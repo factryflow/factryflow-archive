@@ -1,35 +1,53 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import AppShell from "./components/Appshell/AppShell";
+
+import { MantineProvider } from "@mantine/core";
+import { SpotlightProvider } from "@mantine/spotlight";
+import type { SpotlightAction } from "@mantine/spotlight";
+import {
+  IconHome,
+  IconDashboard,
+  IconFileText,
+  IconSearch,
+} from "@tabler/icons-react";
+import Table from "./components/Tables/Table";
+
+const actions: SpotlightAction[] = [
+  {
+    title: "Home",
+    description: "Get to home page",
+    onTrigger: () => console.log("Home"),
+    icon: <IconHome size="1.2rem" />,
+  },
+  {
+    title: "Dashboard",
+    description: "Get full information about current system status",
+    onTrigger: () => console.log("Dashboard"),
+    icon: <IconDashboard size="1.2rem" />,
+  },
+  {
+    title: "Documentation",
+    description: "Visit documentation to lean more about all features",
+    onTrigger: () => console.log("Documentation"),
+    icon: <IconFileText size="1.2rem" />,
+  },
+];
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <MantineProvider>
+      <SpotlightProvider
+        actions={actions}
+        searchIcon={<IconSearch size="1.2rem" />}
+        searchPlaceholder="Search..."
+        shortcut={["mod + P", "mod + K", "/"]}
+        nothingFoundMessage="Nothing found..."
+      >
+        <AppShell>
+          <Table />
+        </AppShell>
+      </SpotlightProvider>
+    </MantineProvider>
+  );
 }
 
-export default App
+export default App;
