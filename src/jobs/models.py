@@ -1,13 +1,13 @@
-from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 
-from src.database import Base
+from src.core.models import Base, BaseUUIDModel
+from src.dependencies.models import job_dependency_table
 
 
-class Job(Base):
+class Job(Base, BaseUUIDModel):
     __tablename__ = "job"
 
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String)
-
     tasks = relationship("Task", back_populates="job")
+    dependencies = relationship(
+        "Dependency", secondary=job_dependency_table, back_populates="jobs"
+    )

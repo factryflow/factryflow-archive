@@ -7,8 +7,12 @@ from src.database import create_db_and_tables
 from src.jobs.router import router as job_router
 from src.tasks.router import router as task_router
 
-app = FastAPI()
-
+app = FastAPI(
+    # title=settings.project_name,
+    # version=settings.version,
+    # openapi_url=f"{settings.api_v1_prefix}/openapi.json",
+    # debug=settings.debug,
+)
 app.include_router(auth_router, tags=["auth"])
 
 app.include_router(task_router, prefix="/tasks", tags=["tasks"])

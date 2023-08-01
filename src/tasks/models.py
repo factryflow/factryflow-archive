@@ -1,24 +1,23 @@
-from enum import Enum
+import enum
 
-from sqlalchemy import Column, ForeignKey, Integer
+from sqlalchemy import Column, Enum, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 
-from src.database import Base
+from src.core.models import Base, BaseUUIDModel
 from src.dependencies.models import task_dependency_table
 
 
-class TaskTarget(Enum):
-    STOCK = "stock"
-    JOB = "job"
+class TaskTarget(enum.Enum):
+    stock = "stock"
+    job = "job"
 
 
-class Task(Base):
+class Task(Base, BaseUUIDModel):
     __tablename__ = "task"
 
-    id = Column(Integer, primary_key=True, index=True)
     task_number = Column(Integer, nullable=False)
     batch_id = Column(Integer)
-    target = Column(Enum(TaskTarget), index=True)
+    target = Column(Enum(TaskTarget))
     job_id = Column(Integer, ForeignKey("job.id"))
 
     job = relationship("Job", back_populates="tasks")
