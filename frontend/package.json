@@ -20,7 +20,9 @@
     "@tanstack/react-query": "^4.32.1",
     "mantine-react-table": "^1.0.0",
     "react": "^18.2.0",
+    "react-auth-kit": "^2.12.5",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.14.2",
     "tabler-icons-react": "^1.56.0"
   },
   "devDependencies": {
