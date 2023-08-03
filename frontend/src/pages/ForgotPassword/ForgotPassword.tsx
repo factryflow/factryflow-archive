@@ -57,7 +57,7 @@ export function ForgotPassword() {
             color="dimmed"
             size="sm"
             className={classes.control}
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/signin")}
           >
             <Center inline>
               <IconArrowLeft size={rem(12)} stroke={1.5} />

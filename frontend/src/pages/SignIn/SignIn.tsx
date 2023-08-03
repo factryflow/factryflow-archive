@@ -1,46 +1,43 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useNavigate } from "react-router-dom"; // Import useHistory
 
 import {
   TextInput,
   PasswordInput,
+  Anchor,
   Paper,
   Title,
   Container,
+  Group,
   Button,
-  Alert,
   Text,
-  Anchor,
+  Alert,
 } from "@mantine/core";
-import { useSignup } from "./useSignup";
 import { useForm, isEmail } from "@mantine/form";
 import { IconAlertCircle } from "@tabler/icons-react";
+import { useSignIn } from "./useSignIn";
 
-export function Signup() {
-  const { register, loading, error } = useSignup();
+export function SignIn() {
+  const { register: signin, loading, error } = useSignIn();
   const navigate = useNavigate();
 
-  const handleSubmit = async (values: { email: string; password: string }) => {
-    const success = await register(values.email, values.password);
+  const handleSubmit = async (values: {
+    username: string;
+    password: string;
+  }) => {
+    const success = await signin(values.username, values.password);
     if (success) {
       navigate("/");
-      // Redirect to login page
     }
   };
 
   const form = useForm({
     initialValues: {
-      email: "",
+      username: "",
       password: "",
     },
 
     validate: {
-      email: isEmail("Invalid email"),
-      // Minimum eight characters, at least one letter and one number:
-      password: (value) =>
-        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(value)
-          ? null
-          : "Minimum eight characters, at least one letter and one number",
+      username: isEmail("Invalid email"),
     },
   });
 
@@ -48,24 +45,24 @@ export function Signup() {
     <Container size={420} my={40}>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Title
+          align="center"
           variant="gradient"
           gradient={{ from: "indigo", to: "cyan", deg: 45 }}
-          align="center"
           sx={(theme) => ({
             fontFamily: `Greycliff CF, ${theme.fontFamily}`,
             fontWeight: 900,
           })}
         >
-          SIGN UP
+          SIGN IN
         </Title>
         <Text color="dimmed" size="sm" align="center" mt={5}>
-          Already have an account?{" "}
+          Don't have an account?{" "}
           <Anchor
             size="sm"
             component="button"
-            onClick={() => navigate("/signin")}
+            onClick={() => navigate("/signup")}
           >
-            Sign in
+            Sign up
           </Anchor>
         </Text>
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
@@ -82,7 +79,7 @@ export function Signup() {
             label="Email"
             placeholder="you@mantine.dev"
             required
-            {...form.getInputProps("email")}
+            {...form.getInputProps("username")}
           />
           <PasswordInput
             label="Password"
@@ -91,8 +88,17 @@ export function Signup() {
             mt="md"
             {...form.getInputProps("password")}
           />
+          <Group position="apart" mt="lg">
+            <Anchor
+              component="button"
+              size="sm"
+              onClick={() => navigate("/forgot-password")}
+            >
+              Forgot password?
+            </Anchor>
+          </Group>
           <Button fullWidth mt="xl" type="submit" loading={loading}>
-            Sign up
+            Sign in
           </Button>
         </Paper>
       </form>
