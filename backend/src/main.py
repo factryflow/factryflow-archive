@@ -1,4 +1,5 @@
 from fastapi import Depends, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from src.auth.dependencies import current_active_user
 from src.auth.models import User
 from src.auth.router import router as auth_router
@@ -12,6 +13,19 @@ app = FastAPI(
     # openapi_url=f"{settings.api_v1_prefix}/openapi.json",
     # debug=settings.debug,
 )
+origins = [
+    "http://localhost",
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(auth_router, tags=["auth"])
 
 app.include_router(task_router, prefix="/tasks", tags=["tasks"])
