@@ -1,9 +1,7 @@
-from os import getenv
-
 from dotenv import load_dotenv
 from pydantic import BaseSettings
 
-load_dotenv(getenv("ENV_FILE"))
+load_dotenv()
 
 
 class Settings(BaseSettings):
@@ -12,6 +10,7 @@ class Settings(BaseSettings):
     # database
     JWT_SECRET: str
     DATABASE_URL: str
+    ENVIRONMENT: str
 
 
 settings = Settings()

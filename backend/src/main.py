@@ -1,5 +1,4 @@
 from fastapi import Depends, FastAPI
-
 from src.auth.dependencies import current_active_user
 from src.auth.models import User
 from src.auth.router import router as auth_router
