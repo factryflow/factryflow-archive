@@ -2,9 +2,7 @@ import enum
 
 from sqlalchemy import Column, Enum, ForeignKey, Integer
 from sqlalchemy.orm import relationship
-
 from src.core.models import Base, BaseUUIDModel
-from src.dependencies.models import task_dependency_table
 
 
 class TaskTarget(enum.Enum):
@@ -21,9 +19,9 @@ class Task(Base, BaseUUIDModel):
     job_id = Column(Integer, ForeignKey("job.id"))
 
     job = relationship("Job", back_populates="tasks")
-    dependencies = relationship(
-        "Dependency", secondary=task_dependency_table, back_populates="tasks"
-    )
+    # dependencies = relationship(
+    #     "Dependency", secondary=task_dependency_table, back_populates="tasks"
+    # )
 
     predecessors = relationship(
         "TaskConstraint",
