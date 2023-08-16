@@ -1,4 +1,4 @@
-import { Header, MediaQuery, useMantineTheme } from "@mantine/core";
+import { Header, MediaQuery, useMantineTheme, Title } from "@mantine/core";
 import { Burger } from "@mantine/core";
 import { CustomHeaderControls } from "./CustomHeaderControls"; // Make sure this path points to your CustomHeaderControls component
 import { openSpotlight } from "@mantine/spotlight";
@@ -14,7 +14,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({ opened, setOpened }) => {
   // Define the required functions for CustomHeaderControls
 
   return (
-    <Header height={{ base: 50, md: 70 }} p="md">
+    <Header height={{ base: 50 }} p="md">
       <div
         style={{
           display: "flex",
@@ -23,6 +23,11 @@ const HeaderComponent: React.FC<HeaderProps> = ({ opened, setOpened }) => {
         }}
       >
         <div style={{ display: "flex", alignItems: "center" }}>
+          <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
+            <Title order={5} align="left" variant="gradient">
+              PRODUCTION SCHEDULER
+            </Title>
+          </MediaQuery>
           <MediaQuery largerThan="sm" styles={{ display: "none" }}>
             <Burger
               opened={opened}
@@ -34,10 +39,19 @@ const HeaderComponent: React.FC<HeaderProps> = ({ opened, setOpened }) => {
           </MediaQuery>
         </div>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <CustomHeaderControls
-            onSearch={openSpotlight}
-            githubLink="https://github.com/Yacobolo/chartizard"
-          />
+          <MediaQuery largerThan="sm" styles={{ display: "none" }}>
+            <Title order={5} align="left" variant="gradient">
+              PRODUCTION SCHEDULER
+            </Title>
+          </MediaQuery>
+        </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
+            <CustomHeaderControls
+              onSearch={openSpotlight}
+              githubLink="https://github.com/Yacobolo/chartizard"
+            />
+          </MediaQuery>
         </div>
       </div>
     </Header>
