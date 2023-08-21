@@ -3,19 +3,18 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
-import { AuthProvider } from "react-auth-kit";
+import { MantineProvider } from "@mantine/core";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <AuthProvider
-      authType={"cookie"}
-      authName={"_auth"}
-      cookieDomain={window.location.hostname}
-      cookieSecure={false}
-    >
-      <BrowserRouter>
+    <BrowserRouter>
+      <MantineProvider
+        theme={{ colorScheme: "dark" }}
+        withGlobalStyles
+        withNormalizeCSS
+      >
         <App />
-      </BrowserRouter>
-    </AuthProvider>
+      </MantineProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );

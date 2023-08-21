@@ -1,6 +1,5 @@
 import AppShell from "../../components/Appshell/AppShell";
 
-import { MantineProvider } from "@mantine/core";
 import { SpotlightProvider } from "@mantine/spotlight";
 import type { SpotlightAction } from "@mantine/spotlight";
 import {
@@ -34,19 +33,17 @@ const actions: SpotlightAction[] = [
 
 function Home() {
   return (
-    <MantineProvider>
-      <SpotlightProvider
-        actions={actions}
-        searchIcon={<IconSearch size="1.2rem" />}
-        searchPlaceholder="Search..."
-        shortcut={["mod + P", "mod + K", "/"]}
-        nothingFoundMessage="Nothing found..."
-      >
-        <AppShell>
-          <Table />
-        </AppShell>
-      </SpotlightProvider>
-    </MantineProvider>
+    <SpotlightProvider
+      actions={actions}
+      searchIcon={<IconSearch size="1.2rem" />}
+      searchPlaceholder="Search..."
+      shortcut={["mod + P", "mod + K", "/"]}
+      nothingFoundMessage="Nothing found..."
+    >
+      <AppShell>
+        <Table />
+      </AppShell>
+    </SpotlightProvider>
   );
 }
 
