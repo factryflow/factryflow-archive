@@ -9,9 +9,10 @@ type Props = {
 
 export const AuthRoute = ({ children, isProtected }: Props) => {
   const { isAuthorized } = useAuth();
+
   if (isProtected) {
-    return isAuthorized ? children : <Navigate to="/" />;
+    return !isAuthorized ? children : <Navigate to="/" />;
   } else {
-    return isAuthorized ? <Navigate to="/home" /> : children;
+    return !isAuthorized ? <Navigate to="/home" /> : children;
   }
 };

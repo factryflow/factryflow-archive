@@ -5,7 +5,7 @@ import { AuthContext } from "./context";
 import { AuthRoute } from "./components/AuthRoute/AuthRoute";
 import { SignInPage } from "./components/SignInPage/SignInPage";
 import { SignUpPage } from "./components/SignUpPage/SignUpPage";
-import { Home } from "./components/Home/Home";
+import { Home } from "./pages/Home/Home";
 
 export type User = {
   token: string;
