@@ -7,19 +7,22 @@ interface AppShellProps {
   children: React.ReactNode;
 }
 
-export const CustomAppShell: React.FC<AppShellProps> = () => {
+export const CustomAppShell: React.FC<AppShellProps> = ({ children }) => {
   return (
     <AppShell
-      padding="md"
-      navbar={<NavbarComponent />}
+      padding={0}
       header={<HeaderComponent />}
+      navbar={<NavbarComponent />}
       styles={{
         main: {
           backgroundColor: "white",
+          width: "100%",
         },
       }}
+      asideOffsetBreakpoint="sm"
+      navbarOffsetBreakpoint="sm"
     >
-      {}
+      {children}
     </AppShell>
   );
 };
