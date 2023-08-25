@@ -1,5 +1,5 @@
 import React from "react";
-import { AppShell } from "@mantine/core";
+import { AppShell, useMantineTheme } from "@mantine/core";
 import { NavbarComponent } from "./NavBar";
 import { HeaderComponent } from "./Header";
 
@@ -8,6 +8,7 @@ interface AppShellProps {
 }
 
 export const CustomAppShell: React.FC<AppShellProps> = ({ children }) => {
+  const theme = useMantineTheme();
   return (
     <AppShell
       padding={0}
@@ -15,7 +16,7 @@ export const CustomAppShell: React.FC<AppShellProps> = ({ children }) => {
       navbar={<NavbarComponent />}
       styles={{
         main: {
-          backgroundColor: "white",
+          background: theme.colors.gray[0],
           width: "100%",
         },
       }}

@@ -39,7 +39,7 @@ const TableTD: FC<TableTDProps> = ({ children }) => {
   return <td className={classes.tableTd}>{children}</td>;
 };
 
-export function UsersTable({ data }: UsersTableProps) {
+export function AdminTable({ data }: UsersTableProps) {
   const { classes } = useStyles();
   const rows = data.map((item) => (
     <tr style={{ padding: 0, margin: 0 }} key={item.id}>

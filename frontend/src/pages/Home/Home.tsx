@@ -1,7 +1,8 @@
 import { CustomAppShell } from "../../components/Home/AppShell";
-import { UsersTable } from "../../components/Table/Table";
+//import { AdminTable } from "../../components/Table/Table";
+import UserTable from "../../components/Table/UserTable";
 export const Home = () => {
-  const mockTodoData = [
+  /*const mockTodoData = [
     {
       id: 1,
       action: "Complete project report",
@@ -131,11 +132,12 @@ export const Home = () => {
       email: "emily@example.com",
       state: "Ohayo",
     },
-  ];
+  ];*/
 
   return (
     <CustomAppShell>
-      <UsersTable data={mockTodoData} />
+      {/*<AdminTable data={mockTodoData} />*/}
+      <UserTable />
     </CustomAppShell>
   );
 };

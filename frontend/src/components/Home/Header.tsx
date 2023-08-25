@@ -19,7 +19,6 @@ const useStyles = createStyles((theme) => ({
     borderBottom: 0,
     margin: 0,
     padding: 0,
-
     color: "#E3FAFC",
   },
 
