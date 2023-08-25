@@ -14,4 +14,4 @@ class JobBaseService(ABC):
         Abstract method to create jobs
         """
         pass
-
+    
