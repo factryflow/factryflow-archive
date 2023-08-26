@@ -14,7 +14,7 @@ const mockdata = [
   {
     label: "Market news",
     icon: IconNotes,
-    initiallyOpened: true,
+    initiallyOpened: false,
     links: [
       { label: "Overview", link: "/" },
       { label: "Forecasts", link: "/" },
@@ -47,6 +47,8 @@ const mockdata = [
 
 const useStyles = createStyles((theme) => ({
   navbar: {
+    //opacity: 0,
+    position: "sticky",
     paddingBottom: 0,
     backgroundColor: "white",
     borderRightColor: "#dee2e6",

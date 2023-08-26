@@ -9,11 +9,7 @@ import {
   createStyles,
   rem,
 } from "@mantine/core";
-import {
-  
-  IconChevronLeft,
-  IconChevronRight,
-} from "@tabler/icons-react";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 
 const useStyles = createStyles((theme) => ({
   control: {
@@ -102,7 +98,7 @@ export function LinksGroup({
       >
         <Group position="apart" spacing={0}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <ThemeIcon size={30}>
+            <ThemeIcon color="#4DABF7" size={30}>
               <Icon size="1.1rem" />
             </ThemeIcon>
             <Box style={{ color: "black" }} ml="md">
