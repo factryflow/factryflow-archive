@@ -15,11 +15,11 @@ import { IconSearch } from "@tabler/icons-react";
 
 const useStyles = createStyles((theme) => ({
   header: {
-    backgroundColor: theme.fn.variant({
-      variant: "filled",
-      color: theme.primaryColor,
-    }).background,
+    backgroundColor: "#4DABF7",
     borderBottom: 0,
+    margin: 0,
+    padding: 0,
+    color: "#E3FAFC",
   },
 
   inner: {
@@ -28,7 +28,6 @@ const useStyles = createStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  autocomplete: {},
   input: {
     backgroundColor: "white",
     border: "none",
@@ -92,7 +91,12 @@ export const HeaderComponent = () => {
   const { classes } = useStyles();
 
   return (
-    <Header height={56} className={classes.header} mb={120}>
+    <Header
+      height={56}
+      className={classes.header}
+      sx={{ zIndex: 1000 }}
+      mb={120}
+    >
       <Container>
         <div className={classes.inner}>
           <Title size="h5">PRODUCTION SCHEDULER</Title>

@@ -1,4 +1,4 @@
-## Production Scheduler
+## FactryFlow
 **UNDER CONSTRUCTION**  
 It will be an open source production scheduler utilizing the python package planbee.  
 Stay Tuned!
