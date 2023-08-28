@@ -1,0 +1,61 @@
+[{
+	"model": "api.dependencytypes",
+	"pk": 1,
+	"fields": {
+		"name": "Materials & Components",
+		"description": "This category encompasses basic raw materials, parts, or components required for manufacturing. It could be anything from steel beams to microchips, depending on the product being manufactured.",
+		"created_at": "2023-08-24T06:42:07.403Z",
+		"updated_at": "2023-08-24T06:42:07.403Z",
+		"deleted_at": null,
+		"is_active": true,
+		"is_deleted": false
+	}
+},{
+	"model": "api.dependencytypes",
+	"pk": 2,
+	"fields": {
+		"name": "Machinery & Equipment",
+		"description": "Essential machines or equipment required for specific tasks, whether it's about them being operational, calibrated, or installed.",
+		"created_at": "2023-08-24T06:42:07.403Z",
+		"updated_at": "2023-08-24T06:42:07.403Z",
+		"deleted_at": null,
+		"is_active": true,
+		"is_deleted": false
+	}
+},{
+	"model": "api.dependencytypes",
+	"pk": 3,
+	"fields": {
+		"name": "Technical Specifications",
+		"description": "Necessary technical details, drawings, or design specifications needed before a manufacturing process can start.",
+		"created_at": "2023-08-24T06:42:07.403Z",
+		"updated_at": "2023-08-24T06:42:07.403Z",
+		"deleted_at": null,
+		"is_active": true,
+		"is_deleted": false
+	}
+},{
+	"model": "api.dependencytypes",
+	"pk": 4,
+	"fields": {
+		"name": "Quality & Compliance",
+		"description": "This merges quality checks and regulatory requirements. It can refer to internal quality checks or external regulations and certifications that need to be met.",
+		"created_at": "2023-08-24T06:42:07.403Z",
+		"updated_at": "2023-08-24T06:42:07.403Z",
+		"deleted_at": null,
+		"is_active": true,
+		"is_deleted": false
+	}
+},{
+	"model": "api.dependencytypes",
+	"pk": 5,
+	"fields": {
+		"name": "Logistics & Suppliers",
+		"description": "Challenges or dependencies related to supply chain, including transportation, supplier delays, and other logistical concerns.",
+		"created_at": "2023-08-24T06:42:07.403Z",
+		"updated_at": "2023-08-24T06:42:07.403Z",
+		"deleted_at": null,
+		"is_active": true,
+		"is_deleted": false
+	}
+}]

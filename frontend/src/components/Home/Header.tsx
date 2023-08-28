@@ -28,7 +28,6 @@ const useStyles = createStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
   },
-
   input: {
     backgroundColor: "white",
     border: "none",
@@ -62,7 +61,6 @@ const useStyles = createStyles((theme) => ({
       ),
     },
   },
-
   title: {
     justifyContent: "flex-start",
   },

@@ -1,0 +1,13 @@
+.idea
+
+/venv
+
+*.pyc
+
+*.log
+
+/media
+
+.env
+
+.vscodes
