@@ -4,3 +4,4 @@ from .jobsView import *
 from .tasksView import *
 from .dependencyView import *
 from .resourcesView import *
+from .operationalExceptionView import *
