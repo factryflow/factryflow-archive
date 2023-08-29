@@ -60,5 +60,18 @@ urlpatterns = [
     path('resource/delete-resource-group/<int:id>/', CreateUpdateResourceGroupsView.as_view(), name="delete-resources"),
     path('resource/get-resource-group-list/', ResourceGroupsListView.as_view(), name="get-resources-list"),
 
+    #operation exception Type
+    path('operational-exception/create-type/', CreateUpdateOperationalExceptionTypeView.as_view(), name="create-operational-exception-type"),
+    path('operational-exception/update-type/<int:id>/', CreateUpdateOperationalExceptionTypeView.as_view(), name="update-operational-exception-type"),
+    path('operational-exception/get-type-details/<int:id>/', CreateUpdateOperationalExceptionTypeView.as_view(), name="get-operational-exception-type-details"),
+    path('operational-exception/delete-type/<int:id>/', CreateUpdateOperationalExceptionTypeView.as_view(), name="delete-operational-exception-type"),
+    path('operational-exception/get-type-list/', OperationalExceptionTypeListView.as_view(), name="get-operational-exception-type-list"),
     
+    
+    #operation exception
+    path('operational-exception/create-exception/', CreateUpdateOperationalExceptionView.as_view(), name="create-operational-exception"),
+    path('operational-exception/update-exception/<int:id>/', CreateUpdateOperationalExceptionView.as_view(), name="update-operational-exception"),
+    path('operational-exception/get-exception-details/<int:id>/', CreateUpdateOperationalExceptionView.as_view(), name="get-operational-exception-details"),
+    path('operational-exception/delete-exception/<int:id>/', CreateUpdateOperationalExceptionView.as_view(), name="delete-operational-exception"),
+    path('operational-exception/get-exception-list/', OperationalExceptionListView.as_view(), name="get-operational-exception-list"),
 ]

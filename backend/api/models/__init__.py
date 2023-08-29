@@ -7,3 +7,5 @@ from .tasksModel import *
 from .dependencyModel import *
 from .resourceGroupsModel import *
 from .resourcesModel import *
+from .operationalExceptionTypeModel import *
+from .operationalExceptionModel import *
