@@ -54,13 +54,13 @@ urlpatterns = [
     path('resource/get-resources-list/', ResourcesListView.as_view(), name="get-resources-list"),
     
     #Resources-Group
-    path('resource/create-resource-group/', CreateUpdateResourceGroupsView.as_view(), name="create-resources"),
-    path('resource/update-resource-group/<int:id>/', CreateUpdateResourceGroupsView.as_view(), name="update-resources"),
-    path('resource/get-resource-group-details/<int:id>/', CreateUpdateResourceGroupsView.as_view(), name="get-resources-details"),
-    path('resource/delete-resource-group/<int:id>/', CreateUpdateResourceGroupsView.as_view(), name="delete-resources"),
-    path('resource/get-resource-group-list/', ResourceGroupsListView.as_view(), name="get-resources-list"),
+    path('resource/create-resource-group/', CreateUpdateResourceGroupsView.as_view(), name="create-resources-group"),
+    path('resource/update-resource-group/<int:id>/', CreateUpdateResourceGroupsView.as_view(), name="update-resources-group"),
+    path('resource/get-resource-group-details/<int:id>/', CreateUpdateResourceGroupsView.as_view(), name="get-resources-group-details"),
+    path('resource/delete-resource-group/<int:id>/', CreateUpdateResourceGroupsView.as_view(), name="delete-resources-group"),
+    path('resource/get-resource-group-list/', ResourceGroupsListView.as_view(), name="get-resources-group-list"),
 
-    #operation exception Type
+    #operation exception type
     path('operational-exception/create-type/', CreateUpdateOperationalExceptionTypeView.as_view(), name="create-operational-exception-type"),
     path('operational-exception/update-type/<int:id>/', CreateUpdateOperationalExceptionTypeView.as_view(), name="update-operational-exception-type"),
     path('operational-exception/get-type-details/<int:id>/', CreateUpdateOperationalExceptionTypeView.as_view(), name="get-operational-exception-type-details"),
@@ -74,4 +74,19 @@ urlpatterns = [
     path('operational-exception/get-exception-details/<int:id>/', CreateUpdateOperationalExceptionView.as_view(), name="get-operational-exception-details"),
     path('operational-exception/delete-exception/<int:id>/', CreateUpdateOperationalExceptionView.as_view(), name="delete-operational-exception"),
     path('operational-exception/get-exception-list/', OperationalExceptionListView.as_view(), name="get-operational-exception-list"),
+    
+    #weekly shift template
+    path('weekly-shift/create-template/', CreateUpdateWeeklyShiftTemplateView.as_view(), name="create-weekly-shift"),
+    path('weekly-shift/update-template/<int:id>/', CreateUpdateWeeklyShiftTemplateView.as_view(), name="update-weekly-shift"),
+    path('weekly-shift/get-template-by-id/<int:id>/', CreateUpdateWeeklyShiftTemplateView.as_view(), name="get-weekly-shift-details"),
+    path('weekly-shift/delete-template/<int:id>/', CreateUpdateWeeklyShiftTemplateView.as_view(), name="delete-weekly-shift"),
+    path('weekly-shift/get-template-list/', WeeklyShiftTemplateListView.as_view(), name="get-weekly-shift-list"),
+    
+    #weekly shift template details
+    path('weekly-shift-template/create-details/', CreateUpdateTemplateDetailsView.as_view(), name="create-weekly-shift-details"),
+    path('weekly-shift-template/update-details/<int:id>/', CreateUpdateTemplateDetailsView.as_view(), name="update-weekly-shift-details"),
+    path('weekly-shift-template/get-details/<int:id>/', CreateUpdateTemplateDetailsView.as_view(), name="get-weekly-shift-details"),
+    path('weekly-shift-template/delete-details/<int:id>/', CreateUpdateTemplateDetailsView.as_view(), name="delete-weekly-shift-details"),
+    path('weekly-shift-template/get-details-list/', TemplateDetailsListView.as_view(), name="get-weekly-shift-details-list"),
+       
 ]
