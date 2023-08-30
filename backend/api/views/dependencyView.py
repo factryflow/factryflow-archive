@@ -60,7 +60,47 @@ class DeleteDependencyTypesView(APIView):
         return Response(result, status=result["code"])
         
 
+class CreateDependencyView(APIView):
+    @swagger_auto_schema(
+        request_body=create_update_dependency_request_body,
+        responses=response_create_update_dependency,
+        operation_summary="Create dependency",
+    )
+    def post(self, request, format=None):
+        """
+        Create dependency.
+        """
+        result = dependency_service.create_dependency(request, format=None)
+        return Response(result, status=result["code"])
+    
+    
+class UpdateDependencyView(APIView):
+    @swagger_auto_schema(
+        request_body=create_update_dependency_request_body,
+        responses=response_create_update_dependency,
+        operation_summary="Update dependency",
+    )
+    def put(self, request, id, format=None):
+        """
+        Update dependency
+        """
+        result = dependency_service.update_dependency(request, id, format=None)
+        return Response(result, status=result["code"])
+    
 
+class GetDependencyByIdView(APIView):
+    @swagger_auto_schema(
+        responses=dependency_details_response,
+        operation_summary="Get dependency by id",
+    )
+    def get(self, request, id, format=None):
+        """
+        get dependency details by id
+        """
+        result = dependency_service.get_dependency_details_by_id(request, id, format=None)
+        return Response(result, status=result["code"])
+    
+    
 class DependencListView(APIView):
     @swagger_auto_schema(
         responses=dependency_details_response,
@@ -72,38 +112,13 @@ class DependencListView(APIView):
         """
         result = dependency_service.get_all_dependency(request, format=None)
         return Response(result, status=result["code"])
-
-class CreateDependencyView(APIView):
-    def post(self, request, format=None):
-        """
-        Create dependency.
-        """
-        result = dependency_service.create_dependency(request, format=None)
-        return Response(result, status=result["code"])
     
     
-class CreateUpdateDependencView(APIView):
-    def post(self, request, format=None):
-        """
-        Create dependency.
-        """
-        result = dependency_service.create_dependency(request, format=None)
-        return Response(result, status=result["code"])
-
-    def put(self, request, id, format=None):
-        """
-        Update dependency
-        """
-        result = dependency_service.update_dependency(request, id, format=None)
-        return Response(result, status=result["code"])
-
-    def get(self, request, id, format=None):
-        """
-        get dependency details by id
-        """
-        result = dependency_service.get_dependency_details_by_id(request, id, format=None)
-        return Response(result, status=result["code"])
-    
+class DeleteDependencyByIdView(APIView):
+    @swagger_auto_schema(
+        responses=response_delete_dependency,
+        operation_summary="delete dependency",
+    )
     def delete(self, request, id, format=None):
         """
         delete dependency detail by id
