@@ -35,9 +35,9 @@ urlpatterns = [
     
     #dependency-Types
     path('dependency/get-dependency-types-list/', DependencyTypesListView.as_view(), name="dependency-types-list"),
-    path('dependency/create-dependency-type/', CreateUpdateDependencyTypesView.as_view(), name="create-dependency-types"),
-    path('dependency/update-dependency-type/<int:id>/', CreateUpdateDependencyTypesView.as_view(), name="update-dependency-types"),
-    path('dependency/delete-dependency-type/<int:id>/', CreateUpdateDependencyTypesView.as_view(), name="delete-dependency-types"),
+    path('dependency/create-dependency-type/', CreateDependencyTypesView.as_view(), name="create-dependency-types"),
+    path('dependency/update-dependency-type/<int:id>/', UpdateDependencyTypesView.as_view(), name="update-dependency-types"),
+    path('dependency/delete-dependency-type/<int:id>/', DeleteDependencyTypesView.as_view(), name="delete-dependency-types"),
     
     #dependency
     path('dependency/get-dependency-list/', DependencListView.as_view(), name="dependency-list"),
