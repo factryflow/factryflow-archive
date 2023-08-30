@@ -6,6 +6,7 @@ erDiagram
     JOB }o--o{ DEPENDENCY: "has"
     JOB {
         int id
+        string external_id
         string name
         date due_date
         string description
@@ -19,6 +20,7 @@ erDiagram
     TASK ||--|{ RESOURCE-GROUP : "requires"
     TASK {
         int id
+        string external_id
         string name
         enum status
         int quantity
@@ -37,15 +39,18 @@ erDiagram
     RESOURCE ||--|| WEEKLY-SHIFT-TEMPLATE : "has"
     RESOURCE {
         int id PK
+        string external_id
         string name
     }
     RESOURCE-GROUP {
         int id
+        string external_id
         string name
     }
     DEPENDENCY ||--|{ DEPENDENCY-TYPE : "has"
     DEPENDENCY {
         int id
+        string external_id
         string name
         enum status
         datetime expected_close_datetime
@@ -74,6 +79,8 @@ erDiagram
     OPERATIONAL-EXCEPTION |o--o{ WEEKLY-SHIFT-TEMPLATE: "can have"
     OPERATIONAL-EXCEPTION ||--|| OPERATIONAL-EXCEPTION-TYPE: "has"
     OPERATIONAL-EXCEPTION {
+        int id
+        string external_id
         datetime start_datetime
         datetime end_datetime
         string notes
@@ -82,5 +89,24 @@ erDiagram
     OPERATIONAL-EXCEPTION-TYPE {
         int id
         string name
+    }
+
+    ALLOCATION-RULE }o--o{ RESOURCE-GROUP: has
+    ALLOCATION-RULE {
+        int id
+        string name
+        string description
+        int priority 
+        int resource_count
+        bool use_all_resources
+    }
+
+    ALLOCATION-RULE-FILTER }| -- o| ALLOCATION-RULE: has
+    ALLOCATION-RULE-FILTER {
+        int id
+        int parent_id
+        string field
+        enum operator
+        string value
     }
 ```
