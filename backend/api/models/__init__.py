@@ -9,3 +9,5 @@ from .resourceGroupsModel import *
 from .resourcesModel import *
 from .operationalExceptionTypeModel import *
 from .operationalExceptionModel import *
+from .weeklyShiftTemplateModel import *
+from .weeklyShiftTemplateDetailsModel import *
