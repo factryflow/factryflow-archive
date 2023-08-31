@@ -1,8 +1,9 @@
 # ER diagram
 
 ``` mermaid
+
 erDiagram
-    JOB |o--o{ TASK : "can have"
+    JOB |o--o{ TASK : "consists of"
     JOB }o--o{ DEPENDENCY: "has"
     JOB {
         int id
@@ -12,12 +13,9 @@ erDiagram
         string description
         string customer
         string notes
-        datetime planned_start_datetime
-        datetime planned_end_datetime
     }
     TASK }o--o{ DEPENDENCY : "has"
-    TASK }o--o{ TASK-TO-TASK : "has"
-    TASK ||--|{ RESOURCE-GROUP : "requires"
+    TASK }o--o{ TASK-TO-TASK : "links to"
     TASK {
         int id
         string external_id
@@ -27,8 +25,6 @@ erDiagram
         int setup_time
         int run_time_per_unit
         int teardown_time
-        datetime planned_start_datetime
-        datetime planned_end_datetime
     }
     TASK-TO-TASK {
         int predecessor_id FK
@@ -75,8 +71,8 @@ erDiagram
         time end_time
     }
 
-    OPERATIONAL-EXCEPTION ||--o{ RESOURCE: "applies to"
-    OPERATIONAL-EXCEPTION |o--o{ WEEKLY-SHIFT-TEMPLATE: "can have"
+    OPERATIONAL-EXCEPTION ||--o{ RESOURCE: "affects"
+    OPERATIONAL-EXCEPTION |o--o{ WEEKLY-SHIFT-TEMPLATE: "overrides"
     OPERATIONAL-EXCEPTION ||--|| OPERATIONAL-EXCEPTION-TYPE: "has"
     OPERATIONAL-EXCEPTION {
         int id
@@ -91,7 +87,7 @@ erDiagram
         string name
     }
 
-    ALLOCATION-RULE }o--o{ RESOURCE-GROUP: has
+    ALLOCATION-RULE }o--o{ RESOURCE-GROUP: "targets"
     ALLOCATION-RULE {
         int id
         string name
@@ -101,12 +97,30 @@ erDiagram
         bool use_all_resources
     }
 
-    ALLOCATION-RULE-FILTER }| -- o| ALLOCATION-RULE: has
-    ALLOCATION-RULE-FILTER {
+    ALLOCATION-RULE-CRITERIA }| -- o| ALLOCATION-RULE: "applies to"
+    ALLOCATION-RULE-CRITERIA {
         int id
         int parent_id
         string field
         enum operator
         string value
+    }
+
+    SCHEDULE-RUN || -- || USER: "triggered by"
+    SCHEDULE-RUN {
+        int id
+        bool is_active
+        timestamp triggered_on
+    }
+
+    SCHEDULE-DETAIL }| -- |{ SCHEDULE-RUN: "relates to"
+    SCHEDULE-DETAIL || -- |{ TASK: "is scheduled in"
+    SCHEDULE-DETAIL }| -- |{ RESOURCE: "is assigned to"
+    SCHEDULE-DETAIL {
+        int id
+        timestamp planned_start_datetime
+        timestamp planned_end_datetime
+        int valid_from_run_id
+        int valid_to_run_id
     }
 ```
