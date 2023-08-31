@@ -11,7 +11,7 @@ dependency_service = DependencyService()
 class DependencyTypesListView(APIView):
     @swagger_auto_schema(
         responses=dependency_type_details_response,
-        operation_summary="Update logged in user's password",
+        operation_summary="List all dependency types.",
     )
     def get(self, request, format=None):
         """
@@ -24,7 +24,7 @@ class CreateDependencyTypesView(APIView):
     @swagger_auto_schema(
         request_body=create_update_dependency_type_request_body,
         responses=response_create_update_dependency_type,
-        operation_summary="Update logged in user's password",
+        operation_summary="Create dependency types",
     )
     def post(self, request, format=None):
         """
@@ -37,7 +37,7 @@ class UpdateDependencyTypesView(APIView):
     @swagger_auto_schema(
         request_body=create_update_dependency_type_request_body,
         responses=response_create_update_dependency_type,
-        operation_summary="Update logged in user's password",
+        operation_summary="Update dependency types",
     )
     def put(self, request, id, format=None):
         """
@@ -50,7 +50,7 @@ class UpdateDependencyTypesView(APIView):
 class DeleteDependencyTypesView(APIView):
     @swagger_auto_schema(
         responses=delete_dependency_type_details_response,
-        operation_summary="Update logged in user's password",
+        operation_summary="delete dependency types detail by id",
     )
     def delete(self, request, id, format=None):
         """

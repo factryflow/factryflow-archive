@@ -4,5 +4,6 @@ from .dependencySchemas import *
 from .jobsSchemas import *
 from .operationalExceptionSchemas import *
 from .resourcesSchemas import *
-
-
+from .roleSchemas import *
+from .taskSchemas import *
+from .weeklyShiftTemplateSchemas import *

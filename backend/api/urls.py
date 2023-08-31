@@ -28,10 +28,11 @@ urlpatterns = [
 
     #tasks
     path('tasks/tasks-list/', TaskListView.as_view(), name="tasks-list"),
-    path('tasks/create-task/', CreateUpdateTasksView.as_view(), name="create-tasks"),
-    path('tasks/update-tasks/<int:id>/', CreateUpdateTasksView.as_view(), name="update-tasks"),
-    path('tasks/get-task-details/<int:id>/', CreateUpdateTasksView.as_view(), name="get-task-details"),
-    path('tasks/delete-task/<int:id>/', CreateUpdateTasksView.as_view(), name="delete-tasks"),
+    path('tasks/create-task/', CreateTasksView.as_view(), name="create-tasks"),
+    path('tasks/update-tasks/<int:id>/', UpdateTasksView.as_view(), name="update-tasks"),
+    path('tasks/get-task-details/<int:id>/', GetTasksDetailsView.as_view(), name="get-task-details"),
+    path('tasks/delete-task/<int:id>/', DeleteTasksView.as_view(), name="delete-tasks"),
+    
     
     #dependency-Types
     path('dependency/get-dependency-types-list/', DependencyTypesListView.as_view(), name="dependency-types-list"),
@@ -76,17 +77,17 @@ urlpatterns = [
     path('operational-exception/get-exception-list/', GetOperationalExceptionListView.as_view(), name="get-operational-exception-list"),
     
     #weekly shift template
-    path('weekly-shift/create-template/', CreateUpdateWeeklyShiftTemplateView.as_view(), name="create-weekly-shift"),
-    path('weekly-shift/update-template/<int:id>/', CreateUpdateWeeklyShiftTemplateView.as_view(), name="update-weekly-shift"),
-    path('weekly-shift/get-template-by-id/<int:id>/', CreateUpdateWeeklyShiftTemplateView.as_view(), name="get-weekly-shift-details"),
-    path('weekly-shift/delete-template/<int:id>/', CreateUpdateWeeklyShiftTemplateView.as_view(), name="delete-weekly-shift"),
+    path('weekly-shift/create-template/', CreateWeeklyShiftTemplateView.as_view(), name="create-weekly-shift"),
+    path('weekly-shift/update-template/<int:id>/', UpdateWeeklyShiftTemplateView.as_view(), name="update-weekly-shift"),
+    path('weekly-shift/get-template-by-id/<int:id>/', GetWeeklyShiftTemplateView.as_view(), name="get-weekly-shift-details"),
+    path('weekly-shift/delete-template/<int:id>/', DeleteWeeklyShiftTemplateView.as_view(), name="delete-weekly-shift"),
     path('weekly-shift/get-template-list/', WeeklyShiftTemplateListView.as_view(), name="get-weekly-shift-list"),
     
     #weekly shift template details
-    path('weekly-shift-template/create-details/', CreateUpdateTemplateDetailsView.as_view(), name="create-weekly-shift-details"),
-    path('weekly-shift-template/update-details/<int:id>/', CreateUpdateTemplateDetailsView.as_view(), name="update-weekly-shift-details"),
-    path('weekly-shift-template/get-details/<int:id>/', CreateUpdateTemplateDetailsView.as_view(), name="get-weekly-shift-details"),
-    path('weekly-shift-template/delete-details/<int:id>/', CreateUpdateTemplateDetailsView.as_view(), name="delete-weekly-shift-details"),
+    path('weekly-shift-template/create-details/', CreateTemplateDetailsView.as_view(), name="create-weekly-shift-details"),
+    path('weekly-shift-template/update-details/<int:id>/', UpdateTemplateDetailsView.as_view(), name="update-weekly-shift-details"),
+    path('weekly-shift-template/get-details/<int:id>/', GetTemplateDetailsView.as_view(), name="get-weekly-shift-details"),
+    path('weekly-shift-template/delete-details/<int:id>/', DeleteTemplateDetailsView.as_view(), name="delete-weekly-shift-details"),
     path('weekly-shift-template/get-details-list/', TemplateDetailsListView.as_view(), name="get-weekly-shift-details-list"),
        
 ]
