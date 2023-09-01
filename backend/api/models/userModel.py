@@ -54,10 +54,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_deleted = models.BooleanField(default=False)
     otp_varification = models.BooleanField(default=False)
-
     otp = models.CharField(max_length=6, blank=True, null=True)
     otp_send_time = models.DateTimeField(blank=True, null=True)
-    
+    is_staff = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
     deleted_at = models.DateTimeField(blank=True, null=True)
