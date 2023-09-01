@@ -43,14 +43,13 @@ const Register = () => {
   useEffect(() => {
     if (isSuccess) {
       if (data?.code === 200) {
-        toast.success("User Login Successfully");
+        toast.success("User Register Successfully");
         dispatch(
           setUser({
             token: data?.data?.token,
-            name: data?.data?.first_name.concat(" ", data?.data?.last_name),
           })
         );
-        navigate("/home");
+        navigate("/jobs");
       } else if (data?.code === 400) {
         toast.error(data.message);
       }
