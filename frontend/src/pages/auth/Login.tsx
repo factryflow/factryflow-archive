@@ -35,7 +35,7 @@ const Login = () => {
           token: data.data?.token,
         })
       );
-      navigate("/home");
+      navigate("/jobs");
       data.code >= 400
         ? toast.error(data.message)
         : toast.success(data.message);
