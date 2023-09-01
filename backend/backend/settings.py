@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api.apps.ApiConfig',
+    'rest_framework_swagger',
     'corsheaders',
+    'drf_yasg',
     'simple_history',
 ]
 
@@ -137,14 +139,30 @@ REST_FRAMEWORK = {
 
     # Parser classes priority-wise for Swagger
     'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
         'rest_framework.parsers.FormParser',
         'rest_framework.parsers.MultiPartParser',
-        'rest_framework.parsers.JSONParser',
     ],
 
     "DATE_INPUT_FORMATS": ["%m/%d/%Y"],
 
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+}
+
+SWAGGER_SETTINGS = {
+    'LOGIN_URL': 'api:login',
+    'LOGOUT_URL': 'api:logout',
+    'USE_SESSION_AUTH': False,
+    'DOC_EXPANSION': 'list',
+    'APIS_SORTER': 'alpha',
+    'SECURITY_DEFINITIONS': {
+        'api_key': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization',
+            "description": "JWT authorization"
+        }
+    },
 }
 
 JWT_AUTH = {

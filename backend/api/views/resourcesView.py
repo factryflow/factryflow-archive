@@ -2,12 +2,18 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from api.utils.schemas import *
+from drf_yasg.utils import swagger_auto_schema
 
 from api.services.resources import ResourceService
 
 resource_service = ResourceService()
 
 class ResourcesListView(APIView):
+    @swagger_auto_schema(
+        responses=resources_details_response,
+        operation_summary="get resources details list",
+    )
     def get(self, request, format=None):
         """
         List all resources.
@@ -16,7 +22,12 @@ class ResourcesListView(APIView):
         return Response(result, status=result["code"])
 
 
-class CreateUpdateResourcesView(APIView):
+class CreateResourcesView(APIView):
+    @swagger_auto_schema(
+        request_body=create_update_resources_request_body,
+        responses=response_create_update_resources,
+        operation_summary="create reources",
+    )
     def post(self, request, format=None):
         """
         Create resources.
@@ -24,12 +35,25 @@ class CreateUpdateResourcesView(APIView):
         result = resource_service.create_resources(request, format=None)
         return Response(result, status=result["code"])
 
+class UpdateResourcesView(APIView):
+    @swagger_auto_schema(
+        request_body=create_update_resources_request_body,
+        responses=response_create_update_resources,
+        operation_summary="update reources",
+    )
+
     def put(self, request, id, format=None):
         """
         Update resources
         """
         result = resource_service.update_resources(request, id, format=None)
         return Response(result, status=result["code"])
+
+class GetResourcesDetailsByIdView(APIView):
+    @swagger_auto_schema(
+        responses=resources_details_response,
+        operation_summary="get resources details by id",
+    )
     
     def get(self, request, id, format=None):
         """
@@ -37,6 +61,12 @@ class CreateUpdateResourcesView(APIView):
         """
         result = resource_service.get_resource_details_by_id(request, id, format=None)
         return Response(result, status=result["code"])
+
+class DeleteResourceByIdView(APIView):
+    @swagger_auto_schema(
+        responses=response_delete_resources,
+        operation_summary="delete resource",
+    )
     
     def delete(self, request, id, format=None):
         """
@@ -46,7 +76,11 @@ class CreateUpdateResourcesView(APIView):
         return Response(result, status=result["code"])
         
 
-class ResourceGroupsListView(APIView):
+class ResourcesGroupsListView(APIView):
+    @swagger_auto_schema(
+        responses=resources_groups_details_response,
+        operation_summary="get resources groups details list",
+    )
     def get(self, request, format=None):
         """
         List all resource groups.
@@ -55,7 +89,12 @@ class ResourceGroupsListView(APIView):
         return Response(result, status=result["code"])
 
 
-class CreateUpdateResourceGroupsView(APIView):
+class CreateResourceGroupsView(APIView):
+    @swagger_auto_schema(
+        request_body=create_update_resources_groups_request_body,
+        responses=response_create_update_resources_groups,
+        operation_summary="create reources groups",
+    )
     def post(self, request, format=None):
         """
         Create resource groups.
@@ -63,12 +102,25 @@ class CreateUpdateResourceGroupsView(APIView):
         result = resource_service.create_resource_groups(request, format=None)
         return Response(result, status=result["code"])
 
+class UpdateResourceGroupsView(APIView):
+    @swagger_auto_schema(
+        request_body=create_update_resources_groups_request_body,
+        responses=response_create_update_resources_groups,
+        operation_summary="update reources groups",
+    )
+
     def put(self, request, id, format=None):
         """
         Update resource groups.
         """
         result = resource_service.update_resource_groups(request, id, format=None)
         return Response(result, status=result["code"])
+
+class GetResourcesGroupsDetailsView(APIView):
+    @swagger_auto_schema(
+        responses=resources_groups_details_response,
+        operation_summary="get resources groups details by id",
+    )
     
     def get(self, request, id, format=None):
         """
@@ -76,6 +128,13 @@ class CreateUpdateResourceGroupsView(APIView):
         """
         result = resource_service.get_resource_group_details_by_id(request, id, format=None)
         return Response(result, status=result["code"])
+
+
+class DeleteResourceGroupsByIdView(APIView):
+    @swagger_auto_schema(
+        responses=resources_details_response,
+        operation_summary="delete resource groups",
+    )
     
     def delete(self, request, id, format=None):
         """
