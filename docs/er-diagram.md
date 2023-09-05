@@ -1,7 +1,6 @@
 # ER diagram
 
 ``` mermaid
-
 erDiagram
     JOB |o--o{ TASK : "consists of"
     JOB }o--o{ DEPENDENCY: "has"
@@ -13,6 +12,8 @@ erDiagram
         string description
         string customer
         string notes
+        timestamp planned_start_datetime
+        timestamp planned_end_datetime
     }
     TASK }o--o{ DEPENDENCY : "has"
     TASK }o--o{ TASK-TO-TASK : "links to"
@@ -25,7 +26,17 @@ erDiagram
         int setup_time
         int run_time_per_unit
         int teardown_time
+        timestamp planned_start_datetime
+        timestamp planned_end_datetime
     }
+
+    TASK-RESOURCE-ASSIGNMENT || -- o{ TASK : "has assignments"
+    TASK-RESOURCE-ASSIGNMENT || -- o{ RESOURCE : "is assigned to tasks"
+    TASK-RESOURCE-ASSIGNMENT {
+        int task_id FK
+        int resource_id FK
+    }
+
     TASK-TO-TASK {
         int predecessor_id FK
         int successor_id FK
@@ -38,6 +49,7 @@ erDiagram
         string external_id
         string name
     }
+
     RESOURCE-GROUP {
         int id
         string external_id
@@ -72,7 +84,7 @@ erDiagram
     }
 
     OPERATIONAL-EXCEPTION ||--o{ RESOURCE: "affects"
-    OPERATIONAL-EXCEPTION |o--o{ WEEKLY-SHIFT-TEMPLATE: "overrides"
+    OPERATIONAL-EXCEPTION |o--o{ WEEKLY-SHIFT-TEMPLATE: "can use"
     OPERATIONAL-EXCEPTION ||--|| OPERATIONAL-EXCEPTION-TYPE: "has"
     OPERATIONAL-EXCEPTION {
         int id
@@ -87,8 +99,9 @@ erDiagram
         string name
     }
 
-    ALLOCATION-RULE }o--o{ RESOURCE-GROUP: "targets"
-    ALLOCATION-RULE {
+    ASSIGNMENT-RULE }o--o{ RESOURCE-GROUP: "targets"
+    ASSIGNMENT-RULE || -- || TASK: "applies to"
+    ASSIGNMENT-RULE {
         int id
         string name
         string description
@@ -97,8 +110,8 @@ erDiagram
         bool use_all_resources
     }
 
-    ALLOCATION-RULE-CRITERIA }| -- o| ALLOCATION-RULE: "applies to"
-    ALLOCATION-RULE-CRITERIA {
+    ASSIGNMENT-RULE-CRITERIA }| -- o| ASSIGNMENT-RULE: "applies to"
+    ASSIGNMENT-RULE-CRITERIA {
         int id
         int parent_id
         string field
@@ -109,18 +122,6 @@ erDiagram
     SCHEDULE-RUN || -- || USER: "triggered by"
     SCHEDULE-RUN {
         int id
-        bool is_active
         timestamp triggered_on
-    }
-
-    SCHEDULE-DETAIL }| -- |{ SCHEDULE-RUN: "relates to"
-    SCHEDULE-DETAIL || -- |{ TASK: "is scheduled in"
-    SCHEDULE-DETAIL }| -- |{ RESOURCE: "is assigned to"
-    SCHEDULE-DETAIL {
-        int id
-        timestamp planned_start_datetime
-        timestamp planned_end_datetime
-        int valid_from_run_id
-        int valid_to_run_id
     }
 ```
