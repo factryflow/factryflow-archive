@@ -3,6 +3,7 @@ from api.serializers.resources import *
 from rest_framework import status
 from api.utils.messages.commonMessages import *
 from api.utils.messages.resourceMessages import *
+from api.utils.searchData import search_data
 from .resouceBaseService import ResourceBaseService
 
 
@@ -77,6 +78,14 @@ class ResourceService(ResourceBaseService):
             return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":RECORD_NOT_FOUND})
         
         
+    def search_resource(self, request, format=None):
+        """Search resource"""
+        resource_obj = Resources.objects.all()
+        search_keys=['id__icontains', 'name__icontains']
+        search_type='or'
+        serilized_data = search_data(request, search_keys, search_type, GetResourcesDetailsSerializer, resource_obj)
+        return ({"data": serilized_data.data, "code": status.HTTP_200_OK, "message": OK})
+    
     
     def get_all_resource_groups(self, request, format=None):
         """
@@ -139,3 +148,12 @@ class ResourceService(ResourceBaseService):
             return({"data":None, "code":status.HTTP_200_OK, "message":RESOURCE_GROUPS_DELETED})
         except ResourceGroups.DoesNotExist:
             return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":RECORD_NOT_FOUND})
+        
+    
+    def search_resource_group(self, request, format=None):
+        """Search resource group"""
+        resource_group_obj = ResourceGroups.objects.all()
+        search_keys=['id__icontains', 'name__icontains']
+        search_type='or'
+        serilized_data = search_data(request, search_keys, search_type, GetResourceGroupsDetailsSerializer, resource_group_obj)
+        return ({"data": serilized_data.data, "code": status.HTTP_200_OK, "message": OK})

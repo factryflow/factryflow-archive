@@ -1,0 +1,1 @@
+from .assignmentRuleSerializer import *

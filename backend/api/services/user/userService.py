@@ -54,7 +54,6 @@ class UserService(UserBaseService):
 		print(user_name)
 		try:
 			user = User.objects.get(email=user_name)
-			print("Hi")
 			if user.check_password(password):
 				return user # return user on valid credentials
 		except User.DoesNotExist:

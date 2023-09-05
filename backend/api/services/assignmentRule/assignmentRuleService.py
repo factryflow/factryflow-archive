@@ -3,29 +3,28 @@ from api.serializers.job import *
 from rest_framework import status
 from api.utils.messages.commonMessages import *
 from api.utils.messages.jobMessages import *
-from api.utils.searchData import search_data
-from .jobBaseService import JobBaseService
+from .assignmentRuleBaseService import AssignmentRuleBaseService
 
 
-class JobService(JobBaseService):
+class AssignmentRuleService(AssignmentRuleBaseService):
     """
-    Create, Retrieve, Update or Delete a jobs instance and Return all jobs.
+    Create, Retrieve, Update or Delete a assignment rule instance and Return all assignment rule.
     """
 
     def __init__(self):
         pass
 
-    def get_all_jobs(self, request, format=None):
+    def get_all_assignment_rule(self, request, format=None):
         """
-        Retun all the jobs
+        Retun all the assignment rule
         """
         job_obj = Jobs.objects.all()
         serializer = GetJobsDetailsSerializer(job_obj, many=True)
         return ({"data": serializer.data, "code": status.HTTP_200_OK, "message": OK})
 
-    def create_jobs(self, request, format=None):
+    def create_assignment_rule(self, request, format=None):
         """
-        Create New job
+        Create New assignment rule
         """
         serializer = CreateUpdateJobSerializer(data=request.data)
         if serializer.is_valid ():
@@ -36,9 +35,9 @@ class JobService(JobBaseService):
 
         return ({"data": serializer.errors, "code": status.HTTP_400_BAD_REQUEST, "message": BAD_REQUEST})
 
-    def update_job(self, request, id, format=None):
+    def update_assignment_rule(self, request, id, format=None):
         """
-        Update jobs details
+        Update assignment rule details
         """
         try:
             job_obj = Jobs.objects.get(id=id)
@@ -53,9 +52,9 @@ class JobService(JobBaseService):
             return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":RECORD_NOT_FOUND})
         
         
-    def get_job_details_by_id(self, request, id, format=None):
+    def get_assignment_rule_by_id(self, request, id, format=None):
         """
-        Get Job details by id
+        Get assignment rule details by id
         """
         try:
             job_obj = Jobs.objects.get(id=id)
@@ -65,9 +64,9 @@ class JobService(JobBaseService):
             return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":RECORD_NOT_FOUND})
         
     
-    def delete_job(self, request, id, format=None):
+    def delete_assignment_rule(self, request, id, format=None):
         """
-        delete Job details
+        delete assignment rule details
         """
         try:
             job_obj = Jobs.objects.get(id=id)
@@ -76,12 +75,3 @@ class JobService(JobBaseService):
             return({"data":None, "code":status.HTTP_200_OK, "message":JOB_DELETED})
         except Jobs.DoesNotExist:
             return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":RECORD_NOT_FOUND})
-        
-    
-    def search_job(self, request, format=None):
-        """Search Jos"""
-        job_obj = Jobs.objects.all()
-        search_keys=['id__icontains', 'name__icontains', 'note__icontains', 'planned_start__icontains']
-        search_type='or'
-        serilized_data = search_data(request, search_keys, search_type, GetJobsDetailsSerializer, job_obj)
-        return ({"data": serilized_data.data, "code": status.HTTP_200_OK, "message": OK})

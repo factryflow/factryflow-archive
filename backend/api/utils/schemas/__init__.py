@@ -7,3 +7,4 @@ from .resourcesSchemas import *
 from .roleSchemas import *
 from .taskSchemas import *
 from .weeklyShiftTemplateSchemas import *
+from .scheduleRunSchemas import *

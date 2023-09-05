@@ -12,3 +12,22 @@ auth_request_body = [
         ]
 
 common_type = openapi.TYPE_OBJECT
+
+
+search_request_body = openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'search_value': openapi.Schema(type=openapi.TYPE_STRING, description="search_value"),
+            },
+            required=['search_value'],  # Specify required fields
+)
+
+
+search_details_request_body = openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'id':openapi.Schema(type=openapi.TYPE_STRING, description="id"),
+                'type': openapi.Schema(type=openapi.TYPE_STRING, description="type"),
+            },
+            required=['id', 'type'],  # Specify required fields
+)
