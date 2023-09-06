@@ -1,13 +1,6 @@
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
-import {
-  TextField,
-  Button,
-  Typography,
-  Card,
-  Grid,
-  CardContent,
-} from "@mui/material";
+import { TextField, Typography, Card, Grid, CardContent } from "@mui/material";
 import { format } from "date-fns";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Layout from "../Layout";
@@ -15,10 +8,11 @@ import { useCreateJobsMutation } from "../../service/jobApi";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  useGetJobByIdMutation,
-  useUpdateJobsMutation,
-} from "../../service/jobApi";
+import { useUpdateJobsMutation } from "../../service/jobApi";
+import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
+
+import { useAppSelector } from "../../app/hooks";
+
 const validationSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
   priority: yup.string().required("priority is required").nullable(),
@@ -31,24 +25,20 @@ const validationSchema = yup.object().shape({
 const MyForm = () => {
   const navigate = useNavigate();
   const params = useParams();
+  const isEdit = !!params.id;
+  const jobiesSelector = useAppSelector((state) => state.job.jobies);
+  console.log(jobiesSelector, "jobselector");
 
   const [createJobs, { data, isLoading, error }] = useCreateJobsMutation();
-  const [updateJobs] = useUpdateJobsMutation();
-  //Api job Single data get by id by url
   const [
-    getJobById,
-    { data: jobIdData, isLoading: jobIdDataIsLoading, error: jobIdDataError },
-  ] = useGetJobByIdMutation();
-
-  // const
-  //   {
-  //     control,
-  //     handleSubmit,
-  //     watch,
-  //     formState: { errors },
-  //   } = useForm({
-  //     resolver: yupResolver(validationSchema),
-  //   });
+    updateJobs,
+    {
+      data: updateJobData,
+      isLoading: updateIsLoading,
+      isSuccess: updateIsSuccess,
+      error: updateError,
+    },
+  ] = useUpdateJobsMutation();
 
   const form = useForm({
     resolver: yupResolver(validationSchema),
@@ -64,19 +54,7 @@ const MyForm = () => {
   const onSubmit = (data: any) => {
     // Inside the onSubmit function
     const formattedDate = format(data.due_date, "MM/dd/yyyy");
-    createJobs({
-      name: data.name,
-      priority: data.priority,
-      due_date: formattedDate,
-      customer: data.customer,
-      description: data.description,
-      note: data.note,
-    });
-  };
-
-  const onEdit = (id: any, data: any) => {
-    const formattedDate = format(data.due_date, "MM/dd/yyyy");
-    const update_data = {
+    const requestData = {
       name: data.name,
       priority: data.priority,
       due_date: formattedDate,
@@ -84,7 +62,12 @@ const MyForm = () => {
       description: data.description,
       note: data.note,
     };
-    updateJobs({ id, data: update_data });
+
+    if (isEdit) {
+      updateJobs({ id: params.id, data: requestData });
+    } else {
+      createJobs(requestData);
+    }
   };
 
   useEffect(() => {
@@ -96,18 +79,26 @@ const MyForm = () => {
   }, [isLoading, error, data]);
 
   useEffect(() => {
-    if (jobIdData) {
-      Object.entries(jobIdData).forEach(([name, value]: any) =>
-        form.setValue(name, value)
-      );
+    if (!updateIsLoading && updateJobData) {
+      updateJobData.code >= 400
+        ? toast.error(updateJobData.message)
+        : toast.success(updateJobData.message) && navigate("/jobs");
     }
-  }, [jobIdData]);
+  }, [updateJobData, updateError, updateIsLoading]);
 
   useEffect(() => {
-    if (params) {
-      getJobById(Number(params.id));
+    if (isEdit) {
+      if (jobiesSelector) {
+        const getJob = jobiesSelector.filter(
+          (item: any) => item.id === Number(params.id)
+        );
+        // console.log(getJob, "GetJob", params.id);
+        Object.entries(getJob[0] ?? []).forEach(([name, value]: any) =>
+          form.setValue(name, value)
+        );
+      }
     }
-  }, []);
+  }, [isEdit, params.id]);
 
   return (
     <Layout>
@@ -117,9 +108,9 @@ const MyForm = () => {
         >
           <CardContent>
             <Typography gutterBottom variant="h5">
-              Jobs Form
+              {isEdit ? "Edit Job" : "Create Job"}
             </Typography>
-            <form onSubmit={handleSubmit(params ? onSubmit : onEdit)}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
                   <Controller
@@ -240,14 +231,25 @@ const MyForm = () => {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <Button
+                  {/* <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                    >
+                      {isEdit ? "Save Changes" : "Submit"}
+                    </Button> */}
+
+                  <LoadingButton
+                    size="small"
                     type="submit"
-                    variant="contained"
+                    loading={isLoading || updateIsLoading}
                     color="primary"
-                    fullWidth
+                    variant="contained"
+                    sx={{ marginBottom: 5 }}
                   >
-                    Submit
-                  </Button>
+                    {isEdit ? "Save Changes" : "Submit"}
+                  </LoadingButton>
                 </Grid>
               </Grid>
             </form>

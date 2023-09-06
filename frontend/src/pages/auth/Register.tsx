@@ -1,44 +1,50 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
-import { Formik } from "formik";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Controller, useForm } from "react-hook-form";
+import { Card } from "@mui/material";
 import * as yup from "yup";
 import { useRegisterUserMutation } from "../../service/authApi";
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { setUser } from "../../features/authSlice";
-const Register = () => {
-  const [registerUser, { data, isSuccess, isError }] =
+import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
+
+export default function Register() {
+  const [registerUser, { data, isLoading, isSuccess, isError }] =
     useRegisterUserMutation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  console.log(data, "register Data");
-  const checkoutSchema = yup.object().shape({
+
+  const validationSchema = yup.object().shape({
     first_name: yup.string().required("required Frist Name"),
     last_name: yup.string().required("required Last Name"),
     email: yup.string().email("invalid email").required("required Email"),
     password: yup.string().required("required password"),
   });
 
-  const initialValues = {
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-  };
+  const form = useForm({
+    resolver: yupResolver(validationSchema),
+  });
 
-  const handleFormSubmit = async (values: any) => {
-    await registerUser(values);
-  };
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = form;
 
-  //   useEffect(() => {
-  //     const user = JSON.parse(localStorage.getItem("user") || "{}");
-  //     if (user?.token) {
-  //       navigate("/home");
-  //     } else {
-  //       navigate("/");
-  //     }
-  //   }, []);
+  const onSubmit = async (data: any) => {
+    await registerUser(data);
+  };
 
   useEffect(() => {
     if (isSuccess) {
@@ -57,110 +63,128 @@ const Register = () => {
   }, [isSuccess]);
 
   return (
-    <>
-      <Formik
-        onSubmit={handleFormSubmit}
-        initialValues={initialValues}
-        validationSchema={checkoutSchema}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <Box
-              display="flex"
-              flexDirection={"column"}
-              maxWidth={400}
-              alignItems="center"
-              justifyContent="center"
-              margin="auto"
-              marginTop={5}
-              padding={3}
-              borderRadius={5}
-              border={1}
+    <Grid>
+      <Container component="main" maxWidth="sm">
+        <Card
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            boxShadow: 3,
+            borderRadius: 2,
+            px: 4,
+            py: 6,
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5" sx={{ mb: 2 }}>
+            Sign up
+          </Typography>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <Controller
+                  name="first_name"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <TextField
+                      label="Frist Name"
+                      variant="outlined"
+                      error={!!errors.first_name}
+                      margin="normal"
+                      autoComplete="off"
+                      helperText={errors.first_name?.message}
+                      fullWidth
+                      {...field}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Controller
+                  name="last_name"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <TextField
+                      label="Last Name"
+                      variant="outlined"
+                      error={!!errors.last_name}
+                      margin="normal"
+                      autoComplete="off"
+                      helperText={errors.last_name?.message}
+                      fullWidth
+                      {...field}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Controller
+                  name="email"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <TextField
+                      label="Email Address"
+                      variant="outlined"
+                      error={!!errors.email}
+                      margin="normal"
+                      autoComplete="off"
+                      helperText={errors.email?.message}
+                      fullWidth
+                      {...field}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Controller
+                  name="password"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <TextField
+                      label="Password"
+                      variant="outlined"
+                      type="password"
+                      error={!!errors.email}
+                      margin="normal"
+                      autoComplete="off"
+                      helperText={errors.password?.message}
+                      fullWidth
+                      {...field}
+                    />
+                  )}
+                />
+              </Grid>
+            </Grid>
+            <LoadingButton
+              size="large"
+              type="submit"
+              loading={isLoading}
+              color="primary"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
             >
-              <Typography variant="h4" padding={3} textAlign="center">
-                Register
-              </Typography>
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Frist Name"
-                onChange={handleChange}
-                value={values.first_name}
-                name="first_name"
-                margin="normal"
-                error={!!touched.first_name && !!errors.first_name}
-                helperText={touched.first_name && errors.first_name}
-                autoComplete="off"
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Last Name"
-                onChange={handleChange}
-                value={values.last_name}
-                name="last_name"
-                margin="normal"
-                error={!!touched.last_name && !!errors.last_name}
-                helperText={touched.last_name && errors.last_name}
-                autoComplete="off"
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Email"
-                onChange={handleChange}
-                value={values.email}
-                name="email"
-                margin="normal"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                autoComplete="off"
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="password"
-                label="Password"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.password}
-                name="password"
-                margin="normal"
-                error={!!touched.password && !!errors.password}
-                helperText={touched.password && errors.password}
-                autoComplete="off"
-              />
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                sx={{ marginBottom: 5 }}
-              >
-                Register
-              </Button>
-              <Typography>
-                Change To
-                <Link to="/" color="inherit">
-                  {" "}
-                  Login
+              Sign Up
+            </LoadingButton>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                Already have an account?
+                <Link href="/" variant="body2">
+                  {"Sign in"}
                 </Link>
-              </Typography>
-            </Box>
+              </Grid>
+            </Grid>
           </form>
-        )}
-      </Formik>
-    </>
+        </Card>
+      </Container>
+    </Grid>
   );
-};
-
-export default Register;
+}

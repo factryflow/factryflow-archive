@@ -6,8 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import PrivateRoutes from "./components/PrivateRoutes";
 import Jobs from "./pages/Jobs";
 import Tasks from "./pages/Tasks";
-import Form from "./pages/Jobs/Form";
-import MyForm from "./pages/Jobs/Form";
+import JobForm from "./pages/Jobs/Form";
+import TaskForm from "./pages/Tasks/Form";
 function App() {
   // const dispatch = useAppDispatch();
   // const user = JSON.parse(localStorage.getItem("token") || "{}");
@@ -22,12 +22,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Register />} />
-        <Route path="jobs/form" element={<Form />} />
         <Route element={<PrivateRoutes />}>
           <Route path="/jobs" element={<Jobs />} />
-          <Route path="/jobs/form" element={<MyForm />} />
-          <Route path="/jobs/form/:id" element={<MyForm />} />
+          <Route path="/jobs/form" element={<JobForm />} />
+          <Route path="/jobs/form/:id" element={<JobForm />} />
           <Route path="/tasks" element={<Tasks />} />
+          <Route path="/tasks/form" element={<TaskForm />} />
+          <Route path="/tasks/form/:id" element={<TaskForm />} />
         </Route>
       </Routes>
     </>

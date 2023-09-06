@@ -1,9 +1,9 @@
 import {createApi,fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import { GetAllJobType } from '../types/jobs.types';
 
-export const jobApi = createApi({
+export const taskApi = createApi({
     
-    reducerPath:"jobApi",
+    reducerPath:"taskApi",
     baseQuery:fetchBaseQuery({
         // baseUrl:" http://127.0.0.1:8000/"
         baseUrl:import.meta.env.VITE_API_ENDPOINT,
@@ -14,64 +14,65 @@ export const jobApi = createApi({
             )
         }
     }),
-    tagTypes: ['getAllJobs'],
+    tagTypes: ['getAllTasks'],
     endpoints:(builder)=>({
-        // getAllJobs Api 
-        getAllJobs: builder.query<GetAllJobType[], void>({
+        // getAllTask Api 
+        getAllTasks: builder.query<any[], void>({
             query: () => {
-              return `/api/jobs/jobs-list/`;
+              return `api/tasks/tasks-list/`;
             },
-            transformResponse: (res:  { data: GetAllJobType[] }) => {
+            transformResponse: (res:  { data: any[] }) => {
                 const data = res.data;
                 const result = data.filter((item:any)=>item.is_deleted === false);
                 return result
                
             },
-            providesTags: ['getAllJobs']
+            providesTags: ['getAllTasks']
           }),
 
         //   getJobbyId Api
-          getJobById:builder.mutation({
-            query:(id:number)=>{
-                return{
-                    url:`api/jobs/get-job-details/${id}/`,
+        //   getJobById:builder.mutation({
+        //     query:(id:number)=>{
+        //         return{
+        //             url:`api/jobs/get-job-details/${id}/`,
                         
-                }
-            },
-            transformResponse: (res: any) => res.data
-        }),
-        // create job api
-          createJobs:builder.mutation({
+        //         }
+        //     },
+        //     transformResponse: (res: any) => res.data
+        // }),
+
+        // create Task api
+          createTasks:builder.mutation({
             query:(body:any)=>{
                 return {
-                    url:'/api/jobs/create-job/',
+                    url:'api/tasks/create-task/',
                     method:'post',
                     body,
                 }
             },
-            invalidatesTags:['getAllJobs'],
+            invalidatesTags:['getAllTasks'],
     
         }),
         // delete Job Api
-        deleteJobs:builder.mutation({
+        deleteTasks:builder.mutation({
             query:(id:number)=>{
                 return{
-                    url:`api/jobs/delete-job/${id}/`,
+                    url:`api/tasks/delete-task/${id}/`,
                     method:'delete',
                 }
             },
-            invalidatesTags:['getAllJobs'],
+            invalidatesTags:['getAllTasks'],
         }),
         //update job Api
-        updateJobs:builder.mutation({
+        updateTasks:builder.mutation({
             query:({id,data})=>{   
                 return {
-                    url:`api/jobs/update-jobs/${id}/`,
+                    url:`api/tasks/update-tasks/${id}/`,
                     method:'put',
                     body:data,
                 }
             },
-            invalidatesTags:['getAllJobs'],
+            invalidatesTags:['getAllTasks'],
     
         })
     }),
@@ -81,9 +82,11 @@ export const jobApi = createApi({
 
 
 export const {
-    useGetAllJobsQuery,
-    useCreateJobsMutation,
-    useDeleteJobsMutation,
-    useGetJobByIdMutation,
-    useUpdateJobsMutation
-}=jobApi
+    useGetAllTasksQuery,
+    useCreateTasksMutation,
+    useDeleteTasksMutation,
+    useUpdateTasksMutation,
+    // useDeleteJobsMutation,
+    // useGetJobByIdMutation,
+    // useUpdateJobsMutation
+}=taskApi

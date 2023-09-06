@@ -1,31 +1,46 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
-import { Link, useNavigate } from "react-router-dom";
-import { Formik } from "formik";
-import * as yup from "yup";
+import Avatar from "@mui/material/Avatar";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
 import { useLoginUserMutation } from "../../service/authApi";
 import { useEffect } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { toast } from "react-toastify";
 import { setUser } from "../../features/authSlice";
-const Login = () => {
+import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Card } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
+
+const LogIn = () => {
   const [loginUser, { data, error, isSuccess, isLoading }] =
     useLoginUserMutation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   console.log(data, "login Data");
-  const checkoutSchema = yup.object().shape({
+  const validationSchema = yup.object().shape({
     email: yup.string().email("invalid email").required("required Email"),
     password: yup.string().required("required password"),
   });
 
-  const initialValues = {
-    email: "",
-    password: "",
-  };
+  const form = useForm({
+    resolver: yupResolver(validationSchema),
+  });
 
-  const handleFormSubmit = async (values: any) => {
-    await loginUser(values);
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = form;
+
+  const onSubmit = async (data: any) => {
+    await loginUser(data);
   };
 
   useEffect(() => {
@@ -47,94 +62,87 @@ const Login = () => {
   }, [isLoading, data, error]);
 
   return (
-    <>
-      <Formik
-        onSubmit={handleFormSubmit}
-        initialValues={initialValues}
-        validationSchema={checkoutSchema}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <Box
-              display="flex"
-              flexDirection={"column"}
-              maxWidth={400}
-              alignItems="center"
-              justifyContent="center"
-              margin="auto"
-              marginTop={5}
-              padding={3}
-              borderRadius={5}
-              border={1}
+    <Grid>
+      <Container component="main" maxWidth="sm">
+        <Card
+          sx={{
+            boxShadow: 3,
+            borderRadius: 2,
+            px: 4,
+            py: 6,
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOpenIcon />
+          </Avatar>
+
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Controller
+              name="email"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <TextField
+                  label="Email Address"
+                  variant="outlined"
+                  error={!!errors.email}
+                  margin="normal"
+                  autoComplete="email"
+                  helperText={errors.email?.message}
+                  fullWidth
+                  {...field}
+                />
+              )}
+            />
+
+            <Controller
+              name="password"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <TextField
+                  label="Password"
+                  variant="outlined"
+                  type="password"
+                  error={!!errors.password}
+                  margin="normal"
+                  autoComplete="email"
+                  helperText={errors.password?.message}
+                  fullWidth
+                  {...field}
+                />
+              )}
+            />
+            <LoadingButton
+              size="large"
+              type="submit"
+              loading={isLoading}
+              color="primary"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
             >
-              <Typography variant="h4" padding={3} textAlign="center">
-                Login
-              </Typography>
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Email"
-                onChange={handleChange}
-                value={values.email}
-                name="email"
-                margin="normal"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                autoComplete="off"
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="password"
-                label="Password"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.password}
-                name="password"
-                margin="normal"
-                error={!!touched.password && !!errors.password}
-                helperText={touched.password && errors.password}
-                autoComplete="off"
-              />
-              <LoadingButton
-                size="small"
-                type="submit"
-                loading={isLoading}
-                color="primary"
-                variant="contained"
-                sx={{ marginBottom: 5 }}
-              >
-                Login
-              </LoadingButton>
-              {/* <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                sx={{ marginBottom: 5 }}
-              >
-                Login
-              </Button> */}
-              <Typography>
-                Change To
-                <Link to="/signup" color="inherit">
-                  {" "}
-                  Register
+              Sign In
+            </LoadingButton>
+            <Grid container>
+              <Grid item>
+                Don't have an account?
+                <Link href="/signup" variant="body2">
+                  {"Sign Up"}
                 </Link>
-              </Typography>
-            </Box>
+              </Grid>
+            </Grid>
           </form>
-        )}
-      </Formik>
-    </>
+        </Card>
+      </Container>
+    </Grid>
   );
 };
-
-export default Login;
+export default LogIn;

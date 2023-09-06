@@ -14,6 +14,8 @@ import { Link, useNavigate } from "react-router-dom";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import { toast } from "react-toastify";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { setJobies } from "../../features/jobSlice";
 interface JobData {
   id: Number;
   name: string;
@@ -21,32 +23,32 @@ interface JobData {
   due_date: Date;
   customer: string;
   description: string;
+  note: string;
 }
 
 const Jobs = () => {
-  const [jobData, setJobData] = useState<JobData[]>();
-  const { data: getjobData, isLoading: jobisLoading } = useGetAllJobsQuery();
-  // console.log(jobData);
+  const dispatch = useAppDispatch();
+  const jobiesSelector = useAppSelector((state) => state.job.jobies);
+  // console.log(jobiesSelector, "jobiesSelector");
+
+  const [mount, setMount] = useState(false);
+
+  const {
+    data: getjobData,
+    isLoading: jobisLoading,
+    // refetch,
+  } = useGetAllJobsQuery(undefined, {});
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
-  const [
-    deleteJobs,
-    {
-      data: deleteJobData,
-      error: deleteError,
-      isLoading: deleteIsLoading,
-      isSuccess: deleteIsSuccess,
-    },
-  ] = useDeleteJobsMutation();
-  console.log(deleteJobData, "deleteJobData");
+  const [deleteJobs] = useDeleteJobsMutation();
+
   const columns = [
     { field: "id", headerName: "ID" },
     {
       field: "name",
       headerName: "Name",
       flex: 1,
-      cellClassName: "name-column--cell",
     },
     {
       field: "priority",
@@ -69,6 +71,11 @@ const Jobs = () => {
       flex: 1,
     },
     {
+      field: "note",
+      headerName: "Note",
+      flex: 1,
+    },
+    {
       field: "action",
       headerName: "Action",
       width: 180,
@@ -79,9 +86,14 @@ const Jobs = () => {
         const handleDeleteAction = (e: React.SyntheticEvent<any>) => {
           const currentRow = params.row;
 
-          if (window.confirm("Are you sure you want to remove this?")) {
+          if (window.confirm("Are you sure you want to remove this Job?")) {
             // return alert(JSON.stringify(currentRow, null, 4));
             deleteJobs(currentRow?.id);
+            const newJobiesData = jobiesSelector.filter(
+              (item: any) => item.id !== currentRow?.id
+            );
+            dispatch(setJobies(newJobiesData));
+            toast.success("Job Delete Successfully");
           }
           return;
         };
@@ -110,16 +122,30 @@ const Jobs = () => {
 
   useEffect(() => {
     if (!jobisLoading && getjobData) {
-      setJobData(getjobData);
+      dispatch(setJobies(getjobData));
     }
   }, [jobisLoading, getjobData]);
-  useEffect(() => {
-    if (deleteIsSuccess && deleteJobData) {
-      deleteJobData.code >= 400
-        ? toast.error(deleteJobData.message)
-        : toast.success(deleteJobData.message);
-    }
-  }, [deleteJobData, deleteIsSuccess]);
+  // useEffect(() => {
+  //   if (!deleteIsLoading && deleteJobData) {
+  //     deleteJobData.code >= 400
+  //       ? toast.error(deleteJobData.message)
+  //       : toast.success(deleteJobData.message);
+  //   }
+  // }, [deleteJobData, deleteIsSuccess]);
+
+  // useEffect(() => {
+  //   if (mount) {
+  //     console.log(`>>> call`);
+
+  //     refetch();
+  //   }
+  // }, [mount]);
+
+  // useEffect(() => {
+  //   setMount(true);
+
+  //   return () => setMount(false);
+  // }, []);
 
   return (
     <>
@@ -135,41 +161,58 @@ const Jobs = () => {
             m="30px 0 0 0"
             height="75vh"
             sx={{
-              "& .MuiDataGrid-root": {
-                border: "none",
-              },
+              "& .MuiDataGrid-root": {},
               "& .MuiDataGrid-cell": {
-                borderBottom: "none",
+                // borderBottom: "none",
               },
               "& .name-column--cell": {
-                color: colors.greenAccent[300],
+                color: "bold !important",
+              },
+              "& .MuiDataGrid-row": {
+                cursor: "pointer",
               },
               "& .MuiDataGrid-columnHeaders": {
-                backgroundColor: colors.blueAccent[500],
-                borderBottom: "none",
+                backgroundColor: "#FAFAFA",
+                color: "	#000000",
+                fontSize: "14px",
+                fontWeight: "bold !important",
+                textTransform: "uppercase",
+                borderTop: "1px solid #F0F0F0",
               },
               "& .MuiDataGrid-virtualScroller": {
-                backgroundColor: colors.primary[400],
+                backgroundColor: "#fff",
               },
               "& .MuiDataGrid-footerContainer": {
-                borderTop: "none",
-                backgroundColor: colors.blueAccent[400],
+                backgroundColor: "#FFFFFF",
               },
               "& .MuiCheckbox-root": {
-                color: `${colors.greenAccent[200]} !important`,
+                color: `1677FF !important`,
+              },
+              ".MuiDataGrid-cell:focus": {
+                outline: "none !important",
+              },
+              ".MuiDataGrid-columnHeader:focus-within": {
+                outline: "none !important",
+              },
+              ".MuiDataGrid-cell:focus-within": {
+                outline: "none !important",
+              },
+              ".MuiDataGrid-toolbarContainer": {
+                padding: "15px",
+                flexDirection: "row-reverse",
               },
             }}
           >
             {jobisLoading ? (
               <>
-                <h1>Loading...</h1>
+                <h3>Loading...</h3>
               </>
             ) : (
-              jobData && (
+              jobiesSelector && (
                 <>
                   <DataGrid
                     className="dataGrid"
-                    rows={jobData}
+                    rows={jobiesSelector ?? []}
                     columns={columns}
                     initialState={{
                       pagination: {
@@ -189,6 +232,7 @@ const Jobs = () => {
                     checkboxSelection
                     disableRowSelectionOnClick
                     disableColumnFilter
+                    disableColumnMenu
                     disableDensitySelector
                     disableColumnSelector
                     // checkboxSelection
