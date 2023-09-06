@@ -144,3 +144,28 @@ class DeleteResourceGroupsByIdView(APIView):
         return Response(result, status=result["code"])
         
 
+class SearchResourceView(APIView):
+    @swagger_auto_schema(
+        request_body=search_request_body,
+        responses=response_create_update_resources,
+        operation_summary="search resource",
+    )
+    def post(self, request, format=None):
+        """
+        search resource
+        """
+        result = resource_service.search_resource(request, format=None)
+        return Response(result, status=result["code"])
+    
+class SearchResourceGroupView(APIView):
+    @swagger_auto_schema(
+        request_body=search_request_body,
+        responses=response_create_update_resources_groups,
+        operation_summary="search resource groups",
+    )
+    def post(self, request, format=None):
+        """
+        search resource groups
+        """
+        result = resource_service.search_resource_group(request, format=None)
+        return Response(result, status=result["code"])
