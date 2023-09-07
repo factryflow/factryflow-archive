@@ -109,7 +109,7 @@ urlpatterns = [
     path('assignment-rule/delete-details/<int:id>/', DeleteAssignmentRuleView.as_view(), name="delete-assignment-rule-details"),
     path('assignment-rule/get-details-list/', AssignmentRuleListView.as_view(), name="get-assignment-rule-details-list"),
     
-    #Assignment Rule
+    #Task resource assigmnet
     path('task-resource-assignment/create-details/',CreateTaskResourceAssignmentView.as_view(), name="create-task-resource-assignment-details"),
     path('task-resource-assignment/update-details/<int:id>/', UpdateTaskResourceAssignmentView.as_view(), name="update-task-resource-assignment-details"),
     path('task-resource-assignment/get-details/<int:id>/', GetTaskResourceAssignmentByIdView.as_view(), name="get-task-resource-assignment-details"),
