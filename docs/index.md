@@ -1,4 +1,4 @@
-# Production Scheduler
+# FactryFlow
 
 Welcome to the official documentation for the Production Scheduler Software. This guide aims to provide an in-depth understanding of the software, ensuring that users can effectively plan, manage, and optimize their production tasks.
 
