@@ -13,14 +13,14 @@ class Resources(models.Model):
     deleted_at = models.DateTimeField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_deleted = models.BooleanField(default=False)
-    history = HistoricalRecords(table_name='resources_history')
+    history = HistoricalRecords(table_name='resource_history')
     
 
     def __str__(self):
         return self.name
 
     class Meta:
-        db_table = 'resources'
+        db_table = 'resource'
         indexes = [
             models.Index(fields=['id', 'name'])
         ]

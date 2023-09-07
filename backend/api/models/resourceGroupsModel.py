@@ -12,14 +12,14 @@ class ResourceGroups(models.Model):
     deleted_at = models.DateTimeField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_deleted = models.BooleanField(default=False)
-    history = HistoricalRecords(table_name='resource_groups_history')
+    history = HistoricalRecords(table_name='resource_group_history')
     
 
     def __str__(self):
         return self.name
 
     class Meta:
-        db_table = 'resource_groups'
+        db_table = 'resource_group'
         indexes = [
             models.Index(fields=['id', 'name'])
         ]
