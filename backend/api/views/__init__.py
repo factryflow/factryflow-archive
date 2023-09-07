@@ -8,3 +8,4 @@ from .operationalExceptionView import *
 from .weeklyshiftTemplateView import *
 from .scheduleRunView import *
 from .searchView import *
+from .assignmentRuleView import *
