@@ -1,10 +1,96 @@
 # Database Schema
 
+All tables will have the following metadata fields:
+
+| data_type | field_name  |
+|----------|-------------|
+| datetime | updated_at  |
+| boolean  | is_active   |
+| boolean  | is_deleted  |
+| datetime | deleted_at  |
+
+## Assignment Rule Table
+
+``` mermaid
+erDiagram
+  assignment_rule {
+        int id PK
+        string name
+        string description
+        int priority
+        int resource_count
+        bool use_all_resources
+    }
+```
+
+
+
+## Assignment Rule Criteria Table
+
+``` mermaid
+erDiagram
+    assignment_rule_criteria {
+        int id PK
+        int parent_id "Parent criteria ID if any"
+        string field "Task field associated with the criteria."  
+        enum operator "Operator used for the criteria (e.g., `equals`, `less_than`)"
+        string value "Value of the criteria."
+        int assignment_rule_id FK
+    }
+```
+
+## Assignment Rule Resource Group Table
+
+``` mermaid
+erDiagram
+  assignment_rule_resource_group {
+        int assigment_rule_id PK,FK
+        int resource_group_id PK,FK
+    }
+```
+
+## Dependency Table
+
+``` mermaid
+erDiagram
+    dependency {
+        int id PK 
+        string external_id
+        string name
+        int dependency_status_id FK
+        int dependency_type_id FK
+        datetime expected_close_datetime
+        datetime actual_close_datetime
+        string notes
+    }
+```
+
+## Dependency Status Table
+
+``` mermaid
+erDiagram
+    dependency_status {
+        int id PK 
+        string name
+    }
+```
+
+## Dependency Type Table
+
+``` mermaid
+erDiagram
+    dependency_type {
+        int id PK 
+        string name
+
+    }
+```
+
 ## Job Table
 
 ``` mermaid
 erDiagram
-    jobs {
+    job {
         int id PK 
         string name
         string description
@@ -14,14 +100,18 @@ erDiagram
         timestamp planned_end_datetime "Populated by schedule-run"
         string external_id "External Identifier for the job."
         string notes "Additional notes or comments about the job."
-        in job_status FK
-        list tasks FK "Backreference to related tasks."
-        list dependencies FK "Backreference to related dependencies."
-        datetime created_at 
-        datetime updated_at 
-        boolean is_active 
-        boolean is_deleted 
-        datetime deleted_at 
+        int job_status_id FK
+        int job_type_id FK
+    }
+```
+
+## Job Dependency
+
+``` mermaid
+erDiagram
+    job_dependency {
+        int job_id PK,FK
+        int dependency_id PK,FK
     }
 ```
 
@@ -35,11 +125,76 @@ erDiagram
     }
 ```
 
+## Job Type Table
+
+``` mermaid
+erDiagram
+    job_type {
+        int id PK 
+        string name
+    }
+```
+
+## Operation Exception Table
+
+``` mermaid
+erDiagram
+    operational_exception {
+        int id PK 
+        string external_id
+        datetime start_datetime
+        datetime end_datetime
+        string notes
+        int weekly_shift_template_id FK
+    }
+```
+
+## Resource Table
+
+``` mermaid
+erDiagram
+    resource {
+        int id PK 
+        string name
+    }
+```
+
+## Resource Group Table
+
+``` mermaid
+erDiagram
+    resource_group {
+        int id PK 
+        string name
+    }
+```
+
+## Schedule Run Table
+
+``` mermaid
+erDiagram
+    schedule_run_table {
+        int id PK 
+        datetime triggered_on
+        int schedule_status_id FK
+    }
+```
+
+## Schedule Run Status Table
+
+``` mermaid
+erDiagram
+    schedule_run_status {
+        int id PK 
+        string name
+    }
+```
+
 ## Task Table
 
 ``` mermaid
 erDiagram
-    tasks {
+    task {
         int id PK
         string name
         int task_status FK 
@@ -50,123 +205,105 @@ erDiagram
         datetime planned_start_datetime "Populated by schedule-run"
         datetime planned_end_datetime "Populated by schedule-run"
         string item "The item which is produced"
-        list predecessors FK
-        list successors FK
+        int task_status_id FK
+        int task_type_id FK
         int job_id FK "The associated job, NULLABLE"
-        datetime created_at 
-        datetime updated_at 
-        boolean is_active 
-        boolean is_deleted 
-        datetime deleted_at 
     }
 ```
 
-## Assignment Rule Table
+## Task Dependency
 
-**Description:** The `assignment_rule` table captures rules for resource assignment.
+``` mermaid
+erDiagram
+    task_dependency {
+        int task_id PK,FK
+        int dependency_id PK,FK
+    }
+```
 
-| Field Name           | Data Type             | Description                                             |
-|----------------------|-----------------------|---------------------------------------------------------|
-| id                   | int                   | Primary Key. Unique identifier for the rule.            |
-| name                 | string                | Name of the rule.                                       |
-| description          | string                | Description of the rule.                                |
-| priority             | int                   | Priority level of the rule.                             |
-| resource_count       | int                   | Number of resources associated.                         |
-| use_all_resources    | bool                  | Indicator if all resources are used.                    |
-| resource_group       | ForeignKey (One-to-One)| Reference to related resource group.                    |
-| tasks                | ForeignKey (Many-to-One) | Backreference to related tasks.                         |
-| created_at           | DateTimeField         | Timestamp when the rule was created.                    |
-| updated_at           | DateTimeField         | Timestamp when the rule was last updated.               |
-| is_active            | BooleanField          | Indicates if the rule is active.                        |
-| is_deleted           | BooleanField          | Indicates if the rule has been soft deleted.            |
-| deleted_at           | DateTimeField (Nullable)| Timestamp when the rule was soft deleted (null if not deleted).|
+## Task Relationship Table
 
----
+``` mermaid
+erDiagram
+    task_relaationship {
+        int predecessor_id PK,FK "id of task"
+        string successor_id PK,FK "id of task"
+    }
+```
 
-## Assignment Rule Criteria Table
+## Task Resource Assigment Table
 
-**Description:** The `assignment_rule_criteria` table holds criteria details for assignment rules.
+``` mermaid
+erDiagram
+    task_resource_assigment {
+        int task_id PK,FK
+        string resource_id PK,FK
+    }
+```
 
-| Field Name           | Data Type                  | Description                                             |
-|----------------------|----------------------------|---------------------------------------------------------|
-| id                   | int                        | Primary Key. Unique identifier for the criteria.        |
-| parent_id            | int                        | Parent criteria ID if any.                              |
-| field                | string                     | Field associated with the criteria.                     |
-| operator             | enum                       | Operator used for the criteria (e.g., `equals`, `less_than`).|
-| value                | string                     | Value of the criteria.                                  |
-| assignment_rule      | ForeignKey (One-to-One)    | Reference to related assignment rule.                   |
-| created_at           | DateTimeField              | Timestamp when the criteria was created.                |
-| updated_at           | DateTimeField              | Timestamp when the criteria was last updated.           |
-| is_active            | BooleanField               | Indicates if the criteria is active.                    |
-| is_deleted           | BooleanField               | Indicates if the criteria has been soft deleted.        |
-| deleted_at           | DateTimeField (Nullable)   | Timestamp when the criteria was soft deleted (null if not deleted).|
+## Task Status Table
 
----
+``` mermaid
+erDiagram
+    task_status {
+        int id PK 
+        string name
+    }
+```
 
-## Dependency Table
+## Task Type Table
 
-**Description:** The `dependency` table captures dependencies for tasks and jobs.
+``` mermaid
+erDiagram
+    task_type {
+        int id PK 
+        string name
+    }
+```
 
-| Field Name                | Data Type                  | Description                                        |
-|---------------------------|----------------------------|----------------------------------------------------|
-| id                        | int                        | Primary Key. Unique identifier for the dependency. |
-| external_id               | string                     | External Identifier for the dependency.            |
-| name                      | string                     | Name of the dependency.                            |
-| status                    | enum                       | Status of the dependency.                          |
-| expected_close_datetime   | datetime                   | Expected resolution time and date.                 |
-| actual_close_datetime     | datetime                   | Actual resolution time and date.                   |
-| notes                     | string                     | Additional notes about the dependency.             |
-| job                       | ForeignKey (One-to-One)    | Reference to the associated job.                   |
-| tasks                     | ForeignKey (Many-to-One)   | Backreference to related tasks.                    |
-| created_at                | DateTimeField              | Timestamp when the dependency was created.         |
-| updated_at                | DateTimeField              | Timestamp when the dependency was last updated.    |
-| is_active                 | BooleanField               | Indicates if the dependency is active.             |
-| is_deleted                | BooleanField               | Indicates if the dependency has been soft deleted. |
-| deleted_at                | DateTimeField (Nullable)   | Timestamp when the dependency was soft deleted (null if not deleted).|
+## User Table
 
----
+``` mermaid
+erDiagram
+    user {
+        int id PK 
+        string first_name
+        string last_name
+        sting email
+        sting password
+        int user_role_id fk
+    }
+```
 
-(For brevity, I've only covered a few tables. Do let me know if you'd like me to proceed with the rest of the tables in the same format!)
+## User Role Table
 
-## Jobs Table
+``` mermaid
+erDiagram
+    user_role {
+        int id PK 
+        string name
+    }
+```
 
-**Description:** The `jobs` table contains information about various jobs. Each record provides detailed data on the job, such as its name, description, associated customer, and timings.
+## Weekly Shift Template Table
 
-| Field Name             | Data Type                   | Description                                           |
-|------------------------|-----------------------------|-------------------------------------------------------|
-| id                     | int                         | Primary Key. Unique identifier for each job.          |
-| name                   | string                      | Name or title of the job.                             |
-| description            | string                      | Detailed description of the job.                      |
-| customer               | string                      | Customer associated with the job.                     |
-| due_date               | date                        | Due date for the job completion.                      |
-| planned_start_datetime | timestamp                   | Planned starting time and date for the job.           |
-| planned_end_datetime   | timestamp                   | Planned ending time and date for the job.             |
-| external_id            | string                      | External Identifier for the job.                      |
-| notes                  | string                      | Additional notes or comments about the job.           |
-| tasks                  | ForeignKey (One-to-Many)    | Backreference to related tasks.                       |
-| dependencies           | ForeignKey (One-to-Many)    | Backreference to related dependencies.                |
-| created_at             | DateTimeField               | Timestamp when the job record was created.            |
-| updated_at             | DateTimeField               | Timestamp when the job record was last updated.       |
-| is_active              | BooleanField                | Indicates if the job record is active.                |
-| is_deleted             | BooleanField                | Indicates if the job has been soft deleted.           |
-| deleted_at             | DateTimeField (Nullable)    | Timestamp when the job was soft deleted (null if not deleted).|
+``` mermaid
+erDiagram
+    weekly_shift_template {
+        int id PK 
+        string name
+    }
+```
 
----
+## Weekly Shift Template Detail Table
 
-This layout provides a clear, concise overview of the `jobs` table and its fields. You can replicate this format for other tables, ensuring consistency across your documentation.
-
-## `job_status`
-
-## `job_type`
-
-## `operational-exception`
-
-## `resource`
-
-## `resource_group`
-
-## `task`
-
-## `task_status`
-
-## `task_type`
+``` mermaid
+erDiagram
+    weekly_shift_template_detail {
+        int id PK 
+        int day_of_week
+        time start_time
+        time end_time
+        int weekly_shift_template_id FK
+    }
+```
