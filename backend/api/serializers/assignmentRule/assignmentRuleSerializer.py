@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import AssignmentRule, AssignmentRuleCriteria
+from api.models import AssignmentRule, AssignmentRuleCriteria, AssignmentRuleResourceGroup
 
 
 
@@ -41,3 +41,23 @@ class GetAssignmentRuleCriteriaDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = AssignmentRuleCriteria
         fields = ('id', 'field', 'operator', 'value', 'parent', 'assignment_rule', 'is_active', 'is_deleted')
+        
+        
+
+class CreateUpdateAssignmentRuleResourceGroupSerializer(serializers.ModelSerializer):
+    """
+    This is for update ,Create of AssignmentRuleResourceGroup
+    """
+    class Meta:
+        model = AssignmentRuleResourceGroup
+        fields = ('id', 'assignment', 'resource')
+        
+    
+
+class GetAssignmentRuleResourceGroupDetailsSerializer(serializers.ModelSerializer):
+    """
+    This is for get the details of AssignmentRuleResourceGroup
+    """
+    class Meta:
+        model = AssignmentRuleResourceGroup
+        fields = ('id', 'assignment', 'resource', 'is_active', 'is_deleted')
