@@ -25,6 +25,7 @@ urlpatterns = [
     path('jobs/update-jobs/<int:id>/', UpdateJobsView.as_view(), name="update-jobs"),
     path('jobs/get-job-details/<int:id>/', GetJobByIdView.as_view(), name="get-job-details"),
     path('jobs/delete-job/<int:id>/', DeleteJobByIdView.as_view(), name="delete-jobs"),
+    path('jobs/search-job/', SearchJobView.as_view(), name="search-job"),
 
     #tasks
     path('tasks/tasks-list/', TaskListView.as_view(), name="tasks-list"),
@@ -68,7 +69,6 @@ urlpatterns = [
     path('operational-exception/delete-type/<int:id>/', DeleteOperationalExceptionTypeByIdView.as_view(), name="delete-operational-exception-type"),
     path('operational-exception/get-type-list/', GetOperationalExceptionTypeListView.as_view(), name="get-operational-exception-type-list"),
     
-    
     #operation exception
     path('operational-exception/create-exception/', CreateOperationalExceptionView.as_view(), name="create-operational-exception"),
     path('operational-exception/update-exception/<int:id>/', UpdateOperationalExceptionView.as_view(), name="update-operational-exception"),
@@ -89,5 +89,31 @@ urlpatterns = [
     path('weekly-shift-template/get-details/<int:id>/', GetTemplateDetailsView.as_view(), name="get-weekly-shift-details"),
     path('weekly-shift-template/delete-details/<int:id>/', DeleteTemplateDetailsView.as_view(), name="delete-weekly-shift-details"),
     path('weekly-shift-template/get-details-list/', TemplateDetailsListView.as_view(), name="get-weekly-shift-details-list"),
-       
-]
+    
+    #Schedule Run
+    path('schedule/create-details/', CreateScheduleRunView.as_view(), name="create-schedule-run-details"),
+    path('schedule/update-details/<int:id>/', UpdateScheduleRunView.as_view(), name="update-schedule-run-details"),
+    path('schedule/get-details/<int:id>/', GetScheduleRunByIdView.as_view(), name="get-schedule-run-details"),
+    path('schedule/delete-details/<int:id>/', DeleteScheduleRunByIdView.as_view(), name="delete-schedule-run-details"),
+    path('schedule/get-details-list/', ScheduleRunListView.as_view(), name="get-schedule-run-details-list"),
+    
+    #search
+    path('search/get-search-list/', GetSearchListView.as_view(), name="get-search-list"),
+    path('search/get-search-details/', GetSearchDetailsView.as_view(), name="get-search-details"),
+    
+    
+    #Assignment Rule
+    path('assignment-rule/create-details/',CreateAssignmentRuleView.as_view(), name="create-assignment-rule-details"),
+    path('assignment-rule/update-details/<int:id>/', UpdateAssignmentRuleView.as_view(), name="update-assignment-rule-details"),
+    path('assignment-rule/get-details/<int:id>/', GetAssignmentRuleByIdView.as_view(), name="get-assignment-rule-details"),
+    path('assignment-rule/delete-details/<int:id>/', DeleteAssignmentRuleView.as_view(), name="delete-assignment-rule-details"),
+    path('assignment-rule/get-details-list/', AssignmentRuleListView.as_view(), name="get-assignment-rule-details-list"),
+    
+    #Task resource assigmnet
+    path('task-resource-assignment/create-details/',CreateTaskResourceAssignmentView.as_view(), name="create-task-resource-assignment-details"),
+    path('task-resource-assignment/update-details/<int:id>/', UpdateTaskResourceAssignmentView.as_view(), name="update-task-resource-assignment-details"),
+    path('task-resource-assignment/get-details/<int:id>/', GetTaskResourceAssignmentByIdView.as_view(), name="get-task-resource-assignment-details"),
+    path('task-resource-assignment/delete-details/<int:id>/', DeleteTaskResourceAssignmentView.as_view(), name="delete-task-resource-assignment-details"),
+    path('task-resource-assignment/get-details-list/', TaskResourceAssignmentListView.as_view(), name="get-task-resource-assignment-details-list"),
+    
+]   

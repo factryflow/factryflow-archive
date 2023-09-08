@@ -1,0 +1,6 @@
+ASSIGNMENT_RULE_CREATED = "Assignment Rule Created Successfully!"
+ASSIGNMENT_RULE_UPDATED = "Assignment Rule Updated Successfully!"
+ASSIGNMENT_RULE_DELETED = "Assignment Rule Deleted Successfully!"
+TASK_RESOURCE_ASSIGNMENT_CREATED = "Task Resource Assignment Created Successfully"
+TASK_RESOURCE_ASSIGNMENT_UPDATED = "Task Resource Assignment Updated Successfully"
+TASK_RESOURCE_ASSIGNMENT_DELETED = "Task Resource Assignment Deleted Successfully"

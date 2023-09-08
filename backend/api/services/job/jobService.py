@@ -3,6 +3,7 @@ from api.serializers.job import *
 from rest_framework import status
 from api.utils.messages.commonMessages import *
 from api.utils.messages.jobMessages import *
+from api.utils.searchData import search_data
 from .jobBaseService import JobBaseService
 
 
@@ -75,3 +76,12 @@ class JobService(JobBaseService):
             return({"data":None, "code":status.HTTP_200_OK, "message":JOB_DELETED})
         except Jobs.DoesNotExist:
             return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":RECORD_NOT_FOUND})
+        
+    
+    def search_job(self, request, format=None):
+        """Search Jos"""
+        job_obj = Jobs.objects.all()
+        search_keys=['id__icontains', 'name__icontains', 'note__icontains', 'planned_start__icontains']
+        search_type='or'
+        serilized_data = search_data(request, search_keys, search_type, GetJobsDetailsSerializer, job_obj)
+        return ({"data": serilized_data.data, "code": status.HTTP_200_OK, "message": OK})

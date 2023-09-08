@@ -22,7 +22,7 @@ class CustomPagination:
             order = '-id'
 
         kwargs = []
-        # print('\n\nquery')
+        
         if (search_value):
             no_of_keys = len(search_keys)
             if no_of_keys > 0:

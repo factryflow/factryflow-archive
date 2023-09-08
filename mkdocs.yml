@@ -1,5 +1,5 @@
-site_name: Production Scheduler
-site_description: FastAPI framework, high performance, easy to learn, fast to code, ready for production
+site_name: FactryFlow
+# site_description: FastAPI framework, high performance, easy to learn, fast to code, ready for production
   
 theme:
   name: material
@@ -28,9 +28,21 @@ theme:
     repo: fontawesome/brands/github-alt
   language: en
 
-repo_url: https://github.com/Yacobolo/ProductionScheduler
-repo_name: ProductionScheduler
+repo_url: https://github.com/Yacobolo/factryflow
+repo_name: factryflow
 
+nav:
+  - Welcome: index.md
+  # - Getting Started:
+  #   - Installation: getting-started/installation.md
+  #   - Quickstart: getting-started/quickstart.md
+  #   - Tutorial: getting-started/tutorial.md
+  # - User Guide:
+  - Technical Documentation:
+    - Architecture: technical-documentation/architecture.md
+    - ER Diagram: technical-documentation/er-diagram.md
+    - Database Schema: technical-documentation/database-schema.md
+    - Database Naming Conventions: technical-documentation/database-naming-conventions.md
 markdown_extensions:
   - pymdownx.superfences:
       custom_fences:

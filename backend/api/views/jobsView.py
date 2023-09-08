@@ -76,4 +76,17 @@ class DeleteJobByIdView(APIView):
         """
         result = Job_service.delete_job(request, id, format=None)
         return Response(result, status=result["code"])
-    
+
+
+class SearchJobView(APIView):
+    @swagger_auto_schema(
+        request_body=search_request_body,
+        responses=response_create_update_job,
+        operation_summary="search job",
+    )
+    def post(self, request, format=None):
+        """
+        search job
+        """
+        result = Job_service.search_job(request, format=None)
+        return Response(result, status=result["code"])

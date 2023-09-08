@@ -16,6 +16,8 @@ class Tasks(models.Model):
     jobs = models.ForeignKey(Jobs, on_delete=models.CASCADE, related_name="tasks_list", blank=True, null=True)
     predecessors = models.ManyToManyField("self", symmetrical=False, related_name="successors", blank=True)
     item = models.CharField(max_length=250, blank=True, null=True)
+    planned_start_datetime = models.DateTimeField(blank=True, null=True)
+    planned_end_datetime = models.DateTimeField(blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
     deleted_at = models.DateTimeField(blank=True, null=True)
