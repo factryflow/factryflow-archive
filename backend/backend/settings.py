@@ -155,6 +155,7 @@ SWAGGER_SETTINGS = {
     'USE_SESSION_AUTH': False,
     'DOC_EXPANSION': 'list',
     'APIS_SORTER': 'alpha',
+    'STATIC_URL': '/static/',
     'SECURITY_DEFINITIONS': {
         'api_key': {
             'type': 'apiKey',
@@ -233,7 +234,6 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 
 STATIC_URL = '/static/'
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 

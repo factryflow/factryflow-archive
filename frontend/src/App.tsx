@@ -8,6 +8,8 @@ import Jobs from "./pages/Jobs";
 import Tasks from "./pages/Tasks";
 import JobForm from "./pages/Jobs/Form";
 import TaskForm from "./pages/Tasks/Form";
+import Dependencys from "./pages/dependencies";
+import DependencyForm from "./pages/dependencies/Form";
 function App() {
   // const dispatch = useAppDispatch();
   // const user = JSON.parse(localStorage.getItem("token") || "{}");
@@ -29,6 +31,8 @@ function App() {
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/tasks/form" element={<TaskForm />} />
           <Route path="/tasks/form/:id" element={<TaskForm />} />
+          <Route path="/dependencys" element={<Dependencys />} />
+          <Route path="/dependencys/form" element={<DependencyForm />} />
         </Route>
       </Routes>
     </>
