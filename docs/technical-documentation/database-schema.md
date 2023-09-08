@@ -146,6 +146,17 @@ erDiagram
         datetime end_datetime
         string notes
         int weekly_shift_template_id FK
+        int operational_exception_type_id
+    }
+```
+
+## Operation Exception Type Table
+
+``` mermaid
+erDiagram
+    operational_exception_type {
+        int task_id PK,FK
+        int dependency_id PK,FK
     }
 ```
 
