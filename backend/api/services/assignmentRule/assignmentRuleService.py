@@ -88,6 +88,7 @@ class AssignmentRuleService(AssignmentRuleBaseService):
             return ({"data": serializer.data, "code": status.HTTP_201_CREATED, "message": TASK_RESOURCE_ASSIGNMENT_CREATED})
         return ({"data": serializer.errors, "code": status.HTTP_400_BAD_REQUEST, "message": BAD_REQUEST})
     
+    
     def update_task_resource_assignment(self, request, id, format=None):
         """
         Update task resource assignment
@@ -134,4 +135,65 @@ class AssignmentRuleService(AssignmentRuleBaseService):
             task_obj.save()
             return({"data":None, "code":status.HTTP_200_OK, "message":TASK_RESOURCE_ASSIGNMENT_DELETED})
         except AssignmentRule.DoesNotExist:
+            return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":RECORD_NOT_FOUND})
+        
+
+
+    def create_assignment_rule_criteria(self, request, format=None):
+        """Create assignment rule criteria"""
+        serializer = CreateUpdateAssignmentRuleCriteriaSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            assignment_rule_criteria_obj = AssignmentRuleCriteria.objects.get(id=serializer.data["id"])
+            serializer = GetAssignmentRuleCriteriaDetailsSerializer(assignment_rule_criteria_obj)
+            return ({"data": serializer.data, "code": status.HTTP_201_CREATED, "message": ASSINGMENT_RULE_CRITERIA_CREATED})
+        return ({"data": serializer.errors, "code": status.HTTP_400_BAD_REQUEST, "message": BAD_REQUEST})
+    
+    
+    def update_assignment_rule_criteria(self, request, id, format=None):
+        """
+        Update assignment rule criteria
+        """
+        try:
+            assignment_rule_criteria_obj = AssignmentRuleCriteria.objects.get(id=id)
+            serializer = CreateUpdateAssignmentRuleCriteriaSerializer(assignment_rule_criteria_obj, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                serializer = GetAssignmentRuleCriteriaDetailsSerializer(assignment_rule_criteria_obj)
+                return ({"data": serializer.data, "code": status.HTTP_201_CREATED, "message": ASSINGMENT_RULE_CRITERIA_UPDATED})
+            return ({"data": serializer.errors, "code": status.HTTP_400_BAD_REQUEST, "message": BAD_REQUEST})
+        except AssignmentRuleCriteria.DoesNotExist:
+            return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":RECORD_NOT_FOUND})
+        
+    def get_assignment_rule_criteria_by_id(self, request, id, format=None):
+        """
+        get assignment rule criteria by id
+        """
+        try:
+            assignment_rule_criteria_obj = AssignmentRuleCriteria.objects.get(id=id)
+            serializer = GetAssignmentRuleCriteriaDetailsSerializer(assignment_rule_criteria_obj)
+            return ({"data": serializer.data, "code": status.HTTP_200_OK, "message": OK})
+        except AssignmentRuleCriteria.DoesNotExist:
+            return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":RECORD_NOT_FOUND})
+        
+    
+    def get_all_assignment_rule_criteria(self, request, format=None):
+        """
+        Retun all the assignment rule criteria
+        """
+        assignment_rule_criteria_obj = AssignmentRuleCriteria.objects.all()
+        serializer = GetAssignmentRuleCriteriaDetailsSerializer(assignment_rule_criteria_obj, many=True)
+        return ({"data": serializer.data, "code": status.HTTP_200_OK, "message": OK})
+    
+    
+    def delete_assignment_rule_criteria(self, request, id, format=None):
+        """
+        delete assignment rule criteria details
+        """
+        try:
+            assignment_rule_criteria_obj = AssignmentRuleCriteria.objects.get(id=id)
+            assignment_rule_criteria_obj.is_deleted = True
+            assignment_rule_criteria_obj.save()
+            return({"data":None, "code":status.HTTP_200_OK, "message":ASSINGMENT_RULE_CRITERIA_DELETED})
+        except AssignmentRuleCriteria.DoesNotExist:
             return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":RECORD_NOT_FOUND})

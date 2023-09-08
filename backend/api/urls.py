@@ -116,4 +116,11 @@ urlpatterns = [
     path('task-resource-assignment/delete-details/<int:id>/', DeleteTaskResourceAssignmentView.as_view(), name="delete-task-resource-assignment-details"),
     path('task-resource-assignment/get-details-list/', TaskResourceAssignmentListView.as_view(), name="get-task-resource-assignment-details-list"),
     
+    #Assignment Rule Criteria
+    path('assignment-rule/create-criteria/',CreateAssignmentRuleCriteriaView.as_view(), name="create-assignment-rule-criteria"),
+    path('assignment-rule/update-criteria/<int:id>/', UpdateAssignmentRuleCriteriaView.as_view(), name="update-assignment-rule-criteria"),
+    path('assignment-rule/get-criteria/<int:id>/', GetAssignmentRuleCriteriaByIdView.as_view(), name="get-assignment-rule-criteria"),
+    path('assignment-rule/delete-criteria/<int:id>/', DeleteAssignmentRuleCriteriaView.as_view(), name="delete-assignment-rule-criteria"),
+    path('assignment-rule/get-criteria-list/', AssignmentRuleCriteriaListView.as_view(), name="get-task-resource-assignment-criteria-list"),
+    
 ]   

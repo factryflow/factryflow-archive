@@ -9,7 +9,7 @@ class UserLoginDetailSerializer(serializers.ModelSerializer):
 	class Meta(object):
 		model = User
 		fields = (
-		'id', 'email', 'first_name', 'last_name', 'is_active', 'is_deleted')
+		'id', 'email', 'first_name', 'last_name', 'role', 'is_active', 'is_deleted')
 
 
 class signUpSerializer(serializers.ModelSerializer):
@@ -20,7 +20,7 @@ class signUpSerializer(serializers.ModelSerializer):
 	password = serializers.CharField(required=False)
 	class Meta:
 		model = User
-		fields = ('id', 'first_name', 'last_name', 'email', 'password')
+		fields = ('id', 'first_name', 'last_name', 'email', 'password', 'role')
 		extra_kwargs = {
 				'password': {'write_only': True},
 			}
@@ -32,6 +32,7 @@ class signUpSerializer(serializers.ModelSerializer):
 		user.set_password(validated_data.get("password"))
 		user.first_name = validated_data.get('first_name')
 		user.last_name = validated_data.get('last_name')
+		user.role = validated_data.get('role')
 		user.save()
 		
 		return user
@@ -43,4 +44,4 @@ class UserDetialsSerializer(serializers.ModelSerializer):
 	"""
 	class Meta:
 		model = User
-		fields = ('id', 'first_name', 'last_name', 'email', 'is_active', 'is_deleted')
+		fields = ('id', 'first_name', 'last_name', 'email', 'role', 'is_active', 'is_deleted')

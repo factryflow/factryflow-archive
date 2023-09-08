@@ -9,7 +9,7 @@ class CreateUpdateTaskSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Tasks
-        fields = ('id', 'external_id', 'name', 'task_status', 'set,up_time', 'run_time_per_unit', 'teardown_time', 'quantity', 'jobs', 'predecessors', 'item', 'planned_start_datetime', 'planned_end_datetime')
+        fields = ('id', 'external_id', 'name', 'task_status', 'setup_time', 'run_time_per_unit', 'teardown_time', 'quantity', 'jobs', 'predecessors', 'item', 'planned_start_datetime', 'planned_end_datetime')
         
     
 
