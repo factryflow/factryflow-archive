@@ -14,3 +14,4 @@ from .weeklyShiftTemplateDetailsModel import *
 from .scheduleRunModel import *
 from .assignmentRuleModel import *
 from .taskResourceAssignmentModel import *
+from .assignmentRuleCriteriaModel import *

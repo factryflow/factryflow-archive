@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
 from django.db import transaction
+from .roleModel import Role
 from simple_history.models import HistoricalRecords
 from django.contrib.auth.models import (
     AbstractBaseUser, PermissionsMixin, BaseUserManager
@@ -51,6 +52,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=25, blank=True)
     email = models.EmailField(max_length=254, blank=True, null=True, unique=True)
     password = models.CharField(max_length=254, blank=True, null=True)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE, related_name="user_role", blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_deleted = models.BooleanField(default=False)
     otp_varification = models.BooleanField(default=False)
