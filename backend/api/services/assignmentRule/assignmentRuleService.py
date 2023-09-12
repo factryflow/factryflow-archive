@@ -197,3 +197,64 @@ class AssignmentRuleService(AssignmentRuleBaseService):
             return({"data":None, "code":status.HTTP_200_OK, "message":ASSINGMENT_RULE_CRITERIA_DELETED})
         except AssignmentRuleCriteria.DoesNotExist:
             return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":RECORD_NOT_FOUND})
+        
+    #assignment rule resource group
+    
+    def create_assignment_rule_criteria(self, request, format=None):
+        """Create assignment rule criteria"""
+        serializer = CreateUpdateAssignmentRuleResourceGroupSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            assignment_resource_obj = AssignmentRuleResourceGroup.objects.get(id=serializer.data["id"])
+            serializer = GetAssignmentRuleResourceGroupDetailsSerializer(assignment_resource_obj)
+            return ({"data": serializer.data, "code": status.HTTP_201_CREATED, "message": ASSINGMENT_RULE_CRITERIA_CREATED})
+        return ({"data": serializer.errors, "code": status.HTTP_400_BAD_REQUEST, "message": BAD_REQUEST})
+    
+    
+    def update_assignment_rule_criteria(self, request, id, format=None):
+        """
+        Update assignment rule criteria
+        """
+        try:
+            assignment_resource_obj = AssignmentRuleResourceGroup.objects.get(id=id)
+            serializer = CreateUpdateAssignmentRuleResourceGroupSerializer(assignment_resource_obj, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                serializer = GetAssignmentRuleResourceGroupDetailsSerializer(assignment_resource_obj)
+                return ({"data": serializer.data, "code": status.HTTP_201_CREATED, "message": ASSINGMENT_RULE_CRITERIA_UPDATED})
+            return ({"data": serializer.errors, "code": status.HTTP_400_BAD_REQUEST, "message": BAD_REQUEST})
+        except AssignmentRuleResourceGroup.DoesNotExist:
+            return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":RECORD_NOT_FOUND})
+        
+    def get_assignment_rule_criteria_by_id(self, request, id, format=None):
+        """
+        get assignment rule criteria by id
+        """
+        try:
+            assignment_resource_obj = AssignmentRuleResourceGroup.objects.get(id=id)
+            serializer = GetAssignmentRuleResourceGroupDetailsSerializer(assignment_resource_obj)
+            return ({"data": serializer.data, "code": status.HTTP_200_OK, "message": OK})
+        except AssignmentRuleResourceGroup.DoesNotExist:
+            return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":RECORD_NOT_FOUND})
+        
+    
+    def get_all_assignment_rule_criteria(self, request, format=None):
+        """
+        Retun all the assignment rule criteria
+        """
+        assignment_resource_obj = AssignmentRuleResourceGroup.objects.all()
+        serializer = GetAssignmentRuleResourceGroupDetailsSerializer(assignment_resource_obj, many=True)
+        return ({"data": serializer.data, "code": status.HTTP_200_OK, "message": OK})
+    
+    
+    def delete_assignment_rule_criteria(self, request, id, format=None):
+        """
+        delete assignment rule criteria details
+        """
+        try:
+            assignment_resource_obj = AssignmentRuleResourceGroup.objects.get(id=id)
+            assignment_resource_obj.is_deleted = True
+            assignment_resource_obj.save()
+            return({"data":None, "code":status.HTTP_200_OK, "message":ASSINGMENT_RULE_CRITERIA_DELETED})
+        except AssignmentRuleResourceGroup.DoesNotExist:
+            return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":RECORD_NOT_FOUND})

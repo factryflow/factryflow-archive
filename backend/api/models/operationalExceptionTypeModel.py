@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from .resourceGroupsModel import ResourceGroups
 from simple_history.models import HistoricalRecords
+from api.utils.modelManager import ActiveManager
 
 
 class OperationalExceptionType(models.Model):
@@ -14,6 +15,7 @@ class OperationalExceptionType(models.Model):
     is_deleted = models.BooleanField(default=False)
     history = HistoricalRecords(table_name='operational_exception_type_history')
     
+    objects = ActiveManager()
 
     def __str__(self):
         return self.name

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from api.models import OperationalExceptionType, OperationalException
-
+from api.serializers.weeklyShiftTemplate import GetWeeklyShiftTemplateDetailsSerializer
 
 
 class CreateUpdateOperationalExceptionTypeSerializer(serializers.ModelSerializer):
@@ -11,7 +11,6 @@ class CreateUpdateOperationalExceptionTypeSerializer(serializers.ModelSerializer
         model = OperationalExceptionType
         fields = ('id', 'name')
         
-    
 
 class GetOperationalExceptionTypeDetailsSerializer(serializers.ModelSerializer):
     """
@@ -28,13 +27,15 @@ class CreateUpdateOperationalExceptionSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = OperationalException
-        fields = ('id', 'exception_type', 'start_datetime', 'end_datetime', 'notes')
+        fields = ('id', 'external_id', 'operational_exception_type', 'start_datetime', 'end_datetime', 'notes', 'weekly_shift_template')
     
 
 class GetOperationalExceptionSerializer(serializers.ModelSerializer):
     """
     Get details of Exception Serializer
     """
+    operational_exception_type = GetOperationalExceptionTypeDetailsSerializer()
+    weekly_shift_template = GetWeeklyShiftTemplateDetailsSerializer()
     class Meta:
         model = OperationalException
-        fields = ('id', 'exception_type', 'start_datetime', 'end_datetime', 'notes', 'is_active', 'is_deleted')
+        fields = ('id', 'external_id', 'operational_exception_type', 'start_datetime', 'end_datetime', 'notes', 'weekly_shift_template', 'is_active', 'is_deleted')
