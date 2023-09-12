@@ -1,9 +1,9 @@
 import {createApi,fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 
 
-export const resourcesApi = createApi({
+export const resourcesGroupApi = createApi({
     
-    reducerPath:"resourcesApi",
+    reducerPath:"resourcesGroupApi",
     baseQuery:fetchBaseQuery({
         // baseUrl:" http://127.0.0.1:8000/"
         baseUrl:import.meta.env.VITE_API_ENDPOINT,
@@ -14,12 +14,12 @@ export const resourcesApi = createApi({
             )
         }
     }),
-    tagTypes: ['getAllResources'],
+    tagTypes: ['getAllResourcesGroup'],
     endpoints:(builder)=>({
-        // getAllResource Api
-        getAllResources: builder.query<any[], void>({
+        // getAllResource Group Api
+        getAllResourcesGroup: builder.query<any[], void>({
             query: () => {
-              return `api/resource/get-resources-list/`;
+              return `api/resource/get-resource-group-list/`;
             },
             transformResponse: (res:  { data: any[] }) => {
                 const data = res.data;
@@ -27,42 +27,42 @@ export const resourcesApi = createApi({
                 return result
                
             },
-            providesTags: ['getAllResources']
+            providesTags: ['getAllResourcesGroup']
           }),
 
 
-        // create Resource Api
-          createresources:builder.mutation({
+        // create Resource Group Api
+          createresourcesGroup:builder.mutation({
             query:(body:any)=>{
                 return {
-                    url:'api/resource/create-resources/',
+                    url:'api/resource/create-resource-group/',
                     method:'post',
                     body,
                 }
             },
-            invalidatesTags:['getAllResources'],
+            invalidatesTags:['getAllResourcesGroup'],
     
         }),
-        // delete Resource Api
-        deleteResources:builder.mutation({
+        // delete Resource Group Api
+        deleteResourcesGroup:builder.mutation({
             query:(id:number)=>{
                 return{
-                    url:`api/resource/delete-resources/${id}/`,
+                    url:`api/resource/delete-resource-group/${id}/`,
                     method:'delete',
                 }
             },
-            invalidatesTags:['getAllResources'],
+            invalidatesTags:['getAllResourcesGroup'],
         }),
-        //update Resource Api
-        updateResources:builder.mutation({
+        //update Resource Group Api
+        updateResourcesGroup:builder.mutation({
             query:({id,data})=>{   
                 return {
-                    url:`api/resource/update-resources/${id}/`,
+                    url:`api/resource/update-resource-group/${id}/`,
                     method:'put',
                     body:data,
                 }
             },
-            invalidatesTags:['getAllResources'],
+            invalidatesTags:['getAllResourcesGroup'],
     
         })
     }),
@@ -72,8 +72,8 @@ export const resourcesApi = createApi({
 
 
 export const {
-     useGetAllResourcesQuery,
-     useCreateresourcesMutation,
-     useDeleteResourcesMutation,
-     useUpdateResourcesMutation
-}=resourcesApi
+     useGetAllResourcesGroupQuery,
+     useCreateresourcesGroupMutation,
+     useDeleteResourcesGroupMutation,
+     useUpdateResourcesGroupMutation
+}=resourcesGroupApi

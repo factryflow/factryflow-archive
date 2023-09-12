@@ -14,6 +14,8 @@ import DependencyType from "./pages/dependencies/dependencytype";
 import DependencyTypeForm from "./pages/dependencies/dependencytype/Form";
 import Resources from "./pages/resources";
 import ChangePass from "./pages/auth/ChangePass";
+import ResourcesGroup from "./pages/resources/resorcesgroup";
+import ResourceForm from "./pages/resources/Form";
 function App() {
   // const dispatch = useAppDispatch();
   // const user = JSON.parse(localStorage.getItem("token") || "{}");
@@ -53,7 +55,12 @@ function App() {
             path="/dependencys/dependencytype/form/:id"
             element={<DependencyTypeForm />}
           />
+
           <Route path="/resources" element={<Resources />} />
+          <Route path="/resources/form" element={<ResourceForm />} />
+          <Route path="/resources/form/:id" element={<ResourceForm />} />
+
+          <Route path="/resources/resourcegroup" element={<ResourcesGroup />} />
         </Route>
       </Routes>
     </>

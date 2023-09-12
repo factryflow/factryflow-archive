@@ -1,31 +1,36 @@
 import React, { useEffect } from "react";
-import Layout from "../Layout";
 import { Box, Button, Stack } from "@mui/material";
 import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
-import Header from "../../components/Header";
-import { Link, useNavigate } from "react-router-dom";
+import Header from "../../../components/Header";
+import { Link } from "react-router-dom";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import {
-  useDeleteResourcesMutation,
-  useGetAllResourcesQuery,
-} from "../../service/resourceApi";
-import { setResourcesies } from "../../features/resourceSlice";
 import { toast } from "react-toastify";
+import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
+import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 
-const Resources = () => {
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import Layout from "../../Layout";
+import {
+  useDeleteResourcesGroupMutation,
+  useGetAllResourcesGroupQuery,
+} from "../../../service/resourcegroupApi";
+import { setResourceGroups } from "../../../features/resourceGroupSlice";
+const ResourcesGroup = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const resourceSelector = useAppSelector(
-    (state) => state.resource.resourcesies
+  const resourceGroupSelector = useAppSelector(
+    (state) => state.resourceGroup.resourceGroups
   );
 
-  const { data: resourceData, isLoading: resourceIsLoading } =
-    useGetAllResourcesQuery();
+  //   const { data: resourceData, isLoading: resourceIsLoading } =
+  //     useGetAllResourcesQuery();
 
-  const [deleteResources] = useDeleteResourcesMutation();
+  const { data: resourceGroupData, isLoading: resourceGroupIsLoading } =
+    useGetAllResourcesGroupQuery();
+
+  //   const [deleteResources] = useDeleteResourcesMutation();
+
+  const [deleteResourcesGroup] = useDeleteResourcesGroupMutation();
 
   const columns: GridColDef<any>[] = [
     { field: "id", headerName: "ID" }, // Adjust the width as needed
@@ -35,8 +40,8 @@ const Resources = () => {
       flex: 1,
     },
     {
-      field: "resource_groups_list",
-      headerName: "Resource Groups List",
+      field: "resources_list",
+      headerName: "Resource List",
       flex: 1, // Adjust the width as needed
     },
     {
@@ -50,22 +55,24 @@ const Resources = () => {
           const currentRow = params.row;
 
           if (
-            window.confirm("Are you sure you want to remove this Resource?")
+            window.confirm(
+              "Are you sure you want to remove this Resource Group?"
+            )
           ) {
             // return alert(JSON.stringify(currentRow, null, 4));
-            deleteResources(currentRow?.id);
-            const newresourceData = resourceSelector.filter(
+            deleteResourcesGroup(currentRow?.id);
+            const newresourceGroupData = resourceGroupSelector.filter(
               (item: any) => item.id !== currentRow?.id
             );
-            dispatch(setResourcesies(newresourceData));
-            toast.success("Resource Delete Successfully");
+            dispatch(setResourceGroups(newresourceGroupData));
+            toast.success("Task Delete Successfully");
           }
           return;
         };
 
         const handleEditAction = (e: React.SyntheticEvent<any>) => {
-          const currentRow = params.row;
-          navigate(`/resources/form/${currentRow?.id}`);
+          // const currentRow = params.row;
+          // navigate(`/tasks/form/${currentRow?.id}`);
         };
 
         return (
@@ -86,23 +93,25 @@ const Resources = () => {
   ];
 
   useEffect(() => {
-    if (!resourceIsLoading && resourceData) {
-      dispatch(setResourcesies(resourceData));
+    if (!resourceGroupIsLoading && resourceGroupData) {
+      dispatch(setResourceGroups(resourceGroupData));
     }
-  }, [resourceIsLoading, resourceData]);
+  }, [resourceGroupIsLoading, resourceGroupData]);
 
   return (
     <Layout>
       <Box m="20px">
-        <Header title="Resource" subtitle="List of Resource " />
+        <Header title="Resource Group" subtitle="List of Resource Group " />
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Link to="/resources/form">
+          <Link to="/resources/resourceGroup/form">
             <Button variant="contained" startIcon={<AddBoxIcon />}>
-              Resourse
+              Resourse Group
             </Button>
           </Link>
-          <Link to="/resources/resourcegroup">
-            <Button variant="contained">Manage Resorce Group</Button>
+          <Link to="/resources">
+            <Button variant="contained" startIcon={<ArrowBackOutlinedIcon />}>
+              Back To Resourse
+            </Button>
           </Link>
         </Box>
 
@@ -152,16 +161,16 @@ const Resources = () => {
             },
           }}
         >
-          {resourceIsLoading ? (
+          {resourceGroupIsLoading ? (
             <>
               <h3>Loading...</h3>
             </>
           ) : (
-            resourceSelector && (
+            resourceGroupSelector && (
               <>
                 <DataGrid
                   className="dataGrid"
-                  rows={resourceSelector ?? []}
+                  rows={resourceGroupSelector ?? []}
                   columns={columns}
                   initialState={{
                     pagination: {
@@ -197,4 +206,4 @@ const Resources = () => {
   );
 };
 
-export default Resources;
+export default ResourcesGroup;

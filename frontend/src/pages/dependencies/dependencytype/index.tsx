@@ -1,21 +1,20 @@
 import React, { useEffect } from "react";
-import Layout from "../../Layout";
 import { Box, Button, Stack, useTheme } from "@mui/material";
-import Header from "../../../components/Header";
-
+import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
+import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   useGetAllDependencyTypeQuery,
   useDeleteDependencytypeMutation,
 } from "../../../service/dependencytypeApi";
-
+import Header from "../../../components/Header";
+import Layout from "../../Layout";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { setDependenciestype } from "../../../features/dependencytypeSlice";
-import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
-import { Link, useNavigate } from "react-router-dom";
-import AddBoxIcon from "@mui/icons-material/AddBox";
 import { toast } from "react-toastify";
 
 const DependencyType = () => {
@@ -118,10 +117,7 @@ const DependencyType = () => {
               </Button>
             </Link>
             <Link to="/dependencys/">
-              <Button
-                variant="contained"
-                onClick={() => navigate("/dependencys")}
-              >
+              <Button variant="contained" startIcon={<ArrowBackOutlinedIcon />}>
                 Back to dependency
               </Button>
             </Link>
