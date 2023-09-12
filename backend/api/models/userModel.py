@@ -14,7 +14,10 @@ from django.conf import settings
 
 
 class UserManager(BaseUserManager):
-
+    
+    def get_queryset(self):
+        return super().get_queryset().filter(is_deleted=False)
+    
     def _create_user(self, email, password, **extra_fields):
         """
         Creates and saves a User with the given email,and password.

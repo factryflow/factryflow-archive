@@ -31,14 +31,16 @@ operational_exception_details_response = {200: GetOperationalExceptionSerializer
 create_update_dependency_request_body = openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
+                'external_id':openapi.Schema(type=openapi.TYPE_STRING, description="external_id"),
                 'exception_type': openapi.Schema(type=openapi.TYPE_STRING, description="exception_type"),
-                'start_datetime': openapi.Schema(type=openapi.TYPE_STRING, description="start_datetime"),\
+                'start_datetime': openapi.Schema(type=openapi.TYPE_STRING, description="start_datetime"),
                 'end_datetime': openapi.Schema(type=openapi.TYPE_STRING, description="end_datetime"),
                 'notes': openapi.Schema(type=openapi.TYPE_STRING, description="notes"),
+                'weekly_shift_template': openapi.Schema(type=openapi.TYPE_STRING, description="weekly_shift_template"),
                
                 # Add more properties as needed
             },
-            required=['exception_type', 'start_datetime','end_datetime','notes'],  # Specify required fields
+            required=['external_id', 'exception_type', 'start_datetime','end_datetime','notes', 'weekly_shift_template'],  # Specify required fields
 )
 
 response_create_update_operational_exception = {200: GetOperationalExceptionSerializer()}

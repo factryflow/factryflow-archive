@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from simple_history.models import HistoricalRecords
 from .weeklyShiftTemplateModel import WeeklyShiftTemplate
+from api.utils.modelManager import ActiveManager
 
 
 class WeeklyShiftTemplateDetail(models.Model):
@@ -17,6 +18,7 @@ class WeeklyShiftTemplateDetail(models.Model):
     is_deleted = models.BooleanField(default=False)
     history = HistoricalRecords(table_name='weekly_shift_template_detail_history')
     
+    objects = ActiveManager()
 
     def __str__(self):
         return self.name

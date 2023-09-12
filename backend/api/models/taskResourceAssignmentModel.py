@@ -3,6 +3,7 @@ from django.utils import timezone
 from .tasksModel import Tasks
 from .resourcesModel import Resources
 from simple_history.models import HistoricalRecords
+from api.utils.modelManager import ActiveManager
 
 
 class TasksResourceAssignment(models.Model):
@@ -16,7 +17,8 @@ class TasksResourceAssignment(models.Model):
     is_deleted = models.BooleanField(default=False)
     history = HistoricalRecords(table_name='tasks_resource_assignment_history')
 
-
+    objects = ActiveManager()
+    
     def __str__(self):
         return str(self.id)
 

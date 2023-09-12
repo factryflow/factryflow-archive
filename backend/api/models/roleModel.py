@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from simple_history.models import HistoricalRecords
+from api.utils.modelManager import ActiveManager
 
 
 class Role(models.Model):
@@ -13,7 +14,9 @@ class Role(models.Model):
     is_deleted = models.BooleanField(default=False)
     history = HistoricalRecords(table_name='roles_history')
     can_delete = models.BooleanField(default=True)
-
+    
+    objects = ActiveManager()
+    
     def __str__(self):
         return self.name
 

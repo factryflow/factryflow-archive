@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from .resourceGroupsModel import ResourceGroups
 from simple_history.models import HistoricalRecords
+from api.utils.modelManager import ActiveManager
 
 
 class Resources(models.Model):
@@ -15,6 +16,7 @@ class Resources(models.Model):
     is_deleted = models.BooleanField(default=False)
     history = HistoricalRecords(table_name='resource_history')
     
+    objects = ActiveManager()
 
     def __str__(self):
         return self.name
