@@ -195,7 +195,7 @@ const Tasks = () => {
         const handleDeleteAction = (e: React.SyntheticEvent<any>) => {
           const currentRow = params.row;
 
-          if (window.confirm("Are you sure you want to remove this Job?")) {
+          if (window.confirm("Are you sure you want to remove this Task?")) {
             // return alert(JSON.stringify(currentRow, null, 4));
             deleteTasks(currentRow?.id);
             const newTaskiesData = taskiesSelector.filter(

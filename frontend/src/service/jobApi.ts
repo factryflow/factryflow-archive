@@ -1,12 +1,17 @@
 import {createApi,fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import { GetAllJobType } from '../types/jobs.types';
-
+import {REHYDRATE} from 'redux-persist';
 export const jobApi = createApi({
     
     reducerPath:"jobApi",
     baseQuery:fetchBaseQuery({
         // baseUrl:" http://127.0.0.1:8000/"
         baseUrl:import.meta.env.VITE_API_ENDPOINT,
+        // extractRehydrationInfo(action, { reducerPath }) {
+        //     if (action.type === REHYDRATE) {
+        //       return action.payload[reducerPath]
+        //     }
+        //   },
         prepareHeaders:(header)=>{
             header.set(
                 'Authorization',

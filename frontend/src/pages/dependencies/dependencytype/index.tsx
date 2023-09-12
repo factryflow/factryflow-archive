@@ -1,49 +1,42 @@
 import React, { useEffect } from "react";
-import Layout from "../Layout";
+import Layout from "../../Layout";
 import { Box, Button, Stack, useTheme } from "@mui/material";
-import { tokens } from "../../theme";
-import Header from "../../components/Header";
+import Header from "../../../components/Header";
+
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
-import { useDeleteTasksMutation } from "../../service/taskApi";
+
 import {
-  useDeleteDependencyMutation,
-  useGetAllDependencysQuery,
-} from "../../service/dependencyApi";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { setDependencies } from "../../features/dependencySlice";
+  useGetAllDependencyTypeQuery,
+  useDeleteDependencytypeMutation,
+} from "../../../service/dependencytypeApi";
+
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { setDependenciestype } from "../../../features/dependencytypeSlice";
 import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
 import { Link, useNavigate } from "react-router-dom";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import { toast } from "react-toastify";
-const Dependencys = () => {
+
+const DependencyType = () => {
   const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+  // const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
-  const {
-    data: getDependencyData,
-    isLoading: dependencyIsLoading,
-    error,
-  } = useGetAllDependencysQuery(undefined);
-
-  const [deleteDependency] = useDeleteDependencyMutation();
   const dispatch = useAppDispatch();
-  const dependenciesSelector = useAppSelector(
-    (state) => state.dependency.dependencies
-  );
-  //   console.log(dependenciesSelector, "selector");
+  const {
+    data: dependencyTypeData,
+    isLoading: dependencyTypeIsLoading,
+    error: dependencyTypeError,
+  } = useGetAllDependencyTypeQuery(undefined);
 
-  //   "id": 1,
-  //   "name": "dependency test",
-  //   "dependency_type": 1,
-  //   "dependency_status": 1,
-  //   "expected_closed": "2023-09-12T09:00:00Z",
-  //   "closed_date": "2023-09-01T08:00:00Z",
-  //   "notes": "test notes",
-  //   "jobs": 1,
-  //   "tasks": 1,
-  //   "is_active": true,
-  //   "is_deleted": false
+  const [deleteDependencytype] = useDeleteDependencytypeMutation();
+
+  console.log(dependencyTypeData, "dependencyTypeData");
+
+  const dependenciesTypeSelector = useAppSelector(
+    (state) => state.dependencytype.dependenciestype
+  );
+  console.log(dependenciesTypeSelector, "dependenciesTypeSelector");
 
   const columns: GridColDef<any>[] = [
     { field: "id", headerName: "ID" }, // Adjust the width as needed
@@ -53,39 +46,8 @@ const Dependencys = () => {
       flex: 1,
     },
     {
-      field: "dependency_type",
-      headerName: "Dependency Type",
-      flex: 1,
-    },
-
-    {
-      field: "dependency_status",
-      headerName: "Dependency Status",
-      flex: 1, // Adjust the width as needed
-    },
-    {
-      field: "expected_closed",
-      headerName: "Expecte Closed",
-      flex: 1, // Adjust the width as needed
-    },
-    {
-      field: "closed_date",
-      headerName: "Closed Date",
-      flex: 1,
-    },
-    {
-      field: "notes",
-      headerName: "Notes",
-      flex: 1, // Adjust the width as needed
-    },
-    {
-      field: "jobs",
-      headerName: "Jobes",
-      flex: 1,
-    },
-    {
-      field: "tasks",
-      headerName: "Tasks",
+      field: "description",
+      headerName: "description",
       flex: 1,
     },
     {
@@ -99,22 +61,24 @@ const Dependencys = () => {
           const currentRow = params.row;
 
           if (
-            window.confirm("Are you sure you want to remove this Dependency?")
+            window.confirm(
+              "Are you sure you want to remove this Dependency Type?"
+            )
           ) {
             // return alert(JSON.stringify(currentRow, null, 4));
-            deleteDependency(currentRow?.id);
-            const newDependenciesData = dependenciesSelector.filter(
+            deleteDependencytype(currentRow?.id);
+            const newDependenciestypeData = dependenciesTypeSelector.filter(
               (item: any) => item.id !== currentRow?.id
             );
-            dispatch(setDependencies(newDependenciesData));
-            toast.success("Dependency Delete Successfully");
+            dispatch(setDependenciestype(newDependenciestypeData));
+            toast.success("Dependency Type Delete Successfully");
           }
           return;
         };
 
         const handleEditAction = (e: React.SyntheticEvent<any>) => {
           const currentRow = params.row;
-          navigate(`/dependencys/form/${currentRow?.id}`);
+          navigate(`/dependencys/dependencytype/form/${currentRow?.id}`);
         };
 
         return (
@@ -135,31 +99,34 @@ const Dependencys = () => {
   ];
 
   useEffect(() => {
-    if (!dependencyIsLoading && getDependencyData) {
-      dispatch(setDependencies(getDependencyData));
+    if (!dependencyTypeIsLoading && dependencyTypeData) {
+      dispatch(setDependenciestype(dependencyTypeData));
     }
-  }, [dependencyIsLoading, getDependencyData]);
+  }, [dependencyTypeIsLoading, dependencyTypeData, dependencyTypeError]);
+
   return (
     <>
+      {" "}
       <Layout>
         <Box m="20px">
-          <Header title="Dependency" subtitle="List of Dependency " />
-          <Box
-            sx={{
-              width: "auto",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <Link to="/dependencys/form">
+          <Header title="Dependency Type" subtitle="List of Dependency Type " />
+
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Link to="/dependencys/dependencytype/form">
               <Button variant="contained" startIcon={<AddBoxIcon />}>
-                Dependency
+                Dependency Type
               </Button>
             </Link>
-            <Link to="/dependencys/dependencytype">
-              <Button variant="contained">Manage Dependency type</Button>
+            <Link to="/dependencys/">
+              <Button
+                variant="contained"
+                onClick={() => navigate("/dependencys")}
+              >
+                Back to dependency
+              </Button>
             </Link>
           </Box>
+
           <Box
             m="30px 0 0 0"
             height="75vh"
@@ -206,16 +173,16 @@ const Dependencys = () => {
               },
             }}
           >
-            {dependencyIsLoading ? (
+            {dependencyTypeIsLoading ? (
               <>
                 <h3>Loading...</h3>
               </>
             ) : (
-              dependenciesSelector && (
+              dependenciesTypeSelector && (
                 <>
                   <DataGrid
                     className="dataGrid"
-                    rows={dependenciesSelector ?? []}
+                    rows={dependenciesTypeSelector ?? []}
                     columns={columns}
                     initialState={{
                       pagination: {
@@ -252,4 +219,4 @@ const Dependencys = () => {
   );
 };
 
-export default Dependencys;
+export default DependencyType;

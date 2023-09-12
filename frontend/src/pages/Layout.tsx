@@ -11,7 +11,12 @@ const Layout = ({ children }: any) => {
         <Sidenav />
         <Box
           component="main"
-          sx={{ flexGrow: 1, p: 3, backgroundColor: "#FAFAFB" }}
+          sx={{
+            flexGrow: 1,
+            p: 3,
+            backgroundColor: "#FAFAFB",
+            height: "100vh",
+          }}
         >
           {children}
         </Box>

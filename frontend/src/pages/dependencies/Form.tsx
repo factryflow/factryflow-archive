@@ -1,5 +1,6 @@
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
+import { format } from "date-fns";
 import {
   TextField,
   Typography,
@@ -7,6 +8,11 @@ import {
   Grid,
   CardContent,
   Button,
+  FormHelperText,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Layout from "../Layout";
@@ -17,12 +23,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import { useAppSelector } from "../../app/hooks";
 
-import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import Box from "@mui/material/Box";
+
 import {
-  useCreateTasksMutation,
-  useUpdateTasksMutation,
-} from "../../service/taskApi";
+  useCreateDependencyMutation,
+  useUpdateDependencyMutation,
+} from "../../service/dependencyApi";
 //   "id": 1,
 //   "name": "dependency test",
 //   "dependency_type": 1,
@@ -47,8 +53,8 @@ const validationSchema = yup.object().shape({
     .nullable(),
   closed_date: yup.date().required("Closed Date is required").nullable(),
   notes: yup.string().required("Note is required"),
-  jobs: yup.string().required("Job is required"),
-  // tasks: yup.string().required("Task is rquire"),
+  jobs: yup.string().required("jobs is required"),
+  tasks: yup.string().required("Task is rquired"),
 });
 
 const DependencyForm = () => {
@@ -58,12 +64,22 @@ const DependencyForm = () => {
 
   const jobselector = useAppSelector((state: any) => state.job.jobies);
   const taskSelector = useAppSelector((state: any) => state.task.taskies);
+  const dependencySelector = useAppSelector(
+    (state: any) => state.dependency.dependencies
+  );
   console.log(jobselector, "jobselector");
-
   const [
-    createTasks,
-    { data: taskData, isLoading: taskIsLoading, error: taskError },
-  ] = useCreateTasksMutation();
+    createDependency,
+    {
+      data: dependencyData,
+      isLoading: dependencyIsLoading,
+      error: dependencyError,
+    },
+  ] = useCreateDependencyMutation();
+  // const [
+  //   createTasks,
+  //   { data: taskData, isLoading: taskIsLoading, error: taskError },
+  // ] = useCreateTasksMutation();
 
   // const [
   //   updateTasks,
@@ -74,67 +90,118 @@ const DependencyForm = () => {
   //   },
   // ] = useUpdateTasksMutation();
 
+  const [
+    updateDependency,
+    { data: updateDataDependency, isLoading: UddIsLoading, error: UddError },
+  ] = useUpdateDependencyMutation();
   const form = useForm({
     resolver: yupResolver(validationSchema),
   });
 
-  const [isEditData, setIsEditData] = useState({});
   const [selectedJobIds, setSelectedJobIds] = useState("");
   const [selectedTaskIds, setSelectedTaskIds] = useState("");
-
-  // console.log(selectedJobIds, "selectedId");
-  const handleSelectChange = (event: any) => {
-    setSelectedJobIds(event.target.value);
-  };
-  const handleSelectTask = (event: any) => {
-    setSelectedTaskIds(event.target.value);
-  };
-
+  console.log(selectedTaskIds, "selectedtaskId");
   const {
     control,
     handleSubmit,
+    setValue,
     watch,
     formState: { errors },
   } = form;
 
+  const handleSelectChange = (event: any) => {
+    setValue("jobs", event.target.value);
+    setSelectedJobIds(event.target.value);
+  };
+
+  const handleSelectTask = (event: any) => {
+    setValue("tasks", event.target.value);
+    setSelectedTaskIds(JSON.stringify(event.target.value));
+  };
+
   const onSubmit = (data: any) => {
+    const expected_closed_date = format(
+      data.expected_closed,
+      "yyyy-MM-dd HH:mm:ss"
+    );
+    const closed_date_date = format(
+      data.expected_closed,
+      "yyyy-MM-dd HH:mm:ss"
+    );
+
+    const requestData = {
+      name: data.name,
+      dependency_type: data.dependency_type,
+      dependency_status: data.dependency_status,
+      expected_closed: expected_closed_date,
+      closed_date: closed_date_date,
+      notes: data.notes,
+      jobs: data.jobs,
+      tasks: data.tasks,
+    };
+
     console.log(data, "Data");
+    if (isEdit) {
+      updateDependency({ id: params.id, data: requestData });
+    } else {
+      createDependency(requestData);
+    }
   };
 
   useEffect(() => {
-    if (!taskIsLoading && taskData) {
-      taskData.code >= 400
-        ? toast.error(taskData.message)
-        : toast.success(taskData.message) && navigate("/tasks");
+    if (!dependencyIsLoading && dependencyData) {
+      dependencyData.code >= 400
+        ? toast.error(dependencyData.message)
+        : toast.success(dependencyData.message) && navigate("/dependencys");
     }
-  }, [taskIsLoading, taskError, taskData]);
+  }, [dependencyIsLoading, dependencyError, dependencyData]);
 
   useEffect(() => {
+    if (!UddIsLoading && updateDataDependency) {
+      updateDataDependency.code >= 400
+        ? toast.error(updateDataDependency.message)
+        : toast.success(updateDataDependency.message) &&
+          navigate("/dependencys");
+    }
+  }, [UddIsLoading, UddError, updateDataDependency]);
+
+  useEffect(() => {
+    const excluded_fields_jobs = ["jobs"];
+    const excluded_fields_tasks = ["tasks"];
+    const excluded_fields_expected_closed = ["expected_closed"];
+    const excluded_fields_closed_date = ["closed_date"];
     if (isEdit) {
-      if (taskSelector) {
-        const getTask = taskSelector.filter(
+      if (dependencySelector) {
+        const getDependency = dependencySelector.filter(
           (item: any) => item.id === Number(params.id)
         );
-        setIsEditData(getTask[0]);
+        console.log(getDependency[0], "getDependency");
+        Object.entries(getDependency[0] ?? []).forEach(([name, value]: any) => {
+          console.log(name, "value", value);
+          // console.log(name,">>>>",value,"<<<<<<");
+          if (excluded_fields_jobs.includes(name)) {
+            form.setValue("jobs", value);
+            setSelectedJobIds(value);
+            return;
+          }
+          if (excluded_fields_tasks.includes(name)) {
+            form.setValue("tasks", value);
+            setSelectedTaskIds(value);
+            return;
+          }
+          if (excluded_fields_expected_closed.includes(name)) {
+            form.setValue("expected_closed", value.slice(0, 10));
+            return;
+          }
+          if (excluded_fields_closed_date.includes(name)) {
+            form.setValue("closed_date", value.slice(0, 10));
+            return;
+          }
+          form.setValue(name, value);
+        });
       }
     }
   }, [isEdit, params.id]);
-
-  useEffect(() => {
-    const excluded_fields = ["predecessors"];
-
-    if (isEditData) {
-      Object.entries(isEditData ?? []).forEach(([name, value]: any) => {
-        console.log(name, "value", value);
-        // console.log(name,">>>>",value,"<<<<<<");
-        if (excluded_fields.includes(name)) {
-          setSelectedJobIds(value);
-          return;
-        }
-        form.setValue(name, value);
-      });
-    }
-  }, [isEditData]);
 
   return (
     <>
@@ -280,67 +347,79 @@ const DependencyForm = () => {
                         name="jobs"
                         control={control}
                         render={({ field }) => (
-                          <Select
-                            {...field}
-                            value={selectedJobIds}
-                            onChange={handleSelectChange}
-                            label="jobs"
-                          >
-                            {jobselector.map((item: any) => (
-                              <MenuItem key={item.id} value={item.id}>
-                                {item.name}
-                              </MenuItem>
-                            ))}
-                          </Select>
+                          <>
+                            <Select
+                              {...field}
+                              value={selectedJobIds}
+                              onChange={handleSelectChange}
+                              error={!!errors.jobs}
+                              label="jobs"
+                            >
+                              {jobselector.map((item: any) => (
+                                <MenuItem key={item.id} value={item.id}>
+                                  {item.name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                            <FormHelperText sx={{ color: "red" }}>
+                              {errors.jobs?.message}
+                            </FormHelperText>
+                          </>
                         )}
                       />
                     </FormControl>
                   </Grid>
-                  {/* <Grid item xs={12}>
+                  <Grid item xs={12}>
                     <FormControl fullWidth variant="outlined">
                       <InputLabel>Tasks</InputLabel>
                       <Controller
                         name="tasks"
                         control={control}
                         render={({ field }) => (
-                          <Select
-                            {...field}
-                            value={selectedTaskIds}
-                            onChange={handleSelectTask}
-                            label="Tasks"
-                          >
-                            {taskSelector.map((item: any) => (
-                              <MenuItem key={item.id} value={item.id}>
-                                {item.name}
-                              </MenuItem>
-                            ))}
-                          </Select>
+                          <>
+                            <Select
+                              {...field}
+                              value={selectedTaskIds}
+                              error={!!errors.tasks}
+                              onChange={handleSelectTask}
+                              label="Tasks"
+                            >
+                              {taskSelector.map((item: any) => (
+                                <MenuItem key={item.id} value={item.id}>
+                                  {item.name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                            <FormHelperText sx={{ color: "red" }}>
+                              {errors.tasks?.message}
+                            </FormHelperText>
+                          </>
                         )}
                       />
                     </FormControl>
-                  </Grid>  */}
+                  </Grid>
 
                   <Grid item xs={12}>
-                    <Button
+                    {/* <Button
                       type="submit"
                       variant="contained"
                       color="primary"
                       fullWidth
                     >
-                      hjhj
-                    </Button>
+                      Submit
+                    </Button> */}
 
-                    {/* <LoadingButton
+                    <LoadingButton
                       size="small"
                       type="submit"
-                      // loading={taskIsLoading || updateTaskIsLoading}
+                      loading={dependencyIsLoading || UddIsLoading}
                       color="primary"
                       variant="contained"
                       sx={{ marginBottom: 5 }}
                       fullWidth
                     >
                       {isEdit ? "Save Changes" : "Submit"}
-                    </LoadingButton> */}
+                    </LoadingButton>
                   </Grid>
                 </Grid>
               </form>

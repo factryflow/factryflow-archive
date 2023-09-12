@@ -1,9 +1,9 @@
 import {createApi,fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import { GetAllJobType } from '../types/jobs.types';
 
-export const dependencyApi = createApi({
+
+export const dependencytypeApi = createApi({
     
-    reducerPath:"dependencyApi",
+    reducerPath:"dependencytypeApi",
     baseQuery:fetchBaseQuery({
         // baseUrl:" http://127.0.0.1:8000/"
         baseUrl:import.meta.env.VITE_API_ENDPOINT,
@@ -14,20 +14,20 @@ export const dependencyApi = createApi({
             )
         }
     }),
-    tagTypes: ['getAllDependencys'],
+    tagTypes: ['getAllDependencyType'],
     endpoints:(builder)=>({
-        // getAllDependency Api
-        getAllDependencys: builder.query<any[], void>({
+        //get All depency type Api
+        getAllDependencyType: builder.query<any[], void>({
             query: () => {
-              return `api/dependency/get-dependency-list/`;
+              return `api/dependency/get-dependency-types-list/`;
             },
             transformResponse: (res:  { data: any[] }) => {
                 const data = res.data;
-                const result = data.filter((item:any)=>item.is_deleted === false);
+                const result = data;
                 return result
                
             },
-            providesTags: ['getAllDependencys']
+            providesTags: ['getAllDependencyType']
           }),
 
         //   getJobbyId Api
@@ -41,38 +41,38 @@ export const dependencyApi = createApi({
         //     transformResponse: (res: any) => res.data
         // }),
 
-        // create Dependency Api
-          createDependency:builder.mutation({
+        // create depency type Api
+          createDependencytype:builder.mutation({
             query:(body:any)=>{
                 return {
-                    url:'api/dependency/create-dependency/',
+                    url:'api/dependency/create-dependency-type/',
                     method:'post',
                     body,
                 }
             },
-            invalidatesTags:['getAllDependencys'],
+            invalidatesTags:['getAllDependencyType'],
     
-        }),
-        // delete Dependency Api
-        deleteDependency:builder.mutation({
+         }),
+        // delete depency type Api
+        deleteDependencytype:builder.mutation({
             query:(id:number)=>{
                 return{
-                    url:`api/dependency/delete-dependency/${id}/`,
+                    url:`api/dependency/delete-dependency-type/${id}/`,
                     method:'delete',
                 }
             },
-            invalidatesTags:['getAllDependencys'],
+            invalidatesTags:['getAllDependencyType'],
         }),
-        //update Dependency Api
-        updateDependency:builder.mutation({
+        //update depency type Api
+        updateDependencyType:builder.mutation({
             query:({id,data})=>{   
                 return {
-                    url:`api/dependency/update-dependency/${id}/`,
+                    url:`api/dependency/update-dependency-type/${id}/`,
                     method:'put',
                     body:data,
                 }
             },
-            invalidatesTags:['getAllDependencys'],
+            invalidatesTags:['getAllDependencyType'],
     
         })
     }),
@@ -82,12 +82,11 @@ export const dependencyApi = createApi({
 
 
 export const {
-    useGetAllDependencysQuery,
-     useCreateDependencyMutation,
-    useDeleteDependencyMutation,
-    useUpdateDependencyMutation,
-    // useUpdateTasksMutation,
+    useGetAllDependencyTypeQuery,
+    useDeleteDependencytypeMutation,
+    useCreateDependencytypeMutation,
+    useUpdateDependencyTypeMutation,
     // useDeleteJobsMutation,
     // useGetJobByIdMutation,
     // useUpdateJobsMutation
-}=dependencyApi
+}=dependencytypeApi

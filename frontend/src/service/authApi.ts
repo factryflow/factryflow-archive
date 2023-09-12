@@ -5,7 +5,8 @@ export const authApi = createApi({
     reducerPath:"authApi",
     baseQuery:fetchBaseQuery({
         // baseUrl:" http://127.0.0.1:8000/"
-        baseUrl: import.meta.env.VITE_API_ENDPOINT
+        baseUrl: import.meta.env.VITE_API_ENDPOINT,
+
     }),
     endpoints:(builder)=>({
         loginUser:builder.mutation({
@@ -25,9 +26,21 @@ export const authApi = createApi({
                     body,
                 }
             }
+        }),
+        changePassword:builder.mutation({
+            query:(body)=>{
+                return {
+                    url:'api/user/change-password/',
+                    method:'put',
+                    body,
+                    headers:{
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                }
+            }
         })
     })
 })
 
 
-export const {useLoginUserMutation,useRegisterUserMutation}= authApi;
+export const {useLoginUserMutation,useRegisterUserMutation,useChangePasswordMutation}= authApi;
