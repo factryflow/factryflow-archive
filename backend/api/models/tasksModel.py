@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from .jobModel import Jobs
 from simple_history.models import HistoricalRecords
+from api.utils.modelManager import ActiveManager
 
 
 class Tasks(models.Model):
@@ -25,6 +26,7 @@ class Tasks(models.Model):
     is_deleted = models.BooleanField(default=False)
     history = HistoricalRecords(table_name='tasks_history')
 
+    objects = ActiveManager()
 
     def __str__(self):
         return self.name

@@ -16,3 +16,6 @@ from .assignmentRuleModel import *
 from .taskResourceAssignmentModel import *
 from .assignmentRuleCriteriaModel import *
 from .assignmentRuleResourceGroupModel import *
+from .dependencyStatusModel import *
+from .jobTypeModel import *
+from .jobStatusModel import *

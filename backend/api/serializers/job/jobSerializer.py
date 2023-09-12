@@ -1,15 +1,27 @@
 from rest_framework import serializers
-from api.models import Jobs
+from api.models import Jobs, JobType, JobStatus
 
+class CreateGetUpdateJobStatusSerializer(serializers.ModelSerializer):
+    """Create/Update and get details of job status"""
+    class Meta:
+        model = JobStatus
+        fields =("id", "name")
+        
 
-
+class CreateGetUpdateJobTypeSerializer(serializers.ModelSerializer):
+    """Create/Update and get details of job Type"""
+    class Meta:
+        model = JobType
+        fields =("id", "name")
+        
+        
 class CreateUpdateJobSerializer(serializers.ModelSerializer):
     """
     This is for update ,Create of jobs
     """
     class Meta:
         model = Jobs
-        fields = ('id', 'name', 'priority', 'due_date', 'customer', 'description', 'note', 'planned_start', 'planned_end')
+        fields = ('id', 'name', 'priority', 'due_date', 'customer', 'description', 'note', 'planned_start', 'planned_end', 'external_id', 'job_status', 'job_type')
         
     
 
@@ -17,9 +29,11 @@ class GetJobsDetailsSerializer(serializers.ModelSerializer):
     """
     This is for get the details of jobs
     """
+    job_type = CreateGetUpdateJobTypeSerializer()
+    job_status = CreateGetUpdateJobStatusSerializer()
     class Meta:
         model = Jobs
-        fields = ('id', 'name', 'priority', 'due_date', 'customer', 'description', 'note', 'planned_start', 'planned_end', 'is_active', 'is_deleted')
+        fields = ('id', 'name', 'priority', 'due_date', 'customer', 'description', 'note', 'planned_start', 'planned_end', 'external_id', 'job_status', 'job_type', 'is_active', 'is_deleted')
     
     
 

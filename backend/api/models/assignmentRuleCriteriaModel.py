@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from simple_history.models import HistoricalRecords
 from .assignmentRuleModel import AssignmentRule
+from api.utils.modelManager import ActiveManager
 
 class AssignmentRuleCriteria(models.Model):
     id = models.AutoField(primary_key=True)
@@ -17,6 +18,7 @@ class AssignmentRuleCriteria(models.Model):
     is_deleted = models.BooleanField(default=False)
     history = HistoricalRecords(table_name='assignment_rule_criteria_history')
 
+    objects = ActiveManager()
 
     def __str__(self):
         return self.field

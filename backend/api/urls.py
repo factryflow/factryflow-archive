@@ -58,9 +58,9 @@ urlpatterns = [
     #Resources-Group
     path('resource/create-resource-group/', CreateResourceGroupsView.as_view(), name="create-resources-group"),
     path('resource/update-resource-group/<int:id>/', UpdateResourceGroupsView.as_view(), name="update-resources-group"),
-    path('resource/get-resource-group-details/<int:id>/', ResourcesGroupsListView.as_view(), name="get-resources-group-details"),
+    path('resource/get-resource-group-details/<int:id>/', GetResourcesGroupsDetailsView.as_view(), name="get-resources-group-details"),
     path('resource/delete-resource-group/<int:id>/', DeleteResourceGroupsByIdView.as_view(), name="delete-resources-group"),
-    path('resource/get-resource-group-list/', GetResourcesGroupsDetailsView.as_view(), name="get-resources-group-list"),
+    path('resource/get-resource-group-list/', ResourcesGroupsListView.as_view(), name="get-resources-group-list"),
 
     #operation exception type
     path('operational-exception/create-type/', CreateOperationalExceptionTypeView.as_view(), name="create-operational-exception-type"),

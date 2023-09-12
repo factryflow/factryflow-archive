@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from .userModel import User
 from simple_history.models import HistoricalRecords
+from api.utils.modelManager import ActiveManager
 
 
 class ScheduleRun(models.Model):
@@ -15,7 +16,8 @@ class ScheduleRun(models.Model):
     is_deleted = models.BooleanField(default=False)
     history = HistoricalRecords(table_name='schedule_run_history')
 
-
+    objects = ActiveManager()
+    
     def __str__(self):
         return str(self.id)
 

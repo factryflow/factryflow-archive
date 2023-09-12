@@ -3,6 +3,7 @@ from django.utils import timezone
 from simple_history.models import HistoricalRecords
 from .assignmentRuleModel import AssignmentRule
 from .resourceGroupsModel import ResourceGroups
+from api.utils.modelManager import ActiveManager
 
 class AssignmentRuleResourceGroup(models.Model):
     id = models.AutoField(primary_key=True)
@@ -16,6 +17,8 @@ class AssignmentRuleResourceGroup(models.Model):
     history = HistoricalRecords(table_name='assignment_rule_resource_group_history')
 
 
+    objects = ActiveManager()
+    
     def __str__(self):
         return str(self.id)
 
