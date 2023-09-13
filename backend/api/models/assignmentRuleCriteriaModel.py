@@ -7,7 +7,7 @@ from api.utils.modelManager import ActiveManager
 class AssignmentRuleCriteria(models.Model):
     id = models.AutoField(primary_key=True)
     field = models.CharField(max_length=150)
-    operator = models.IntegerField(blank=True, null=True)
+    operator = models.IntegerField(blank=True, null=True, default=1, help_text="1. Equals, 2. Add, 3. Subtract, 4. Divide, 5. Multiple")
     value = models.CharField(max_length=254, blank=True, null=True)
     parent = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, null=True)
     assignment_rule = models.ForeignKey(AssignmentRule, on_delete=models.CASCADE, blank=True, null=True)

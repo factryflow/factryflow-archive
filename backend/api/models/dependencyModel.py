@@ -9,14 +9,13 @@ from api.utils.modelManager import ActiveManager
 
 class Dependency(models.Model):
     id = models.AutoField(primary_key=True)
+    external_id = models.CharField(max_length=180, blank=True, null=True)
     name = models.CharField(max_length=150)
     dependency_type = models.ForeignKey(DependencyTypes, on_delete=models.DO_NOTHING, blank=True, null=True)
     dependency_status = models.ForeignKey(DependencyStatus, on_delete=models.DO_NOTHING, blank=True, null=True)
-    expected_closed = models.DateTimeField(blank=True, null=True)
-    closed_date = models.DateTimeField(blank=True, null=True)
+    expected_close_datetime = models.DateTimeField(blank=True, null=True)
+    actual_close_datetime = models.DateTimeField(blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
-    jobs = models.ForeignKey(Jobs, on_delete=models.CASCADE, related_name="dependency_list")
-    tasks = models.ForeignKey(Tasks, on_delete=models.CASCADE, related_name="task_dependency")
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
     deleted_at = models.DateTimeField(blank=True, null=True)

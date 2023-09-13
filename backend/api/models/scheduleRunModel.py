@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from .userModel import User
+from .scheduleRunStatusModel import ScheduleRunStatus
 from simple_history.models import HistoricalRecords
 from api.utils.modelManager import ActiveManager
 
@@ -9,6 +10,7 @@ class ScheduleRun(models.Model):
     id = models.AutoField(primary_key=True)
     triggered_on = models.DateTimeField(blank=True, null=True)
     triggered_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="triggered_by", blank=True, null=True)
+    schedule_status = models.ForeignKey(ScheduleRunStatus, on_delete=models.CASCADE, related_name="schedule_status", blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
     deleted_at = models.DateTimeField(blank=True, null=True)
