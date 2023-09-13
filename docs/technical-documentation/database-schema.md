@@ -2,308 +2,292 @@
 
 All tables will have the following metadata fields:
 
-| data_type | field_name  |
-|----------|-------------|
-| datetime | updated_at  |
-| boolean  | is_active   |
-| boolean  | is_deleted  |
-| datetime | deleted_at  |
+| data_type | field_name |
+| --------- | ---------- |
+| datetime  | updated_at |
+| boolean   | is_active  |
+| boolean   | is_deleted |
+| datetime  | deleted_at |
 
-## Assignment Rule Table
+## `assignment_rule`
 
-``` mermaid
-erDiagram
-  assignment_rule {
-        int id PK
-        string name
-        string description
-        int priority
-        int resource_count
-        bool use_all_resources
-    }
-```
+**Description**: Stores the rules for assignments, including their priority and resource count.
 
+| data_type | field_name        | constraints | default | relationships | comments |
+| --------- | ----------------- | ----------- | ------- | ------------- | -------- |
+| int       | id                | PK          |         |               |          |
+| string    | name              | NOT NULL    | 'N/A'   |               |          |
+| string    | description       |             | 'N/A'   |               |          |
+| int       | priority          |             |         |               |          |
+| int       | resource_count    |             | 1       |               |          |
+| bool      | use_all_resources |             | false   |               |          |
 
+## `assignment_rule_criteria`
 
-## Assignment Rule Criteria Table
+**Description**: Defines the criteria for each assignment rule.
 
-``` mermaid
-erDiagram
-    assignment_rule_criteria {
-        int id PK
-        int parent_id "Parent criteria ID if any"
-        string field "Task field associated with the criteria."  
-        enum operator "Operator used for the criteria (e.g., `equals`, `less_than`)"
-        string value "Value of the criteria."
-        int assignment_rule_id FK
-    }
-```
+| data_type | field_name         | constraints | default  | relationships     | comments                  |
+| --------- | ------------------ | ----------- | -------- | ----------------- | ------------------------- |
+| int       | id                 | PK          |          |                   |                           |
+| int       | parent_id          |             | NULL     |                   | Parent criteria ID if any |
+| string    | field              | NOT NULL    | 'N/A'    |                   |                           |
+| enum      | operator           |             | 'equals' |                   |                           |
+| string    | value              |             | 'N/A'    |                   |                           |
+| int       | assignment_rule_id | FK          |          | `assignment_rule` |                           |
 
-## Assignment Rule Resource Group Table
+## `assignment_rule_resource_group`
 
-``` mermaid
-erDiagram
-  assignment_rule_resource_group {
-        int assigment_rule_id PK,FK
-        int resource_group_id PK,FK
-    }
-```
+**Description**: Links assignment rules to resource groups.
 
-## Dependency Table
+| data_type | field_name        | constraints | default | relationships     | comments |
+| --------- | ----------------- | ----------- | ------- | ----------------- | -------- |
+| int       | assigment_rule_id | PK, FK      |         | `assignment_rule` |          |
+| int       | resource_group_id | PK, FK      |         | `resource_group`  |          |
 
-``` mermaid
-erDiagram
-    dependency {
-        int id PK 
-        string external_id
-        string name
-        int dependency_status_id FK
-        int dependency_type_id FK
-        datetime expected_close_datetime
-        datetime actual_close_datetime
-        string notes
-    }
-```
+## `dependency`
 
-## Dependency Status Table
+**Description**: Manages external dependencies for tasks and jobs.
 
-``` mermaid
-erDiagram
-    dependency_status {
-        int id PK 
-        string name
-    }
-```
+| data_type | field_name              | constraints | default | relationships       | comments                                          |
+| --------- | ----------------------- | ----------- | ------- | ------------------- | ------------------------------------------------- |
+| int       | id                      | PK          |         |                     |                                                   |
+| string    | external_id             |             | 'N/A'   |                     | External Identifier for the dependency            |
+| string    | name                    |             | 'N/A'   |                     |                                                   |
+| int       | dependency_status_id    | FK          |         | `dependency_status` |                                                   |
+| int       | dependency_type_id      | FK          |         | `dependency_type`   |                                                   |
+| datetime  | expected_close_datetime |             |         |                     | Expected closure date/time for the dependency     |
+| datetime  | actual_close_datetime   |             |         |                     | Actual closure date/time for the dependency       |
+| string    | notes                   |             | 'N/A'   |                     | Additional notes or comments about the dependency |
 
-## Dependency Type Table
+## `dependency_status`
 
-``` mermaid
-erDiagram
-    dependency_type {
-        int id PK 
-        string name
+**Description**: Lists possible statuses for dependencies.
 
-    }
-```
+| data_type | field_name | constraints | default | relationships | comments |
+| --------- | ---------- | ----------- | ------- | ------------- | -------- |
+| int       | id         | PK          |         |               |          |
+| string    | name       |             | 'N/A'   |               |          |
 
-## Job Table
+## `dependency_type`
 
-``` mermaid
-erDiagram
-    job {
-        int id PK 
-        string name
-        string description
-        string customer "Customer associated with the job."
-        date due_date "Due date for the job completion."
-        timestamp planned_start_datetime "Populated by schedule-run"
-        timestamp planned_end_datetime "Populated by schedule-run"
-        string external_id "External Identifier for the job."
-        string notes "Additional notes or comments about the job."
-        int job_status_id FK
-        int job_type_id FK
-    }
-```
+**Description**: Categorizes dependencies into types.
 
-## Job Dependency
+| data_type | field_name | constraints | default | relationships | comments |
+| --------- | ---------- | ----------- | ------- | ------------- | -------- |
+| int       | id         | PK          |         |               |          |
+| string    | name       |             | 'N/A'   |               |          |
 
-``` mermaid
-erDiagram
-    job_dependency {
-        int job_id PK,FK
-        int dependency_id PK,FK
-    }
-```
+## `job`
 
-## Job Status Table
+**Description**: Represents jobs in the production schedule.
 
-``` mermaid
-erDiagram
-    job_status {
-        int id PK 
-        string name
-    }
-```
+| data_type | field_name             | constraints | default | relationships | comments                               |
+| --------- | ---------------------- | ----------- | ------- | ------------- | -------------------------------------- |
+| int       | id                     | PK          |         |               |                                        |
+| string    | name                   |             | 'N/A'   |               |                                        |
+| string    | description            |             | 'N/A'   |               |                                        |
+| string    | customer               |             | 'N/A'   |               | Customer associated with the job       |
+| date      | due_date               |             |         |               | Due date for the job completion        |
+| int       | priority               |             |         |               | Priority of the job                    |
+| timestamp | planned_start_datetime |             |         |               | Start datetime planned by schedule-run |
+| timestamp | planned_end_datetime   |             |         |               | End datetime planned by schedule-run   |
+| string    | external_id            |             | 'N/A'   |               |                                        |
+| string    | notes                  |             | 'N/A'   |               |                                        |
+| int       | job_status_id          | FK          |         | `job_status`  |                                        |
+| int       | job_type_id            | FK          |         | `job_type`    |                                        |
 
-## Job Type Table
+## `job_dependency`
 
-``` mermaid
-erDiagram
-    job_type {
-        int id PK 
-        string name
-    }
-```
+**Description**: Links jobs to their dependencies.
 
-## Operation Exception Table
+| data_type | field_name    | constraints | default | relationships | comments |
+| --------- | ------------- | ----------- | ------- | ------------- | -------- |
+| int       | job_id        | PK, FK      |         | `job`         |          |
+| int       | dependency_id | PK, FK      |         | `dependency`  |          |
 
-``` mermaid
-erDiagram
-    operational_exception {
-        int id PK 
-        string external_id
-        datetime start_datetime
-        datetime end_datetime
-        string notes
-        int weekly_shift_template_id FK
-    }
-```
+## `job_status`
 
-## Resource Table
+**Description**: Lists possible statuses for jobs.
 
-``` mermaid
-erDiagram
-    resource {
-        int id PK 
-        string name
-    }
-```
+| data_type | field_name | constraints | default | relationships | comments |
+| --------- | ---------- | ----------- | ------- | ------------- | -------- |
+| int       | id         | PK          |         |               |          |
+| string    | name       |             | 'N/A'   |               |          |
 
-## Resource Group Table
+## `job_type`
 
-``` mermaid
-erDiagram
-    resource_group {
-        int id PK 
-        string name
-    }
-```
+**Description**: Categorizes jobs into different types.
 
-## Schedule Run Table
+| data_type | field_name | constraints | default | relationships | comments |
+| --------- | ---------- | ----------- | ------- | ------------- | -------- |
+| int       | id         | PK          |         |               |          |
+| string    | name       |             | 'N/A'   |               |          |
 
-``` mermaid
-erDiagram
-    schedule_run_table {
-        int id PK 
-        datetime triggered_on
-        int schedule_status_id FK
-    }
-```
+## `operational_exception`
 
-## Schedule Run Status Table
+**Description**: Manages exceptions in operations.
 
-``` mermaid
-erDiagram
-    schedule_run_status {
-        int id PK 
-        string name
-    }
-```
+| data_type | field_name                    | constraints | default | relationships                | comments |
+| --------- | ----------------------------- | ----------- | ------- | ---------------------------- | -------- |
+| int       | id                            | PK          |         |                              |          |
+| string    | external_id                   |             | 'N/A'   |                              |          |
+| datetime  | start_datetime                |             |         |                              |          |
+| datetime  | end_datetime                  |             |         |                              |          |
+| string    | notes                         |             | 'N/A'   |                              |          |
+| int       | weekly_shift_template_id      | FK          |         | `weekly_shift_template`      |          |
+| int       | operational_exception_type_id | FK          |         | `operational_exception_type` |          |
 
-## Task Table
+## `operational_exception_type`
 
-``` mermaid
-erDiagram
-    task {
-        int id PK
-        string name
-        int task_status FK 
-        int quantity
-        int setup_time
-        int run_time_per_unit 
-        int teardown_time
-        datetime planned_start_datetime "Populated by schedule-run"
-        datetime planned_end_datetime "Populated by schedule-run"
-        string item "The item which is produced"
-        int task_status_id FK
-        int task_type_id FK
-        int job_id FK "The associated job, NULLABLE"
-    }
-```
+**Description**: Categorizes operational exceptions into types.
 
-## Task Dependency
+| data_type | field_name    | constraints | default | relationships | comments |
+| --------- | ------------- | ----------- | ------- | ------------- | -------- |
+| int       | task_id       | PK, FK      |         | `task`        |          |
+| int       | dependency_id | PK, FK      |         | `dependency`  |          |
 
-``` mermaid
-erDiagram
-    task_dependency {
-        int task_id PK,FK
-        int dependency_id PK,FK
-    }
-```
+## `resource`
 
-## Task Relationship Table
+**Description**: Represents resources available for tasks.
 
-``` mermaid
-erDiagram
-    task_relaationship {
-        int predecessor_id PK,FK "id of task"
-        string successor_id PK,FK "id of task"
-    }
-```
+| data_type | field_name               | constraints | default | relationships           | comments |
+| --------- | ------------------------ | ----------- | ------- | ----------------------- | -------- |
+| int       | id                       | PK          |         |                         |          |
+| string    | name                     |             | 'N/A'   |                         |          |
+| int       | weekly_shift_template_id | FK          |         | `weekly_shift_template` |          |
 
-## Task Resource Assigment Table
+## `resource_group`
 
-``` mermaid
-erDiagram
-    task_resource_assigment {
-        int task_id PK,FK
-        string resource_id PK,FK
-    }
-```
+**Description**: Groups resources for better management.
 
-## Task Status Table
+| data_type | field_name | constraints | default | relationships | comments |
+| --------- | ---------- | ----------- | ------- | ------------- | -------- |
+| int       | id         | PK          |         |               |          |
+| string    | name       |             | 'N/A'   |               |          |
 
-``` mermaid
-erDiagram
-    task_status {
-        int id PK 
-        string name
-    }
-```
+## `schedule_run_table`
 
-## Task Type Table
+**Description**: Logs when the scheduling algorithm was run.
 
-``` mermaid
-erDiagram
-    task_type {
-        int id PK 
-        string name
-    }
-```
+| data_type | field_name         | constraints | default | relationships         | comments                           |
+| --------- | ------------------ | ----------- | ------- | --------------------- | ---------------------------------- |
+| int       | id                 | PK          |         |                       |                                    |
+| datetime  | triggered_on       |             |         |                       | Datetime when the schedule was run |
+| int       | schedule_status_id | FK          |         | `schedule_run_status` |                                    |
 
-## User Table
+## `schedule_run_status`
 
-``` mermaid
-erDiagram
-    user {
-        int id PK 
-        string first_name
-        string last_name
-        sting email
-        sting password
-        int user_role_id fk
-    }
-```
+**Description**: Lists possible statuses for schedule runs.
 
-## User Role Table
+| data_type | field_name | constraints | default | relationships | comments |
+| --------- | ---------- | ----------- | ------- | ------------- | -------- |
+| int       | id         | PK          |         |               |          |
+| string    | name       |             | 'N/A'   |               |          |
 
-``` mermaid
-erDiagram
-    user_role {
-        int id PK 
-        string name
-    }
-```
+## `task`
 
-## Weekly Shift Template Table
+**Description**: Represents individual tasks in the production schedule.
 
-``` mermaid
-erDiagram
-    weekly_shift_template {
-        int id PK 
-        string name
-    }
-```
+| data_type | field_name             | constraints | default | relationships | comments                               |
+| --------- | ---------------------- | ----------- | ------- | ------------- | -------------------------------------- |
+| int       | id                     | PK          |         |               |                                        |
+| string    | name                   |             | 'N/A'   |               |                                        |
+| int       | task_status            | FK          |         | `task_status` |                                        |
+| int       | quantity               |             | 1       |               |                                        |
+| int       | setup_time             |             |         |               |                                        |
+| int       | run_time_per_unit      |             |         |               |                                        |
+| int       | teardown_time          |             |         |               |                                        |
+| datetime  | planned_start_datetime |             |         |               | Start datetime planned by schedule-run |
+| datetime  | planned_end_datetime   |             |         |               | End datetime planned by schedule-run   |
+| string    | item                   |             | 'N/A'   |               | The item which is produced             |
+| int       | task_status_id         | FK          |         | `task_status` |                                        |
+| int       | task_type_id           | FK          |         | `task_type`   |                                        |
+| int       | job_id                 | FK          |         | `job`         | The associated job, NULLABLE           |
 
-## Weekly Shift Template Detail Table
+## `task_dependency`
 
-``` mermaid
-erDiagram
-    weekly_shift_template_detail {
-        int id PK 
-        int day_of_week
-        time start_time
-        time end_time
-        int weekly_shift_template_id FK
-    }
-```
+**Description**: Links tasks to their dependencies.
+
+| data_type | field_name    | constraints | default | relationships | comments |
+| --------- | ------------- | ----------- | ------- | ------------- | -------- |
+| int       | task_id       | PK, FK      |         | `task`        |          |
+| int       | dependency_id | PK, FK      |         | `dependency`  |          |
+
+## `task_relationship`
+
+**Description**: Defines relationships between tasks.
+
+| data_type | field_name     | constraints | default | relationships | comments |
+| --------- | -------------- | ----------- | ------- | ------------- | -------- |
+| int       | predecessor_id | PK, FK      |         | `task`        |          |
+| string    | successor_id   | PK, FK      |         | `task`        |          |
+
+## `task_resource_assignment`
+
+**Description**: Assigns resources to tasks.
+
+| data_type | field_name  | constraints | default | relationships | comments |
+| --------- | ----------- | ----------- | ------- | ------------- | -------- |
+| int       | task_id     | PK, FK      |         | `task`        |          |
+| string    | resource_id | PK, FK      |         | `resource`    |          |
+
+## `task_status`
+
+**Description**: Lists possible statuses for tasks.
+
+| data_type | field_name | constraints | default | relationships | comments |
+| --------- | ---------- | ----------- | ------- | ------------- | -------- |
+| int       | id         | PK          |         |               |          |
+| string    | name       |             | 'N/A'   |               |          |
+
+## `task_type`
+
+**Description**: Categorizes tasks into different types.
+
+| data_type | field_name | constraints | default | relationships | comments |
+| --------- | ---------- | ----------- | ------- | ------------- | -------- |
+| int       | id         | PK          |         |               |          |
+| string    | name       |             | 'N/A'   |               |          |
+
+## `user`
+
+**Description**: Represents users of the production scheduling software.
+
+| data_type | field_name   | constraints | default | relationships | comments  |
+| --------- | ------------ | ----------- | ------- | ------------- | --------- |
+| int       | id           | PK          |         |               |           |
+| string    | first_name   |             | 'N/A'   |               |           |
+| string    | last_name    |             | 'N/A'   |               |           |
+| string    | email        |             | 'N/A'   |               |           |
+| string    | password     |             | 'N/A'   |               | Encrypted |
+| int       | user_role_id | FK          |         | `user_role`   |           |
+
+## `user_role`
+
+**Description**: Defines roles for users.
+
+| data_type | field_name | constraints | default | relationships | comments |
+| --------- | ---------- | ----------- | ------- | ------------- | -------- |
+| int       | id         | PK          |         |               |          |
+| string    | name       |             | 'N/A'   |               |          |
+
+## `weekly_shift_template`
+
+**Description**: Templates for weekly shifts.
+
+| data_type | field_name | constraints | default | relationships | comments |
+| --------- | ---------- | ----------- | ------- | ------------- | -------- |
+| int       | id         | PK          |         |               |          |
+| string    | name       |             | 'N/A'   |               |          |
+
+## `weekly_shift_template_detail`
+
+**Description**: Detailed breakdown of weekly shift templates.
+
+| data_type | field_name               | constraints | default | relationships           | comments |
+| --------- | ------------------------ | ----------- | ------- | ----------------------- | -------- |
+| int       | id                       | PK          |         |                         |          |
+| int       | day_of_week              |             | 0       |                         |          |
+| time      | start_time               |             |         |                         |          |
+| time      | end_time                 |             |         |                         |          |
+| int       | weekly_shift_template_id | FK          |         | `weekly_shift_template` |          |
