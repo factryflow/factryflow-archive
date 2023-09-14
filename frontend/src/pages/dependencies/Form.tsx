@@ -76,6 +76,9 @@ const DependencyForm = () => {
       error: dependencyError,
     },
   ] = useCreateDependencyMutation();
+
+  console.log(dependencyError, "dependencyDtaa");
+
   // const [
   //   createTasks,
   //   { data: taskData, isLoading: taskIsLoading, error: taskError },
@@ -149,8 +152,8 @@ const DependencyForm = () => {
   };
 
   useEffect(() => {
-    if (!dependencyIsLoading && dependencyData) {
-      dependencyData.code >= 400
+    if (!dependencyIsLoading && dependencyData && dependencyError) {
+      dependencyData.code === 400
         ? toast.error(dependencyData.message)
         : toast.success(dependencyData.message) && navigate("/dependencys");
     }

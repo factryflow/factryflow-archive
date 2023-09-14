@@ -16,6 +16,10 @@ import Resources from "./pages/resources";
 import ChangePass from "./pages/auth/ChangePass";
 import ResourcesGroup from "./pages/resources/resorcesgroup";
 import ResourceForm from "./pages/resources/Form";
+import ResourceGroupForm from "./pages/resources/resorcesgroup/Form";
+import Exception from "./pages/Exception";
+import ExceptionType from "./pages/Exception/ExceptionType";
+
 function App() {
   // const dispatch = useAppDispatch();
   // const user = JSON.parse(localStorage.getItem("token") || "{}");
@@ -61,6 +65,17 @@ function App() {
           <Route path="/resources/form/:id" element={<ResourceForm />} />
 
           <Route path="/resources/resourcegroup" element={<ResourcesGroup />} />
+          <Route
+            path="/resources/resourcegroup/form"
+            element={<ResourceGroupForm />}
+          />
+          <Route
+            path="/resources/resourcegroup/form/:id"
+            element={<ResourceGroupForm />}
+          />
+
+          <Route path="/exception" element={<Exception />} />
+          <Route path="/exception/exception-type" element={<ExceptionType />} />
         </Route>
       </Routes>
     </>

@@ -13,6 +13,8 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import TaskIcon from "@mui/icons-material/Task";
 import WorkIcon from "@mui/icons-material/Work";
+import Logo from "../../assets/images/dependency.svg";
+
 import { useNavigate } from "react-router-dom";
 import { useAppStore } from "../../appStore";
 
@@ -167,7 +169,7 @@ export default function Sidenav() {
                   justifyContent: "center",
                 }}
               >
-                <TaskIcon />
+                <img src={Logo} alt="images" height={30} width={24} />
               </ListItemIcon>
               <ListItemText
                 primary="Dependencys"
@@ -204,6 +206,38 @@ export default function Sidenav() {
               </ListItemIcon>
               <ListItemText
                 primary="Resources"
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
+        </List>
+        {/* <Divider /> */}
+        <List>
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => {
+              navigate("/exception");
+            }}
+          >
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <TaskIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Exception"
                 sx={{ opacity: open ? 1 : 0 }}
               />
             </ListItemButton>

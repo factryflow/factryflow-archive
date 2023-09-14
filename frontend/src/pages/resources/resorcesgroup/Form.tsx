@@ -74,7 +74,7 @@ const ResourceGroupForm = () => {
     (state) => state.resource.resourcesies
   );
 
-  console.log(resourceSelector, "resourceSelector");
+  // console.log(resourceSelector, "resourceSelector");
   const {
     control,
     handleSubmit,
@@ -110,7 +110,8 @@ const ResourceGroupForm = () => {
     if (!updateResourceGroupIsLoading && updateResourceGroup) {
       updateResourceGroup.code >= 400
         ? toast.error(updateResourceGroup.message)
-        : toast.success(updateResourceGroup.message) && navigate("/resources");
+        : toast.success(updateResourceGroup.message) &&
+          navigate("/resources/resourcegroup");
     }
   }, [
     updateResourceGroupIsLoading,
@@ -121,18 +122,20 @@ const ResourceGroupForm = () => {
   useEffect(() => {
     const excluded_fields = ["resources_list"];
     if (isEdit) {
-      if (resourceSelector) {
-        const getresource = resourceSelector.filter(
+      if (resourceGroupSelector) {
+        const getresourceGroup = resourceGroupSelector.filter(
           (item: any) => item.id === Number(params.id)
         );
 
-        Object.entries(getresource[0] ?? []).forEach(([name, value]: any) => {
-          if (excluded_fields.includes(name)) {
-            setSelectedIds(value);
-            return;
+        Object.entries(getresourceGroup[0] ?? []).forEach(
+          ([name, value]: any) => {
+            if (excluded_fields.includes(name)) {
+              setSelectedIds(value);
+              return;
+            }
+            form.setValue(name, value);
           }
-          form.setValue(name, value);
-        });
+        );
       }
     }
   }, [isEdit]);
@@ -147,7 +150,7 @@ const ResourceGroupForm = () => {
           >
             <CardContent>
               <Typography gutterBottom variant="h5">
-                {isEdit ? "Edit Resource " : "Create Resource "}
+                {isEdit ? "Edit Resource Group" : "Create Resource Group "}
               </Typography>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Grid container spacing={1}>
@@ -172,7 +175,7 @@ const ResourceGroupForm = () => {
 
                   <Grid item xs={12}>
                     <FormControl fullWidth variant="outlined">
-                      <InputLabel>Resource Group</InputLabel>
+                      <InputLabel>Resource List</InputLabel>
                       <Controller
                         name="resources_list"
                         control={control}
@@ -182,7 +185,7 @@ const ResourceGroupForm = () => {
                             multiple
                             value={selectedIds}
                             onChange={handleSelectChange}
-                            label="Resource Groups List"
+                            label="Resource  List"
                           >
                             {resourceSelector.map((item: any) => (
                               <MenuItem key={item.id} value={item.id}>

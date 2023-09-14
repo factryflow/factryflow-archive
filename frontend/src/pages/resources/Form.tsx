@@ -77,7 +77,7 @@ const ResourceForm = () => {
     (state) => state.resource.resourcesies
   );
 
-  console.log(resourceSelector, "resourceSelector");
+  // console.log(resourceSelector, "resourceSelector");
   const {
     control,
     handleSubmit,

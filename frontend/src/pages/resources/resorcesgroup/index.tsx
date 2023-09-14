@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Box, Button, Stack } from "@mui/material";
 import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
 import Header from "../../../components/Header";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { toast } from "react-toastify";
@@ -18,6 +18,7 @@ import {
 import { setResourceGroups } from "../../../features/resourceGroupSlice";
 const ResourcesGroup = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const resourceGroupSelector = useAppSelector(
     (state) => state.resourceGroup.resourceGroups
   );
@@ -65,14 +66,14 @@ const ResourcesGroup = () => {
               (item: any) => item.id !== currentRow?.id
             );
             dispatch(setResourceGroups(newresourceGroupData));
-            toast.success("Task Delete Successfully");
+            toast.success("Resource Group Delete Successfully");
           }
           return;
         };
 
         const handleEditAction = (e: React.SyntheticEvent<any>) => {
-          // const currentRow = params.row;
-          // navigate(`/tasks/form/${currentRow?.id}`);
+          const currentRow = params.row;
+          navigate(`/resources/resourceGroup/form/${currentRow?.id}`);
         };
 
         return (
