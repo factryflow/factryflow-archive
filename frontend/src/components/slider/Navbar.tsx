@@ -15,13 +15,13 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import { toast } from "react-toastify";
 import { useAppStore } from "../../appStore";
 import { useAppSelector } from "../../app/hooks";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout, selectAuth } from "../../features/authSlice";
-import { toast } from "react-toastify";
-
+import { setMenu } from "../../features/menuSlice";
 const AppBar = styled(
   MuiAppBar,
   {}
@@ -74,8 +74,7 @@ export default function Navbar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
 
-  const updateOpen = useAppStore((state) => state.updateOpen);
-  const dopen = useAppStore((state) => state.dopen);
+  const dopen = useAppSelector((state) => state.menu.menu);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -194,7 +193,7 @@ export default function Navbar() {
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}
-            onClick={() => updateOpen(!dopen)}
+            onClick={() => dispatch(setMenu(!dopen))}
           >
             <MenuIcon />
           </IconButton>

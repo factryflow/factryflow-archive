@@ -19,15 +19,10 @@ import ResourceForm from "./pages/resources/Form";
 import ResourceGroupForm from "./pages/resources/resorcesgroup/Form";
 import Exception from "./pages/Exception";
 import ExceptionType from "./pages/Exception/ExceptionType";
+import Template from "./pages/Templates";
+import TemplateForm from "./pages/Templates/Form";
 
 function App() {
-  // const dispatch = useAppDispatch();
-  // const user = JSON.parse(localStorage.getItem("token") || "{}");
-
-  // useEffect(() => {
-  //   dispatch(setUser(user));
-  // }, []);
-
   return (
     <>
       <ToastContainer />
@@ -76,6 +71,10 @@ function App() {
 
           <Route path="/exception" element={<Exception />} />
           <Route path="/exception/exception-type" element={<ExceptionType />} />
+
+          <Route path="/template" element={<Template />} />
+          <Route path="/template/form" element={<TemplateForm />} />
+          <Route path="/template/form/:id" element={<TemplateForm />} />
         </Route>
       </Routes>
     </>

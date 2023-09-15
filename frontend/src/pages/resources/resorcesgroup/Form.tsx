@@ -1,4 +1,3 @@
-import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
@@ -17,6 +16,7 @@ import {
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import { toast } from "react-toastify";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 
@@ -62,10 +62,6 @@ const ResourceGroupForm = () => {
     },
   ] = useCreateresourcesGroupMutation();
 
-  const form = useForm({
-    resolver: yupResolver(validationSchema),
-  });
-
   const resourceGroupSelector = useAppSelector(
     (state) => state.resourceGroup.resourceGroups
   );
@@ -73,8 +69,11 @@ const ResourceGroupForm = () => {
   const resourceSelector = useAppSelector(
     (state) => state.resource.resourcesies
   );
-
   // console.log(resourceSelector, "resourceSelector");
+
+  const form = useForm({
+    resolver: yupResolver(validationSchema),
+  });
   const {
     control,
     handleSubmit,

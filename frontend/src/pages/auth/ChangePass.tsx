@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Layout from "../Layout";
 import { Card, CardContent, Grid, TextField, Typography } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
@@ -8,6 +7,7 @@ import * as yup from "yup";
 
 import { useChangePasswordMutation } from "../../service/authApi";
 import { toast } from "react-toastify";
+import Layout from "../Layout";
 
 const validationSchema = yup.object().shape({
   current_password: yup.string().required("Current Password is required"),

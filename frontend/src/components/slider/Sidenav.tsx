@@ -16,7 +16,7 @@ import WorkIcon from "@mui/icons-material/Work";
 import Logo from "../../assets/images/dependency.svg";
 
 import { useNavigate } from "react-router-dom";
-import { useAppStore } from "../../appStore";
+import { useAppSelector } from "../../app/hooks";
 
 const drawerWidth = 240;
 
@@ -71,8 +71,8 @@ export default function Sidenav() {
   const theme = useTheme();
   // const [open, setOpen] = React.useState(true);
   const navigate = useNavigate();
-  const updateOpen = useAppStore((state) => state.updateOpen);
-  const open = useAppStore((state) => state.dopen);
+  const open = useAppSelector((state) => state.menu.menu);
+  // const open = useAppStore((state) => state.dopen);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -240,6 +240,35 @@ export default function Sidenav() {
                 primary="Exception"
                 sx={{ opacity: open ? 1 : 0 }}
               />
+            </ListItemButton>
+          </ListItem>
+        </List>
+        {/* <Divider /> */}
+        <List>
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => {
+              navigate("/template");
+            }}
+          >
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <TaskIcon />
+              </ListItemIcon>
+              <ListItemText primary="Template" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
         </List>
