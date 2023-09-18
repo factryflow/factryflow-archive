@@ -43,6 +43,7 @@ nav:
     - ER Diagram: technical-documentation/er-diagram.md
     - Database Schema: technical-documentation/database-schema.md
     - Database Naming Conventions: technical-documentation/database-naming-conventions.md
+    - API Style Guide: technical-documentation/api-style-guide.md
 markdown_extensions:
   - pymdownx.superfences:
       custom_fences:
