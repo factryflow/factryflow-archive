@@ -124,3 +124,11 @@ class DependencyService(DependencyBaseService):
             return({"data":None, "code":status.HTTP_200_OK, "message":DEPENDENCY_DELETED})
         except Dependency.DoesNotExist:
             return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":RECORD_NOT_FOUND})
+        
+        
+        
+    def get_all_dependency_status(self, request, format=None):
+        """Get all dependency status"""
+        dependency_status_obj = DependencyStatus.objects.all()
+        serializer = CreateGetUpdateDependencyStatusSerializer(dependency_status_obj, many=True)
+        return ({"data": serializer.data, "code": status.HTTP_200_OK, "message": OK})

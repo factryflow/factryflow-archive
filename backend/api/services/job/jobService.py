@@ -85,3 +85,21 @@ class JobService(JobBaseService):
         search_type='or'
         serilized_data = search_data(request, search_keys, search_type, GetJobsDetailsSerializer, job_obj)
         return ({"data": serilized_data.data, "code": status.HTTP_200_OK, "message": OK})
+    
+        
+    
+    def get_all_job_types(self, request, format=None):
+        """
+        Retun all the job types
+        """
+        job_type_obj = JobType.objects.all()
+        serializer = CreateGetUpdateJobTypeSerializer(job_type_obj, many=True)
+        return ({"data": serializer.data, "code": status.HTTP_200_OK, "message": OK})
+    
+    def get_all_job_status(self, request, format=None):
+        """
+        Retun all the job status
+        """
+        job_status_obj = JobStatus.objects.all()
+        serializer = CreateGetUpdateJobStatusSerializer(job_status_obj, many=True)
+        return ({"data": serializer.data, "code": status.HTTP_200_OK, "message": OK})

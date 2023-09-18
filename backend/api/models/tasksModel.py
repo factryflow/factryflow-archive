@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from .jobModel import Jobs
+from .taskStatusModel import TaskStatus
+from .taskTypeModel import TaskType
 from simple_history.models import HistoricalRecords
 from api.utils.modelManager import ActiveManager
 
@@ -9,7 +11,8 @@ class Tasks(models.Model):
     id = models.AutoField(primary_key=True)
     external_id = models.CharField(max_length=150, blank=True, null=True)
     name = models.CharField(max_length=150)
-    task_status = models.IntegerField(blank=True, null=True, help_text="1. Not Planned, 2. Planned, 3. Ready to start, 4. In Progress, 5. Completed")
+    task_status = models.ForeignKey(TaskStatus, on_delete=models.CASCADE, related_name="tasks_status", blank=True, null=True)
+    task_type = models.ForeignKey(TaskType, on_delete=models.CASCADE, related_name="tasks_type", blank=True, null=True)
     setup_time = models.IntegerField(blank=True, null=True)
     run_time_per_unit = models.IntegerField(blank=True, null=True)
     teardown_time = models.IntegerField(blank=True, null=True)

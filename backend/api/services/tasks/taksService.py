@@ -1,4 +1,4 @@
-from api.models import Tasks
+from api.models import Tasks, TaskStatus, TaskType
 from api.serializers.tasks import *
 from rest_framework import status
 from api.utils.messages.commonMessages import *
@@ -74,3 +74,17 @@ class TaskService(TaskBaseService):
             return({"data":None, "code":status.HTTP_200_OK, "message":TASK_DELETED})
         except Tasks.DoesNotExist:
             return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":RECORD_NOT_FOUND})
+        
+    
+    def get_task_type_list(self, request, format=None):
+        """Get task types list"""
+        task_type_objs = TaskType.objects.all()
+        serializer = CreateGetUpdateTaskTypeSerializer(task_type_objs, many=True)
+        return ({"data": serializer.data, "code": status.HTTP_200_OK, "message": OK})
+
+
+    def get_task_status_list(self, request, format=None):
+        """Get task status list"""
+        task_status_objs = TaskStatus.objects.all()
+        serializer = CreateGetUpdateTaskStatusSerializer(task_status_objs, many=True)
+        return ({"data": serializer.data, "code": status.HTTP_200_OK, "message": OK})

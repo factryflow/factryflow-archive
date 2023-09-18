@@ -38,6 +38,7 @@ class GetAssignmentRuleCriteriaDetailsSerializer(serializers.ModelSerializer):
     """
     This is for get the details of AssignmentRuleCriteria
     """
+    assignment_rule = GetAssignmentRuleDetailsSerializer()
     class Meta:
         model = AssignmentRuleCriteria
         fields = ('id', 'field', 'operator', 'value', 'parent', 'assignment_rule', 'is_active', 'is_deleted')

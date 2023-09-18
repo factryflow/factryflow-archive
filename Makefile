@@ -13,7 +13,7 @@ start-frontend:
 
 ## Start the backend server
 start-backend:
-	cd $(BACKEND_DIR) && python manage.py runserver
+	cd $(BACKEND_DIR) && python manage.py migrate && python manage.py runserver
 
 ## Other utility targets (like testing, linting, etc.) can be added as needed
 

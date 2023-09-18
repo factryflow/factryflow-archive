@@ -16,7 +16,8 @@
 			"extensions": [
 				"ms-azuretools.vscode-docker",
 				"mtxr.sqltools",
-				"mtxr.sqltools-driver-pg"
+				"mtxr.sqltools-driver-pg",
+				"eamodio.gitlens"
 			],
 			"settings": {
 				"sqltools.connections": [
