@@ -11,6 +11,7 @@ import { useGetAllTemplateQuery } from "@/service/templateApi";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { setTemplates } from "@/features/templateSlice";
 import { useDeleteTemplateMutation } from "@/service/templateApi";
+import Loading from "@/components/loading/loading";
 import { toast } from "react-toastify";
 const Template = () => {
   const dispatch = useAppDispatch();
@@ -93,9 +94,6 @@ const Template = () => {
               Template
             </Button>
           </Link>
-          <Link to="#">
-            <Button variant="contained">Manage Template Details</Button>
-          </Link>
         </Box>
 
         <Box
@@ -145,9 +143,7 @@ const Template = () => {
           }}
         >
           {templateIsLoading ? (
-            <>
-              <h3>Loading...</h3>
-            </>
+            <Loading />
           ) : (
             templateSelector && (
               <>

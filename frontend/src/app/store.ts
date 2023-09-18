@@ -24,6 +24,7 @@ import {
   exceptionTypeReducer,
   menureducer,
   templateReducer,
+  userReducer,
 } from "../features";
 
 import {
@@ -51,6 +52,7 @@ const reducer = combineReducers({
   exception: exceptionReducer,
   exceptiontype: exceptionTypeReducer,
   template: templateReducer,
+  user: userReducer,
   [authApi.reducerPath]: authApi.reducer,
   [jobApi.reducerPath]: jobApi.reducer,
   [taskApi.reducerPath]: taskApi.reducer,
@@ -79,7 +81,15 @@ const config: PersistConfig<any> = {
     exceptionTypeApi.reducerPath,
     templateApi.reducerPath,
   ],
-  whitelist: ["menu", "job", "dependency", "task", "resource", "resourceGroup"],
+  whitelist: [
+    "menu",
+    "job",
+    "dependency",
+    "task",
+    "resource",
+    "resourceGroup",
+    "user",
+  ],
 };
 
 const peristedReducer = persistReducer<RootReducer, AnyAction>(config, reducer);

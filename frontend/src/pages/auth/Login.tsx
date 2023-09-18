@@ -12,11 +12,11 @@ import { toast } from "react-toastify";
 import { setUser } from "../../features/authSlice";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Card } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
-
+import type { Login } from "@/types/api.types";
 const LogIn = () => {
   const [loginUser, { data, error, isSuccess, isLoading }] =
     useLoginUserMutation();
@@ -39,17 +39,18 @@ const LogIn = () => {
     formState: { errors },
   } = form;
 
-  const onSubmit = async (data: any) => {
+  const onSubmit: SubmitHandler<Login> = async (data) => {
     await loginUser(data);
   };
 
   useEffect(() => {
     if (!isLoading && data) {
-      dispatch(
-        setUser({
-          token: data.data?.token,
-        })
-      );
+      const { data: response } = data;
+      if (response) {
+        const token = response.token;
+
+        dispatch(setUser({ token }));
+      }
       navigate("/jobs");
       data.code >= 400
         ? toast.error(data.message)

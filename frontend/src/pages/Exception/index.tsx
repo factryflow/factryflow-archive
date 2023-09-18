@@ -4,7 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
+import { toast } from "react-toastify";
 import AddBoxIcon from "@mui/icons-material/AddBox";
+import Loading from "@/components/loading/loading";
 import { setexceptions } from "../../features/exceptionSlice";
 import {
   useGetAllExceptionQuery,
@@ -13,7 +15,6 @@ import {
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Layout from "../Layout";
 import Header from "../../components/Header";
-import { toast } from "react-toastify";
 
 const Exception = () => {
   // "id": 1,
@@ -186,9 +187,7 @@ const Exception = () => {
             }}
           >
             {exceptionIsLoading ? (
-              <>
-                <h3>Loading...</h3>
-              </>
+              <Loading />
             ) : (
               exceptionSelector && (
                 <>

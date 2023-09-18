@@ -19,6 +19,7 @@ import {
 } from "@/service/templateApi";
 import { toast } from "react-toastify";
 import { useAppSelector } from "@/app/hooks";
+import TempleDetails from "@/components/data-tables/template/TemplateDetails";
 
 const validationSchema = yup.object().shape({
   name: yup.string().required("Name is required").nullable(),
@@ -152,6 +153,10 @@ const TemplateForm = () => {
             </form>
           </CardContent>
         </Card>
+      </Grid>
+
+      <Grid>
+        <TempleDetails />
       </Grid>
     </Layout>
   );

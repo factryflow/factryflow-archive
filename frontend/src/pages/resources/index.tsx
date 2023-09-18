@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
-import Layout from "../Layout";
 import { Box, Button, Stack } from "@mui/material";
 import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
-import Header from "../../components/Header";
 import { Link, useNavigate } from "react-router-dom";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import { toast } from "react-toastify";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
@@ -13,7 +12,9 @@ import {
   useGetAllResourcesQuery,
 } from "../../service/resourceApi";
 import { setResourcesies } from "../../features/resourceSlice";
-import { toast } from "react-toastify";
+import Layout from "../Layout";
+import Header from "../../components/Header";
+import Loading from "@/components/loading/loading";
 
 const Resources = () => {
   const dispatch = useAppDispatch();
@@ -153,9 +154,7 @@ const Resources = () => {
           }}
         >
           {resourceIsLoading ? (
-            <>
-              <h3>Loading...</h3>
-            </>
+            <Loading />
           ) : (
             resourceSelector && (
               <>

@@ -14,6 +14,8 @@ import ListItemText from "@mui/material/ListItemText";
 import TaskIcon from "@mui/icons-material/Task";
 import WorkIcon from "@mui/icons-material/Work";
 import Logo from "../../assets/images/dependency.svg";
+import TemplateLogo from "@/assets/images/template.svg";
+import ResourceLogo from "@/assets/images/resource.svg";
 
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
@@ -152,7 +154,7 @@ export default function Sidenav() {
             disablePadding
             sx={{ display: "block" }}
             onClick={() => {
-              navigate("/dependencys");
+              navigate("/dependency");
             }}
           >
             <ListItemButton
@@ -172,9 +174,38 @@ export default function Sidenav() {
                 <img src={Logo} alt="images" height={30} width={24} />
               </ListItemIcon>
               <ListItemText
-                primary="Dependencys"
+                primary="Dependency"
                 sx={{ opacity: open ? 1 : 0 }}
               />
+            </ListItemButton>
+          </ListItem>
+        </List>
+        {/* <Divider /> */}
+        <List>
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => {
+              navigate("/template");
+            }}
+          >
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <img src={TemplateLogo} alt="images" height={30} width={24} />
+              </ListItemIcon>
+              <ListItemText primary="Template" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
         </List>
@@ -202,7 +233,7 @@ export default function Sidenav() {
                   justifyContent: "center",
                 }}
               >
-                <TaskIcon />
+                <img src={ResourceLogo} alt="images" height={30} width={24} />
               </ListItemIcon>
               <ListItemText
                 primary="Resources"
@@ -240,35 +271,6 @@ export default function Sidenav() {
                 primary="Exception"
                 sx={{ opacity: open ? 1 : 0 }}
               />
-            </ListItemButton>
-          </ListItem>
-        </List>
-        {/* <Divider /> */}
-        <List>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/template");
-            }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <TaskIcon />
-              </ListItemIcon>
-              <ListItemText primary="Template" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
         </List>

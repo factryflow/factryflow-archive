@@ -6,7 +6,7 @@ import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import { Link, useNavigate } from "react-router-dom";
-
+import Loading from "@/components/loading/loading";
 import {
   useGetAllDependencyTypeQuery,
   useDeleteDependencytypeMutation,
@@ -111,12 +111,12 @@ const DependencyType = () => {
           <Header title="Dependency Type" subtitle="List of Dependency Type " />
 
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Link to="/dependencys/dependencytype/form">
+            <Link to="/dependency/dependencytype/form">
               <Button variant="contained" startIcon={<AddBoxIcon />}>
                 Dependency Type
               </Button>
             </Link>
-            <Link to="/dependencys/">
+            <Link to="/dependency/">
               <Button variant="contained" startIcon={<ArrowBackOutlinedIcon />}>
                 Back to dependency
               </Button>
@@ -170,9 +170,7 @@ const DependencyType = () => {
             }}
           >
             {dependencyTypeIsLoading ? (
-              <>
-                <h3>Loading...</h3>
-              </>
+              <Loading />
             ) : (
               dependenciesTypeSelector && (
                 <>

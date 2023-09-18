@@ -6,16 +6,17 @@ import Header from "../../components/Header";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import { useDeleteTasksMutation } from "../../service/taskApi";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Loading from "@/components/loading/loading";
 import {
   useDeleteDependencyMutation,
   useGetAllDependencysQuery,
 } from "../../service/dependencyApi";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { setDependencies } from "../../features/dependencySlice";
-import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
-import { Link, useNavigate } from "react-router-dom";
-import AddBoxIcon from "@mui/icons-material/AddBox";
-import { toast } from "react-toastify";
 const Dependencys = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -151,12 +152,12 @@ const Dependencys = () => {
               justifyContent: "space-between",
             }}
           >
-            <Link to="/dependencys/form">
+            <Link to="/dependency/form">
               <Button variant="contained" startIcon={<AddBoxIcon />}>
                 Dependency
               </Button>
             </Link>
-            <Link to="/dependencys/dependencytype">
+            <Link to="/dependency/dependencytype">
               <Button variant="contained">Manage Dependency type</Button>
             </Link>
           </Box>
@@ -207,9 +208,7 @@ const Dependencys = () => {
             }}
           >
             {dependencyIsLoading ? (
-              <>
-                <h3>Loading...</h3>
-              </>
+              <Loading />
             ) : (
               dependenciesSelector && (
                 <>

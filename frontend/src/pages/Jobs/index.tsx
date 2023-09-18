@@ -1,30 +1,23 @@
 import { Box, Button, Stack, Typography, useTheme } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { tokens } from "../../theme";
-// import { mockDataInvoices } from "../../data/mockData";
-import Header from "../../components/Header";
-import Layout from "../Layout";
-import {
-  useGetAllJobsQuery,
-  useDeleteJobsMutation,
-} from "../../service/jobApi";
+import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
 import React, { useEffect, useState } from "react";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import { Link, useNavigate } from "react-router-dom";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import { toast } from "react-toastify";
+import { tokens } from "../../theme";
+import Header from "../../components/Header";
+import Layout from "../Layout";
+import {
+  useGetAllJobsQuery,
+  useDeleteJobsMutation,
+} from "../../service/jobApi";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { setJobies } from "../../features/jobSlice";
-interface JobData {
-  id: Number;
-  name: string;
-  priority: Number;
-  due_date: Date;
-  customer: string;
-  description: string;
-  note: string;
-}
+import Loading from "@/components/loading/loading";
+
+import { JobResponse } from "@/types/api.types";
 
 const Jobs = () => {
   const dispatch = useAppDispatch();
@@ -43,7 +36,7 @@ const Jobs = () => {
   const navigate = useNavigate();
   const [deleteJobs] = useDeleteJobsMutation();
 
-  const columns = [
+  const columns: GridColDef<JobResponse>[] = [
     { field: "id", headerName: "ID" },
     {
       field: "name",
@@ -80,7 +73,6 @@ const Jobs = () => {
       headerName: "Action",
       width: 180,
       sortable: false,
-      disableClickEventBubbling: true,
 
       renderCell: (params: any) => {
         const handleDeleteAction = (e: React.SyntheticEvent<any>) => {
@@ -205,7 +197,7 @@ const Jobs = () => {
           >
             {jobisLoading ? (
               <>
-                <h3>Loading...</h3>
+                <Loading />
               </>
             ) : (
               jobiesSelector && (

@@ -21,7 +21,7 @@ import Exception from "./pages/Exception";
 import ExceptionType from "./pages/Exception/ExceptionType";
 import Template from "./pages/Templates";
 import TemplateForm from "./pages/Templates/Form";
-
+import AuthorizedUser from "./middleware/AuthorizedUser";
 function App() {
   return (
     <>
@@ -39,19 +39,19 @@ function App() {
           <Route path="/tasks/form" element={<TaskForm />} />
           <Route path="/tasks/form/:id" element={<TaskForm />} />
 
-          <Route path="/dependencys" element={<Dependencys />} />
-          <Route path="/dependencys/form" element={<DependencyForm />} />
-          <Route path="/dependencys/form/:id" element={<DependencyForm />} />
+          <Route path="/dependency" element={<Dependencys />} />
+          <Route path="/dependency/form" element={<DependencyForm />} />
+          <Route path="/dependency/form/:id" element={<DependencyForm />} />
           <Route
-            path="/dependencys/dependencytype"
+            path="/dependency/dependencytype"
             element={<DependencyType />}
           />
           <Route
-            path="/dependencys/dependencytype/form"
+            path="/dependency/dependencytype/form"
             element={<DependencyTypeForm />}
           />
           <Route
-            path="/dependencys/dependencytype/form/:id"
+            path="/dependency/dependencytype/form/:id"
             element={<DependencyTypeForm />}
           />
 

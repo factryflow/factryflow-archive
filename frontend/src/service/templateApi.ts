@@ -11,7 +11,7 @@ export const templateApi = createApi({
   tagTypes: ["getAllTemplate"],
   endpoints: (builder) => ({
     // getAllTemplate Api
-    getAllTemplate: builder.query<any[], void>({
+    getAllTemplate: builder.query<any[] | undefined, void>({
       query: () => {
         return `api/weekly-shift/get-template-list/`;
       },

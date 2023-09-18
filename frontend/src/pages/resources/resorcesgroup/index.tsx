@@ -1,21 +1,22 @@
 import React, { useEffect } from "react";
 import { Box, Button, Stack } from "@mui/material";
 import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
-import Header from "../../../components/Header";
 import { Link, useNavigate } from "react-router-dom";
-import AddBoxIcon from "@mui/icons-material/AddBox";
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { toast } from "react-toastify";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
-
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import Layout from "../../Layout";
 import {
   useDeleteResourcesGroupMutation,
   useGetAllResourcesGroupQuery,
 } from "../../../service/resourcegroupApi";
+import Header from "../../../components/Header";
+import Layout from "../../Layout";
 import { setResourceGroups } from "../../../features/resourceGroupSlice";
+import Loading from "@/components/loading/loading";
+
 const ResourcesGroup = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -163,9 +164,7 @@ const ResourcesGroup = () => {
           }}
         >
           {resourceGroupIsLoading ? (
-            <>
-              <h3>Loading...</h3>
-            </>
+            <Loading />
           ) : (
             resourceGroupSelector && (
               <>

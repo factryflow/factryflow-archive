@@ -16,7 +16,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { toast } from "react-toastify";
-import { useAppStore } from "../../appStore";
+
 import { useAppSelector } from "../../app/hooks";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";

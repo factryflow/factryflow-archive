@@ -1,26 +1,26 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import { GetAllJobType } from '../types/jobs.types';
+import { JobResponse } from "@/types/api.types";
 
 type JobSliceTypes = {
-  job: GetAllJobType | null;
-  jobies: GetAllJobType[] | [];
+  job: JobResponse | null;
+  jobies: JobResponse[] | [];
 };
 
 const initialState: JobSliceTypes = {
-    job: null,
-    jobies: [],
+  job: null,
+  jobies: [],
 };
 
 const JobSlice = createSlice({
-  name: 'job',
+  name: "job",
   initialState,
   reducers: {
     setJob: (state, action) => {
       state.job = action.payload;
     },
 
-    setJobies: (state, action:PayloadAction<GetAllJobType[]>) => {
+    setJobies: (state, action: PayloadAction<JobResponse[]>) => {
       state.jobies = action.payload;
     },
 
@@ -42,4 +42,3 @@ const JobSlice = createSlice({
 
 export const { setJobies, setJob, resetJobies, resetJob } = JobSlice.actions;
 export default JobSlice.reducer;
-

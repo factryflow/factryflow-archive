@@ -7,6 +7,7 @@ import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import { toast } from "react-toastify";
+import Loading from "@/components/loading/loading";
 // import { setexceptions } from "../../features/exceptionSlice";
 // import { useGetAllExceptionQuery } from "../../service/exceptionApi";
 import { setexceptionTypes } from "../../../features/exceptiontypeSlice";
@@ -168,9 +169,7 @@ const ExceptionType = () => {
             }}
           >
             {exceptionTypeIsLoading ? (
-              <>
-                <h3>Loading...</h3>
-              </>
+              <Loading />
             ) : (
               exceptionTypeSelector && (
                 <>
