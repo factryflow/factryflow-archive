@@ -141,10 +141,10 @@ All tables will have the following metadata fields:
 
 **Description**: Categorizes operational exceptions into types.
 
-| data_type | field_name    | constraints | default | relationships | comments |
-| --------- | ------------- | ----------- | ------- | ------------- | -------- |
-| int       | task_id       | PK, FK      |         | `task`        |          |
-| int       | dependency_id | PK, FK      |         | `dependency`  |          |
+| data_type | field_name | constraints | default | relationships | comments |
+| --------- | ---------- | ----------- | ------- | ------------- | -------- |
+| int       | id         | PK          |         |               |          |
+| string    | name       |             | 'N/A'   |               |          |
 
 ## `resource`
 
