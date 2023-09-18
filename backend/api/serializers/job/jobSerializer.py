@@ -21,7 +21,7 @@ class CreateUpdateJobSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Jobs
-        fields = ('id', 'name', 'priority', 'due_date', 'customer', 'description', 'note', 'planned_start', 'planned_end', 'external_id', 'job_status', 'job_type')
+        fields = ('id', 'name', 'priority', 'due_date', 'customer', 'description', 'note', 'planned_start_datetime', 'planned_end_datetime', 'external_id', 'job_status', 'job_type')
         
     
 
@@ -33,7 +33,7 @@ class GetJobsDetailsSerializer(serializers.ModelSerializer):
     job_status = CreateGetUpdateJobStatusSerializer()
     class Meta:
         model = Jobs
-        fields = ('id', 'name', 'priority', 'due_date', 'customer', 'description', 'note', 'planned_start', 'planned_end', 'external_id', 'job_status', 'job_type', 'is_active', 'is_deleted')
+        fields = ('id', 'name', 'priority', 'due_date', 'customer', 'description', 'note', 'planned_start_datetime', 'planned_end_datetime', 'external_id', 'job_status', 'job_type', 'is_active', 'is_deleted')
     
     
 
@@ -48,3 +48,5 @@ class GetSearchJobDetailsSerializer(serializers.ModelSerializer):
     
     def get_type(self, obj):
         return "job"
+
+    

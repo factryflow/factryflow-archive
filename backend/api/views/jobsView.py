@@ -90,3 +90,28 @@ class SearchJobView(APIView):
         """
         result = Job_service.search_job(request, format=None)
         return Response(result, status=result["code"])
+    
+
+class JobTypesListView(APIView):
+    @swagger_auto_schema(
+        responses=response_create_update_job_type,
+        operation_summary="get job type list ",
+    )
+    def get(self, request, format=None):
+        """
+        get job type list
+        """
+        result = Job_service.get_all_job_types(request, format=None)
+        return Response(result, status=result["code"])
+
+class JobStatusListView(APIView):
+    @swagger_auto_schema(
+        responses=response_create_update_job_type,
+        operation_summary="get job status list ",
+    )
+    def get(self, request, format=None):
+        """
+        get job status list
+        """
+        result = Job_service.get_all_job_status(request, format=None)
+        return Response(result, status=result["code"])

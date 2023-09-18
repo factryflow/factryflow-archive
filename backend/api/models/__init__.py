@@ -19,3 +19,8 @@ from .assignmentRuleResourceGroupModel import *
 from .dependencyStatusModel import *
 from .jobTypeModel import *
 from .jobStatusModel import *
+from .jobDependencyModel import *
+from .scheduleRunStatusModel import *
+from .taskDependencyModel import *
+from .taskStatusModel import *
+from .taskTypeModel import *

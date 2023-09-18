@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import Tasks
+from api.models import Tasks, TaskType, TaskStatus
 
 
 
@@ -33,3 +33,21 @@ class GetSearchTaskDetailsSerializer(serializers.ModelSerializer):
     
     def get_type(self, obj):
         return "task"
+    
+
+class CreateGetUpdateTaskTypeSerializer(serializers.ModelSerializer):
+    """
+    Create/Get/Update task Type
+    """
+    class Meta:
+        model = TaskType
+        fields = ("id", "name")
+
+
+class CreateGetUpdateTaskStatusSerializer(serializers.ModelSerializer):
+    """
+    Create/Get/Update task Type
+    """
+    class Meta:
+        model = TaskStatus
+        fields = ("id", "name")

@@ -26,6 +26,8 @@ urlpatterns = [
     path('jobs/get-job-details/<int:id>/', GetJobByIdView.as_view(), name="get-job-details"),
     path('jobs/delete-job/<int:id>/', DeleteJobByIdView.as_view(), name="delete-jobs"),
     path('jobs/search-job/', SearchJobView.as_view(), name="search-job"),
+    path('jobs/get-all-types/', JobTypesListView.as_view(), name='get-all-job-types'),
+    path('jobs/get-all-status/', JobTypesListView.as_view(), name='get-all-job-status'),
 
     #tasks
     path('tasks/tasks-list/', TaskListView.as_view(), name="tasks-list"),
@@ -33,6 +35,8 @@ urlpatterns = [
     path('tasks/update-tasks/<int:id>/', UpdateTasksView.as_view(), name="update-tasks"),
     path('tasks/get-task-details/<int:id>/', GetTasksDetailsView.as_view(), name="get-task-details"),
     path('tasks/delete-task/<int:id>/', DeleteTasksView.as_view(), name="delete-tasks"),
+    path('tasks/get-all-types/', GetTaskTypesView.as_view(), name='get-all-task-types'),
+    path('tasks/get-all-status/', GetTaskStatusView.as_view(), name='get-all-task-status'),
     
     
     #dependency-Types
@@ -47,6 +51,7 @@ urlpatterns = [
     path('dependency/update-dependency/<int:id>/', UpdateDependencyView.as_view(), name="update-dependency"),
     path('dependency/get-dependency-details/<int:id>/', GetDependencyByIdView.as_view(), name="update-dependency"),
     path('dependency/delete-dependency/<int:id>/', DeleteDependencyByIdView.as_view(), name="delete-dependency"),
+    path('dependency/get-dependecy-status-list/', GetDependencyStatusDetails.as_view(), name="get-dependency-status-list"),
     
     #Resources
     path('resource/create-resources/', CreateResourcesView.as_view(), name="create-resources"),
@@ -122,5 +127,5 @@ urlpatterns = [
     path('assignment-rule/get-criteria/<int:id>/', GetAssignmentRuleCriteriaByIdView.as_view(), name="get-assignment-rule-criteria"),
     path('assignment-rule/delete-criteria/<int:id>/', DeleteAssignmentRuleCriteriaView.as_view(), name="delete-assignment-rule-criteria"),
     path('assignment-rule/get-criteria-list/', AssignmentRuleCriteriaListView.as_view(), name="get-task-resource-assignment-criteria-list"),
-    
+
 ]   

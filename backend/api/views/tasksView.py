@@ -71,3 +71,19 @@ class DeleteTasksView(APIView):
         return Response(result, status=result["code"])
         
 
+class GetTaskTypesView(APIView):
+    def get(self, request, format=None):
+        """
+        Get task type list
+        """
+        result = task_service.get_task_type_list(request, format=None)
+        return Response(result, status=result["code"])
+    
+
+class GetTaskStatusView(APIView):
+    def get(self, request, format=None):
+        """
+        Get task status list
+        """
+        result = task_service.get_task_status_list(request, format=None)
+        return Response(result, status=result["code"])

@@ -126,3 +126,15 @@ class DeleteDependencyByIdView(APIView):
         result = dependency_service.delete_dependency(request, id, format=None)
         return Response(result, status=result["code"])
         
+
+class GetDependencyStatusDetails(APIView):
+    @swagger_auto_schema(
+        responses=dependency_status_response,
+        operation_summary="get all dependency status",
+    )
+    def delete(self, request, id, format=None):
+        """
+        get all dependency status
+        """
+        result = dependency_service.get_all_dependency_status(request, id, format=None)
+        return Response(result, status=result["code"])
