@@ -101,6 +101,7 @@ urlpatterns = [
     path('schedule/get-details/<int:id>/', GetScheduleRunByIdView.as_view(), name="get-schedule-run-details"),
     path('schedule/delete-details/<int:id>/', DeleteScheduleRunByIdView.as_view(), name="delete-schedule-run-details"),
     path('schedule/get-details-list/', ScheduleRunListView.as_view(), name="get-schedule-run-details-list"),
+    path('schedule/get-all-status', ScheduleRunStatusListView.as_view(), name="schedule-run-status-list"),
     
     #search
     path('search/get-search-list/', GetSearchListView.as_view(), name="get-search-list"),

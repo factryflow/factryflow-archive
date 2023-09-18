@@ -51,7 +51,7 @@ create_update_jobs_status_request_body = openapi.Schema(
             required=['name'],  # Specify required fields
 )
 
-response_create_update_job_type = {200: CreateGetUpdateJobTypeSerializer()}
+response_create_update_job_type = {200: CreateGetUpdateJobTypeSerializer(many=True)}
 
 response_create_update_job_status = {200: CreateGetUpdateJobStatusSerializer()}
 
