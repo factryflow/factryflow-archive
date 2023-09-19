@@ -77,3 +77,15 @@ class DeleteScheduleRunByIdView(APIView):
         result = schedule_run_service.delete_schedule_run(request, id, format=None)
         return Response(result, status=result["code"])
     
+
+class ScheduleRunStatusListView(APIView):
+    @swagger_auto_schema(
+        responses=schedule_run_status_details_response,
+        operation_summary="List all schedule run status",
+    )
+    def get(self, request, format=None):
+        """
+        List all schedule run status
+        """
+        result = schedule_run_service.get_all_schedule_run_status(request, format=None)
+        return Response(result, status=result["code"])

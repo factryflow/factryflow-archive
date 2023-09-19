@@ -100,7 +100,7 @@ class ResourceService(ResourceBaseService):
         Create New resources groups
         """
         serializer = CreateUpdateResourceGroupSerializer(data=request.data)
-        if serializer.is_valid ():
+        if serializer.is_valid():
             serializer.save()
             resource_groups_obj = ResourceGroups.objects.get(id=serializer.data["id"])
             serializer = GetResourceGroupsDetailsSerializer(resource_groups_obj)

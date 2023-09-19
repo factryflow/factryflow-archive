@@ -12,7 +12,6 @@ class CreateUpdateAssignmentRuleSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'description', 'priority', 'resource_count', 'use_all_resources')
         
     
-
 class GetAssignmentRuleDetailsSerializer(serializers.ModelSerializer):
     """
     This is for get the details of AssignmentRule

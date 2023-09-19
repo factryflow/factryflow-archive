@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import Jobs, JobType, JobStatus
+from api.models import Jobs, JobType, JobStatus, JobDependency
 
 class CreateGetUpdateJobStatusSerializer(serializers.ModelSerializer):
     """Create/Update and get details of job status"""
@@ -48,5 +48,11 @@ class GetSearchJobDetailsSerializer(serializers.ModelSerializer):
     
     def get_type(self, obj):
         return "job"
+    
 
+class CreateUpdateJobDependencySerializer(serializers.ModelSerializer):
+    """Create/update job depedency Serializer"""
+    class Meta:
+        model = JobDependency
+        fields = ("id", "job", "dependency")
     

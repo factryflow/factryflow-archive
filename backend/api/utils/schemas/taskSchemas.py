@@ -15,6 +15,7 @@ create_update_tasks_request_body = openapi.Schema(
                 'external_id': openapi.Schema(type=openapi.TYPE_STRING, description="external_id"),
                 'name': openapi.Schema(type=openapi.TYPE_STRING, description="name"),
                 'task_status': openapi.Schema(type=openapi.TYPE_STRING, description="task_status"),
+                'task_type': openapi.Schema(type=openapi.TYPE_STRING, description="task_type"),
                 'setup_time': openapi.Schema(type=openapi.TYPE_STRING, description="setup_time"),
                 'run_time_per_unit': openapi.Schema(type=openapi.TYPE_STRING, description="run_time_per_unit"),
                 'teardown_time': openapi.Schema(type=openapi.TYPE_STRING, description="teardown_time"),
@@ -26,7 +27,7 @@ create_update_tasks_request_body = openapi.Schema(
                 'planned_end_datetime': openapi.Schema(type=openapi.TYPE_STRING, description="planned_end_datetime"),
                 # Add more properties as needed
             },
-            required=['external_id', 'name','task_status','setup_time','run_time_per_unit','teardown_time','quantity','jobs', 'predecessors', 'item', 'planned_start_datetime', 'planned_end_datetime'],  # Specify required fields
+            required=['external_id', 'name','task_status', 'task_type', 'setup_time','run_time_per_unit','teardown_time','quantity','jobs', 'predecessors', 'item', 'planned_start_datetime', 'planned_end_datetime'],  # Specify required fields
 )
 
 response_create_update_tasks = {200: GetTaskDetailsSerializer()}
