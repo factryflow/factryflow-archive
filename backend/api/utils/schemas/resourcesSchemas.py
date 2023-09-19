@@ -33,10 +33,11 @@ create_update_resources_request_body = openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
                 'name': openapi.Schema(type=openapi.TYPE_STRING, description="name"),
+                'weekly_shift_template': openapi.Schema(type=openapi.TYPE_STRING, description="weekly_shift_template"),
                 'resource_groups_list': openapi.Schema(type=openapi.TYPE_STRING, description="resource_groups_list"),\
                 # Add more properties as needed
             },
-            required=['name', 'resource_groups_list'],  # Specify required fields
+            required=['name', 'weekly_shift_template', 'resource_groups_list'],  # Specify required fields
 )
 
 response_create_update_resources = {200: GetResourcesDetailsSerializer()}

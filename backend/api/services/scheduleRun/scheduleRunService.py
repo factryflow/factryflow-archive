@@ -1,4 +1,4 @@
-from api.models import ScheduleRun
+from api.models import ScheduleRun, ScheduleRunStatus
 from api.serializers.scheduleRun import *
 from rest_framework import status
 from api.utils.messages.commonMessages import *
@@ -75,3 +75,12 @@ class SchduleRunService(SchduleRunBaseService):
             return({"data":None, "code":status.HTTP_200_OK, "message":SCHEDULE_RUN_DELETED})
         except ScheduleRun.DoesNotExist:
             return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":RECORD_NOT_FOUND})
+        
+        
+    def get_all_schedule_run_status(self, request, format=None):
+        """
+        Retun all the SCHEDULE_RUN
+        """
+        schedule_status_obj = ScheduleRunStatus.objects.all()
+        serializer = CreateUpdateScheduleRunStatusSerializer(schedule_status_obj, many=True)
+        return ({"data": serializer.data, "code": status.HTTP_200_OK, "message": OK})
