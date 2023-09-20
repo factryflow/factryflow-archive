@@ -28,7 +28,7 @@ operational_exception_details_response = {200: GetOperationalExceptionSerializer
 
 #This is using for create/update depenency details
 
-create_update_dependency_request_body = openapi.Schema(
+create_update_operational_exception_body = openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
                 'external_id':openapi.Schema(type=openapi.TYPE_STRING, description="external_id"),
