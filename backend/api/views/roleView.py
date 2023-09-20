@@ -8,7 +8,7 @@ from api.services.role import RoleService
 
 roleService = RoleService()
 
-class RoleListView(APIView):
+class RoleCreateListView(APIView):
     permission_classes = (AllowAny,)
     @swagger_auto_schema(
         responses=get_role_list_response,
@@ -20,10 +20,7 @@ class RoleListView(APIView):
         """
         result = roleService.get_all_roles(request, format=None)
         return Response(result, status=result["code"])
-
-
-class RoleCreateView(APIView):
-    permission_classes = (AllowAny,)
+    
     @swagger_auto_schema(
         request_body=create_role_request_body,
         responses=create_role_response,
@@ -35,5 +32,6 @@ class RoleCreateView(APIView):
         """
         result = roleService.create(request, format=None)
         return Response(result, status=result["code"])
+
 
 

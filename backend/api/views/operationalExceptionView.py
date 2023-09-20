@@ -9,20 +9,8 @@ from api.services.operationalException import OperationalExceptionService
 
 exception_service = OperationalExceptionService()
 
-class GetOperationalExceptionTypeListView(APIView):
-    @swagger_auto_schema(
-        responses=operational_exception_type_details_response,
-        operation_summary="get operational exception type list ",
-    )
-    def get(self, request, format=None):
-        """
-        List all operational exception type.
-        """
-        result = exception_service.get_all_exception_types(request, format=None)
-        return Response(result, status=result["code"])
 
-
-class CreateOperationalExceptionTypeView(APIView):
+class GetCreateOperationalExceptionTypeView(APIView):
     @swagger_auto_schema(
         request_body=create_update_operational_exception_type,
         responses=response_create_update_operational_exception_type,
@@ -35,8 +23,19 @@ class CreateOperationalExceptionTypeView(APIView):
         result = exception_service.create_exception_types(request, format=None)
         return Response(result, status=result["code"])
     
+    @swagger_auto_schema(
+        responses=operational_exception_type_details_response,
+        operation_summary="get operational exception type list ",
+    )
+    def get(self, request, format=None):
+        """
+        List all operational exception type.
+        """
+        result = exception_service.get_all_exception_types(request, format=None)
+        return Response(result, status=result["code"])
+    
 
-class UpdateOperationalExceptionTypeView(APIView):
+class GetUpdateDeleteOperationalExceptionTypeView(APIView):
     @swagger_auto_schema(
         request_body=create_update_operational_exception_type,
         responses=response_create_update_operational_exception_type,
@@ -49,7 +48,6 @@ class UpdateOperationalExceptionTypeView(APIView):
         result = exception_service.update_exception_types(request, id, format=None)
         return Response(result, status=result["code"])
 
-class GetOperationalExceptionTypeDetailsView(APIView):
     @swagger_auto_schema(
         responses=operational_exception_type_details_response,
         operation_summary="get operational exception type details by id ",
@@ -60,8 +58,7 @@ class GetOperationalExceptionTypeDetailsView(APIView):
         """
         result = exception_service.get_exception_type_by_id(request, id, format=None)
         return Response(result, status=result["code"])
-
-class DeleteOperationalExceptionTypeByIdView(APIView):
+    
     @swagger_auto_schema(
         responses=delete_operational_exception_type_response,
         operation_summary="delete operational exception type",
@@ -73,7 +70,9 @@ class DeleteOperationalExceptionTypeByIdView(APIView):
         """
         result = exception_service.delete_exception_types(request, id, format=None)
         return Response(result, status=result["code"])
-        
+    
+
+
 
 class GetOperationalExceptionListView(APIView):
     @swagger_auto_schema(

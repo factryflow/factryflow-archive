@@ -16,63 +16,46 @@ urlpatterns = [
     path('user/get-user-details-by-token/',GetUserDetialsByTokenView.as_view(), name="get-user-details-by-token"),
    
     #role
-    path('role/get-all-roles/', RoleListView.as_view(), name="get-all-role"),
-    path('role/create-role/', RoleCreateView.as_view(), name="create-role"),
+    path('roles/', RoleCreateListView.as_view(), name="get-or-create-role"),
     
     #jobs
-    path('jobs/jobs-list/', JobListView.as_view(), name="jobs-list"),
-    path('jobs/create-job/', CreateJobsView.as_view(), name="create-jobs"),
-    path('jobs/update-jobs/<int:id>/', UpdateJobsView.as_view(), name="update-jobs"),
-    path('jobs/get-job-details/<int:id>/', GetJobByIdView.as_view(), name="get-job-details"),
-    path('jobs/delete-job/<int:id>/', DeleteJobByIdView.as_view(), name="delete-jobs"),
-    path('jobs/search-job/', SearchJobView.as_view(), name="search-job"),
-    path('jobs/get-all-types/', JobTypesListView.as_view(), name='get-all-job-types'),
-    path('jobs/get-all-status/', JobTypesListView.as_view(), name='get-all-job-status'),
+    path('jobs/', JobCreateListView.as_view(), name="jobs"),
+    path('jobs/<int:id>/', GetUpdateDeleteJobView.as_view(), name="get-update-delete-jobs"),
+    path('search-jobs/', SearchJobView.as_view(), name="search-job"),
+    path('jobs-types/', JobTypesListView.as_view(), name='get-all-job-types'),
+    path('jobs-status/', JobTypesListView.as_view(), name='get-all-job-status'),
+    
 
     #tasks
-    path('tasks/tasks-list/', TaskListView.as_view(), name="tasks-list"),
-    path('tasks/create-task/', CreateTasksView.as_view(), name="create-tasks"),
-    path('tasks/update-tasks/<int:id>/', UpdateTasksView.as_view(), name="update-tasks"),
-    path('tasks/get-task-details/<int:id>/', GetTasksDetailsView.as_view(), name="get-task-details"),
-    path('tasks/delete-task/<int:id>/', DeleteTasksView.as_view(), name="delete-tasks"),
-    path('tasks/get-all-types/', GetTaskTypesView.as_view(), name='get-all-task-types'),
-    path('tasks/get-all-status/', GetTaskStatusView.as_view(), name='get-all-task-status'),
+    path('tasks/', TaskCreateListView.as_view(), name="tasks"),
+    path('tasks/<int:id>/', GetUpdateDeleteTasksView.as_view(), name="get-update-delete-tasks"),
+    path('tasks-types/', GetTaskTypesView.as_view(), name='get-all-task-types'),
+    path('tasks-status/', GetTaskStatusView.as_view(), name='get-all-task-status'),
     
     
     #dependency-Types
-    path('dependency/get-dependency-types-list/', DependencyTypesListView.as_view(), name="dependency-types-list"),
-    path('dependency/create-dependency-type/', CreateDependencyTypesView.as_view(), name="create-dependency-types"),
-    path('dependency/update-dependency-type/<int:id>/', UpdateDependencyTypesView.as_view(), name="update-dependency-types"),
-    path('dependency/delete-dependency-type/<int:id>/', DeleteDependencyTypesView.as_view(), name="delete-dependency-types"),
+    path('dependency-types/', DependencyTypesCreateListView.as_view(), name="dependency-types"),
+    path('dependency-types/<int:id>/', UpdateDeleteDependencyTypesView.as_view(), name="update--delete-dependency-types"),
+    
     
     #dependency
-    path('dependency/get-dependency-list/', DependencListView.as_view(), name="dependency-list"),
-    path('dependency/create-dependency/', CreateDependencyView.as_view(), name="create-dependency"),
-    path('dependency/update-dependency/<int:id>/', UpdateDependencyView.as_view(), name="update-dependency"),
-    path('dependency/get-dependency-details/<int:id>/', GetDependencyByIdView.as_view(), name="update-dependency"),
-    path('dependency/delete-dependency/<int:id>/', DeleteDependencyByIdView.as_view(), name="delete-dependency"),
-    path('dependency/get-dependecy-status-list/', GetDependencyStatusDetails.as_view(), name="get-dependency-status-list"),
+    path('dependency/', CreateListDependencyView.as_view(), name="dependency"),
+    path('dependency/<int:id>/', GetUpdateDeleteDependencyIdView.as_view(), name="get-update-delete-dependency"),
+    path('dependency-status/', GetDependencyStatusDetails.as_view(), name="get-dependency-status-list"),
     
     #Resources
-    path('resource/create-resources/', CreateResourcesView.as_view(), name="create-resources"),
-    path('resource/update-resources/<int:id>/', UpdateResourcesView.as_view(), name="update-resources"),
-    path('resource/get-resources-details/<int:id>/', GetResourcesDetailsByIdView.as_view(), name="get-resources-details"),
-    path('resource/delete-resources/<int:id>/', DeleteResourceByIdView.as_view(), name="delete-resources"),
-    path('resource/get-resources-list/', ResourcesListView.as_view(), name="get-resources-list"),
+    path('resources/', GetCreateResourcesView.as_view(), name="resources"),
+    path('resources/<int:id>/', GetUpdateDeleteResourcesView.as_view(), name="get-update-delete-resources"),
+
     
     #Resources-Group
-    path('resource/create-resource-group/', CreateResourceGroupsView.as_view(), name="create-resources-group"),
-    path('resource/update-resource-group/<int:id>/', UpdateResourceGroupsView.as_view(), name="update-resources-group"),
-    path('resource/get-resource-group-details/<int:id>/', GetResourcesGroupsDetailsView.as_view(), name="get-resources-group-details"),
-    path('resource/delete-resource-group/<int:id>/', DeleteResourceGroupsByIdView.as_view(), name="delete-resources-group"),
-    path('resource/get-resource-group-list/', ResourcesGroupsListView.as_view(), name="get-resources-group-list"),
+    path('resource-groups/', ResourcesGroupsCreateListView.as_view(), name="resources-groups"),
+    path('resource-groups/<int:id>/', GetUpdateDeleteResourceGroupsView.as_view(), name="Get-update-delete-resources-group"),
+
 
     #operation exception type
-    path('operational-exception/create-type/', CreateOperationalExceptionTypeView.as_view(), name="create-operational-exception-type"),
-    path('operational-exception/update-type/<int:id>/', UpdateOperationalExceptionTypeView.as_view(), name="update-operational-exception-type"),
-    path('operational-exception/get-type-details/<int:id>/', GetOperationalExceptionTypeDetailsView.as_view(), name="get-operational-exception-type-details"),
-    path('operational-exception/delete-type/<int:id>/', DeleteOperationalExceptionTypeByIdView.as_view(), name="delete-operational-exception-type"),
-    path('operational-exception/get-type-list/', GetOperationalExceptionTypeListView.as_view(), name="get-operational-exception-type-list"),
+    path('operational-exception-types/', GetCreateOperationalExceptionTypeView.as_view(), name="operational-exception-types"),
+    path('operational-exception/<int:id>/', GetUpdateDeleteOperationalExceptionTypeView.as_view(), name="Get-update-delete-operational-exception-type"),
     
     #operation exception
     path('operational-exception/create-exception/', CreateOperationalExceptionView.as_view(), name="create-operational-exception"),
