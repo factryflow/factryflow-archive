@@ -10,7 +10,7 @@ from api.services.job import JobService
 
 Job_service = JobService()
 
-class JobListView(APIView):
+class JobCreateListView(APIView):
     @swagger_auto_schema(
         responses=jobs_details_response,
         operation_summary="get jobs list ",
@@ -22,8 +22,6 @@ class JobListView(APIView):
         result = Job_service.get_all_jobs(request, format=None)
         return Response(result, status=result["code"])
 
-
-class CreateJobsView(APIView):
     @swagger_auto_schema(
         request_body=create_update_jobs_request_body,
         responses=response_create_update_job,
@@ -36,7 +34,7 @@ class CreateJobsView(APIView):
         result = Job_service.create_jobs(request, format=None)
         return Response(result, status=result["code"])
 
-class UpdateJobsView(APIView):
+class GetUpdateDeleteJobView(APIView):
     @swagger_auto_schema(
         request_body=create_update_jobs_request_body,
         responses=response_create_update_job,
@@ -49,9 +47,7 @@ class UpdateJobsView(APIView):
         """
         result = Job_service.update_job(request, id, format=None)
         return Response(result, status=result["code"])
-
-
-class GetJobByIdView(APIView):
+    
     @swagger_auto_schema(
         responses=jobs_details_response,
         operation_summary="Get job by id",
@@ -65,7 +61,6 @@ class GetJobByIdView(APIView):
         return Response(result, status=result["code"])
     
     
-class DeleteJobByIdView(APIView):
     @swagger_auto_schema(
         responses=response_delete_job,
         operation_summary="delete job",
@@ -76,6 +71,7 @@ class DeleteJobByIdView(APIView):
         """
         result = Job_service.delete_job(request, id, format=None)
         return Response(result, status=result["code"])
+    
 
 
 class SearchJobView(APIView):

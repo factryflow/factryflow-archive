@@ -8,7 +8,7 @@ from api.services.tasks import TaskService
 
 task_service = TaskService()
 
-class TaskListView(APIView):
+class TaskCreateListView(APIView):
     @swagger_auto_schema(
         responses=tasks_details_response,
         operation_summary="get task list ",
@@ -19,8 +19,7 @@ class TaskListView(APIView):
         """
         result = task_service.get_all_tasks(request, format=None)
         return Response(result, status=result["code"])
-
-class CreateTasksView(APIView):
+    
     @swagger_auto_schema(
         request_body=create_update_tasks_request_body,
         responses=response_create_update_tasks,
@@ -33,7 +32,9 @@ class CreateTasksView(APIView):
         result = task_service.create_tasks(request, format=None)
         return Response(result, status=result["code"])
     
-class UpdateTasksView(APIView):
+    
+    
+class GetUpdateDeleteTasksView(APIView):
     @swagger_auto_schema(
         request_body=create_update_tasks_request_body,
         responses=response_create_update_tasks,
@@ -46,7 +47,6 @@ class UpdateTasksView(APIView):
         result = task_service.update_tasks(request, id, format=None)
         return Response(result, status=result["code"])
     
-class GetTasksDetailsView(APIView):
     @swagger_auto_schema(
         responses=tasks_details_response,
         operation_summary="get tasks by id ",
@@ -58,7 +58,6 @@ class GetTasksDetailsView(APIView):
         result = task_service.get_task_details_by_id(request, id, format=None)
         return Response(result, status=result["code"])
     
-class DeleteTasksView(APIView):
     @swagger_auto_schema(
     responses=response_delete_tasks,
     operation_summary="delete tasks ",
@@ -69,7 +68,8 @@ class DeleteTasksView(APIView):
         """
         result = task_service.delete_tasks(request, id, format=None)
         return Response(result, status=result["code"])
-        
+    
+     
 
 class GetTaskTypesView(APIView):
     def get(self, request, format=None):
