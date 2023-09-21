@@ -129,9 +129,9 @@ class GetDependencyStatusDetails(APIView):
         responses=dependency_status_response,
         operation_summary="get all dependency status",
     )
-    def delete(self, request, id, format=None):
+    def get(self, request, format=None):
         """
         get all dependency status
         """
-        result = dependency_service.get_all_dependency_status(request, id, format=None)
+        result = dependency_service.get_all_dependency_status(request, format=None)
         return Response(result, status=result["code"])

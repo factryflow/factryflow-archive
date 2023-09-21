@@ -22,15 +22,15 @@ urlpatterns = [
     path('jobs/', JobCreateListView.as_view(), name="jobs"),
     path('jobs/<int:id>/', GetUpdateDeleteJobView.as_view(), name="get-update-delete-jobs"),
     path('search-jobs/', SearchJobView.as_view(), name="search-job"),
-    path('jobs-types/', JobTypesListView.as_view(), name='get-all-job-types'),
-    path('jobs-status/', JobTypesListView.as_view(), name='get-all-job-status'),
+    path('job-types/', JobTypesListView.as_view(), name='get-all-job-types'),
+    path('job-status/', JobTypesListView.as_view(), name='get-all-job-status'),
     
 
     #tasks
     path('tasks/', TaskCreateListView.as_view(), name="tasks"),
     path('tasks/<int:id>/', GetUpdateDeleteTasksView.as_view(), name="get-update-delete-tasks"),
-    path('tasks-types/', GetTaskTypesView.as_view(), name='get-all-task-types'),
-    path('tasks-status/', GetTaskStatusView.as_view(), name='get-all-task-status'),
+    path('task-types/', GetTaskTypesView.as_view(), name='get-all-task-types'),
+    path('task-status/', GetTaskStatusView.as_view(), name='get-all-task-status'),
     
     
     #dependency-Types
