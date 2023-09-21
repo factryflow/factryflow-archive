@@ -33,6 +33,10 @@ repo_name: factryflow
 
 nav:
   - Welcome: index.md
+  - Core Concepts:
+    - Resource Management: core-concepts/resource-management.md
+    - Production Fundamentals: core-concepts/production-fundamentals.md
+    - Assignment Rules: core-concepts/assignment-rules.md
   # - Getting Started:
   #   - Installation: getting-started/installation.md
   #   - Quickstart: getting-started/quickstart.md
