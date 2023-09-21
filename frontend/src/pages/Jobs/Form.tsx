@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { TextField, Typography, Card, Grid, CardContent } from "@mui/material";
 import { format } from "date-fns";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUpdateJobsMutation } from "../../service/jobApi";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
-
+import { CreateJob } from "@/types/api.types";
 import { useAppSelector } from "../../app/hooks";
 
 const validationSchema = yup.object().shape({
@@ -51,8 +51,9 @@ const MyForm = () => {
     formState: { errors },
   } = form;
 
-  const onSubmit = (data: any) => {
+  const onSubmit: SubmitHandler<any> = (data) => {
     // Inside the onSubmit function
+    if (!data) return;
     const formattedDate = format(data.due_date, "MM/dd/yyyy");
     const requestData = {
       name: data.name,
@@ -64,7 +65,7 @@ const MyForm = () => {
     };
 
     if (isEdit) {
-      updateJobs({ id: params.id, data: requestData });
+      updateJobs({ id: params.id!, data: requestData });
     } else {
       createJobs(requestData);
     }
@@ -104,15 +105,19 @@ const MyForm = () => {
     <Layout>
       <Grid>
         <Card
-          style={{ maxWidth: 450, padding: "20px 5px", margin: "20px auto" }}
+          style={{ width: "100%", padding: "20px 5px", margin: "30px auto" }}
         >
           <CardContent>
             <Typography gutterBottom variant="h5">
               {isEdit ? "Edit Job" : "Create Job"}
             </Typography>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Grid container spacing={1}>
-                <Grid item xs={12}>
+              <Grid
+                container
+                rowSpacing={1}
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              >
+                <Grid item xs={6}>
                   <Controller
                     name="name"
                     control={control}
@@ -131,7 +136,7 @@ const MyForm = () => {
                   />
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Controller
                     name="priority"
                     control={control}
@@ -150,7 +155,7 @@ const MyForm = () => {
                     )}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Controller
                     name="due_date"
                     control={control}
@@ -172,7 +177,7 @@ const MyForm = () => {
                   />
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Controller
                     name="customer"
                     control={control}
@@ -192,7 +197,7 @@ const MyForm = () => {
                   />
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Controller
                     name="description"
                     control={control}
@@ -211,7 +216,7 @@ const MyForm = () => {
                   />
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Controller
                     name="note"
                     control={control}

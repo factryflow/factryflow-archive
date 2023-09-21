@@ -162,15 +162,19 @@ const TaskForm = () => {
       <Layout>
         <Grid>
           <Card
-            style={{ maxWidth: 450, padding: "20px 5px", margin: "20px auto" }}
+            style={{ width: "100%", padding: "20px 5px", margin: "30px auto" }}
           >
             <CardContent>
               <Typography gutterBottom variant="h5">
                 {isEdit ? "Edit Task" : "Create Task"}
               </Typography>
               <form onSubmit={handleSubmit(onSubmit)}>
-                <Grid container spacing={1}>
-                  <Grid item xs={12}>
+                <Grid
+                  container
+                  rowSpacing={1}
+                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                >
+                  <Grid item xs={6}>
                     <Controller
                       name="external_id"
                       control={control}
@@ -190,7 +194,7 @@ const TaskForm = () => {
                     />
                   </Grid>
 
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
                     <Controller
                       name="name"
                       control={control}
@@ -209,7 +213,7 @@ const TaskForm = () => {
                       )}
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
                     <Controller
                       name="task_status"
                       control={control}
@@ -228,7 +232,7 @@ const TaskForm = () => {
                       )}
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
                     <Controller
                       name="setup_time"
                       defaultValue=""
@@ -248,7 +252,7 @@ const TaskForm = () => {
                     />
                   </Grid>
 
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
                     <Controller
                       name="run_time_per_unit"
                       control={control}
@@ -268,7 +272,7 @@ const TaskForm = () => {
                     />
                   </Grid>
 
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
                     <Controller
                       name="teardown_time"
                       control={control}
@@ -288,7 +292,7 @@ const TaskForm = () => {
                     />
                   </Grid>
 
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
                     <Controller
                       name="quantity"
                       control={control}
@@ -307,7 +311,7 @@ const TaskForm = () => {
                       )}
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
                     <FormControl fullWidth variant="outlined">
                       <InputLabel>Predecessors</InputLabel>
                       <Controller
@@ -332,7 +336,7 @@ const TaskForm = () => {
                     </FormControl>
                   </Grid>
 
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
                     <Controller
                       name="item"
                       control={control}
@@ -369,7 +373,6 @@ const TaskForm = () => {
                       color="primary"
                       variant="contained"
                       sx={{ marginBottom: 5 }}
-                      fullWidth
                     >
                       {isEdit ? "Save Changes" : "Submit"}
                     </LoadingButton>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../Layout";
 import {
   Card,
@@ -18,21 +18,23 @@ import {
   useUpdateTemplateMutation,
 } from "@/service/templateApi";
 import { toast } from "react-toastify";
-import { useAppSelector } from "@/app/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import TempleDetails from "@/components/data-tables/template/TemplateDetails";
-
+import { useGetAllTemplateDetailsQuery } from "@/service/templateDetailsApi";
+import { setTemplateDetails } from "@/features/templateDetailsSlice";
+import { log } from "console";
 const validationSchema = yup.object().shape({
   name: yup.string().required("Name is required").nullable(),
 });
 
 const TemplateForm = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const params = useParams();
   const isEdit = !!params.id;
-
   //all template data store reducer
   const templateSelector = useAppSelector((state) => state.template.templates);
-
+  const [templateId, setTemplateId] = useState<number>(0);
   //api call craete template
   const [
     createTemplate,
@@ -53,6 +55,16 @@ const TemplateForm = () => {
     },
   ] = useUpdateTemplateMutation();
 
+  //api call templateDetails
+
+  const {
+    data: templateDetailsData,
+    isLoading: templateDetailisLoading,
+    error: tempDetailsError,
+    isFetching: templateDetailsIsFetching,
+    isError: templateDetailsisError,
+  } = useGetAllTemplateDetailsQuery();
+
   const form = useForm({
     resolver: yupResolver(validationSchema),
   });
@@ -66,7 +78,7 @@ const TemplateForm = () => {
   } = form;
 
   const onSubmit = (data: any) => {
-    console.log(data, "Data");
+    // console.log(data, "Data");
     if (isEdit) {
       updateTemplate({ id: params.id, data });
     } else {
@@ -75,10 +87,18 @@ const TemplateForm = () => {
   };
 
   useEffect(() => {
+    if (!templateDetailisLoading && templateDetailsData) {
+      dispatch(setTemplateDetails(templateDetailsData));
+    }
+  }, [templateDetailisLoading, templateDetailsData, tempDetailsError]);
+
+  useEffect(() => {
     if (!templateIsLoading && createTemplateData) {
+      let tempId = createTemplateData.data.id;
+      setTemplateId(tempId);
       createTemplateData.code >= 400
         ? toast.error(createTemplateData.message)
-        : toast.success(createTemplateData.message) && navigate("/template");
+        : toast.success(createTemplateData.message);
     }
   }, [templateIsLoading, templateError, createTemplateData]);
 
@@ -156,7 +176,12 @@ const TemplateForm = () => {
       </Grid>
 
       <Grid>
-        <TempleDetails />
+        <TempleDetails
+          templateDetailsIsFetching={templateDetailsIsFetching}
+          templateDetailsisErrors={templateDetailsisError}
+          templateDetailisLoading={templateDetailisLoading}
+          templateId={templateId}
+        />
       </Grid>
     </Layout>
   );

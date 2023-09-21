@@ -25,6 +25,7 @@ import {
   menureducer,
   templateReducer,
   userReducer,
+  templateDetailsReducer,
 } from "../features";
 
 import {
@@ -38,6 +39,7 @@ import {
   exceptionApi,
   exceptionTypeApi,
   templateApi,
+  templateDetailsApi,
 } from "../service";
 
 const reducer = combineReducers({
@@ -53,6 +55,7 @@ const reducer = combineReducers({
   exceptiontype: exceptionTypeReducer,
   template: templateReducer,
   user: userReducer,
+  templatedetail: templateDetailsReducer,
   [authApi.reducerPath]: authApi.reducer,
   [jobApi.reducerPath]: jobApi.reducer,
   [taskApi.reducerPath]: taskApi.reducer,
@@ -63,6 +66,7 @@ const reducer = combineReducers({
   [exceptionApi.reducerPath]: exceptionApi.reducer,
   [exceptionTypeApi.reducerPath]: exceptionTypeApi.reducer,
   [templateApi.reducerPath]: templateApi.reducer,
+  [templateDetailsApi.reducerPath]: templateDetailsApi.reducer,
 });
 
 type RootReducer = ReturnType<typeof reducer>;
@@ -80,6 +84,7 @@ const config: PersistConfig<any> = {
     exceptionApi.reducerPath,
     exceptionTypeApi.reducerPath,
     templateApi.reducerPath,
+    templateDetailsApi.reducerPath,
   ],
   whitelist: [
     "menu",
@@ -89,6 +94,7 @@ const config: PersistConfig<any> = {
     "resource",
     "resourceGroup",
     "user",
+    "template",
   ],
 };
 
@@ -109,7 +115,8 @@ export const store = configureStore({
       .concat(resourcesGroupApi.middleware)
       .concat(exceptionApi.middleware)
       .concat(exceptionTypeApi.middleware)
-      .concat(templateApi.middleware);
+      .concat(templateApi.middleware)
+      .concat(templateDetailsApi.middleware);
   },
 });
 

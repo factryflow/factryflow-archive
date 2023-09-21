@@ -73,7 +73,7 @@ export type JobResponse = {
 export type CreateJob = {
   name: string;
   priority: Nullable<number>;
-  due_date: Nullable<Date>;
+  due_date: Nullable<string>;
   customer: Nullable<string>;
   description: string;
   note: string;

@@ -33,7 +33,7 @@ import {
 //   "name": "dependency test",
 //   "dependency_type": 1,
 //   "dependency_status": 1,
-//   "expected_closed": "2023-09-12T09:00:00Z",
+//   "expected_closed": "2023-09-6T09:00:00Z",
 //   "closed_date": "2023-09-01T08:00:00Z",
 //   "notes": "test notes",
 //   "jobs": 1,
@@ -212,15 +212,19 @@ const DependencyForm = () => {
       <Layout>
         <Grid>
           <Card
-            style={{ maxWidth: 450, padding: "20px 5px", margin: "20px auto" }}
+            style={{ width: "100%", padding: "20px 5px", margin: "30px auto" }}
           >
             <CardContent>
               <Typography gutterBottom variant="h5">
                 {isEdit ? "Edit Dependency" : "Create Dependency"}
               </Typography>
               <form onSubmit={handleSubmit(onSubmit)}>
-                <Grid container spacing={1}>
-                  <Grid item xs={12}>
+                <Grid
+                  container
+                  rowSpacing={1}
+                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                >
+                  <Grid item xs={6}>
                     <Controller
                       name="name"
                       control={control}
@@ -238,7 +242,7 @@ const DependencyForm = () => {
                       )}
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
                     <Controller
                       name="dependency_type"
                       control={control}
@@ -257,7 +261,7 @@ const DependencyForm = () => {
                       )}
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
                     <Controller
                       name="dependency_status"
                       control={control}
@@ -276,7 +280,7 @@ const DependencyForm = () => {
                       )}
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
                     <Controller
                       name="expected_closed"
                       defaultValue={new Date()}
@@ -299,7 +303,7 @@ const DependencyForm = () => {
                     />
                   </Grid>
 
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
                     <Controller
                       name="closed_date"
                       control={control}
@@ -321,7 +325,7 @@ const DependencyForm = () => {
                       )}
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
                     <Controller
                       name="notes"
                       control={control}
@@ -343,7 +347,7 @@ const DependencyForm = () => {
                       )}
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
                     <FormControl fullWidth variant="outlined">
                       <InputLabel>Jobs</InputLabel>
                       <Controller
@@ -372,7 +376,7 @@ const DependencyForm = () => {
                       />
                     </FormControl>
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
                     <FormControl fullWidth variant="outlined">
                       <InputLabel>Tasks</InputLabel>
                       <Controller
@@ -403,15 +407,6 @@ const DependencyForm = () => {
                   </Grid>
 
                   <Grid item xs={12}>
-                    {/* <Button
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                      fullWidth
-                    >
-                      Submit
-                    </Button> */}
-
                     <LoadingButton
                       size="small"
                       type="submit"
@@ -419,7 +414,6 @@ const DependencyForm = () => {
                       color="primary"
                       variant="contained"
                       sx={{ marginBottom: 5 }}
-                      fullWidth
                     >
                       {isEdit ? "Save Changes" : "Submit"}
                     </LoadingButton>

@@ -13,6 +13,7 @@ import { setTemplates } from "@/features/templateSlice";
 import { useDeleteTemplateMutation } from "@/service/templateApi";
 import Loading from "@/components/loading/loading";
 import { toast } from "react-toastify";
+
 const Template = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
