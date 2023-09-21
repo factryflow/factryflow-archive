@@ -5,15 +5,15 @@ app_name = 'api'
 
 urlpatterns = [
     
-    path('auth/login/', LoginView.as_view(), name='login'),
-    path('auth/logout/', LogoutView.as_view(), name='logout'),
-    path('auth/sign-up/', SignupView.as_view(), name='auth-sign-up'),
+    path('auth-login/', LoginView.as_view(), name='login'),
+    path('auth-logout/', LogoutView.as_view(), name='logout'),
+    path('auth-sign-up/', SignupView.as_view(), name='auth-sign-up'),
         
     #Change-Password
-    path('user/change-password/',ChangePasswordView.as_view(), name="update-password"),
+    path('change-password/',ChangePasswordView.as_view(), name="update-password"),
 
     #Profile
-    path('user/get-user-details-by-token/',GetUserDetialsByTokenView.as_view(), name="get-user-details-by-token"),
+    path('user-details/',GetUserDetialsByTokenView.as_view(), name="get-user-details-by-token"),
    
     #role
     path('roles/', RoleCreateListView.as_view(), name="get-or-create-role"),
@@ -68,16 +68,17 @@ urlpatterns = [
     #weekly shift template details
     path('weekly-shift-template-details/', GetCreateWeeklyShiftDetailsView.as_view(), name="weekly-shift-details"),
     path('weekly-shift-template-details/<int:id>/', GetUpdateDeleteWeeklyShiftDetailsView.as_view(), name="Get-update-delete-weekly-shift-details"),
+    path('weekly-template-details-by-template-id/<int:template_id>/', GetWeeklyShiftDetailsbyTemplateView.as_view(), name="weekly-template-details-by-template-id"),
     
    
     #Schedule Run
     path('schedule-details/', GetCreateScheduleRunView.as_view(), name="schedule-run-details"),
     path('schedule-details/<int:id>/', GetUpdateDeleteScheduleRunView.as_view(), name="Get-update-delete-schedule-run-details"),
-    path('schedule-status', ScheduleRunStatusListView.as_view(), name="schedule-run-status"),
+    path('schedule-status/', ScheduleRunStatusListView.as_view(), name="schedule-run-status"),
     
     #search
-    path('search/get-search-list/', GetSearchListView.as_view(), name="get-search-list"),
-    path('search/get-search-details/', GetSearchDetailsView.as_view(), name="get-search-details"),
+    path('search-list/', GetSearchListView.as_view(), name="get-search-list"),
+    path('search-details/', GetSearchDetailsView.as_view(), name="get-search-details"),
     
     
     #Assignment Rule

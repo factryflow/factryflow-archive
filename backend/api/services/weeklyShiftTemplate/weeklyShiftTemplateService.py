@@ -86,6 +86,13 @@ class WeeklyShiftTemplateService(WeeklyShiftTemplateBaseService):
         serializer = GetTemplateDetailsSerializer(template_obj, many=True)
         return ({"data": serializer.data, "code": status.HTTP_200_OK, "message": OK})
 
+    def get_weekly_shift_details_by_template_id(self, request, template_id, format=None):
+        """
+        Retun all the WeeklyShiftTemplate details by template id 
+        """
+        template_obj = WeeklyShiftTemplateDetail.objects.filter(template__id=template_id)
+        serializer = GetTemplateDetailsSerializer(template_obj, many=True)
+        return ({"data": serializer.data, "code": status.HTTP_200_OK, "message": OK})
 
     def create_template_details(self, request, format=None):
         """

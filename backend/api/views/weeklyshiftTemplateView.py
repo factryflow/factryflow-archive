@@ -138,3 +138,14 @@ class GetUpdateDeleteWeeklyShiftDetailsView(APIView):
         return Response(result, status=result["code"])
     
 
+class GetWeeklyShiftDetailsbyTemplateView(APIView):
+    @swagger_auto_schema(
+        responses=response_create_update_weekly_shift_template,
+        operation_summary="get weekly shift template by template id",
+    )
+    def get(self, request, template_id, format=None):
+        """
+        Get weekly shift template details by template id
+        """
+        result = template_service.get_weekly_shift_details_by_template_id(request, template_id, format=None)
+        return Response(result, status=result["code"])
