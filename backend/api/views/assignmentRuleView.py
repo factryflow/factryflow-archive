@@ -8,19 +8,11 @@ from api.services.assignmentRule import AssignmentRuleService
 
 assignment_rule_service = AssignmentRuleService()
 
-class AssignmentRuleListView(APIView):
-    @swagger_auto_schema(
-        responses=assignment_rule_details_response,
-        operation_summary="List all assignment rule.",
-    )
-    def get(self, request, format=None):
-        """
-        List all assignment rule.
-        """
-        result = assignment_rule_service.get_all_assignment_rule(request, format=None)
-        return Response(result, status=result["code"])
 
-class CreateAssignmentRuleView(APIView):
+
+
+class GetCreateAssignmentRuleView(APIView):
+
     @swagger_auto_schema(
         request_body=create_update_assignment_rule_request_body,
         responses=response_create_update_assignment_rule,
@@ -33,7 +25,22 @@ class CreateAssignmentRuleView(APIView):
         result = assignment_rule_service.create_assignment_rule(request, format=None)
         return Response(result, status=result["code"])
     
-class UpdateAssignmentRuleView(APIView):
+    @swagger_auto_schema(
+        responses=assignment_rule_details_response,
+        operation_summary="List all assignment rule.",
+    )
+    def get(self, request, format=None):
+        """
+        List all assignment rule.
+        """
+        result = assignment_rule_service.get_all_assignment_rule(request, format=None)
+        return Response(result, status=result["code"])
+    
+	
+
+
+class GetUpdateAssignmentRuleView(APIView):
+    
     @swagger_auto_schema(
         request_body=create_update_assignment_rule_request_body,
         responses=response_create_update_assignment_rule,
@@ -47,7 +54,17 @@ class UpdateAssignmentRuleView(APIView):
         return Response(result, status=result["code"])
     
     
-class DeleteAssignmentRuleView(APIView):
+    @swagger_auto_schema(
+        responses=assignment_rule_details_response,
+        operation_summary="get assignment rule by id.",
+    )
+    def get(self, request, format=None):
+        """
+        get assignment details by id
+        """
+        result = assignment_rule_service.get_assignment_rule_by_id(request, format=None)
+        return Response(result, status=result["code"])
+    
     @swagger_auto_schema(
         responses=response_delete_assignment_rule,
         operation_summary="delete assignment rule detail by id",
@@ -60,33 +77,10 @@ class DeleteAssignmentRuleView(APIView):
         return Response(result, status=result["code"])
     
 
-class GetAssignmentRuleByIdView(APIView):
-    @swagger_auto_schema(
-        responses=assignment_rule_details_response,
-        operation_summary="get assignment rule by id.",
-    )
-    def get(self, request, format=None):
-        """
-        get assignment details by id
-        """
-        result = assignment_rule_service.get_assignment_rule_by_id(request, format=None)
-        return Response(result, status=result["code"])
-        
 
 
-class TaskResourceAssignmentListView(APIView):
-    @swagger_auto_schema(
-        responses=task_resource_assignment_details_response,
-        operation_summary="List all task resource assignment",
-    )
-    def get(self, request, format=None):
-        """
-        List all task resource assignment.
-        """
-        result = assignment_rule_service.get_all_task_resource_assignment(request, format=None)
-        return Response(result, status=result["code"])
+class GetCreateTaskResourceAssignmentView(APIView):
 
-class CreateTaskResourceAssignmentView(APIView):
     @swagger_auto_schema(
         request_body=create_update_task_resource_assignment_request_body,
         responses=response_create_update_task_resource_assignment,
@@ -99,7 +93,24 @@ class CreateTaskResourceAssignmentView(APIView):
         result = assignment_rule_service.create_task_resource_assignment(request, format=None)
         return Response(result, status=result["code"])
     
-class UpdateTaskResourceAssignmentView(APIView):
+    
+    @swagger_auto_schema(
+        responses=task_resource_assignment_details_response,
+        operation_summary="List all task resource assignment",
+    )
+    def get(self, request, format=None):
+        """
+        List all task resource assignment.
+        """
+        result = assignment_rule_service.get_all_task_resource_assignment(request, format=None)
+        return Response(result, status=result["code"])
+
+    
+	
+
+
+class GetUpdateResourceAssignmentView(APIView):
+    
     @swagger_auto_schema(
         request_body=create_update_task_resource_assignment_request_body,
         responses=response_create_update_task_resource_assignment,
@@ -113,20 +124,6 @@ class UpdateTaskResourceAssignmentView(APIView):
         return Response(result, status=result["code"])
     
     
-class DeleteTaskResourceAssignmentView(APIView):
-    @swagger_auto_schema(
-        responses=response_delete_task_resource_assignment,
-        operation_summary="delete task resource assignment detail by id",
-    )
-    def delete(self, request, id, format=None):
-        """
-        delete task resource assignment detail by id
-        """
-        result = assignment_rule_service.delete_task_resource_assignment(request, id, format=None)
-        return Response(result, status=result["code"])
-    
-
-class GetTaskResourceAssignmentByIdView(APIView):
     @swagger_auto_schema(
         responses=task_resource_assignment_details_response,
         operation_summary="get task resource assignment by id.",
@@ -137,22 +134,26 @@ class GetTaskResourceAssignmentByIdView(APIView):
         """
         result = assignment_rule_service.get_task_resource_assignment_by_id(request, format=None)
         return Response(result, status=result["code"])
-
-
-# AssignmentRule Criteria
-class AssignmentRuleCriteriaListView(APIView):
+    
+    
     @swagger_auto_schema(
-        responses=assignment_rule_criteria_details_response,
-        operation_summary="List all assignment rule criteria",
+        responses=response_delete_task_resource_assignment,
+        operation_summary="delete task resource assignment detail by id",
     )
-    def get(self, request, format=None):
+    def delete(self, request, id, format=None):
         """
-        List all assignment rule criteria
+        delete task resource assignment detail by id
         """
-        result = assignment_rule_service.get_all_assignment_rule_criteria(request, format=None)
+        result = assignment_rule_service.delete_task_resource_assignment(request, id, format=None)
         return Response(result, status=result["code"])
 
-class CreateAssignmentRuleCriteriaView(APIView):
+
+
+
+
+
+class GetCreateAssignmentRuleCriteriaView(APIView):
+
     @swagger_auto_schema(
         request_body=create_update_assignment_rule_criteria_request_body,
         responses=response_create_update_assignment_rule_criteria,
@@ -165,7 +166,24 @@ class CreateAssignmentRuleCriteriaView(APIView):
         result = assignment_rule_service.create_assignment_rule_criteria(request, format=None)
         return Response(result, status=result["code"])
     
-class UpdateAssignmentRuleCriteriaView(APIView):
+    
+    @swagger_auto_schema(
+        responses=assignment_rule_criteria_details_response,
+        operation_summary="List all assignment rule criteria",
+    )
+    def get(self, request, format=None):
+        """
+        List all assignment rule criteria
+        """
+        result = assignment_rule_service.get_all_assignment_rule_criteria(request, format=None)
+        return Response(result, status=result["code"])
+
+    
+	
+
+
+class GetUpdateAssignmentRuleCriteriaView(APIView):
+    
     @swagger_auto_schema(
         request_body=create_update_assignment_rule_criteria_request_body,
         responses=response_create_update_assignment_rule_criteria,
@@ -179,7 +197,18 @@ class UpdateAssignmentRuleCriteriaView(APIView):
         return Response(result, status=result["code"])
     
     
-class DeleteAssignmentRuleCriteriaView(APIView):
+    @swagger_auto_schema(
+        responses=assignment_rule_criteria_details_response,
+        operation_summary="get assignment rule criteria by id",
+    )
+    def get(self, request, format=None):
+        """
+        get assignment rule criteria details by id
+        """
+        result = assignment_rule_service.get_assignment_rule_criteria_by_id(request, format=None)
+        return Response(result, status=result["code"])
+    
+    
     @swagger_auto_schema(
         responses=response_delete_assignment_rule_criteria,
         operation_summary="delete assignment rule criteria detail by id",
@@ -191,14 +220,11 @@ class DeleteAssignmentRuleCriteriaView(APIView):
         result = assignment_rule_service.delete_assignment_rule_criteria(request, id, format=None)
         return Response(result, status=result["code"])
 
-class GetAssignmentRuleCriteriaByIdView(APIView):
-    @swagger_auto_schema(
-        responses=assignment_rule_criteria_details_response,
-        operation_summary="get assignment rule criteria by id",
-    )
-    def get(self, request, format=None):
-        """
-        get assignment rule criteria details by id
-        """
-        result = assignment_rule_service.get_assignment_rule_criteria_by_id(request, format=None)
-        return Response(result, status=result["code"])
+
+
+
+
+
+
+
+

@@ -8,19 +8,10 @@ from api.services.weeklyShiftTemplate import WeeklyShiftTemplateService
 
 template_service = WeeklyShiftTemplateService()
 
-class WeeklyShiftTemplateListView(APIView):
-    @swagger_auto_schema(
-        responses=weekly_shift_template_response,
-        operation_summary="List all weekly shift template",
-    )
-    def get(self, request, format=None):
-        """
-        List all weekly shift template.
-        """
-        result = template_service.get_all_weekly_shift_template(request, format=None)
-        return Response(result, status=result["code"])
 
-class CreateWeeklyShiftTemplateView(APIView):
+
+class GetCreateWeeklyShiftTemplateView(APIView):
+
     @swagger_auto_schema(
         request_body=create_update_weekly_shift_template_request_body,
         responses=response_create_update_weekly_shift_template,
@@ -33,8 +24,20 @@ class CreateWeeklyShiftTemplateView(APIView):
         result = template_service.create_weekly_shift_template(request, format=None)
         return Response(result, status=result["code"])
     
+    @swagger_auto_schema(
+        responses=weekly_shift_template_response,
+        operation_summary="List all weekly shift template",
+    )
+    def get(self, request, format=None):
+        """
+        List all weekly shift template.
+        """
+        result = template_service.get_all_weekly_shift_template(request, format=None)
+        return Response(result, status=result["code"])
 
-class UpdateWeeklyShiftTemplateView(APIView):
+
+class GetUpdateDeleteWeeklyShiftTemplateView(APIView):
+    
     @swagger_auto_schema(
         request_body=create_update_weekly_shift_template_request_body,
         responses=response_create_update_weekly_shift_template,
@@ -46,94 +49,103 @@ class UpdateWeeklyShiftTemplateView(APIView):
         """
         result = template_service.update_weekly_shift_template(request, id, format=None)
         return Response(result, status=result["code"])
-    
 
-class GetWeeklyShiftTemplateView(APIView):
     @swagger_auto_schema(
-        responses=weekly_shift_template_response,
-        operation_summary="get weekly shift template",
+        responses=response_create_update_weekly_shift_template,
+        operation_summary="get weekly shift template by id",
     )
     def get(self, request, id, format=None):
         """
-        get weekly shift template.
+        get weekly shift template by id
         """
         result = template_service.get_weekly_shift_template_by_id(request, id, format=None)
         return Response(result, status=result["code"])
     
-class DeleteWeeklyShiftTemplateView(APIView):
     @swagger_auto_schema(
         responses=response_delete_weekly_shift_template,
-        operation_summary="get weekly shift template",
+        operation_summary="delete weekly shift template by id",
     )
     def delete(self, request, id, format=None):
         """
-        delete weekly shift template detail by id
+        delete weekly shift template by id
         """
         result = template_service.delete_weekly_shift_template(request, id, format=None)
         return Response(result, status=result["code"])
-        
 
 
+class GetCreateWeeklyShiftDetailsView(APIView):
 
-class TemplateDetailsListView(APIView):
     @swagger_auto_schema(
-        responses=template_details_response,
-        operation_summary="List all weekly shift template.",
-    )
-    def get(self, request, format=None):
-        """
-        List all weekly shift template.
-        """
-        result = template_service.get_all_template_details(request, format=None)
-        return Response(result, status=result["code"])
-
-class CreateTemplateDetailsView(APIView):
-    @swagger_auto_schema(
-        request_body=create_update_template_details_request_body,
-        responses=response_create_update_template_details,
+        request_body=create_update_weekly_shift_template_request_body,
+        responses=response_create_update_weekly_shift_template,
         operation_summary="Create weekly shift template details",
     )
     def post(self, request, format=None):
         """
-        Create weekly shift template details
+        Create weekly shift details.
         """
         result = template_service.create_template_details(request, format=None)
         return Response(result, status=result["code"])
+    
+    @swagger_auto_schema(
+        responses=template_details_response,
+        operation_summary="List all weekly shift details",
+    )
+    def get(self, request, format=None):
+        """
+        List all weekly shift details.
+        """
+        result = template_service.get_all_template_details(request, format=None)
+        return Response(result, status=result["code"])
+    
+	
 
-class UpdateTemplateDetailsView(APIView):
+
+class GetUpdateDeleteWeeklyShiftDetailsView(APIView):
+    
     @swagger_auto_schema(
         request_body=create_update_template_details_request_body,
         responses=response_create_update_template_details,
-        operation_summary="Update weekly shift template details",
+        operation_summary="update weekly shift template.",
     )
     def put(self, request, id, format=None):
         """
-        Update weekly shift template details
+        update weekly shift template.
         """
-        result = template_service.update_template_details(request, id, format=None)
+        result = template_service.update_weekly_shift_template(request, id, format=None)
         return Response(result, status=result["code"])
 
-class GetTemplateDetailsView(APIView):
     @swagger_auto_schema(
-        responses=template_details_response,
-        operation_summary="get weekly shift template detail by id",
+        responses=response_create_update_weekly_shift_template,
+        operation_summary="get weekly shift template by id",
     )
     def get(self, request, id, format=None):
         """
-        get weekly shift template detail by id
+        get weekly shift template by id
         """
-        result = template_service.get_template_details_by_id(request, id, format=None)
+        result = template_service.get_weekly_shift_template_by_id(request, id, format=None)
         return Response(result, status=result["code"])
-
     
-class DeleteTemplateDetailsView(APIView):
     @swagger_auto_schema(
-        responses=response_delete_template_details,
-        operation_summary="delete weekly shift template detail by id",
+        responses=response_delete_weekly_shift_template,
+        operation_summary="delete weekly shift template by id",
     )
     def delete(self, request, id, format=None):
         """
-        delete weekly shift template detail by id
+        delete weekly shift template by id
         """
-        result = template_service.delete_template_details(request, id, format=None)
+        result = template_service.delete_weekly_shift_template(request, id, format=None)
+        return Response(result, status=result["code"])
+    
+
+class GetWeeklyShiftDetailsbyTemplateView(APIView):
+    @swagger_auto_schema(
+        responses=response_create_update_weekly_shift_template,
+        operation_summary="get weekly shift template by template id",
+    )
+    def get(self, request, template_id, format=None):
+        """
+        Get weekly shift template details by template id
+        """
+        result = template_service.get_weekly_shift_details_by_template_id(request, template_id, format=None)
         return Response(result, status=result["code"])

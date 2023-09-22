@@ -8,6 +8,7 @@ from api.services.search import SearchService
 
 search_service = SearchService()
 
+
 class GetSearchListView(APIView):
     @swagger_auto_schema(
         request_body=search_request_body,
@@ -20,7 +21,7 @@ class GetSearchListView(APIView):
         """
         result = search_service.get_all_search_list(request, format=None)
         return Response(result, status=result["code"])
-    
+
 
 class GetSearchDetailsView(APIView):
     @swagger_auto_schema(

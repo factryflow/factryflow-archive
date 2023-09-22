@@ -139,13 +139,7 @@ class UserService(UserBaseService):
 	def sign_up(self, request, format=None):
 		try:
 			user = User.objects.get(email=request.data["email"].lower())
-			if user.otp_varification == True:
-				return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":EMAIL_ALREADY_EXIST})
-			else:
-				serializer = UserLoginDetailSerializer(user)
-				data = serializer.data
-				data["token"] = get_token(user)
-				return({"data":None, "code":status.HTTP_200_OK, "message":OTP_SENT})
+			return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":EMAIL_ALREADY_EXIST})
 		except User.DoesNotExist:
 			serializer = signUpSerializer(data=request.data)
 			if serializer.is_valid():
