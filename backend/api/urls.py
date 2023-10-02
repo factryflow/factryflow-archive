@@ -1,6 +1,6 @@
 from http import HTTPStatus
 
-from api.views import item_router, user_auth_router, user_no_auth_router
+from api.views import *
 from django.core.exceptions import (
     FieldError,
     ObjectDoesNotExist,
@@ -19,6 +19,7 @@ api.register_controllers(NinjaJWTDefaultController)
 api.add_router("/users", user_no_auth_router, tags=["users"])
 api.add_router("/users", user_auth_router, auth=JWTAuth(), tags=["users"])
 api.add_router("/items", item_router, auth=JWTAuth(), tags=["items"])
+api.add_router("/roles", role_router, tags=["roles"])
 
 
 @api.exception_handler(ObjectDoesNotExist)

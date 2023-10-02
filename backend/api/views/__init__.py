@@ -1,5 +1,5 @@
-from .userView import *
-from .roleView import *
+from .user import *
+from .role import *
 from .jobsView import *
 from .tasksView import *
 from .dependencyView import *
@@ -9,4 +9,4 @@ from .weeklyshiftTemplateView import *
 from .scheduleRunView import *
 from .searchView import *
 from .assignmentRuleView import *
-from .itemView import *
+from .item import *
