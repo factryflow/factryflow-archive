@@ -1,97 +1,75 @@
-from django.urls import path
-from .views import *
+from http import HTTPStatus
 
-app_name = 'api'
+from api.views import item_router, user_auth_router, user_no_auth_router
+from django.core.exceptions import (
+    FieldError,
+    ObjectDoesNotExist,
+    PermissionDenied,
+    ValidationError,
+)
+from ninja.errors import ValidationError as NinjaValidationError
+from ninja_extra import NinjaExtraAPI
+from ninja_jwt.authentication import JWTAuth
+from ninja_jwt.controller import NinjaJWTDefaultController
 
-urlpatterns = [
-    
-    path('auth-login/', LoginView.as_view(), name='login'),
-    path('auth-logout/', LogoutView.as_view(), name='logout'),
-    path('auth-sign-up/', SignupView.as_view(), name='auth-sign-up'),
-        
-    #Change-Password
-    path('change-password/',ChangePasswordView.as_view(), name="update-password"),
-
-    #Profile
-    path('user-details/',GetUserDetialsByTokenView.as_view(), name="get-user-details-by-token"),
-   
-    #role
-    path('roles/', RoleCreateListView.as_view(), name="get-or-create-role"),
-    
-    #jobs
-    path('jobs/', JobCreateListView.as_view(), name="jobs"),
-    path('jobs/<int:id>/', GetUpdateDeleteJobView.as_view(), name="get-update-delete-jobs"),
-    path('search-jobs/', SearchJobView.as_view(), name="search-job"),
-    path('job-types/', JobTypesListView.as_view(), name='get-all-job-types'),
-    path('job-status/', JobTypesListView.as_view(), name='get-all-job-status'),
-    
-
-    #tasks
-    path('tasks/', TaskCreateListView.as_view(), name="tasks"),
-    path('tasks/<int:id>/', GetUpdateDeleteTasksView.as_view(), name="get-update-delete-tasks"),
-    path('task-types/', GetTaskTypesView.as_view(), name='get-all-task-types'),
-    path('task-status/', GetTaskStatusView.as_view(), name='get-all-task-status'),
-    
-    
-    #dependency-Types
-    path('dependency-types/', DependencyTypesCreateListView.as_view(), name="dependency-types"),
-    path('dependency-types/<int:id>/', UpdateDeleteDependencyTypesView.as_view(), name="update--delete-dependency-types"),
-    
-    
-    #dependency
-    path('dependency/', CreateListDependencyView.as_view(), name="dependency"),
-    path('dependency/<int:id>/', GetUpdateDeleteDependencyIdView.as_view(), name="get-update-delete-dependency"),
-    path('dependency-status/', GetDependencyStatusDetails.as_view(), name="get-dependency-status-list"),
-    
-    #Resources
-    path('resources/', GetCreateResourcesView.as_view(), name="resources"),
-    path('resources/<int:id>/', GetUpdateDeleteResourcesView.as_view(), name="get-update-delete-resources"),
-
-    
-    #Resources-Group
-    path('resource-groups/', ResourcesGroupsCreateListView.as_view(), name="resources-groups"),
-    path('resource-groups/<int:id>/', GetUpdateDeleteResourceGroupsView.as_view(), name="Get-update-delete-resources-group"),
+api = NinjaExtraAPI(urls_namespace="api")
+api.register_controllers(NinjaJWTDefaultController)
 
 
-    #operation exception type
-    path('operational-exception-types/', GetCreateOperationalExceptionTypeView.as_view(), name="operational-exception-types"),
-    path('operational-exception/<int:id>/', GetUpdateDeleteOperationalExceptionTypeView.as_view(), name="Get-update-delete-operational-exception-type"),
-    
-    #operation exception
-    path('operational-exceptions/', GetCreateOperationalExceptionView.as_view(), name="operational-exceptions"),
-    path('operational-exceptions/<int:id>/', GetUpdateDeleteOperationalExceptionView.as_view(), name="Get-update-delete-operational-exceptions"),
-   
-    #weekly shift template
-    path('weekly-shift-templates/', GetCreateWeeklyShiftTemplateView.as_view(), name="weekly-shift-template"),
-    path('weekly-shift-templates/<int:id>/', GetUpdateDeleteWeeklyShiftTemplateView.as_view(), name="Get-update-delete-weekly-shift-template"),
-   
-    #weekly shift template details
-    path('weekly-shift-template-details/', GetCreateWeeklyShiftDetailsView.as_view(), name="weekly-shift-details"),
-    path('weekly-shift-template-details/<int:id>/', GetUpdateDeleteWeeklyShiftDetailsView.as_view(), name="Get-update-delete-weekly-shift-details"),
-    path('weekly-template-details-by-template-id/<int:template_id>/', GetWeeklyShiftDetailsbyTemplateView.as_view(), name="weekly-template-details-by-template-id"),
-    
-   
-    #Schedule Run
-    path('schedule-details/', GetCreateScheduleRunView.as_view(), name="schedule-run-details"),
-    path('schedule-details/<int:id>/', GetUpdateDeleteScheduleRunView.as_view(), name="Get-update-delete-schedule-run-details"),
-    path('schedule-status/', ScheduleRunStatusListView.as_view(), name="schedule-run-status"),
-    
-    #search
-    path('search-list/', GetSearchListView.as_view(), name="get-search-list"),
-    path('search-details/', GetSearchDetailsView.as_view(), name="get-search-details"),
-    
-    
-    #Assignment Rule
-    path('assignment-rule-details/',GetCreateAssignmentRuleView.as_view(), name="assignment-rule-details"),
-    path('assignment-rule-details/<int:id>/', GetUpdateAssignmentRuleView.as_view(), name="Get-update-delete-assignment-rule-details"),
+api.add_router("/users", user_no_auth_router, tags=["users"])
+api.add_router("/users", user_auth_router, auth=JWTAuth(), tags=["users"])
+api.add_router("/items", item_router, auth=JWTAuth(), tags=["items"])
 
 
-    #Task resource assigmnet
-    path('task-resource-assignment-details/',GetCreateTaskResourceAssignmentView.as_view(), name="task-resource-assignment-details"),
-    path('task-resource-assignment-details/<int:id>/', GetUpdateResourceAssignmentView.as_view(), name="Get-update-delete-resource-assignment-details"),
-    
-    #Assignment Rule Criteria
-    path('assignment-rule-criteria/',GetCreateAssignmentRuleCriteriaView.as_view(), name="assignment-rule-criteria"),
-    path('assignment-rule-criteria/<int:id>/', GetUpdateAssignmentRuleCriteriaView.as_view(), name="Get-update-delete-assignment-rule-criteria"),
+@api.exception_handler(ObjectDoesNotExist)
+def handle_object_does_not_exist(request, exc):
+    return api.create_response(
+        request,
+        {"message": "ObjectDoesNotExist", "detail": str(exc)},
+        status=HTTPStatus.NOT_FOUND,
+    )
 
-]
+
+@api.exception_handler(PermissionDenied)
+def handle_permission_error(request, exc: PermissionDenied):
+    return api.create_response(
+        request,
+        {
+            "message": "PermissionDenied",
+            "detail": "You don't have the permission to access this resource.",
+        },
+        status=HTTPStatus.FORBIDDEN,
+    )
+
+
+@api.exception_handler(NinjaValidationError)
+def handle_ninja_validation_error(request, exc: NinjaValidationError):
+    mapped_msg = {error["loc"][-1]: error["msg"] for error in exc.errors}
+    return api.create_response(
+        request,
+        data={"message": "NinjaValidationError", "detail": mapped_msg},
+        status=HTTPStatus.BAD_REQUEST,
+    )
+
+
+@api.exception_handler(ValidationError)
+def handle_validation_error(request, exc: ValidationError):
+    status = HTTPStatus.BAD_REQUEST
+    for field, errors in exc.error_dict.items():
+        for error in errors:
+            if error.code in ["unique", "unique_together"]:
+                status = HTTPStatus.CONFLICT
+    return api.create_response(
+        request,
+        data={"message": "ValidationError", "detail": exc.message_dict},
+        status=status,
+    )
+
+
+@api.exception_handler(FieldError)
+def handle_field_error(request, exc: FieldError):
+    return api.create_response(
+        request,
+        data={"message": "FieldError", "detail": str(exc)},
+        status=HTTPStatus.BAD_REQUEST,
+    )

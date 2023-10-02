@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 from .userBaseService import UserBaseService
 from api.utils.messages.userMessages import *
 from api.utils.messages.commonMessages import *
-from api.models import User, UserSession
+from api.models import User
 from api.utils.getToken import get_token
 from api.utils.getUserByToken import get_user_by_token
 from api.serializers.user import *

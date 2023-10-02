@@ -1,75 +1,51 @@
-from rest_framework import status
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from api.utils.schemas import *
-from drf_yasg.utils import swagger_auto_schema
-from api.services.user import UserService
+from api.models.user import User
+from api.schemas.user import UserIn, UserOut
+from django.contrib.auth import get_user_model
+from ninja import Router
+from ninja_crud.views import (
+    DeleteModelView,
+    ListModelView,
+    ModelViewSet,
+    RetrieveModelView,
+    UpdateModelView,
+)
 
-userService = UserService()
+user_no_auth_router = Router()
 
-class SignupView(APIView):
-    permission_classes = (AllowAny,)
-    @swagger_auto_schema(
-        request_body=signup_request_body,
-        responses=signup_response,
-        operation_summary="Signup a new user",
+
+@user_no_auth_router.post("/", response=UserOut)
+def register_user(request, user_in: UserIn):
+    user = get_user_model().objects.create_user(
+        username=user_in.username, email=user_in.email, password=user_in.password
     )
-    def post(self, request, format=None):
-        """
-        Create User/ Signup User
-        """
-        result = userService.sign_up(request, format=None)
-        return Response(result, status=status.HTTP_200_OK)
+    return user
 
 
-class LoginView(APIView):
-    permission_classes = (AllowAny,)
-    @swagger_auto_schema(
-        request_body=login_request_body,
-        responses=login_response,
-        operation_summary="Login a user",
-    )
-    def post(self, request, format=None):
-        """
-        Login
-        """
-        result = userService.login(request, format=None)
-        return Response(result, status=status.HTTP_200_OK)
+user_auth_router = Router()
 
 
-        
-class LogoutView(APIView):
-    """
-    Logout
-    """
-    def post(self, request, format=None):
-        # simply delete the token to force a login
-        result = userService.logout(request, format=None)
-        return Response(result, status=status.HTTP_200_OK)
+class UserViewSet(ModelViewSet):
+    model_class = User
+
+    # AbstractModelView subclasses can be used as-is
+    list = ListModelView(output_schema=UserOut)
+    retrieve = RetrieveModelView(output_schema=UserOut)
+    update = UpdateModelView(input_schema=UserIn, output_schema=UserOut)
+    delete = DeleteModelView()
 
 
-class ChangePasswordView(APIView):
-    """
-    change Password after otp varification
-    """
-    @swagger_auto_schema(
-        request_body=change_password_body,
-        responses=change_password_response,
-        operation_summary="Update logged in user's password",
-    )
-    def put(self, request, format=None):
-        result = userService.change_password(request, format=None)
-        return Response(result, status=status.HTTP_200_OK)
+# The register_routes method must be called to register the routes with the router
+UserViewSet.register_routes(user_auth_router)
 
-class GetUserDetialsByTokenView(APIView):
-    """
-    Get User Details
-    """
-    @swagger_auto_schema(
-        responses=user_details_response,
-        operation_summary="Update logged in user's password",
-    )
-    def get(self, request, format=None):
-        result = userService.get_user_details_by_token(request, format=None)
-        return Response(result, status=status.HTTP_200_OK)
+
+# @auth_router.get("/me")
+# def get_current_user(request):
+#     """
+#     Get the current authenticated user.
+#     """
+#     user = request.user
+
+#     if user.is_authenticated:
+#         return UserOut(id=user.id, username=user.username, email=user.email)
+#     else:
+#         return {"detail": "Authentication credentials were not provided."}

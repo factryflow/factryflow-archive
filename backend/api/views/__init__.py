@@ -9,3 +9,4 @@ from .weeklyshiftTemplateView import *
 from .scheduleRunView import *
 from .searchView import *
 from .assignmentRuleView import *
+from .itemView import *
