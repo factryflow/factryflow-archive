@@ -20,6 +20,9 @@ api.add_router("/users", user_no_auth_router, tags=["users"])
 api.add_router("/users", user_auth_router, auth=JWTAuth(), tags=["users"])
 api.add_router("/items", item_router, auth=JWTAuth(), tags=["items"])
 api.add_router("/roles", role_router, tags=["roles"])
+api.add_router("/jobs", job_router, auth=JWTAuth(), tags=["jobs"])
+api.add_router("/job-types", job_type_router, auth=JWTAuth(), tags=["job-types"])
+api.add_router("/job-status", job_status_router, auth=JWTAuth(), tags=["job-status"])
 
 
 @api.exception_handler(ObjectDoesNotExist)
