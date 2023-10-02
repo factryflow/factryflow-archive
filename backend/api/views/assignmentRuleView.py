@@ -58,11 +58,11 @@ class GetUpdateAssignmentRuleView(APIView):
         responses=assignment_rule_details_response,
         operation_summary="get assignment rule by id.",
     )
-    def get(self, request, format=None):
+    def get(self, request, id, format=None):
         """
         get assignment details by id
         """
-        result = assignment_rule_service.get_assignment_rule_by_id(request, format=None)
+        result = assignment_rule_service.get_assignment_rule_by_id(request, id, format=None)
         return Response(result, status=result["code"])
     
     @swagger_auto_schema(
@@ -201,11 +201,11 @@ class GetUpdateAssignmentRuleCriteriaView(APIView):
         responses=assignment_rule_criteria_details_response,
         operation_summary="get assignment rule criteria by id",
     )
-    def get(self, request, format=None):
+    def get(self, request,id, format=None):
         """
         get assignment rule criteria details by id
         """
-        result = assignment_rule_service.get_assignment_rule_criteria_by_id(request, format=None)
+        result = assignment_rule_service.get_assignment_rule_criteria_by_id(request, id, format=None)
         return Response(result, status=result["code"])
     
     

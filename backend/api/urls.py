@@ -62,8 +62,8 @@ urlpatterns = [
     path('operational-exceptions/<int:id>/', GetUpdateDeleteOperationalExceptionView.as_view(), name="Get-update-delete-operational-exceptions"),
    
     #weekly shift template
-    path('weekly-shift-template/', GetCreateWeeklyShiftTemplateView.as_view(), name="weekly-shift-template"),
-    path('weekly-shift-template/<int:id>/', GetUpdateDeleteWeeklyShiftTemplateView.as_view(), name="Get-update-delete-weekly-shift-template"),
+    path('weekly-shift-templates/', GetCreateWeeklyShiftTemplateView.as_view(), name="weekly-shift-template"),
+    path('weekly-shift-templates/<int:id>/', GetUpdateDeleteWeeklyShiftTemplateView.as_view(), name="Get-update-delete-weekly-shift-template"),
    
     #weekly shift template details
     path('weekly-shift-template-details/', GetCreateWeeklyShiftDetailsView.as_view(), name="weekly-shift-details"),
