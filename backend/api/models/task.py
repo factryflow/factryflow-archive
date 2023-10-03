@@ -1,9 +1,9 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from .job import Job
-from .taskStatus import TaskStatus
-from .taskType import TaskType
+from api.models.job import Job
+from api.models.task_status import TaskStatus
+from api.models.task_type import TaskType
 from simple_history.models import HistoricalRecords
 from api.utils.model_manager import ActiveManager
 

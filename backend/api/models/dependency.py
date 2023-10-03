@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from .dependencyTypes import DependencyTypes
-from .dependencyStatus import DependencyStatus
+from api.models.dependency_types import DependencyTypes
+from api.models.dependency_status import DependencyStatus
 from simple_history.models import HistoricalRecords
 from api.utils.model_manager import ActiveManager
 

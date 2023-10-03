@@ -2,8 +2,8 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from simple_history.models import HistoricalRecords
-from .jobStatus import JobStatus
-from .jobType import JobType
+from api.models.job_status import JobStatus
+from api.models.job_type import JobType
 from api.utils.model_manager import ActiveManager
 
 
