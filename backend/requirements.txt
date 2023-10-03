@@ -24,6 +24,7 @@ click-didyoumean==0.3.0
 click-plugins==1.1.1
 click-repl==0.3.0
 constantly==15.1.0
+contextlib2==21.6.0
 coreapi==2.3.3
 coreapi-cli==1.0.9
 coreschema==0.0.4
@@ -37,6 +38,10 @@ django-cors-headers==4.2.0
 django-cron==0.6.0
 django-crontab==0.7.1
 django-easy-pdf==0.1.1
+django-ninja==0.22.2
+django-ninja-crud==0.3.1
+django-ninja-extra==0.19.3
+django-ninja-jwt==5.2.5
 django-push-notifications==3.0.0
 django-rest-swagger==2.2.0
 django-simple-history==3.3.0
@@ -76,6 +81,7 @@ imageio-ffmpeg==0.4.8
 importlib-metadata==6.8.0
 incremental==22.10.0
 inflection==0.5.1
+injector==0.21.0
 itypes==1.2.0
 Jinja2==3.1.2
 jmespath==1.0.1
@@ -100,6 +106,7 @@ py-vapid==1.9.0
 pyasn1==0.5.0
 pyasn1-modules==0.3.0
 pycparser==2.21
+pydantic==1.10.12
 pyfcm==1.5.4
 PyHamcrest==2.0.4
 pyHanko==0.20.0
@@ -113,6 +120,7 @@ pypng==0.20220715.0
 python-bidi==0.4.2
 python-dateutil==2.8.2
 python-decouple==3.8
+python-dotenv==1.0.0
 python-http-client==3.3.7
 pytz==2023.3
 pywebpush==1.14.0

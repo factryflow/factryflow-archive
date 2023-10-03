@@ -200,8 +200,8 @@ class AssignmentRuleService(AssignmentRuleBaseService):
         
     #assignment rule resource group
     
-    def create_assignment_rule_criteria(self, request, format=None):
-        """Create assignment rule criteria"""
+    def create_assignment_rule_resource_group(self, request, format=None):
+        """Create assignment rule resource group"""
         serializer = CreateUpdateAssignmentRuleResourceGroupSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -211,9 +211,9 @@ class AssignmentRuleService(AssignmentRuleBaseService):
         return ({"data": serializer.errors, "code": status.HTTP_400_BAD_REQUEST, "message": BAD_REQUEST})
     
     
-    def update_assignment_rule_criteria(self, request, id, format=None):
+    def update_assignment_rule_resource_group(self, request, id, format=None):
         """
-        Update assignment rule criteria
+        Update assignment rule resource group
         """
         try:
             assignment_resource_obj = AssignmentRuleResourceGroup.objects.get(id=id)
@@ -226,9 +226,9 @@ class AssignmentRuleService(AssignmentRuleBaseService):
         except AssignmentRuleResourceGroup.DoesNotExist:
             return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":RECORD_NOT_FOUND})
         
-    def get_assignment_rule_criteria_by_id(self, request, id, format=None):
+    def get_assignment_rule_resource_group_by_id(self, request, id, format=None):
         """
-        get assignment rule criteria by id
+        get assignment rule resource group by id
         """
         try:
             assignment_resource_obj = AssignmentRuleResourceGroup.objects.get(id=id)
@@ -238,18 +238,18 @@ class AssignmentRuleService(AssignmentRuleBaseService):
             return({"data":None, "code":status.HTTP_400_BAD_REQUEST, "message":RECORD_NOT_FOUND})
         
     
-    def get_all_assignment_rule_criteria(self, request, format=None):
+    def get_all_assignment_rule_resource_group(self, request, format=None):
         """
-        Retun all the assignment rule criteria
+        Retun all the assignment rule resource group
         """
         assignment_resource_obj = AssignmentRuleResourceGroup.objects.all()
         serializer = GetAssignmentRuleResourceGroupDetailsSerializer(assignment_resource_obj, many=True)
         return ({"data": serializer.data, "code": status.HTTP_200_OK, "message": OK})
     
     
-    def delete_assignment_rule_criteria(self, request, id, format=None):
+    def delete_assignment_rule_resource_group(self, request, id, format=None):
         """
-        delete assignment rule criteria details
+        delete assignment rule resource group details
         """
         try:
             assignment_resource_obj = AssignmentRuleResourceGroup.objects.get(id=id)
