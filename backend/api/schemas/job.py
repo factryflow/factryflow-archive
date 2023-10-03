@@ -1,16 +1,9 @@
 # schemas.py
 from datetime import datetime, date
 from typing import Optional
-from api.models import Job, JobStatus, JobType, JobDependency
+from api.models import Job, JobStatus, JobType
 from ninja import Schema, ModelSchema
 
-
-
-class JobTypeIn(Schema):
-    id:int
-    
-class JobStatusIn(Schema):
-    id:int
     
 class JobIn(Schema):
     name: str
@@ -22,8 +15,6 @@ class JobIn(Schema):
     planned_end_datetime: datetime
     external_id: str
     note: Optional[str] = None
-    job_status: JobStatusIn
-    job_type: JobTypeIn
     
 
 

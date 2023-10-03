@@ -2,8 +2,8 @@ from api.models import Job, JobType, JobStatus
 from api.schemas import JobOut, JobIn, JobTypeOut, JobStatusOut
 from api.utils.crud_views import SoftDeleteModelView
 from api.utils.model_utils import (
-    set_created_updated_by_on_create,
-    set_updated_by_on_update,
+    set_job_foreign_keys_on_create,
+    set_job_foreign_keys_on_update,
 )
 from ninja import Router
 from ninja_crud.views import (
@@ -43,13 +43,13 @@ class JobViewSet(ModelViewSet):
     create = CreateModelView(
         input_schema=JobIn,
         output_schema=JobOut,
-        pre_save=set_created_updated_by_on_create,
+        pre_save=set_job_foreign_keys_on_create,
     )
     retrieve = RetrieveModelView(output_schema=JobOut)
     update = UpdateModelView(
         input_schema=JobIn,
         output_schema=JobOut,
-        pre_save=set_updated_by_on_update,
+        pre_save=set_job_foreign_keys_on_update,
     )
     delete = SoftDeleteModelView()
 
