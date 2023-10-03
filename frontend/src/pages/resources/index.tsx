@@ -13,7 +13,7 @@ import {
 } from "../../service/resourceApi";
 import { setResourcesies } from "../../features/resourceSlice";
 import Layout from "../Layout";
-import Header from "../../components/Header";
+import Header from "../../components/table/Header";
 import Loading from "@/components/loading/loading";
 
 const Resources = () => {

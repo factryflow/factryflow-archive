@@ -1,13 +1,13 @@
-import { Box, Button, Stack, Typography, useTheme } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
 import React, { useEffect, useState } from "react";
-import AddBoxIcon from "@mui/icons-material/AddBox";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import { toast } from "react-toastify";
-import { tokens } from "../../theme";
-import Header from "../../components/Header";
+import { Badge, Card } from "@mantine/core";
+
+import Header from "../../components/table/Header";
 import Layout from "../Layout";
 import {
   useGetAllJobsQuery,
@@ -16,57 +16,118 @@ import {
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { setJobies } from "../../features/jobSlice";
 import Loading from "@/components/loading/loading";
-
+import useTabs from "@/hooks/useTabs";
+import { getString } from "@/helpers";
 import { JobResponse } from "@/types/api.types";
+import jobs from "@/data/jobs.json";
+// import { ReactComponent as DeleteIcon } from "@/assets/images/delete.svg";
+import deleteicon from "@/assets/images/delete.svg";
+import editicon from "@/assets/images/border_color.svg";
+import viewicon from "@/assets/images/visibility.svg";
+import DeleteModel from "@/components/table/Model/delete-model";
+
+type BadgeType = {
+  [key in string]: string;
+};
+
+type excluded_fields =
+  | "planned_start"
+  | "planned_end"
+  | "is_active"
+  | "is_deleted";
+
+interface WithJobResponse extends JobResponse {
+  customer: string;
+  status?: string;
+}
 
 const Jobs = () => {
+  const [data, setData] = useState<
+    Array<Omit<WithJobResponse, excluded_fields>> | []
+  >([]);
   const dispatch = useAppDispatch();
-  const jobiesSelector = useAppSelector((state) => state.job.jobies);
-  // console.log(jobiesSelector, "jobiesSelector");
+  const jobsSelector = useAppSelector((state: any) => state.job.jobies);
+  const [filterData, setFilterData] = useState<any[]>(jobs);
+  // console.log(filterData, "dataaaaaaa");
+  const { data: getjobData, isLoading: jobLoading } = useGetAllJobsQuery(
+    undefined,
+    {}
+  );
 
-  const [mount, setMount] = useState(false);
-
-  const {
-    data: getjobData,
-    isLoading: jobisLoading,
-    // refetch,
-  } = useGetAllJobsQuery(undefined, {});
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
   const [deleteJobs] = useDeleteJobsMutation();
+  const [deleteModel, setDeleteModel] = useState<boolean>(false);
 
-  const columns: GridColDef<JobResponse>[] = [
+  const columns: GridColDef<Omit<WithJobResponse, excluded_fields>>[] = [
     { field: "id", headerName: "ID" },
     {
       field: "name",
       headerName: "Name",
       flex: 1,
+      headerAlign: "center",
+      align: "center",
     },
     {
       field: "priority",
       headerName: "Priority Number",
       flex: 1,
+      headerAlign: "center",
+      align: "center",
     },
     {
       field: "due_date",
       headerName: "Due Date",
       flex: 1,
+      headerAlign: "center",
+      align: "center",
     },
     {
       field: "customer",
       headerName: "Customer",
       flex: 1,
+      headerAlign: "center",
+      align: "center",
     },
     {
       field: "description",
       headerName: "Description",
       flex: 1,
+      headerAlign: "center",
+      align: "center",
     },
     {
       field: "note",
       headerName: "Note",
       flex: 1,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (row) => {
+        // console.log("🚀 ~ file: index.tsx:78 ~ Jobs ~ param:", row);
+
+        const badgeColor: BadgeType = {
+          completed: "green",
+          "not-planned": "red",
+          planned: "violet",
+          progress: "yellow",
+        };
+
+        return (
+          <Badge
+            variant="light"
+            color={badgeColor[row.value]}
+            sx={{ textTransform: "unset" }}
+          >
+            {getString(row.value)}
+          </Badge>
+        );
+      },
     },
     {
       field: "action",
@@ -75,20 +136,20 @@ const Jobs = () => {
       sortable: false,
 
       renderCell: (params: any) => {
-        const handleDeleteAction = (e: React.SyntheticEvent<any>) => {
-          const currentRow = params.row;
-
-          if (window.confirm("Are you sure you want to remove this Job?")) {
-            // return alert(JSON.stringify(currentRow, null, 4));
-            deleteJobs(currentRow?.id);
-            const newJobiesData = jobiesSelector.filter(
-              (item: any) => item.id !== currentRow?.id
-            );
-            dispatch(setJobies(newJobiesData));
-            toast.success("Job Delete Successfully");
-          }
-          return;
-        };
+        //   const handleDeleteAction = (e: React.SyntheticEvent<any>) => {
+        //     const currentRow = params.row;
+        //     // setDeleteModel(true);
+        //     // if (window.confirm("Are you sure you want to remove this Job?")) {
+        //     //   // return alert(JSON.stringify(currentRow, null, 4));
+        //     //   deleteJobs(currentRow?.id);
+        //     //   const newJobiesData = jobsSelector.filter(
+        //     //     (item: any) => item.id !== currentRow?.id
+        //     //   );
+        //     //   dispatch(setJobies(newJobiesData));
+        //     //   toast.success("Job Delete Successfully");
+        //     // }
+        //     // return;
+        //   };
 
         const handleEditAction = (e: React.SyntheticEvent<any>) => {
           const currentRow = params.row;
@@ -97,66 +158,73 @@ const Jobs = () => {
 
         return (
           <Stack direction="row" spacing={2}>
-            <ModeEditOutlinedIcon
+            {/* <ModeEditOutlinedIcon
               sx={{ color: "blue", cursor: "pointer" }}
               onClick={handleEditAction}
-            />
+            /> */}
 
-            <DeleteOutlinedIcon
-              sx={{ color: "red", cursor: "pointer" }}
-              onClick={handleDeleteAction}
+            <img src={viewicon} alt="view_Icon" height={30} width={24} />
+            <img
+              src={editicon}
+              alt="edit_Icon"
+              height={30}
+              width={24}
+              onClick={handleEditAction}
             />
+            <img
+              src={deleteicon}
+              alt="delete_Icon"
+              height={30}
+              width={24}
+              onClick={() => setDeleteModel(true)}
+            />
+            {/*<DeleteIcon onClick={handleDeleteAction} /> */}
           </Stack>
         );
       },
     },
   ];
 
+  const handleClick = () => {
+    navigate("/jobs/form");
+  };
+  // const setJobDataList = (data: WithJobResponse[]) => {
+  //   console.log(data, "setJobDataList");
+  //   setData(data);
+  // };
+
   useEffect(() => {
-    if (!jobisLoading && getjobData) {
+    if (!jobLoading && getjobData) {
       dispatch(setJobies(getjobData));
     }
-  }, [jobisLoading, getjobData]);
-  // useEffect(() => {
-  //   if (!deleteIsLoading && deleteJobData) {
-  //     deleteJobData.code >= 400
-  //       ? toast.error(deleteJobData.message)
-  //       : toast.success(deleteJobData.message);
-  //   }
-  // }, [deleteJobData, deleteIsSuccess]);
 
-  // useEffect(() => {
-  //   if (mount) {
-  //     console.log(`>>> call`);
+    // [TODO]: letter set status in state => tabs
+  }, [jobLoading, getjobData]);
 
-  //     refetch();
-  //   }
-  // }, [mount]);
-
-  // useEffect(() => {
-  //   setMount(true);
-
-  //   return () => setMount(false);
-  // }, []);
+  useEffect(() => {
+    if (jobs.length) {
+      setData(jobs as any);
+    }
+  }, [jobs]);
 
   return (
     <>
       <Layout>
-        <Box m="20px">
-          <Header title="Jobs" subtitle="List of Jobs " />
-          <Link to="/jobs/form">
-            <Button variant="contained" startIcon={<AddBoxIcon />}>
-              Job
-            </Button>
-          </Link>
+        <Box>
+          <Header
+            title="Job Management"
+            buttonname="Create New job"
+            onClick={handleClick}
+          />
+
           <Box
             m="30px 0 0 0"
-            height="75vh"
+            height="auto"
             sx={{
-              "& .MuiDataGrid-root": {},
-              "& .MuiDataGrid-cell": {
-                // borderBottom: "none",
+              "& .MuiDataGrid-root": {
+                mt: 4,
               },
+
               "& .name-column--cell": {
                 color: "bold !important",
               },
@@ -168,7 +236,7 @@ const Jobs = () => {
                 color: "	#000000",
                 fontSize: "14px",
                 fontWeight: "bold !important",
-                textTransform: "uppercase",
+
                 borderTop: "1px solid #F0F0F0",
               },
               "& .MuiDataGrid-virtualScroller": {
@@ -195,45 +263,58 @@ const Jobs = () => {
               },
             }}
           >
-            {jobisLoading ? (
-              <>
-                <Loading />
-              </>
-            ) : (
-              jobiesSelector && (
+            <Card withBorder>
+              <StatusTabs
+                statusTabs={[
+                  "all",
+                  ...new Set(data.map((job: any) => job.status)),
+                ]}
+                data={data}
+                setFilterData={setFilterData}
+              />
+              {false ? (
                 <>
-                  <DataGrid
-                    className="dataGrid"
-                    rows={jobiesSelector ?? []}
-                    columns={columns}
-                    initialState={{
-                      pagination: {
-                        paginationModel: {
-                          pageSize: 10,
-                        },
-                      },
-                    }}
-                    slots={{ toolbar: GridToolbar }}
-                    slotProps={{
-                      toolbar: {
-                        showQuickFilter: true,
-                        quickFilterProps: { debounceMs: 500 },
-                      },
-                    }}
-                    pageSizeOptions={[5, 10, 25]}
-                    checkboxSelection
-                    disableRowSelectionOnClick
-                    disableColumnFilter
-                    disableColumnMenu
-                    disableDensitySelector
-                    disableColumnSelector
-                    // checkboxSelection
-                    // rows={jobData}
-                    // columns={columns}
-                  />
+                  <Loading />
                 </>
-              )
-            )}
+              ) : (
+                true && (
+                  <>
+                    <DataGrid
+                      className="dataGrid"
+                      autoHeight={true}
+                      // rows={jobsSelector ?? []}
+                      rows={filterData ?? []}
+                      columns={columns}
+                      initialState={{
+                        pagination: {
+                          paginationModel: {
+                            pageSize: 10,
+                          },
+                        },
+                      }}
+                      slots={{ toolbar: GridToolbar }}
+                      slotProps={{
+                        toolbar: {
+                          showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
+                        },
+                      }}
+                      pageSizeOptions={[5, 10, 25]}
+                      checkboxSelection
+                      disableRowSelectionOnClick
+                      disableColumnFilter
+                      disableColumnMenu
+                      disableDensitySelector
+                      disableColumnSelector
+                    />
+                  </>
+                )
+              )}
+              <DeleteModel
+                deleteModel={deleteModel}
+                setDeleteModel={setDeleteModel}
+              />
+            </Card>
           </Box>
         </Box>
       </Layout>
@@ -242,3 +323,41 @@ const Jobs = () => {
 };
 
 export default Jobs;
+
+export const StatusTabs = ({
+  statusTabs,
+  data,
+  setFilterData,
+}: {
+  statusTabs: string[];
+
+  data: any;
+  setFilterData: any;
+}) => {
+  const { Tabs } = useTabs();
+
+  const filterJobDataWithActiveTab = (tab: string) => {
+    // console.log(tab, "tabssss");
+    if (tab === "all") {
+      setFilterData(data);
+    } else {
+      setFilterData(data.filter((job: any) => job.status === tab));
+    }
+  };
+
+  const statusCounts = data.reduce((acc: any, item: any) => {
+    acc[item.status] = (acc[item.status] || 0) + 1;
+    acc["all"] = (acc["all"] || 0) + 1;
+    return acc;
+  }, {});
+
+  // console.log(statusCounts, "statusCounts");
+
+  return (
+    <Tabs
+      tabs={statusTabs}
+      filterDataWithActiveTab={filterJobDataWithActiveTab}
+      statusCounts={statusCounts}
+    />
+  );
+};

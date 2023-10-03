@@ -1,6 +1,18 @@
+import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
 import * as yup from "yup";
+import "../../index.css";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
-import { TextField, Typography, Card, Grid, CardContent } from "@mui/material";
+import {
+  TextField,
+  Typography,
+  Grid,
+  CardContent,
+  InputLabel,
+  Box,
+  Select,
+  MenuItem,
+  Button,
+} from "@mui/material";
 import { format } from "date-fns";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Layout from "../Layout";
@@ -12,7 +24,12 @@ import { useUpdateJobsMutation } from "../../service/jobApi";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import { CreateJob } from "@/types/api.types";
 import { useAppSelector } from "../../app/hooks";
-
+import { Tabs, Card } from "@mantine/core";
+import Loading from "@/components/loading/loading";
+import TaskDetails from "@/components/data-tables/tasks/TaskDetails";
+import DependencyDetails from "@/components/data-tables/dependency/dependencyDetails";
+import taskData from "@/data/tasks.json";
+import dependencyData from "@/data/dependancy.json";
 const validationSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
   priority: yup.string().required("priority is required").nullable(),
@@ -20,6 +37,7 @@ const validationSchema = yup.object().shape({
   customer: yup.string().required("customer is required").nullable(),
   description: yup.string().required("description is required"),
   note: yup.string().required("note is required"),
+  status: yup.string().required("status is required"),
 });
 
 const MyForm = () => {
@@ -28,8 +46,9 @@ const MyForm = () => {
   const isEdit = !!params.id;
   const jobiesSelector = useAppSelector((state) => state.job.jobies);
   console.log(jobiesSelector, "jobselector");
-
+  const [statuschange, setStatus] = useState(0);
   const [createJobs, { data, isLoading, error }] = useCreateJobsMutation();
+  const [activeTab, setActiveTab] = useState<string | null>("tasks");
   const [
     updateJobs,
     {
@@ -101,76 +120,72 @@ const MyForm = () => {
     }
   }, [isEdit, params.id]);
 
+  const boxStyle = {
+    boxShadow: "0.3px 0.3px 1px rgba(0, 0, 0, 0.16)", // Adjust values as needed
+    padding: "20px",
+    backgroundColor: "white",
+    width: "100%",
+  };
+
+  const handleStatus = (e: any) => {
+    setStatus(e.target.value);
+  };
+
+  const handleTabChange = (newTabValue: any) => {
+    setActiveTab(newTabValue);
+    // Force a window resize event
+    window.dispatchEvent(new Event("resize"));
+  };
+
+  type BadgeType = {
+    [key in string]: string;
+  };
+
+  const TabsList = Tabs.List;
+  const TabsPannel = Tabs.Panel;
+
   return (
-    <Layout>
-      <Grid>
-        <Card
-          style={{ width: "100%", padding: "20px 5px", margin: "30px auto" }}
+    <>
+      <Layout>
+        <Box
+          sx={{
+            width: "100%",
+            height: "auto",
+            p: 1,
+            m: 1,
+          }}
         >
-          <CardContent>
-            <Typography gutterBottom variant="h5">
-              {isEdit ? "Edit Job" : "Create Job"}
+          <Card
+            style={boxStyle}
+            sx={{ padding: 2, height: "auto", borderRadius: "12px" }}
+          >
+            <Typography gutterBottom variant="h5" sx={{ mb: 3 }}>
+              {isEdit ? "Job Details" : "Job Details"}
             </Typography>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Grid
                 container
-                rowSpacing={1}
+                rowSpacing={2}
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
                 <Grid item xs={6}>
+                  <Typography variant="subtitle1">Job Name</Typography>
                   <Controller
                     name="name"
                     control={control}
                     defaultValue=""
                     render={({ field }) => (
                       <TextField
-                        label="Name"
-                        variant="outlined"
                         error={!!errors.name}
-                        margin="normal"
+                        size="small"
+                        placeholder=" Enter Job Name"
                         helperText={errors.name?.message}
                         fullWidth
                         {...field}
-                      />
-                    )}
-                  />
-                </Grid>
-
-                <Grid item xs={6}>
-                  <Controller
-                    name="priority"
-                    control={control}
-                    defaultValue=""
-                    render={({ field }) => (
-                      <TextField
-                        label="Priority"
-                        variant="outlined"
-                        type="number"
-                        margin="normal"
-                        error={!!errors.priority}
-                        helperText={errors.priority?.message}
-                        fullWidth
-                        {...field}
-                      />
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <Controller
-                    name="due_date"
-                    control={control}
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        label="Date"
-                        type="date"
-                        variant="outlined"
-                        margin="normal"
-                        error={!!errors.due_date}
-                        helperText={errors.due_date?.message}
-                        fullWidth
-                        InputLabelProps={{
-                          shrink: true,
+                        InputProps={{
+                          style: {
+                            borderRadius: "5px",
+                          },
                         }}
                       />
                     )}
@@ -178,90 +193,231 @@ const MyForm = () => {
                 </Grid>
 
                 <Grid item xs={6}>
-                  <Controller
-                    name="customer"
-                    control={control}
-                    defaultValue=""
-                    render={({ field }) => (
-                      <TextField
-                        label="Customer"
-                        variant="outlined"
-                        margin="normal"
-                        type="number"
-                        error={!!errors.customer}
-                        helperText={errors.customer?.message}
-                        {...field}
-                        fullWidth
-                      />
-                    )}
-                  />
-                </Grid>
-
-                <Grid item xs={6}>
+                  <Typography variant="subtitle1">Description</Typography>
                   <Controller
                     name="description"
                     control={control}
                     defaultValue=""
                     render={({ field }) => (
                       <TextField
-                        label="Description"
-                        variant="outlined"
-                        margin="normal"
+                        size="small"
+                        placeholder="Write Description"
                         error={!!errors.description}
                         helperText={errors.description?.message}
                         fullWidth
                         {...field}
+                        InputProps={{
+                          style: {
+                            borderRadius: "5px",
+                          },
+                        }}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="subtitle1"> Due Date</Typography>
+                  <Controller
+                    name="due_date"
+                    control={control}
+                    defaultValue={new Date()}
+                    render={({ field }) => (
+                      <TextField
+                        variant="outlined"
+                        type="date"
+                        size="small"
+                        error={!!errors.due_date}
+                        helperText={errors.due_date?.message}
+                        {...field}
+                        fullWidth
+                        inputProps={{
+                          style: {
+                            borderRadius: "5px",
+                          },
+                        }}
                       />
                     )}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
+                  <Typography variant="subtitle1">priority</Typography>
+                  <Controller
+                    name="priority"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <TextField
+                        type="number"
+                        size="small"
+                        error={!!errors.priority}
+                        helperText={errors.priority?.message}
+                        fullWidth
+                        {...field}
+                        InputProps={{
+                          style: {
+                            borderRadius: "5px",
+                          },
+                        }}
+                      />
+                    )}
+                  />
+                </Grid>
+
+                <Grid item xs={6}>
+                  <Typography variant="subtitle1">Status</Typography>
+                  <Controller
+                    name="status"
+                    control={control}
+                    render={({ field }) => (
+                      <>
+                        <Select
+                          {...field}
+                          fullWidth
+                          size="small"
+                          value={statuschange}
+                          onChange={handleStatus}
+                          sx={{
+                            background: "#F9F9F9 !important",
+                          }}
+                          inputProps={{
+                            style: {
+                              borderRadius: "5px",
+                            },
+                          }}
+                        >
+                          <MenuItem defaultChecked value={0}>
+                            Not Planned
+                          </MenuItem>
+                          <MenuItem value={1}>True</MenuItem>
+                          <MenuItem value={2}>False</MenuItem>
+                        </Select>
+                      </>
+                    )}
+                  />
+                </Grid>
+
+                {/* <Grid item xs={6} sx={{ mb: 1 }}>
+                  <Typography variant="subtitle1" sx={{ mb: 1 }}>
+                    Customer
+                  </Typography>
+
+                  <Controller
+                    name="customer"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <TextField
+                        type="number"
+                        size="small"
+                        error={!!errors.customer}
+                        helperText={errors.customer?.message}
+                        {...field}
+                        fullWidth
+                        InputProps={{
+                          style: {
+                            borderRadius: "5px",
+                          },
+                        }}
+                      />
+                    )}
+                  />
+                </Grid> */}
+
+                {/* <Grid item xs={6}>
+                  <Typography variant="subtitle1" sx={{ mb: 1 }}>
+                    {" "}
+                    Note
+                  </Typography>
+
                   <Controller
                     name="note"
                     control={control}
                     defaultValue=""
                     render={({ field }) => (
                       <TextField
-                        label="Note"
-                        variant="outlined"
-                        margin="normal"
+                        size="small"
                         error={!!errors.note}
                         helperText={errors.note?.message}
                         fullWidth
                         {...field}
+                        InputProps={{
+                          style: {
+                            borderRadius: "5px",
+                          },
+                        }}
                       />
                     )}
                   />
-                </Grid>
+                </Grid> */}
 
-                <Grid item xs={12}>
-                  {/* <Button
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                      fullWidth
-                    >
-                      {isEdit ? "Save Changes" : "Submit"}
-                    </Button> */}
-
-                  <LoadingButton
-                    size="small"
-                    type="submit"
-                    loading={isLoading || updateIsLoading}
-                    color="primary"
-                    variant="contained"
-                    sx={{ marginBottom: 5 }}
+                <Grid item xs={12} sx={{ mt: 3 }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      gap: "15px",
+                    }}
                   >
-                    {isEdit ? "Save Changes" : "Submit"}
-                  </LoadingButton>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      className="btn-cancel"
+                      onClick={() => navigate("/jobs")}
+                    >
+                      {isEdit ? "Back" : "Cancel"}
+                    </Button>
+                    <LoadingButton
+                      size="large"
+                      type="submit"
+                      loading={isLoading || updateIsLoading}
+                      color="primary"
+                      variant="contained"
+                      className="btn-success"
+                    >
+                      {isEdit ? "Edit" : "Create"}
+                    </LoadingButton>
+                  </Box>
                 </Grid>
               </Grid>
             </form>
-          </CardContent>
-        </Card>
-      </Grid>
-    </Layout>
+          </Card>
+        </Box>
+        {isEdit && (
+          <Box
+            sx={{
+              width: "100%",
+              height: "auto",
+              p: 1,
+              m: 1,
+            }}
+          >
+            <Card style={boxStyle} sx={{ padding: 2, height: "auto" }}>
+              <Tabs value={activeTab} onTabChange={handleTabChange}>
+                <TabsList>
+                  <Tabs.Tab value="tasks">Tasks</Tabs.Tab>
+                  <Tabs.Tab value="Dependencies">Dependencies</Tabs.Tab>
+                </TabsList>
+
+                <TabsPannel value="tasks" style={{ width: "100%" }}>
+                  {activeTab === "tasks" && (
+                    <div style={{ height: "auto", width: "100%" }}>
+                      <TaskDetails data={taskData} />
+                    </div>
+                  )}
+                </TabsPannel>
+                <TabsPannel value="Dependencies">
+                  {activeTab === "Dependencies" && (
+                    <div style={{ height: "auto", width: "100%" }}>
+                      <DependencyDetails data={dependencyData} />
+                    </div>
+                  )}
+                </TabsPannel>
+              </Tabs>
+            </Card>
+          </Box>
+        )}
+      </Layout>
+    </>
   );
 };
 

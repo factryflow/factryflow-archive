@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import Layout from "../Layout";
 import { Box, Button, Stack, useTheme } from "@mui/material";
-import { tokens } from "../../theme";
-import Header from "../../components/Header";
+
+import Header from "../../components/table/Header";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import { useDeleteTasksMutation } from "../../service/taskApi";
@@ -19,7 +19,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { setDependencies } from "../../features/dependencySlice";
 const Dependencys = () => {
   const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+
   const navigate = useNavigate();
   const {
     data: getDependencyData,

@@ -13,7 +13,7 @@ export const dependencytypeApi = createApi({
     //get All depency type Api
     getAllDependencyType: builder.query<any[], void>({
       query: () => {
-        return `api/dependency/get-dependency-types-list/`;
+        return `api/dependency-types/`;
       },
       transformResponse: (res: { data: any[] }) => {
         const data = res.data;
@@ -38,7 +38,7 @@ export const dependencytypeApi = createApi({
     createDependencytype: builder.mutation({
       query: (body: any) => {
         return {
-          url: "api/dependency/create-dependency-type/",
+          url: "api/dependency-types/",
           method: "post",
           body,
         };
@@ -49,7 +49,7 @@ export const dependencytypeApi = createApi({
     deleteDependencytype: builder.mutation({
       query: (id: number) => {
         return {
-          url: `api/dependency/delete-dependency-type/${id}/`,
+          url: `api/dependency-types/${id}/`,
           method: "delete",
         };
       },
@@ -59,7 +59,7 @@ export const dependencytypeApi = createApi({
     updateDependencyType: builder.mutation({
       query: ({ id, data }) => {
         return {
-          url: `api/dependency/update-dependency-type/${id}/`,
+          url: `api/dependency-types/${id}/`,
           method: "put",
           body: data,
         };

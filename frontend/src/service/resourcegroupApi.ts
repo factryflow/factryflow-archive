@@ -13,7 +13,7 @@ export const resourcesGroupApi = createApi({
     // getAllResource Group Api
     getAllResourcesGroup: builder.query<any[], void>({
       query: () => {
-        return `api/resource/get-resource-group-list/`;
+        return `api/resource-groups/`;
       },
       transformResponse: (res: { data: any[] }) => {
         const data = res.data;
@@ -27,7 +27,7 @@ export const resourcesGroupApi = createApi({
     createresourcesGroup: builder.mutation({
       query: (body: any) => {
         return {
-          url: "api/resource/create-resource-group/",
+          url: "api/resource-groups/",
           method: "post",
           body,
         };
@@ -38,7 +38,7 @@ export const resourcesGroupApi = createApi({
     deleteResourcesGroup: builder.mutation({
       query: (id: number) => {
         return {
-          url: `api/resource/delete-resource-group/${id}/`,
+          url: `api/resource-groups/${id}/`,
           method: "delete",
         };
       },
@@ -48,7 +48,7 @@ export const resourcesGroupApi = createApi({
     updateResourcesGroup: builder.mutation({
       query: ({ id, data }) => {
         return {
-          url: `api/resource/update-resource-group/${id}/`,
+          url: `api/resource-groups/${id}/`,
           method: "put",
           body: data,
         };

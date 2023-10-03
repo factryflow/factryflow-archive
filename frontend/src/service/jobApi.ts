@@ -23,7 +23,7 @@ export const jobApi = createApi({
     // getAllJobs Api
     getAllJobs: builder.query<JobResponse[], void>({
       query: () => {
-        return `/api/jobs/jobs-list/`;
+        return `api/jobs/`;
       },
       transformResponse: (res: GenericResponse<JobResponse[]>) => {
         const result = res.data?.filter(
@@ -38,7 +38,7 @@ export const jobApi = createApi({
     getJobById: builder.mutation<JobResponse | undefined, number>({
       query: (id: number) => {
         return {
-          url: `api/jobs/get-job-details/${id}/`,
+          url: `aapi/jobs/${id}/`,
         };
       },
       transformResponse: (res: GenericResponse<JobResponse>) => res.data,
@@ -50,7 +50,7 @@ export const jobApi = createApi({
     >({
       query: (body: any) => {
         return {
-          url: "/api/jobs/create-job/",
+          url: "api/jobs/",
           method: "post",
           body,
         };
@@ -61,7 +61,7 @@ export const jobApi = createApi({
     deleteJobs: builder.mutation<GenericResponse<null>, number>({
       query: (id) => {
         return {
-          url: `api/jobs/delete-job/${id}/`,
+          url: `api/jobs/${id}/`,
           method: "delete",
         };
       },
@@ -74,7 +74,7 @@ export const jobApi = createApi({
     >({
       query: ({ id, data }) => {
         return {
-          url: `api/jobs/update-jobs/${id}/`,
+          url: `api/jobs/${id}/`,
           method: "put",
           body: data,
         };

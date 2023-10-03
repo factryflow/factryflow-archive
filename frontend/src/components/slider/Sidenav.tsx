@@ -1,24 +1,35 @@
+import { useState } from "react";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
+import {
+  Collapse,
+  ListItemText,
+  ListItemIcon,
+  ListItemButton,
+  ListItem,
+  List,
+  IconButton,
+  Divider,
+  SvgIcon,
+} from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import TaskIcon from "@mui/icons-material/Task";
-import WorkIcon from "@mui/icons-material/Work";
-import Logo from "../../assets/images/dependency.svg";
-import TemplateLogo from "@/assets/images/template.svg";
-import ResourceLogo from "@/assets/images/resource.svg";
 
+// import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "@/app/hooks";
+
+import DashboardIcon from "@/assets/sidebar/dashboard.svg";
+import ProductionIcon from "@/assets/sidebar/production.svg";
+import SettingIcon from "@/assets/sidebar/settings.svg";
+import SupportIcon from "@/assets/sidebar/support_agent.svg";
+import ResourceIcon from "@/assets/sidebar/resource.svg";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import Dote from "@/assets/images/Dote.svg";
+import FactoryFlowIcon from "@/assets/images/factryflow .svg";
 
 const drawerWidth = 240;
 
@@ -75,30 +86,32 @@ export default function Sidenav() {
   const navigate = useNavigate();
   const open = useAppSelector((state) => state.menu.menu);
   // const open = useAppStore((state) => state.dopen);
+  const [isCollapse, setIsCollapse] = useState(false);
+  const [resourceCollapse, setResourceCollapse] = useState(false);
+  const handleCollapse = () => {
+    setIsCollapse(!isCollapse);
+  };
+
+  const handleresourceCollapse = () => {
+    setResourceCollapse(!resourceCollapse);
+  };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", borderRight: "1px solid #F1F1F2 " }}>
       <CssBaseline />
-      <Box height={30} />
+
       <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
-          </IconButton>
+        <DrawerHeader sx={{ marginRight: "14px !important" }}>
+          <img
+            src={FactoryFlowIcon}
+            alt="FactoryFlowIcon"
+            height={50}
+            width={200}
+          />
         </DrawerHeader>
         {/* <Divider /> */}
         <List>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/jobs");
-            }}
-          >
+          <ListItem disablePadding sx={{ display: "block" }} onClick={() => {}}>
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -113,99 +126,17 @@ export default function Sidenav() {
                   justifyContent: "center",
                 }}
               >
-                <WorkIcon />
-              </ListItemIcon>
-              <ListItemText primary="Jobs" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-        </List>
-        {/* <Divider /> */}
-        <List>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/tasks");
-            }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <TaskIcon />
-              </ListItemIcon>
-              <ListItemText primary="Tasks" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-        </List>
-        {/* <Divider /> */}
-        <List>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/dependency");
-            }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <img src={Logo} alt="images" height={30} width={24} />
+                <img
+                  src={DashboardIcon}
+                  alt="Dash_Icon"
+                  height={30}
+                  width={24}
+                />
               </ListItemIcon>
               <ListItemText
-                primary="Dependency"
+                primary="Dashboard"
                 sx={{ opacity: open ? 1 : 0 }}
               />
-            </ListItemButton>
-          </ListItem>
-        </List>
-        {/* <Divider /> */}
-        <List>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/template");
-            }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <img src={TemplateLogo} alt="images" height={30} width={24} />
-              </ListItemIcon>
-              <ListItemText primary="Template" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
         </List>
@@ -215,9 +146,7 @@ export default function Sidenav() {
           <ListItem
             disablePadding
             sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/resources");
-            }}
+            onClick={handleCollapse}
           >
             <ListItemButton
               sx={{
@@ -233,23 +162,113 @@ export default function Sidenav() {
                   justifyContent: "center",
                 }}
               >
-                <img src={ResourceLogo} alt="images" height={30} width={24} />
-              </ListItemIcon>
+                <img
+                  src={ProductionIcon}
+                  alt="Production_Icon"
+                  height={30}
+                  width={24}
+                />
+              </ListItemIcon>{" "}
               <ListItemText
-                primary="Resources"
+                primary="Production"
                 sx={{ opacity: open ? 1 : 0 }}
               />
+              {isCollapse ? <ExpandMoreIcon /> : <KeyboardArrowRight />}
             </ListItemButton>
           </ListItem>
+          <Collapse in={isCollapse} timeout="auto" unmountOnExit>
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => {
+                navigate("/jobs");
+              }}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img src={Dote} alt="Dote_Icon" height={30} width={24} />
+                </ListItemIcon>
+                <ListItemText primary="Jobs" sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => {
+                navigate("/tasks");
+              }}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img src={Dote} alt="Dote_Icon" height={30} width={24} />
+                </ListItemIcon>
+                <ListItemText primary="Tasks" sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => {
+                navigate("/dependency");
+              }}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img src={Dote} alt="Dote_Icon" height={30} width={24} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Dependency"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          </Collapse>
         </List>
+
         {/* <Divider /> */}
         <List>
           <ListItem
             disablePadding
             sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/exception");
-            }}
+            onClick={handleresourceCollapse}
           >
             <ListItemButton
               sx={{
@@ -265,10 +284,165 @@ export default function Sidenav() {
                   justifyContent: "center",
                 }}
               >
-                <TaskIcon />
+                <img
+                  src={ResourceIcon}
+                  alt="resource_Icon"
+                  height={30}
+                  width={24}
+                />
+              </ListItemIcon>{" "}
+              <ListItemText primary="Resource" sx={{ opacity: open ? 1 : 0 }} />
+              {resourceCollapse ? <ExpandMoreIcon /> : <KeyboardArrowRight />}
+            </ListItemButton>
+          </ListItem>
+          <Collapse in={resourceCollapse} timeout="auto" unmountOnExit>
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => {
+                navigate("/template");
+              }}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img src={Dote} alt="Dote_Icon" height={30} width={24} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Template"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => {
+                navigate("/resources");
+              }}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img src={Dote} alt="Dote_Icon" height={30} width={24} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Resources"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => {
+                navigate("/exception");
+              }}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img src={Dote} alt="Dote_Icon" height={30} width={24} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Exception"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          </Collapse>
+        </List>
+
+        {/* <Divider /> */}
+        <List>
+          <ListItem disablePadding sx={{ display: "block" }} onClick={() => {}}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <img
+                  src={SettingIcon}
+                  alt="Setting_Icon"
+                  height={30}
+                  width={24}
+                />
+              </ListItemIcon>
+              <ListItemText primary="Settings" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+        </List>
+
+        {/* <Divider /> */}
+        <List>
+          <ListItem disablePadding sx={{ display: "block" }} onClick={() => {}}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <img
+                  src={SupportIcon}
+                  alt="Setting_Icon"
+                  height={30}
+                  width={24}
+                />
               </ListItemIcon>
               <ListItemText
-                primary="Exception"
+                primary="Help & Support"
                 sx={{ opacity: open ? 1 : 0 }}
               />
             </ListItemButton>

@@ -13,7 +13,7 @@ export const resourcesApi = createApi({
     // getAllResource Api
     getAllResources: builder.query<any[], void>({
       query: () => {
-        return `api/resource/get-resources-list/`;
+        return `api/resources/`;
       },
       transformResponse: (res: { data: any[] }) => {
         const data = res.data;
@@ -27,7 +27,7 @@ export const resourcesApi = createApi({
     createresources: builder.mutation({
       query: (body: any) => {
         return {
-          url: "api/resource/create-resources/",
+          url: "api/resources/",
           method: "post",
           body,
         };
@@ -38,7 +38,7 @@ export const resourcesApi = createApi({
     deleteResources: builder.mutation({
       query: (id: number) => {
         return {
-          url: `api/resource/delete-resources/${id}/`,
+          url: `api/resources/${id}/`,
           method: "delete",
         };
       },
@@ -48,7 +48,7 @@ export const resourcesApi = createApi({
     updateResources: builder.mutation({
       query: ({ id, data }) => {
         return {
-          url: `api/resource/update-resources/${id}/`,
+          url: `api/resources/${id}/`,
           method: "put",
           body: data,
         };

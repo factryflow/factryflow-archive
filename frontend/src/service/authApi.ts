@@ -18,7 +18,7 @@ export const authApi = createApi({
     loginUser: builder.mutation<GenericResponse<LoginResponse>, Login>({
       query: (body) => {
         return {
-          url: "/api/auth/login/",
+          url: "api/auth-login/",
           method: "post",
           body,
         };
@@ -33,7 +33,7 @@ export const authApi = createApi({
           password: string;
         }) => {
           return {
-            url: "/api/auth/sign-up/",
+            url: "api/auth-sign-up/",
             method: "post",
             body,
           };
@@ -43,7 +43,7 @@ export const authApi = createApi({
     changePassword: builder.mutation({
       query: (body) => {
         return {
-          url: "api/user/change-password/",
+          url: "api/change-password/",
           method: "put",
           body,
           headers: {
@@ -55,7 +55,7 @@ export const authApi = createApi({
     getProfile: builder.query({
       query: () => {
         return {
-          url: `api/user/get-user-details-by-token/`,
+          url: `api/user-details/`,
           method: "get",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

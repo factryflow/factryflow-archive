@@ -16,7 +16,7 @@ import {
   useDeleteExceptionTypeMutation,
 } from "../../../service/exceptionTypeApi";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import Header from "../../../components/Header";
+import Header from "../../../components/table/Header";
 import Layout from "../../Layout";
 
 const ExceptionType = () => {

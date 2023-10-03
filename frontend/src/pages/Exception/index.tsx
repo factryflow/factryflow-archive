@@ -14,7 +14,7 @@ import {
 } from "../../service/exceptionApi";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Layout from "../Layout";
-import Header from "../../components/Header";
+import Header from "../../components/table/Header";
 
 const Exception = () => {
   // "id": 1,

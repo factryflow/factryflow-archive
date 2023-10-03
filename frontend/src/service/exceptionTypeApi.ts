@@ -13,7 +13,7 @@ export const exceptionTypeApi = createApi({
     // getAllExceptionType Api
     getAllExceptionType: builder.query<any[], void>({
       query: () => {
-        return `api/operational-exception/get-type-list/`;
+        return `api/operational-exception-types/`;
       },
       transformResponse: (res: { data: any[] }) => {
         const data = res.data;
@@ -27,7 +27,7 @@ export const exceptionTypeApi = createApi({
     createExceptionType: builder.mutation({
       query: (body: any) => {
         return {
-          url: "api/operational-exception/create-type/",
+          url: "api/operational-exception-types/",
           method: "post",
           body,
         };
@@ -38,7 +38,7 @@ export const exceptionTypeApi = createApi({
     deleteExceptionType: builder.mutation({
       query: (id: number) => {
         return {
-          url: `api/operational-exception/delete-type/${id}/`,
+          url: `api/operational-exception-types/${id}/`,
           method: "delete",
         };
       },
@@ -48,7 +48,7 @@ export const exceptionTypeApi = createApi({
     updateExceptionType: builder.mutation({
       query: ({ id, data }) => {
         return {
-          url: `api/operational-exception/update-type/${id}/`,
+          url: `api/operational-exception-types/${id}/`,
           method: "put",
           body: data,
         };

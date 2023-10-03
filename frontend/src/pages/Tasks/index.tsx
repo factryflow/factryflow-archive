@@ -7,8 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import { toast } from "react-toastify";
 import Loading from "@/components/loading/loading";
-import { tokens } from "../../theme";
-import Header from "../../components/Header";
+
+import Header from "../../components/table/Header";
 import Layout from "../Layout";
 import { setTaskies } from "../../features/taskSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -19,7 +19,7 @@ import {
 
 const Tasks = () => {
   const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+
   const navigate = useNavigate();
   const {
     data: getTaskData,
@@ -30,6 +30,10 @@ const Tasks = () => {
   const [deleteTasks] = useDeleteTasksMutation();
   const dispatch = useAppDispatch();
   const taskiesSelector = useAppSelector((state) => state.task.taskies);
+
+  const handleClick = () => {
+    navigate("/tasks/form");
+  };
 
   const columns: GridColDef<any>[] = [
     { field: "id", headerName: "ID" },
@@ -47,6 +51,9 @@ const Tasks = () => {
       field: "task_status",
       headerName: "Task Status",
       width: 100,
+      renderCell: (params: any) => {
+        return <span>{params?.row?.task_status?.name}</span>;
+      },
     },
     {
       field: "setup_time",
@@ -130,98 +137,100 @@ const Tasks = () => {
   return (
     <>
       <Layout>
-        <Box m="20px">
-          <Header title="Tasks" subtitle="List of Tasks " />
-          <Link to="/tasks/form">
-            <Button variant="contained" startIcon={<AddBoxIcon />}>
-              Task
-            </Button>
-          </Link>
-          <Box
-            m="30px 0 0 0"
-            height="75vh"
-            sx={{
-              "& .MuiDataGrid-root": {},
-              "& .MuiDataGrid-cell": {
-                // borderBottom: "none",
-              },
-              "& .name-column--cell": {
-                color: "bold !important",
-              },
-              "& .MuiDataGrid-row": {
-                cursor: "pointer",
-              },
-              "& .MuiDataGrid-columnHeaders": {
-                backgroundColor: "#FAFAFA",
-                color: "	#000000",
-                fontSize: "10px",
-                fontWeight: "bold !important",
-                textTransform: "uppercase",
-                borderTop: "1px solid #F0F0F0",
-              },
-              "& .MuiDataGrid-virtualScroller": {
-                backgroundColor: "#fff",
-              },
-              "& .MuiDataGrid-footerContainer": {
-                backgroundColor: "#FFFFFF",
-              },
-              "& .MuiCheckbox-root": {
-                color: `1677FF !important`,
-              },
-              ".MuiDataGrid-cell:focus": {
-                outline: "none !important",
-              },
-              ".MuiDataGrid-columnHeader:focus-within": {
-                outline: "none !important",
-              },
-              ".MuiDataGrid-cell:focus-within": {
-                outline: "none !important",
-              },
-              ".MuiDataGrid-toolbarContainer": {
-                padding: "15px",
-                flexDirection: "row-reverse",
-              },
-            }}
-          >
-            {taskIsLoading ? (
-              <>
-                <Loading />
-              </>
-            ) : (
-              taskiesSelector && (
+        <Box>
+          <Box m="20px">
+            <Header
+              title="Tasks Management"
+              buttonname="Create New Tasks"
+              onClick={handleClick}
+            />
+            <Box
+              m="30px 0 0 0"
+              height="auto"
+              sx={{
+                "& .MuiDataGrid-root": {
+                  mt: 4,
+                },
+
+                "& .name-column--cell": {
+                  color: "bold !important",
+                },
+                "& .MuiDataGrid-row": {
+                  cursor: "pointer",
+                },
+                "& .MuiDataGrid-columnHeaders": {
+                  backgroundColor: "#FAFAFA",
+                  color: "	#000000",
+                  fontSize: "14px",
+                  fontWeight: "bold !important",
+
+                  borderTop: "1px solid #F0F0F0",
+                },
+                "& .MuiDataGrid-virtualScroller": {
+                  backgroundColor: "#fff",
+                },
+                "& .MuiDataGrid-footerContainer": {
+                  backgroundColor: "#FFFFFF",
+                },
+                "& .MuiCheckbox-root": {
+                  color: `1677FF !important`,
+                },
+                ".MuiDataGrid-cell:focus": {
+                  outline: "none !important",
+                },
+                ".MuiDataGrid-columnHeader:focus-within": {
+                  outline: "none !important",
+                },
+                ".MuiDataGrid-cell:focus-within": {
+                  outline: "none !important",
+                },
+                ".MuiDataGrid-toolbarContainer": {
+                  padding: "15px",
+                  flexDirection: "row-reverse",
+                },
+              }}
+            >
+              {taskIsLoading ? (
                 <>
-                  <DataGrid
-                    className="dataGrid"
-                    rows={taskiesSelector ?? []}
-                    columns={columns}
-                    initialState={{
-                      pagination: {
-                        paginationModel: {
-                          pageSize: 10,
-                        },
-                      },
-                    }}
-                    slots={{ toolbar: GridToolbar }}
-                    slotProps={{
-                      toolbar: {
-                        showQuickFilter: true,
-                        quickFilterProps: { debounceMs: 500 },
-                      },
-                    }}
-                    pageSizeOptions={[5, 10, 25]}
-                    checkboxSelection
-                    disableRowSelectionOnClick
-                    disableColumnFilter
-                    disableColumnMenu
-                    disableDensitySelector
-                    disableColumnSelector
-                    // checkboxSelection
-                    // rows={jobData}
-                    // columns={columns}
-                  />
+                  <Loading />
                 </>
-              )
-            )}
+              ) : (
+                taskiesSelector && (
+                  <>
+                    <DataGrid
+                      className="dataGrid"
+                      autoHeight={true}
+                      rows={taskiesSelector ?? []}
+                      columns={columns}
+                      initialState={{
+                        pagination: {
+                          paginationModel: {
+                            pageSize: 10,
+                          },
+                        },
+                      }}
+                      slots={{ toolbar: GridToolbar }}
+                      slotProps={{
+                        toolbar: {
+                          showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
+                        },
+                      }}
+                      pageSizeOptions={[5, 10, 25]}
+                      checkboxSelection
+                      disableRowSelectionOnClick
+                      disableColumnFilter
+                      disableColumnMenu
+                      disableDensitySelector
+                      disableColumnSelector
+                      // checkboxSelection
+                      // rows={jobData}
+                      // columns={columns}
+                    />
+                  </>
+                )
+              )}
+            </Box>
           </Box>
         </Box>
       </Layout>

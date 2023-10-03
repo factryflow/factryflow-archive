@@ -1,0 +1,4002 @@
+[
+  {
+    "id": 1,
+    "dependency_name": "sit amet eleifend pede libero quis orci nullam molestie nibh in lectus",
+    "dependency_type": "odio porttitor id consequat in consequat ut nulla sed accumsan felis ut at dolor",
+    "expected_close": "3/29/2023",
+    "actual_close": "11/11/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 2,
+    "dependency_name": "felis donec semper sapien a libero nam dui proin leo odio",
+    "dependency_type": "vel lectus in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit",
+    "expected_close": "9/3/2023",
+    "actual_close": "4/30/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 3,
+    "dependency_name": "lacinia sapien quis libero nullam sit amet turpis elementum ligula",
+    "dependency_type": "donec semper sapien a libero nam dui proin leo odio porttitor",
+    "expected_close": "10/25/2022",
+    "actual_close": "2/24/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 4,
+    "dependency_name": "vel nulla eget eros elementum pellentesque quisque porta volutpat erat quisque erat",
+    "dependency_type": "interdum in ante vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae duis",
+    "expected_close": "2/15/2023",
+    "actual_close": "1/24/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 5,
+    "dependency_name": "ut nunc vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia",
+    "dependency_type": "sagittis dui vel nisl duis ac nibh fusce lacus purus aliquet at",
+    "expected_close": "4/21/2023",
+    "actual_close": "8/25/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 6,
+    "dependency_name": "consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum praesent blandit lacinia",
+    "dependency_type": "nunc viverra dapibus nulla suscipit ligula in lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper",
+    "expected_close": "2/17/2023",
+    "actual_close": "8/9/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 7,
+    "dependency_name": "accumsan odio curabitur convallis duis consequat dui nec nisi volutpat eleifend donec ut dolor morbi vel lectus in",
+    "dependency_type": "donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum",
+    "expected_close": "12/25/2022",
+    "actual_close": "6/2/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 8,
+    "dependency_name": "sit amet nunc viverra dapibus nulla suscipit ligula in lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper",
+    "dependency_type": "ipsum dolor sit amet consectetuer adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit non",
+    "expected_close": "6/15/2023",
+    "actual_close": "7/10/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 9,
+    "dependency_name": "maecenas tristique est et tempus semper est quam pharetra magna ac consequat metus sapien ut nunc",
+    "dependency_type": "aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien",
+    "expected_close": "3/4/2023",
+    "actual_close": "7/17/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 10,
+    "dependency_name": "posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi",
+    "dependency_type": "magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient",
+    "expected_close": "9/21/2023",
+    "actual_close": "5/19/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 11,
+    "dependency_name": "elementum ligula vehicula consequat morbi a ipsum integer a nibh",
+    "dependency_type": "cras in purus eu magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus",
+    "expected_close": "7/2/2023",
+    "actual_close": "6/7/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 12,
+    "dependency_name": "sit amet sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus orci",
+    "dependency_type": "nulla neque libero convallis eget eleifend luctus ultricies eu nibh quisque id justo sit amet sapien dignissim vestibulum",
+    "expected_close": "11/12/2022",
+    "actual_close": "4/18/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 13,
+    "dependency_name": "nulla elit ac nulla sed vel enim sit amet nunc viverra dapibus nulla suscipit ligula in lacus curabitur at ipsum",
+    "dependency_type": "ipsum integer a nibh in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id nulla",
+    "expected_close": "8/6/2023",
+    "actual_close": "9/11/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 14,
+    "dependency_name": "pede libero quis orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in",
+    "dependency_type": "eu mi nulla ac enim in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec",
+    "expected_close": "6/14/2023",
+    "actual_close": "11/6/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 15,
+    "dependency_name": "eu tincidunt in leo maecenas pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus",
+    "dependency_type": "nulla ut erat id mauris vulputate elementum nullam varius nulla facilisi cras non",
+    "expected_close": "8/18/2023",
+    "actual_close": "3/24/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 16,
+    "dependency_name": "rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer",
+    "dependency_type": "vestibulum sed magna at nunc commodo placerat praesent blandit nam nulla",
+    "expected_close": "2/11/2023",
+    "actual_close": "10/27/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 17,
+    "dependency_name": "eget eleifend luctus ultricies eu nibh quisque id justo sit amet sapien dignissim vestibulum vestibulum",
+    "dependency_type": "ut rhoncus aliquet pulvinar sed nisl nunc rhoncus dui vel sem sed",
+    "expected_close": "10/20/2022",
+    "actual_close": "5/27/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 18,
+    "dependency_name": "non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante",
+    "dependency_type": "faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam suspendisse",
+    "expected_close": "7/17/2023",
+    "actual_close": "10/21/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 19,
+    "dependency_name": "ornare imperdiet sapien urna pretium nisl ut volutpat sapien arcu sed augue aliquam erat volutpat in congue",
+    "dependency_type": "fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam",
+    "expected_close": "10/7/2022",
+    "actual_close": "8/27/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 20,
+    "dependency_name": "turpis donec posuere metus vitae ipsum aliquam non mauris morbi non",
+    "dependency_type": "justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem id",
+    "expected_close": "2/28/2023",
+    "actual_close": "2/7/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 21,
+    "dependency_name": "justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin",
+    "dependency_type": "rutrum nulla nunc purus phasellus in felis donec semper sapien a libero nam dui proin leo odio porttitor id consequat",
+    "expected_close": "10/14/2022",
+    "actual_close": "10/5/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 22,
+    "dependency_name": "neque libero convallis eget eleifend luctus ultricies eu nibh quisque id justo sit amet sapien dignissim vestibulum vestibulum ante",
+    "dependency_type": "nibh in lectus pellentesque at nulla suspendisse potenti cras in purus eu",
+    "expected_close": "6/17/2023",
+    "actual_close": "8/16/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 23,
+    "dependency_name": "erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer ac neque",
+    "dependency_type": "magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer ac neque duis",
+    "expected_close": "11/23/2022",
+    "actual_close": "1/14/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 24,
+    "dependency_name": "tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat",
+    "dependency_type": "justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non ligula",
+    "expected_close": "10/13/2022",
+    "actual_close": "5/24/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 25,
+    "dependency_name": "quam suspendisse potenti nullam porttitor lacus at turpis donec posuere metus vitae ipsum aliquam non mauris morbi non lectus aliquam",
+    "dependency_type": "sapien arcu sed augue aliquam erat volutpat in congue etiam justo etiam pretium iaculis justo in hac habitasse platea",
+    "expected_close": "10/28/2022",
+    "actual_close": "6/3/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 26,
+    "dependency_name": "magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum",
+    "dependency_type": "posuere nonummy integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante",
+    "expected_close": "2/6/2023",
+    "actual_close": "7/24/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 27,
+    "dependency_name": "proin risus praesent lectus vestibulum quam sapien varius ut blandit non interdum in ante vestibulum ante ipsum primis",
+    "dependency_type": "a nibh in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id",
+    "expected_close": "7/1/2023",
+    "actual_close": "1/12/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 28,
+    "dependency_name": "maecenas rhoncus aliquam lacus morbi quis tortor id nulla ultrices aliquet maecenas",
+    "dependency_type": "sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc",
+    "expected_close": "1/2/2023",
+    "actual_close": "9/25/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 29,
+    "dependency_name": "consectetuer adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit non interdum in",
+    "dependency_type": "sed magna at nunc commodo placerat praesent blandit nam nulla integer",
+    "expected_close": "6/29/2023",
+    "actual_close": "10/8/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 30,
+    "dependency_name": "faucibus orci luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet",
+    "dependency_type": "dui maecenas tristique est et tempus semper est quam pharetra magna ac consequat metus",
+    "expected_close": "1/3/2023",
+    "actual_close": "9/19/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 31,
+    "dependency_name": "vivamus tortor duis mattis egestas metus aenean fermentum donec ut mauris eget",
+    "dependency_type": "sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc",
+    "expected_close": "8/23/2023",
+    "actual_close": "2/16/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 32,
+    "dependency_name": "pharetra magna ac consequat metus sapien ut nunc vestibulum ante ipsum",
+    "dependency_type": "mauris non ligula pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus",
+    "expected_close": "6/9/2023",
+    "actual_close": "11/23/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 33,
+    "dependency_name": "lobortis convallis tortor risus dapibus augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis",
+    "dependency_type": "turpis eget elit sodales scelerisque mauris sit amet eros suspendisse",
+    "expected_close": "8/17/2023",
+    "actual_close": "7/18/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 34,
+    "dependency_name": "in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit",
+    "dependency_type": "tortor quis turpis sed ante vivamus tortor duis mattis egestas metus aenean fermentum donec",
+    "expected_close": "3/10/2023",
+    "actual_close": "1/13/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 35,
+    "dependency_name": "dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor",
+    "dependency_type": "orci vehicula condimentum curabitur in libero ut massa volutpat convallis morbi odio",
+    "expected_close": "3/2/2023",
+    "actual_close": "1/25/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 36,
+    "dependency_name": "nam congue risus semper porta volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie",
+    "dependency_type": "molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis orci",
+    "expected_close": "12/30/2022",
+    "actual_close": "9/4/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 37,
+    "dependency_name": "mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet massa id lobortis",
+    "dependency_type": "luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique",
+    "expected_close": "7/8/2023",
+    "actual_close": "5/1/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 38,
+    "dependency_name": "cubilia curae donec pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer",
+    "dependency_type": "orci luctus et ultrices posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui nec nisi volutpat",
+    "expected_close": "12/17/2022",
+    "actual_close": "11/28/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 39,
+    "dependency_name": "nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in purus eu magna vulputate luctus cum sociis",
+    "dependency_type": "lectus pellentesque at nulla suspendisse potenti cras in purus eu magna vulputate luctus cum sociis",
+    "expected_close": "8/3/2023",
+    "actual_close": "2/15/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 40,
+    "dependency_name": "consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum praesent blandit lacinia",
+    "dependency_type": "eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas metus aenean fermentum donec",
+    "expected_close": "12/15/2022",
+    "actual_close": "12/16/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 41,
+    "dependency_name": "non mauris morbi non lectus aliquam sit amet diam in magna bibendum imperdiet nullam orci pede venenatis non sodales sed",
+    "dependency_type": "massa id nisl venenatis lacinia aenean sit amet justo morbi ut odio cras",
+    "expected_close": "11/11/2022",
+    "actual_close": "5/10/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 42,
+    "dependency_name": "vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis orci eget orci",
+    "dependency_type": "nisi at nibh in hac habitasse platea dictumst aliquam augue quam",
+    "expected_close": "11/13/2022",
+    "actual_close": "2/18/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 43,
+    "dependency_name": "lacus morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc",
+    "dependency_type": "odio odio elementum eu interdum eu tincidunt in leo maecenas pulvinar lobortis est phasellus",
+    "expected_close": "1/9/2023",
+    "actual_close": "4/23/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 44,
+    "dependency_name": "vel est donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac",
+    "dependency_type": "donec dapibus duis at velit eu est congue elementum in hac habitasse platea dictumst morbi vestibulum velit id",
+    "expected_close": "10/15/2022",
+    "actual_close": "11/5/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 45,
+    "dependency_name": "turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy",
+    "dependency_type": "tincidunt eget tempus vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in",
+    "expected_close": "6/1/2023",
+    "actual_close": "3/14/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 46,
+    "dependency_name": "aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi ut odio cras",
+    "dependency_type": "vestibulum velit id pretium iaculis diam erat fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam",
+    "expected_close": "1/16/2023",
+    "actual_close": "8/30/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 47,
+    "dependency_name": "leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat",
+    "dependency_type": "donec vitae nisi nam ultrices libero non mattis pulvinar nulla pede ullamcorper augue a suscipit",
+    "expected_close": "12/3/2022",
+    "actual_close": "11/6/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 48,
+    "dependency_name": "vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum",
+    "dependency_type": "fermentum donec ut mauris eget massa tempor convallis nulla neque libero convallis eget eleifend luctus",
+    "expected_close": "11/20/2022",
+    "actual_close": "4/1/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 49,
+    "dependency_name": "eget massa tempor convallis nulla neque libero convallis eget eleifend luctus ultricies eu nibh quisque",
+    "dependency_type": "ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae",
+    "expected_close": "5/27/2023",
+    "actual_close": "2/21/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 50,
+    "dependency_name": "vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices",
+    "dependency_type": "maecenas tincidunt lacus at velit vivamus vel nulla eget eros elementum pellentesque quisque",
+    "expected_close": "3/25/2023",
+    "actual_close": "6/25/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 51,
+    "dependency_name": "quam pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie",
+    "dependency_type": "donec pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi",
+    "expected_close": "10/28/2022",
+    "actual_close": "10/10/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 52,
+    "dependency_name": "tortor id nulla ultrices aliquet maecenas leo odio condimentum id",
+    "dependency_type": "luctus et ultrices posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui nec nisi volutpat",
+    "expected_close": "1/6/2023",
+    "actual_close": "1/24/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 53,
+    "dependency_name": "rutrum nulla nunc purus phasellus in felis donec semper sapien a libero nam dui proin leo odio porttitor id",
+    "dependency_type": "nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque",
+    "expected_close": "1/2/2023",
+    "actual_close": "6/18/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 54,
+    "dependency_name": "ut odio cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit",
+    "dependency_type": "magna bibendum imperdiet nullam orci pede venenatis non sodales sed tincidunt eu felis fusce",
+    "expected_close": "3/16/2023",
+    "actual_close": "9/30/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 55,
+    "dependency_name": "imperdiet sapien urna pretium nisl ut volutpat sapien arcu sed",
+    "dependency_type": "amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque ultrices",
+    "expected_close": "8/14/2023",
+    "actual_close": "2/16/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 56,
+    "dependency_name": "nunc viverra dapibus nulla suscipit ligula in lacus curabitur at",
+    "dependency_type": "semper interdum mauris ullamcorper purus sit amet nulla quisque arcu",
+    "expected_close": "3/26/2023",
+    "actual_close": "3/10/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 57,
+    "dependency_name": "quis odio consequat varius integer ac leo pellentesque ultrices mattis",
+    "dependency_type": "tempus sit amet sem fusce consequat nulla nisl nunc nisl duis bibendum felis sed interdum venenatis turpis enim",
+    "expected_close": "11/22/2022",
+    "actual_close": "12/28/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 58,
+    "dependency_name": "vitae ipsum aliquam non mauris morbi non lectus aliquam sit amet diam in magna bibendum imperdiet nullam orci",
+    "dependency_type": "molestie lorem quisque ut erat curabitur gravida nisi at nibh in",
+    "expected_close": "11/26/2022",
+    "actual_close": "10/10/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 59,
+    "dependency_name": "in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio justo",
+    "dependency_type": "integer ac neque duis bibendum morbi non quam nec dui luctus rutrum nulla tellus",
+    "expected_close": "11/22/2022",
+    "actual_close": "11/20/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 60,
+    "dependency_name": "vitae nisl aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula",
+    "dependency_type": "posuere cubilia curae nulla dapibus dolor vel est donec odio",
+    "expected_close": "9/19/2023",
+    "actual_close": "8/29/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 61,
+    "dependency_name": "primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio justo sollicitudin",
+    "dependency_type": "iaculis justo in hac habitasse platea dictumst etiam faucibus cursus urna ut tellus nulla ut erat id mauris vulputate elementum",
+    "expected_close": "12/21/2022",
+    "actual_close": "9/29/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 62,
+    "dependency_name": "morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est risus auctor",
+    "dependency_type": "velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla eget eros elementum",
+    "expected_close": "6/16/2023",
+    "actual_close": "1/11/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 63,
+    "dependency_name": "ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae donec pharetra",
+    "dependency_type": "dapibus nulla suscipit ligula in lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus",
+    "expected_close": "2/22/2023",
+    "actual_close": "11/2/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 64,
+    "dependency_name": "odio porttitor id consequat in consequat ut nulla sed accumsan felis ut at dolor quis",
+    "dependency_type": "donec semper sapien a libero nam dui proin leo odio porttitor",
+    "expected_close": "8/23/2023",
+    "actual_close": "8/5/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 65,
+    "dependency_name": "nunc purus phasellus in felis donec semper sapien a libero nam dui proin leo odio porttitor id consequat",
+    "dependency_type": "ultrices libero non mattis pulvinar nulla pede ullamcorper augue a suscipit nulla",
+    "expected_close": "11/6/2022",
+    "actual_close": "6/29/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 66,
+    "dependency_name": "et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet",
+    "dependency_type": "leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero",
+    "expected_close": "10/17/2022",
+    "actual_close": "12/23/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 67,
+    "dependency_name": "ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit",
+    "dependency_type": "amet sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus",
+    "expected_close": "2/28/2023",
+    "actual_close": "8/16/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 68,
+    "dependency_name": "curabitur in libero ut massa volutpat convallis morbi odio odio elementum",
+    "dependency_type": "justo etiam pretium iaculis justo in hac habitasse platea dictumst",
+    "expected_close": "5/14/2023",
+    "actual_close": "12/10/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 69,
+    "dependency_name": "nulla pede ullamcorper augue a suscipit nulla elit ac nulla sed",
+    "dependency_type": "morbi a ipsum integer a nibh in quis justo maecenas rhoncus aliquam lacus morbi",
+    "expected_close": "5/19/2023",
+    "actual_close": "4/1/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 70,
+    "dependency_name": "erat nulla tempus vivamus in felis eu sapien cursus vestibulum proin eu",
+    "dependency_type": "ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean",
+    "expected_close": "5/28/2023",
+    "actual_close": "3/13/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 71,
+    "dependency_name": "consectetuer adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut",
+    "dependency_type": "magna at nunc commodo placerat praesent blandit nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede",
+    "expected_close": "1/16/2023",
+    "actual_close": "9/13/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 72,
+    "dependency_name": "rutrum neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo",
+    "dependency_type": "odio odio elementum eu interdum eu tincidunt in leo maecenas pulvinar lobortis est phasellus sit amet erat",
+    "expected_close": "10/14/2022",
+    "actual_close": "2/25/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 73,
+    "dependency_name": "maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut",
+    "dependency_type": "placerat praesent blandit nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem id",
+    "expected_close": "12/21/2022",
+    "actual_close": "3/1/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 74,
+    "dependency_name": "integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero non mattis pulvinar nulla",
+    "dependency_type": "integer tincidunt ante vel ipsum praesent blandit lacinia erat vestibulum sed magna at nunc commodo placerat praesent blandit nam nulla",
+    "expected_close": "12/8/2022",
+    "actual_close": "2/11/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 75,
+    "dependency_name": "varius nulla facilisi cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla eget eros",
+    "dependency_type": "felis donec semper sapien a libero nam dui proin leo odio porttitor id",
+    "expected_close": "5/5/2023",
+    "actual_close": "2/2/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 76,
+    "dependency_name": "purus phasellus in felis donec semper sapien a libero nam dui proin leo odio porttitor id consequat in consequat ut",
+    "dependency_type": "posuere metus vitae ipsum aliquam non mauris morbi non lectus aliquam sit amet diam",
+    "expected_close": "6/6/2023",
+    "actual_close": "2/23/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 77,
+    "dependency_name": "cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla eget",
+    "dependency_type": "elementum eu interdum eu tincidunt in leo maecenas pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus",
+    "expected_close": "3/23/2023",
+    "actual_close": "4/25/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 78,
+    "dependency_name": "vestibulum proin eu mi nulla ac enim in tempor turpis nec euismod scelerisque quam turpis",
+    "dependency_type": "vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum praesent blandit lacinia erat vestibulum",
+    "expected_close": "11/29/2022",
+    "actual_close": "10/11/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 79,
+    "dependency_name": "molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in purus eu magna vulputate luctus cum sociis natoque",
+    "dependency_type": "placerat praesent blandit nam nulla integer pede justo lacinia eget tincidunt eget tempus",
+    "expected_close": "5/14/2023",
+    "actual_close": "11/16/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 80,
+    "dependency_name": "potenti nullam porttitor lacus at turpis donec posuere metus vitae ipsum aliquam",
+    "dependency_type": "porttitor pede justo eu massa donec dapibus duis at velit eu est congue elementum in hac habitasse platea",
+    "expected_close": "2/14/2023",
+    "actual_close": "4/16/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 81,
+    "dependency_name": "eu nibh quisque id justo sit amet sapien dignissim vestibulum vestibulum ante ipsum primis in",
+    "dependency_type": "morbi a ipsum integer a nibh in quis justo maecenas rhoncus aliquam lacus",
+    "expected_close": "12/24/2022",
+    "actual_close": "7/20/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 82,
+    "dependency_name": "molestie sed justo pellentesque viverra pede ac diam cras pellentesque",
+    "dependency_type": "commodo placerat praesent blandit nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem id",
+    "expected_close": "5/27/2023",
+    "actual_close": "8/12/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 83,
+    "dependency_name": "lobortis ligula sit amet eleifend pede libero quis orci nullam molestie nibh in",
+    "dependency_type": "diam in magna bibendum imperdiet nullam orci pede venenatis non sodales sed tincidunt eu",
+    "expected_close": "3/6/2023",
+    "actual_close": "2/8/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 84,
+    "dependency_name": "sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis",
+    "dependency_type": "nisl venenatis lacinia aenean sit amet justo morbi ut odio cras mi pede malesuada in",
+    "expected_close": "1/26/2023",
+    "actual_close": "11/17/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 85,
+    "dependency_name": "aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit",
+    "dependency_type": "venenatis turpis enim blandit mi in porttitor pede justo eu massa donec dapibus duis",
+    "expected_close": "3/20/2023",
+    "actual_close": "4/17/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 86,
+    "dependency_name": "vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer",
+    "dependency_type": "leo maecenas pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus in felis eu sapien",
+    "expected_close": "10/19/2022",
+    "actual_close": "5/14/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 87,
+    "dependency_name": "et tempus semper est quam pharetra magna ac consequat metus sapien ut nunc vestibulum ante ipsum",
+    "dependency_type": "montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id",
+    "expected_close": "11/3/2022",
+    "actual_close": "9/19/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 88,
+    "dependency_name": "et ultrices posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat",
+    "dependency_type": "donec ut mauris eget massa tempor convallis nulla neque libero convallis eget eleifend luctus ultricies",
+    "expected_close": "4/19/2023",
+    "actual_close": "3/5/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 89,
+    "dependency_name": "rhoncus aliquet pulvinar sed nisl nunc rhoncus dui vel sem",
+    "dependency_type": "nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla eget eros elementum pellentesque quisque porta volutpat erat",
+    "expected_close": "8/20/2023",
+    "actual_close": "8/17/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 90,
+    "dependency_name": "enim sit amet nunc viverra dapibus nulla suscipit ligula in lacus curabitur at ipsum ac tellus semper",
+    "dependency_type": "auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi ut",
+    "expected_close": "2/9/2023",
+    "actual_close": "4/17/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 91,
+    "dependency_name": "luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at nibh in hac habitasse",
+    "dependency_type": "ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae donec pharetra",
+    "expected_close": "6/21/2023",
+    "actual_close": "6/28/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 92,
+    "dependency_name": "quisque ut erat curabitur gravida nisi at nibh in hac habitasse platea dictumst aliquam",
+    "dependency_type": "orci luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi",
+    "expected_close": "5/10/2023",
+    "actual_close": "12/13/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 93,
+    "dependency_name": "consectetuer adipiscing elit proin risus praesent lectus vestibulum quam sapien",
+    "dependency_type": "justo sit amet sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices",
+    "expected_close": "5/8/2023",
+    "actual_close": "9/16/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 94,
+    "dependency_name": "dolor sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque",
+    "dependency_type": "tincidunt ante vel ipsum praesent blandit lacinia erat vestibulum sed magna at nunc commodo placerat",
+    "expected_close": "7/4/2023",
+    "actual_close": "10/15/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 95,
+    "dependency_name": "felis sed interdum venenatis turpis enim blandit mi in porttitor pede justo eu massa donec dapibus duis at",
+    "dependency_type": "diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante ipsum primis in",
+    "expected_close": "3/7/2023",
+    "actual_close": "12/22/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 96,
+    "dependency_name": "dui vel sem sed sagittis nam congue risus semper porta volutpat quam pede lobortis ligula",
+    "dependency_type": "donec pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer",
+    "expected_close": "7/26/2023",
+    "actual_close": "4/23/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 97,
+    "dependency_name": "dui nec nisi volutpat eleifend donec ut dolor morbi vel lectus in quam",
+    "dependency_type": "justo morbi ut odio cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem",
+    "expected_close": "5/1/2023",
+    "actual_close": "7/31/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 98,
+    "dependency_name": "condimentum curabitur in libero ut massa volutpat convallis morbi odio odio elementum eu interdum",
+    "dependency_type": "molestie lorem quisque ut erat curabitur gravida nisi at nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin",
+    "expected_close": "5/19/2023",
+    "actual_close": "6/26/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 99,
+    "dependency_name": "rutrum nulla tellus in sagittis dui vel nisl duis ac",
+    "dependency_type": "nulla tellus in sagittis dui vel nisl duis ac nibh fusce lacus purus aliquet at feugiat non",
+    "expected_close": "4/27/2023",
+    "actual_close": "9/30/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 100,
+    "dependency_name": "ac neque duis bibendum morbi non quam nec dui luctus rutrum nulla tellus in sagittis dui vel nisl",
+    "dependency_type": "at velit eu est congue elementum in hac habitasse platea dictumst",
+    "expected_close": "10/27/2022",
+    "actual_close": "6/12/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 101,
+    "dependency_name": "iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus",
+    "dependency_type": "dolor sit amet consectetuer adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit",
+    "expected_close": "3/15/2023",
+    "actual_close": "4/14/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 102,
+    "dependency_name": "feugiat non pretium quis lectus suspendisse potenti in eleifend quam a",
+    "dependency_type": "ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia",
+    "expected_close": "9/21/2023",
+    "actual_close": "3/12/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 103,
+    "dependency_name": "vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id massa id nisl",
+    "dependency_type": "pellentesque at nulla suspendisse potenti cras in purus eu magna",
+    "expected_close": "7/23/2023",
+    "actual_close": "10/26/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 104,
+    "dependency_name": "eleifend donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum",
+    "dependency_type": "consequat dui nec nisi volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla",
+    "expected_close": "9/14/2023",
+    "actual_close": "5/13/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 105,
+    "dependency_name": "maecenas tristique est et tempus semper est quam pharetra magna ac consequat metus sapien ut nunc vestibulum ante ipsum",
+    "dependency_type": "rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer",
+    "expected_close": "4/1/2023",
+    "actual_close": "11/23/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 106,
+    "dependency_name": "aliquet at feugiat non pretium quis lectus suspendisse potenti in",
+    "dependency_type": "dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum praesent",
+    "expected_close": "1/20/2023",
+    "actual_close": "5/18/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 107,
+    "dependency_name": "ut ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus et",
+    "dependency_type": "mauris eget massa tempor convallis nulla neque libero convallis eget eleifend luctus ultricies eu",
+    "expected_close": "5/16/2023",
+    "actual_close": "3/3/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 108,
+    "dependency_name": "sed vestibulum sit amet cursus id turpis integer aliquet massa id lobortis convallis tortor risus dapibus augue",
+    "dependency_type": "curae nulla dapibus dolor vel est donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum",
+    "expected_close": "8/21/2023",
+    "actual_close": "5/14/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 109,
+    "dependency_name": "leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet massa id",
+    "dependency_type": "eros elementum pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget semper rutrum nulla nunc",
+    "expected_close": "5/22/2023",
+    "actual_close": "12/3/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 110,
+    "dependency_name": "augue aliquam erat volutpat in congue etiam justo etiam pretium iaculis",
+    "dependency_type": "amet consectetuer adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut",
+    "expected_close": "7/29/2023",
+    "actual_close": "8/4/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 111,
+    "dependency_name": "ultrices posuere cubilia curae nulla dapibus dolor vel est donec",
+    "dependency_type": "nibh fusce lacus purus aliquet at feugiat non pretium quis lectus",
+    "expected_close": "10/10/2022",
+    "actual_close": "5/4/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 112,
+    "dependency_name": "quis lectus suspendisse potenti in eleifend quam a odio in hac habitasse platea dictumst maecenas ut",
+    "dependency_type": "nulla neque libero convallis eget eleifend luctus ultricies eu nibh quisque id",
+    "expected_close": "9/30/2022",
+    "actual_close": "11/13/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 113,
+    "dependency_name": "vestibulum sed magna at nunc commodo placerat praesent blandit nam nulla integer pede justo lacinia eget tincidunt eget tempus vel",
+    "dependency_type": "cras pellentesque volutpat dui maecenas tristique est et tempus semper",
+    "expected_close": "8/13/2023",
+    "actual_close": "4/21/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 114,
+    "dependency_name": "cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui nec",
+    "dependency_type": "ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae",
+    "expected_close": "8/18/2023",
+    "actual_close": "1/28/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 115,
+    "dependency_name": "lorem ipsum dolor sit amet consectetuer adipiscing elit proin risus praesent lectus vestibulum",
+    "dependency_type": "ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id massa id nisl venenatis",
+    "expected_close": "7/3/2023",
+    "actual_close": "8/4/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 116,
+    "dependency_name": "in hac habitasse platea dictumst morbi vestibulum velit id pretium iaculis diam erat",
+    "dependency_type": "quam pharetra magna ac consequat metus sapien ut nunc vestibulum ante ipsum primis in",
+    "expected_close": "7/10/2023",
+    "actual_close": "12/17/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 117,
+    "dependency_name": "convallis tortor risus dapibus augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet",
+    "dependency_type": "porttitor lacus at turpis donec posuere metus vitae ipsum aliquam non mauris morbi non lectus aliquam",
+    "expected_close": "5/18/2023",
+    "actual_close": "12/15/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 118,
+    "dependency_name": "ut blandit non interdum in ante vestibulum ante ipsum primis in faucibus orci luctus",
+    "dependency_type": "odio in hac habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque",
+    "expected_close": "9/29/2023",
+    "actual_close": "11/20/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 119,
+    "dependency_name": "habitasse platea dictumst morbi vestibulum velit id pretium iaculis diam",
+    "dependency_type": "lorem id ligula suspendisse ornare consequat lectus in est risus auctor sed tristique in",
+    "expected_close": "1/9/2023",
+    "actual_close": "8/22/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 120,
+    "dependency_name": "non sodales sed tincidunt eu felis fusce posuere felis sed lacus morbi sem",
+    "dependency_type": "sapien a libero nam dui proin leo odio porttitor id consequat in consequat ut nulla sed accumsan felis ut at",
+    "expected_close": "7/24/2023",
+    "actual_close": "9/5/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 121,
+    "dependency_name": "duis ac nibh fusce lacus purus aliquet at feugiat non pretium quis lectus suspendisse potenti in eleifend",
+    "dependency_type": "tincidunt ante vel ipsum praesent blandit lacinia erat vestibulum sed magna at",
+    "expected_close": "5/27/2023",
+    "actual_close": "9/10/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 122,
+    "dependency_name": "volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris enim leo rhoncus sed",
+    "dependency_type": "vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum praesent blandit lacinia erat vestibulum sed",
+    "expected_close": "1/9/2023",
+    "actual_close": "1/10/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 123,
+    "dependency_name": "blandit mi in porttitor pede justo eu massa donec dapibus duis",
+    "dependency_type": "accumsan odio curabitur convallis duis consequat dui nec nisi volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla",
+    "expected_close": "3/6/2023",
+    "actual_close": "5/30/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 124,
+    "dependency_name": "duis at velit eu est congue elementum in hac habitasse platea dictumst morbi vestibulum velit",
+    "dependency_type": "viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est",
+    "expected_close": "7/14/2023",
+    "actual_close": "10/27/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 125,
+    "dependency_name": "nisl aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula condimentum curabitur",
+    "dependency_type": "in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt",
+    "expected_close": "3/25/2023",
+    "actual_close": "8/19/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 126,
+    "dependency_name": "sodales scelerisque mauris sit amet eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas metus aenean",
+    "dependency_type": "metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis",
+    "expected_close": "2/1/2023",
+    "actual_close": "2/8/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 127,
+    "dependency_name": "donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante ipsum",
+    "dependency_type": "vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis",
+    "expected_close": "6/14/2023",
+    "actual_close": "2/10/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 128,
+    "dependency_name": "in consequat ut nulla sed accumsan felis ut at dolor quis odio consequat",
+    "dependency_type": "turpis enim blandit mi in porttitor pede justo eu massa donec dapibus duis at",
+    "expected_close": "4/13/2023",
+    "actual_close": "9/8/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 129,
+    "dependency_name": "viverra eget congue eget semper rutrum nulla nunc purus phasellus in felis donec semper sapien",
+    "dependency_type": "venenatis lacinia aenean sit amet justo morbi ut odio cras mi pede malesuada in imperdiet et commodo",
+    "expected_close": "3/17/2023",
+    "actual_close": "6/8/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 130,
+    "dependency_name": "ut erat curabitur gravida nisi at nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum",
+    "dependency_type": "luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus",
+    "expected_close": "10/24/2022",
+    "actual_close": "3/24/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 131,
+    "dependency_name": "sit amet nunc viverra dapibus nulla suscipit ligula in lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus",
+    "dependency_type": "erat fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam",
+    "expected_close": "5/19/2023",
+    "actual_close": "3/27/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 132,
+    "dependency_name": "malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin",
+    "dependency_type": "tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet",
+    "expected_close": "3/1/2023",
+    "actual_close": "1/28/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 133,
+    "dependency_name": "elementum ligula vehicula consequat morbi a ipsum integer a nibh in quis justo maecenas",
+    "dependency_type": "sit amet erat nulla tempus vivamus in felis eu sapien",
+    "expected_close": "12/30/2022",
+    "actual_close": "10/17/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 134,
+    "dependency_name": "vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae",
+    "dependency_type": "nisl duis bibendum felis sed interdum venenatis turpis enim blandit mi in porttitor pede justo eu massa",
+    "expected_close": "2/27/2023",
+    "actual_close": "3/1/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 135,
+    "dependency_name": "primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam suspendisse potenti nullam",
+    "dependency_type": "luctus et ultrices posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat",
+    "expected_close": "1/23/2023",
+    "actual_close": "10/18/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 136,
+    "dependency_name": "lacus morbi quis tortor id nulla ultrices aliquet maecenas leo odio condimentum id luctus",
+    "dependency_type": "ut dolor morbi vel lectus in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum",
+    "expected_close": "4/22/2023",
+    "actual_close": "3/7/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 137,
+    "dependency_name": "quam a odio in hac habitasse platea dictumst maecenas ut massa quis augue luctus",
+    "dependency_type": "sollicitudin mi sit amet lobortis sapien sapien non mi integer ac neque duis bibendum morbi non quam nec",
+    "expected_close": "8/7/2023",
+    "actual_close": "11/12/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 138,
+    "dependency_name": "lectus aliquam sit amet diam in magna bibendum imperdiet nullam orci pede venenatis non sodales",
+    "dependency_type": "consectetuer adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit non interdum",
+    "expected_close": "9/3/2023",
+    "actual_close": "2/10/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 139,
+    "dependency_name": "sed tristique in tempus sit amet sem fusce consequat nulla nisl nunc nisl duis bibendum felis sed interdum venenatis",
+    "dependency_type": "porta volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie nibh in",
+    "expected_close": "12/11/2022",
+    "actual_close": "8/21/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 140,
+    "dependency_name": "in tempus sit amet sem fusce consequat nulla nisl nunc",
+    "dependency_type": "sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus",
+    "expected_close": "2/3/2023",
+    "actual_close": "3/26/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 141,
+    "dependency_name": "quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante",
+    "dependency_type": "integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus",
+    "expected_close": "12/30/2022",
+    "actual_close": "11/2/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 142,
+    "dependency_name": "scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis",
+    "dependency_type": "magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor gravida sem praesent",
+    "expected_close": "8/12/2023",
+    "actual_close": "7/19/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 143,
+    "dependency_name": "quisque arcu libero rutrum ac lobortis vel dapibus at diam nam",
+    "dependency_type": "lorem ipsum dolor sit amet consectetuer adipiscing elit proin risus praesent lectus vestibulum",
+    "expected_close": "8/27/2023",
+    "actual_close": "9/2/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 144,
+    "dependency_name": "facilisi cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla",
+    "dependency_type": "in libero ut massa volutpat convallis morbi odio odio elementum eu",
+    "expected_close": "7/25/2023",
+    "actual_close": "7/12/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 145,
+    "dependency_name": "sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi",
+    "dependency_type": "dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla",
+    "expected_close": "10/26/2022",
+    "actual_close": "1/26/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 146,
+    "dependency_name": "dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et",
+    "dependency_type": "vehicula consequat morbi a ipsum integer a nibh in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id nulla",
+    "expected_close": "6/4/2023",
+    "actual_close": "12/1/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 147,
+    "dependency_name": "sed tristique in tempus sit amet sem fusce consequat nulla nisl nunc nisl",
+    "dependency_type": "varius ut blandit non interdum in ante vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia",
+    "expected_close": "1/10/2023",
+    "actual_close": "7/6/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 148,
+    "dependency_name": "convallis nulla neque libero convallis eget eleifend luctus ultricies eu nibh quisque id justo sit amet sapien dignissim vestibulum vestibulum",
+    "dependency_type": "curae duis faucibus accumsan odio curabitur convallis duis consequat dui nec nisi",
+    "expected_close": "10/17/2022",
+    "actual_close": "4/26/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 149,
+    "dependency_name": "nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus",
+    "dependency_type": "erat curabitur gravida nisi at nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer",
+    "expected_close": "8/31/2023",
+    "actual_close": "12/17/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 150,
+    "dependency_name": "semper porta volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci nullam",
+    "dependency_type": "eget eros elementum pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget semper",
+    "expected_close": "3/22/2023",
+    "actual_close": "11/27/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 151,
+    "dependency_name": "lectus in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet massa id",
+    "dependency_type": "arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula",
+    "expected_close": "9/24/2023",
+    "actual_close": "1/10/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 152,
+    "dependency_name": "nisl duis ac nibh fusce lacus purus aliquet at feugiat non pretium quis lectus suspendisse potenti in eleifend quam",
+    "dependency_type": "fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet massa id lobortis convallis",
+    "expected_close": "12/17/2022",
+    "actual_close": "4/9/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 153,
+    "dependency_name": "vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy",
+    "dependency_type": "habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut",
+    "expected_close": "11/5/2022",
+    "actual_close": "9/12/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 154,
+    "dependency_name": "id pretium iaculis diam erat fermentum justo nec condimentum neque",
+    "dependency_type": "at turpis donec posuere metus vitae ipsum aliquam non mauris morbi non lectus aliquam",
+    "expected_close": "1/8/2023",
+    "actual_close": "12/31/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 155,
+    "dependency_name": "luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam",
+    "dependency_type": "montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et magnis dis",
+    "expected_close": "2/23/2023",
+    "actual_close": "12/5/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 156,
+    "dependency_name": "eleifend pede libero quis orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in purus eu magna",
+    "dependency_type": "vestibulum sed magna at nunc commodo placerat praesent blandit nam nulla integer pede",
+    "expected_close": "6/14/2023",
+    "actual_close": "4/30/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 157,
+    "dependency_name": "penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean",
+    "dependency_type": "in lectus pellentesque at nulla suspendisse potenti cras in purus eu magna vulputate luctus cum sociis",
+    "expected_close": "4/30/2023",
+    "actual_close": "9/13/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 158,
+    "dependency_name": "sapien non mi integer ac neque duis bibendum morbi non",
+    "dependency_type": "eget semper rutrum nulla nunc purus phasellus in felis donec semper sapien a libero nam dui proin",
+    "expected_close": "1/23/2023",
+    "actual_close": "4/1/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 159,
+    "dependency_name": "nibh quisque id justo sit amet sapien dignissim vestibulum vestibulum ante",
+    "dependency_type": "molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc",
+    "expected_close": "9/17/2023",
+    "actual_close": "9/16/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 160,
+    "dependency_name": "rutrum nulla tellus in sagittis dui vel nisl duis ac nibh fusce lacus purus",
+    "dependency_type": "adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit non interdum in ante vestibulum",
+    "expected_close": "4/30/2023",
+    "actual_close": "5/16/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 161,
+    "dependency_name": "faucibus orci luctus et ultrices posuere cubilia curae duis faucibus accumsan odio",
+    "dependency_type": "sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus",
+    "expected_close": "1/9/2023",
+    "actual_close": "7/8/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 162,
+    "dependency_name": "vulputate ut ultrices vel augue vestibulum ante ipsum primis in faucibus orci",
+    "dependency_type": "erat volutpat in congue etiam justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam",
+    "expected_close": "1/24/2023",
+    "actual_close": "5/7/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 163,
+    "dependency_name": "eget orci vehicula condimentum curabitur in libero ut massa volutpat convallis morbi odio odio elementum eu interdum eu",
+    "dependency_type": "ultrices posuere cubilia curae mauris viverra diam vitae quam suspendisse potenti nullam",
+    "expected_close": "6/21/2023",
+    "actual_close": "11/9/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 164,
+    "dependency_name": "massa tempor convallis nulla neque libero convallis eget eleifend luctus ultricies",
+    "dependency_type": "etiam justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus urna ut tellus nulla ut erat",
+    "expected_close": "2/22/2023",
+    "actual_close": "3/5/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 165,
+    "dependency_name": "enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque ultrices phasellus",
+    "dependency_type": "dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum",
+    "expected_close": "12/28/2022",
+    "actual_close": "10/30/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 166,
+    "dependency_name": "sed interdum venenatis turpis enim blandit mi in porttitor pede justo eu massa",
+    "dependency_type": "semper interdum mauris ullamcorper purus sit amet nulla quisque arcu",
+    "expected_close": "11/12/2022",
+    "actual_close": "1/4/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 167,
+    "dependency_name": "pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi",
+    "dependency_type": "justo in hac habitasse platea dictumst etiam faucibus cursus urna ut",
+    "expected_close": "4/24/2023",
+    "actual_close": "6/5/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 168,
+    "dependency_name": "eros vestibulum ac est lacinia nisi venenatis tristique fusce congue diam id ornare imperdiet sapien urna",
+    "dependency_type": "amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque",
+    "expected_close": "8/17/2023",
+    "actual_close": "9/29/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 169,
+    "dependency_name": "habitasse platea dictumst morbi vestibulum velit id pretium iaculis diam erat fermentum justo",
+    "dependency_type": "eleifend pede libero quis orci nullam molestie nibh in lectus pellentesque at",
+    "expected_close": "10/23/2022",
+    "actual_close": "9/1/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 170,
+    "dependency_name": "ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit",
+    "dependency_type": "dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at",
+    "expected_close": "6/21/2023",
+    "actual_close": "1/18/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 171,
+    "dependency_name": "felis ut at dolor quis odio consequat varius integer ac leo pellentesque ultrices mattis odio donec vitae",
+    "dependency_type": "nunc nisl duis bibendum felis sed interdum venenatis turpis enim blandit mi in porttitor pede justo eu massa",
+    "expected_close": "7/18/2023",
+    "actual_close": "2/6/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 172,
+    "dependency_name": "integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem",
+    "dependency_type": "quis odio consequat varius integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero",
+    "expected_close": "10/25/2022",
+    "actual_close": "5/14/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 173,
+    "dependency_name": "donec semper sapien a libero nam dui proin leo odio porttitor id consequat in consequat ut nulla sed",
+    "dependency_type": "augue vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia",
+    "expected_close": "8/3/2023",
+    "actual_close": "6/13/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 174,
+    "dependency_name": "potenti in eleifend quam a odio in hac habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt",
+    "dependency_type": "vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet turpis",
+    "expected_close": "7/21/2023",
+    "actual_close": "11/10/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 175,
+    "dependency_name": "ac est lacinia nisi venenatis tristique fusce congue diam id ornare",
+    "dependency_type": "luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas",
+    "expected_close": "8/20/2023",
+    "actual_close": "5/26/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 176,
+    "dependency_name": "congue diam id ornare imperdiet sapien urna pretium nisl ut volutpat sapien arcu sed",
+    "dependency_type": "libero non mattis pulvinar nulla pede ullamcorper augue a suscipit nulla elit",
+    "expected_close": "4/1/2023",
+    "actual_close": "7/30/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 177,
+    "dependency_name": "pede ullamcorper augue a suscipit nulla elit ac nulla sed vel enim sit amet nunc viverra dapibus nulla",
+    "dependency_type": "vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet",
+    "expected_close": "8/18/2023",
+    "actual_close": "4/14/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 178,
+    "dependency_name": "consequat ut nulla sed accumsan felis ut at dolor quis odio consequat varius integer ac leo pellentesque ultrices",
+    "dependency_type": "vestibulum eget vulputate ut ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus et",
+    "expected_close": "4/3/2023",
+    "actual_close": "4/5/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 179,
+    "dependency_name": "interdum eu tincidunt in leo maecenas pulvinar lobortis est phasellus sit amet erat nulla",
+    "dependency_type": "faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam suspendisse potenti nullam",
+    "expected_close": "2/20/2023",
+    "actual_close": "3/10/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 180,
+    "dependency_name": "tortor id nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie",
+    "dependency_type": "purus eu magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis",
+    "expected_close": "8/22/2023",
+    "actual_close": "1/10/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 181,
+    "dependency_name": "vel est donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum",
+    "dependency_type": "in sagittis dui vel nisl duis ac nibh fusce lacus purus aliquet at feugiat non",
+    "expected_close": "6/18/2023",
+    "actual_close": "2/2/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 182,
+    "dependency_name": "vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices erat",
+    "dependency_type": "amet consectetuer adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit non interdum",
+    "expected_close": "12/21/2022",
+    "actual_close": "10/19/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 183,
+    "dependency_name": "sit amet lobortis sapien sapien non mi integer ac neque duis bibendum",
+    "dependency_type": "in hac habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem",
+    "expected_close": "1/22/2023",
+    "actual_close": "8/23/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 184,
+    "dependency_name": "quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus phasellus in felis donec semper sapien",
+    "dependency_type": "ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit donec diam",
+    "expected_close": "12/30/2022",
+    "actual_close": "7/8/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 185,
+    "dependency_name": "quam sapien varius ut blandit non interdum in ante vestibulum ante ipsum",
+    "dependency_type": "in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit",
+    "expected_close": "5/6/2023",
+    "actual_close": "1/27/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 186,
+    "dependency_name": "congue etiam justo etiam pretium iaculis justo in hac habitasse",
+    "dependency_type": "nulla facilisi cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit",
+    "expected_close": "12/4/2022",
+    "actual_close": "6/21/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 187,
+    "dependency_name": "fusce consequat nulla nisl nunc nisl duis bibendum felis sed interdum venenatis turpis enim blandit mi in porttitor pede",
+    "dependency_type": "a pede posuere nonummy integer non velit donec diam neque vestibulum eget",
+    "expected_close": "7/31/2023",
+    "actual_close": "3/9/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 188,
+    "dependency_name": "vel ipsum praesent blandit lacinia erat vestibulum sed magna at nunc commodo",
+    "dependency_type": "ipsum primis in faucibus orci luctus et ultrices posuere cubilia",
+    "expected_close": "5/16/2023",
+    "actual_close": "7/28/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 189,
+    "dependency_name": "turpis eget elit sodales scelerisque mauris sit amet eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis",
+    "dependency_type": "ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae",
+    "expected_close": "8/22/2023",
+    "actual_close": "6/17/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 190,
+    "dependency_name": "sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer",
+    "dependency_type": "consequat metus sapien ut nunc vestibulum ante ipsum primis in faucibus",
+    "expected_close": "9/8/2023",
+    "actual_close": "1/31/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 191,
+    "dependency_name": "gravida nisi at nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer",
+    "dependency_type": "sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at",
+    "expected_close": "2/24/2023",
+    "actual_close": "7/12/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 192,
+    "dependency_name": "lacus morbi quis tortor id nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra",
+    "dependency_type": "adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc",
+    "expected_close": "7/8/2023",
+    "actual_close": "4/22/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 193,
+    "dependency_name": "vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula",
+    "dependency_type": "sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum",
+    "expected_close": "12/25/2022",
+    "actual_close": "6/18/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 194,
+    "dependency_name": "venenatis tristique fusce congue diam id ornare imperdiet sapien urna pretium nisl ut volutpat sapien arcu",
+    "dependency_type": "orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam suspendisse potenti nullam porttitor lacus at",
+    "expected_close": "11/28/2022",
+    "actual_close": "5/21/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 195,
+    "dependency_name": "at turpis a pede posuere nonummy integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum",
+    "dependency_type": "posuere felis sed lacus morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl",
+    "expected_close": "8/27/2023",
+    "actual_close": "8/26/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 196,
+    "dependency_name": "non quam nec dui luctus rutrum nulla tellus in sagittis",
+    "dependency_type": "primis in faucibus orci luctus et ultrices posuere cubilia curae",
+    "expected_close": "8/1/2023",
+    "actual_close": "9/10/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 197,
+    "dependency_name": "velit id pretium iaculis diam erat fermentum justo nec condimentum neque sapien",
+    "dependency_type": "vulputate ut ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia",
+    "expected_close": "4/19/2023",
+    "actual_close": "5/14/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 198,
+    "dependency_name": "vulputate ut ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae donec",
+    "dependency_type": "quis libero nullam sit amet turpis elementum ligula vehicula consequat morbi a ipsum integer a nibh in",
+    "expected_close": "12/4/2022",
+    "actual_close": "8/3/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 199,
+    "dependency_name": "vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices",
+    "dependency_type": "ac tellus semper interdum mauris ullamcorper purus sit amet nulla quisque arcu libero rutrum",
+    "expected_close": "6/1/2023",
+    "actual_close": "11/20/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 200,
+    "dependency_name": "viverra eget congue eget semper rutrum nulla nunc purus phasellus in felis donec semper sapien a libero nam dui proin",
+    "dependency_type": "volutpat erat quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus phasellus",
+    "expected_close": "4/15/2023",
+    "actual_close": "1/29/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 201,
+    "dependency_name": "ligula sit amet eleifend pede libero quis orci nullam molestie nibh in lectus pellentesque at",
+    "dependency_type": "luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at nibh in hac habitasse platea dictumst aliquam",
+    "expected_close": "11/15/2022",
+    "actual_close": "6/22/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 202,
+    "dependency_name": "tellus in sagittis dui vel nisl duis ac nibh fusce lacus purus aliquet",
+    "dependency_type": "sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus",
+    "expected_close": "1/19/2023",
+    "actual_close": "10/11/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 203,
+    "dependency_name": "nam nulla integer pede justo lacinia eget tincidunt eget tempus vel",
+    "dependency_type": "posuere cubilia curae nulla dapibus dolor vel est donec odio justo sollicitudin ut suscipit",
+    "expected_close": "9/1/2023",
+    "actual_close": "1/19/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 204,
+    "dependency_name": "id sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate",
+    "dependency_type": "sit amet sem fusce consequat nulla nisl nunc nisl duis bibendum felis sed interdum venenatis turpis enim blandit",
+    "expected_close": "6/8/2023",
+    "actual_close": "12/19/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 205,
+    "dependency_name": "donec ut mauris eget massa tempor convallis nulla neque libero convallis eget eleifend luctus",
+    "dependency_type": "hac habitasse platea dictumst morbi vestibulum velit id pretium iaculis diam erat",
+    "expected_close": "5/7/2023",
+    "actual_close": "4/10/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 206,
+    "dependency_name": "mattis odio donec vitae nisi nam ultrices libero non mattis pulvinar nulla pede ullamcorper augue a suscipit",
+    "dependency_type": "fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis",
+    "expected_close": "10/19/2022",
+    "actual_close": "7/8/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 207,
+    "dependency_name": "turpis a pede posuere nonummy integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante",
+    "dependency_type": "diam erat fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis",
+    "expected_close": "4/24/2023",
+    "actual_close": "5/31/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 208,
+    "dependency_name": "sed vestibulum sit amet cursus id turpis integer aliquet massa id lobortis convallis tortor risus dapibus augue vel accumsan tellus",
+    "dependency_type": "ante ipsum primis in faucibus orci luctus et ultrices posuere",
+    "expected_close": "10/18/2022",
+    "actual_close": "3/12/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 209,
+    "dependency_name": "lacus purus aliquet at feugiat non pretium quis lectus suspendisse potenti in eleifend quam a odio in hac",
+    "dependency_type": "nunc nisl duis bibendum felis sed interdum venenatis turpis enim",
+    "expected_close": "9/16/2023",
+    "actual_close": "10/23/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 210,
+    "dependency_name": "amet consectetuer adipiscing elit proin risus praesent lectus vestibulum quam sapien",
+    "dependency_type": "duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit donec diam neque vestibulum eget vulputate",
+    "expected_close": "6/1/2023",
+    "actual_close": "11/9/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 211,
+    "dependency_name": "semper interdum mauris ullamcorper purus sit amet nulla quisque arcu libero rutrum ac lobortis vel dapibus at",
+    "dependency_type": "aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer ac neque",
+    "expected_close": "11/14/2022",
+    "actual_close": "6/6/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 212,
+    "dependency_name": "ullamcorper augue a suscipit nulla elit ac nulla sed vel enim sit",
+    "dependency_type": "ac nibh fusce lacus purus aliquet at feugiat non pretium quis lectus suspendisse potenti in eleifend",
+    "expected_close": "6/8/2023",
+    "actual_close": "5/9/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 213,
+    "dependency_name": "in consequat ut nulla sed accumsan felis ut at dolor quis odio",
+    "dependency_type": "volutpat convallis morbi odio odio elementum eu interdum eu tincidunt in",
+    "expected_close": "11/24/2022",
+    "actual_close": "7/29/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 214,
+    "dependency_name": "quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus phasellus in felis donec semper sapien",
+    "dependency_type": "mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet",
+    "expected_close": "5/20/2023",
+    "actual_close": "4/9/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 215,
+    "dependency_name": "sapien a libero nam dui proin leo odio porttitor id consequat in consequat ut nulla sed accumsan felis ut",
+    "dependency_type": "in eleifend quam a odio in hac habitasse platea dictumst",
+    "expected_close": "1/23/2023",
+    "actual_close": "2/18/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 216,
+    "dependency_name": "in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id nulla ultrices aliquet maecenas leo odio condimentum",
+    "dependency_type": "risus semper porta volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci",
+    "expected_close": "1/1/2023",
+    "actual_close": "11/2/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 217,
+    "dependency_name": "convallis morbi odio odio elementum eu interdum eu tincidunt in leo maecenas pulvinar lobortis est",
+    "dependency_type": "congue eget semper rutrum nulla nunc purus phasellus in felis donec semper sapien a libero nam",
+    "expected_close": "10/27/2022",
+    "actual_close": "3/25/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 218,
+    "dependency_name": "iaculis diam erat fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam",
+    "dependency_type": "in faucibus orci luctus et ultrices posuere cubilia curae duis faucibus accumsan odio",
+    "expected_close": "7/8/2023",
+    "actual_close": "2/10/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 219,
+    "dependency_name": "vel lectus in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet massa",
+    "dependency_type": "semper est quam pharetra magna ac consequat metus sapien ut nunc",
+    "expected_close": "3/28/2023",
+    "actual_close": "8/15/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 220,
+    "dependency_name": "dapibus augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula",
+    "dependency_type": "mattis pulvinar nulla pede ullamcorper augue a suscipit nulla elit ac nulla sed vel enim sit amet nunc viverra dapibus",
+    "expected_close": "7/24/2023",
+    "actual_close": "9/8/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 221,
+    "dependency_name": "mauris eget massa tempor convallis nulla neque libero convallis eget eleifend luctus ultricies eu nibh quisque id justo sit",
+    "dependency_type": "eleifend pede libero quis orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in purus eu",
+    "expected_close": "12/5/2022",
+    "actual_close": "9/27/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 222,
+    "dependency_name": "tortor risus dapibus augue vel accumsan tellus nisi eu orci",
+    "dependency_type": "posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui nec nisi volutpat eleifend donec ut dolor",
+    "expected_close": "12/19/2022",
+    "actual_close": "2/26/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 223,
+    "dependency_name": "mauris vulputate elementum nullam varius nulla facilisi cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus",
+    "dependency_type": "donec quis orci eget orci vehicula condimentum curabitur in libero ut massa volutpat convallis",
+    "expected_close": "10/2/2022",
+    "actual_close": "8/22/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 224,
+    "dependency_name": "quis orci eget orci vehicula condimentum curabitur in libero ut massa volutpat convallis morbi odio odio",
+    "dependency_type": "blandit mi in porttitor pede justo eu massa donec dapibus duis",
+    "expected_close": "8/16/2023",
+    "actual_close": "11/28/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 225,
+    "dependency_name": "nulla suscipit ligula in lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus sit amet nulla quisque arcu",
+    "dependency_type": "nulla quisque arcu libero rutrum ac lobortis vel dapibus at diam nam tristique tortor eu",
+    "expected_close": "9/5/2023",
+    "actual_close": "1/11/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 226,
+    "dependency_name": "luctus cum sociis natoque penatibus et magnis dis parturient montes",
+    "dependency_type": "elementum in hac habitasse platea dictumst morbi vestibulum velit id pretium iaculis diam erat fermentum justo nec",
+    "expected_close": "9/23/2023",
+    "actual_close": "10/18/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 227,
+    "dependency_name": "non interdum in ante vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae duis faucibus accumsan",
+    "dependency_type": "odio curabitur convallis duis consequat dui nec nisi volutpat eleifend donec ut",
+    "expected_close": "2/16/2023",
+    "actual_close": "2/15/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 228,
+    "dependency_name": "sed nisl nunc rhoncus dui vel sem sed sagittis nam congue risus semper porta",
+    "dependency_type": "mattis egestas metus aenean fermentum donec ut mauris eget massa tempor convallis nulla neque libero",
+    "expected_close": "11/15/2022",
+    "actual_close": "10/15/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 229,
+    "dependency_name": "justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus urna",
+    "dependency_type": "lacus morbi quis tortor id nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra",
+    "expected_close": "7/24/2023",
+    "actual_close": "12/1/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 230,
+    "dependency_name": "justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus urna ut tellus nulla ut",
+    "dependency_type": "faucibus orci luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices erat tortor",
+    "expected_close": "9/4/2023",
+    "actual_close": "12/20/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 231,
+    "dependency_name": "turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam",
+    "dependency_type": "molestie lorem quisque ut erat curabitur gravida nisi at nibh in hac habitasse",
+    "expected_close": "6/18/2023",
+    "actual_close": "2/27/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 232,
+    "dependency_name": "elit proin risus praesent lectus vestibulum quam sapien varius ut blandit non",
+    "dependency_type": "at lorem integer tincidunt ante vel ipsum praesent blandit lacinia erat vestibulum sed magna at nunc commodo placerat",
+    "expected_close": "2/17/2023",
+    "actual_close": "11/21/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 233,
+    "dependency_name": "est risus auctor sed tristique in tempus sit amet sem fusce consequat nulla",
+    "dependency_type": "lobortis sapien sapien non mi integer ac neque duis bibendum morbi non quam nec dui luctus rutrum nulla tellus in",
+    "expected_close": "6/27/2023",
+    "actual_close": "4/3/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 234,
+    "dependency_name": "in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet massa id",
+    "dependency_type": "risus dapibus augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero nullam",
+    "expected_close": "1/1/2023",
+    "actual_close": "8/11/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 235,
+    "dependency_name": "molestie lorem quisque ut erat curabitur gravida nisi at nibh in hac habitasse platea",
+    "dependency_type": "pretium nisl ut volutpat sapien arcu sed augue aliquam erat volutpat in congue etiam",
+    "expected_close": "2/16/2023",
+    "actual_close": "2/23/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 236,
+    "dependency_name": "elit ac nulla sed vel enim sit amet nunc viverra dapibus nulla suscipit ligula in lacus curabitur at",
+    "dependency_type": "et eros vestibulum ac est lacinia nisi venenatis tristique fusce congue diam id ornare imperdiet sapien urna pretium nisl ut",
+    "expected_close": "10/15/2022",
+    "actual_close": "12/17/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 237,
+    "dependency_name": "a nibh in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id",
+    "dependency_type": "id mauris vulputate elementum nullam varius nulla facilisi cras non velit nec",
+    "expected_close": "10/19/2022",
+    "actual_close": "7/3/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 238,
+    "dependency_name": "sed tincidunt eu felis fusce posuere felis sed lacus morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc",
+    "dependency_type": "tincidunt ante vel ipsum praesent blandit lacinia erat vestibulum sed magna at nunc",
+    "expected_close": "2/27/2023",
+    "actual_close": "5/12/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 239,
+    "dependency_name": "sagittis dui vel nisl duis ac nibh fusce lacus purus",
+    "dependency_type": "nibh in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id nulla ultrices aliquet maecenas",
+    "expected_close": "6/27/2023",
+    "actual_close": "11/1/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 240,
+    "dependency_name": "in hac habitasse platea dictumst etiam faucibus cursus urna ut",
+    "dependency_type": "in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque ultrices",
+    "expected_close": "12/5/2022",
+    "actual_close": "3/11/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 241,
+    "dependency_name": "lacinia nisi venenatis tristique fusce congue diam id ornare imperdiet sapien urna pretium nisl ut volutpat sapien arcu sed augue",
+    "dependency_type": "duis bibendum felis sed interdum venenatis turpis enim blandit mi in porttitor pede justo eu massa donec dapibus",
+    "expected_close": "5/26/2023",
+    "actual_close": "3/17/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 242,
+    "dependency_name": "sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem",
+    "dependency_type": "nulla suspendisse potenti cras in purus eu magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur",
+    "expected_close": "4/27/2023",
+    "actual_close": "5/15/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 243,
+    "dependency_name": "sit amet justo morbi ut odio cras mi pede malesuada in imperdiet",
+    "dependency_type": "pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus metus",
+    "expected_close": "10/11/2022",
+    "actual_close": "4/20/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 244,
+    "dependency_name": "in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet",
+    "dependency_type": "et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque",
+    "expected_close": "11/9/2022",
+    "actual_close": "10/19/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 245,
+    "dependency_name": "mi integer ac neque duis bibendum morbi non quam nec",
+    "dependency_type": "pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna ac consequat",
+    "expected_close": "3/12/2023",
+    "actual_close": "8/22/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 246,
+    "dependency_name": "eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula",
+    "dependency_type": "at nulla suspendisse potenti cras in purus eu magna vulputate luctus cum sociis natoque",
+    "expected_close": "10/20/2022",
+    "actual_close": "2/6/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 247,
+    "dependency_name": "sed augue aliquam erat volutpat in congue etiam justo etiam pretium iaculis justo in hac habitasse",
+    "dependency_type": "justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin",
+    "expected_close": "3/11/2023",
+    "actual_close": "11/9/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 248,
+    "dependency_name": "et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean",
+    "dependency_type": "laoreet ut rhoncus aliquet pulvinar sed nisl nunc rhoncus dui vel",
+    "expected_close": "7/27/2023",
+    "actual_close": "5/20/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 249,
+    "dependency_name": "fusce posuere felis sed lacus morbi sem mauris laoreet ut",
+    "dependency_type": "aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi ut odio cras",
+    "expected_close": "12/15/2022",
+    "actual_close": "11/21/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 250,
+    "dependency_name": "quam sapien varius ut blandit non interdum in ante vestibulum ante ipsum",
+    "dependency_type": "ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit amet eros suspendisse",
+    "expected_close": "4/23/2023",
+    "actual_close": "10/27/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 251,
+    "dependency_name": "sem sed sagittis nam congue risus semper porta volutpat quam pede lobortis ligula sit amet eleifend pede libero",
+    "dependency_type": "ultrices phasellus id sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus",
+    "expected_close": "7/7/2023",
+    "actual_close": "5/22/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 252,
+    "dependency_name": "morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc rhoncus dui vel",
+    "dependency_type": "sed lacus morbi sem mauris laoreet ut rhoncus aliquet pulvinar",
+    "expected_close": "3/13/2023",
+    "actual_close": "4/8/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 253,
+    "dependency_name": "sed sagittis nam congue risus semper porta volutpat quam pede lobortis ligula sit amet eleifend pede",
+    "dependency_type": "rhoncus sed vestibulum sit amet cursus id turpis integer aliquet massa id lobortis convallis tortor risus dapibus augue vel accumsan",
+    "expected_close": "9/2/2023",
+    "actual_close": "3/5/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 254,
+    "dependency_name": "dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum praesent blandit lacinia erat",
+    "dependency_type": "urna ut tellus nulla ut erat id mauris vulputate elementum nullam varius nulla facilisi cras non velit",
+    "expected_close": "11/15/2022",
+    "actual_close": "10/1/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 255,
+    "dependency_name": "aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt",
+    "dependency_type": "pede justo eu massa donec dapibus duis at velit eu est congue elementum in hac habitasse platea dictumst morbi vestibulum",
+    "expected_close": "11/28/2022",
+    "actual_close": "11/28/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 256,
+    "dependency_name": "id lobortis convallis tortor risus dapibus augue vel accumsan tellus nisi",
+    "dependency_type": "felis donec semper sapien a libero nam dui proin leo odio porttitor id consequat in consequat ut nulla sed accumsan",
+    "expected_close": "12/4/2022",
+    "actual_close": "9/29/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 257,
+    "dependency_name": "nisi eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat morbi a ipsum",
+    "dependency_type": "erat nulla tempus vivamus in felis eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec",
+    "expected_close": "10/2/2022",
+    "actual_close": "5/8/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 258,
+    "dependency_name": "ante ipsum primis in faucibus orci luctus et ultrices posuere",
+    "dependency_type": "massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur",
+    "expected_close": "9/15/2023",
+    "actual_close": "5/24/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 259,
+    "dependency_name": "habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie",
+    "dependency_type": "ligula pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae",
+    "expected_close": "6/30/2023",
+    "actual_close": "12/16/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 260,
+    "dependency_name": "vestibulum sit amet cursus id turpis integer aliquet massa id lobortis convallis tortor risus dapibus augue vel accumsan",
+    "dependency_type": "eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis mattis",
+    "expected_close": "5/12/2023",
+    "actual_close": "12/24/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 261,
+    "dependency_name": "turpis donec posuere metus vitae ipsum aliquam non mauris morbi non lectus aliquam sit amet diam in magna",
+    "dependency_type": "hac habitasse platea dictumst morbi vestibulum velit id pretium iaculis diam erat fermentum justo nec condimentum neque sapien",
+    "expected_close": "9/4/2023",
+    "actual_close": "5/31/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 262,
+    "dependency_name": "primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra",
+    "dependency_type": "aliquam quis turpis eget elit sodales scelerisque mauris sit amet eros suspendisse accumsan",
+    "expected_close": "2/19/2023",
+    "actual_close": "2/17/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 263,
+    "dependency_name": "ipsum aliquam non mauris morbi non lectus aliquam sit amet diam in magna bibendum imperdiet nullam orci pede venenatis",
+    "dependency_type": "nulla ultrices aliquet maecenas leo odio condimentum id luctus nec",
+    "expected_close": "3/4/2023",
+    "actual_close": "8/16/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 264,
+    "dependency_name": "risus dapibus augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero",
+    "dependency_type": "est lacinia nisi venenatis tristique fusce congue diam id ornare imperdiet sapien urna pretium",
+    "expected_close": "6/29/2023",
+    "actual_close": "9/30/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 265,
+    "dependency_name": "ut ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus",
+    "dependency_type": "mauris non ligula pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate",
+    "expected_close": "11/18/2022",
+    "actual_close": "6/9/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 266,
+    "dependency_name": "aliquam sit amet diam in magna bibendum imperdiet nullam orci pede venenatis",
+    "dependency_type": "consequat dui nec nisi volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla",
+    "expected_close": "2/23/2023",
+    "actual_close": "4/27/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 267,
+    "dependency_name": "erat id mauris vulputate elementum nullam varius nulla facilisi cras",
+    "dependency_type": "ultrices phasellus id sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean",
+    "expected_close": "6/27/2023",
+    "actual_close": "1/8/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 268,
+    "dependency_name": "ornare imperdiet sapien urna pretium nisl ut volutpat sapien arcu sed augue aliquam erat",
+    "dependency_type": "sapien arcu sed augue aliquam erat volutpat in congue etiam justo etiam pretium iaculis justo",
+    "expected_close": "6/10/2023",
+    "actual_close": "8/7/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 269,
+    "dependency_name": "primis in faucibus orci luctus et ultrices posuere cubilia curae duis faucibus accumsan odio curabitur",
+    "dependency_type": "ut volutpat sapien arcu sed augue aliquam erat volutpat in congue etiam justo etiam pretium iaculis",
+    "expected_close": "8/18/2023",
+    "actual_close": "11/27/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 270,
+    "dependency_name": "pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero non",
+    "dependency_type": "parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum",
+    "expected_close": "1/19/2023",
+    "actual_close": "3/12/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 271,
+    "dependency_name": "rutrum nulla nunc purus phasellus in felis donec semper sapien",
+    "dependency_type": "aliquam lacus morbi quis tortor id nulla ultrices aliquet maecenas leo odio condimentum id luctus nec",
+    "expected_close": "8/28/2023",
+    "actual_close": "10/31/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 272,
+    "dependency_name": "volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris enim leo",
+    "dependency_type": "eros viverra eget congue eget semper rutrum nulla nunc purus phasellus in felis donec semper sapien a libero",
+    "expected_close": "10/11/2022",
+    "actual_close": "10/7/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 273,
+    "dependency_name": "potenti cras in purus eu magna vulputate luctus cum sociis natoque penatibus et",
+    "dependency_type": "mauris eget massa tempor convallis nulla neque libero convallis eget eleifend luctus ultricies eu nibh",
+    "expected_close": "6/13/2023",
+    "actual_close": "9/5/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 274,
+    "dependency_name": "cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec euismod scelerisque quam turpis",
+    "dependency_type": "posuere nonummy integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante ipsum primis in",
+    "expected_close": "4/16/2023",
+    "actual_close": "11/5/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 275,
+    "dependency_name": "amet sem fusce consequat nulla nisl nunc nisl duis bibendum felis",
+    "dependency_type": "suscipit ligula in lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus sit amet nulla quisque arcu",
+    "expected_close": "1/4/2023",
+    "actual_close": "6/22/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 276,
+    "dependency_name": "eros elementum pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget semper",
+    "dependency_type": "vitae nisi nam ultrices libero non mattis pulvinar nulla pede ullamcorper augue a suscipit nulla elit",
+    "expected_close": "6/17/2023",
+    "actual_close": "6/12/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 277,
+    "dependency_name": "etiam faucibus cursus urna ut tellus nulla ut erat id mauris vulputate elementum nullam varius nulla facilisi cras non velit",
+    "dependency_type": "ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non ligula",
+    "expected_close": "11/21/2022",
+    "actual_close": "5/29/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 278,
+    "dependency_name": "sit amet sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia",
+    "dependency_type": "lectus aliquam sit amet diam in magna bibendum imperdiet nullam orci pede venenatis non sodales sed",
+    "expected_close": "2/12/2023",
+    "actual_close": "1/24/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 279,
+    "dependency_name": "morbi non lectus aliquam sit amet diam in magna bibendum imperdiet nullam orci pede venenatis non sodales sed",
+    "dependency_type": "volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris",
+    "expected_close": "10/9/2022",
+    "actual_close": "11/24/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 280,
+    "dependency_name": "blandit mi in porttitor pede justo eu massa donec dapibus duis at",
+    "dependency_type": "odio cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet",
+    "expected_close": "5/16/2023",
+    "actual_close": "5/2/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 281,
+    "dependency_name": "sed tincidunt eu felis fusce posuere felis sed lacus morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed",
+    "dependency_type": "commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris",
+    "expected_close": "8/7/2023",
+    "actual_close": "5/24/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 282,
+    "dependency_name": "neque duis bibendum morbi non quam nec dui luctus rutrum nulla tellus in sagittis dui",
+    "dependency_type": "ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae",
+    "expected_close": "6/30/2023",
+    "actual_close": "7/22/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 283,
+    "dependency_name": "libero quis orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras",
+    "dependency_type": "a odio in hac habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem",
+    "expected_close": "3/27/2023",
+    "actual_close": "6/2/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 284,
+    "dependency_name": "magna bibendum imperdiet nullam orci pede venenatis non sodales sed tincidunt eu felis fusce posuere",
+    "dependency_type": "interdum mauris non ligula pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie",
+    "expected_close": "10/18/2022",
+    "actual_close": "10/1/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 285,
+    "dependency_name": "sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia nisi",
+    "dependency_type": "vestibulum proin eu mi nulla ac enim in tempor turpis nec euismod scelerisque quam",
+    "expected_close": "12/30/2022",
+    "actual_close": "1/2/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 286,
+    "dependency_name": "nulla nisl nunc nisl duis bibendum felis sed interdum venenatis turpis enim",
+    "dependency_type": "sed interdum venenatis turpis enim blandit mi in porttitor pede",
+    "expected_close": "7/3/2023",
+    "actual_close": "11/25/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 287,
+    "dependency_name": "ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae duis faucibus accumsan odio",
+    "dependency_type": "metus aenean fermentum donec ut mauris eget massa tempor convallis",
+    "expected_close": "6/23/2023",
+    "actual_close": "8/10/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 288,
+    "dependency_name": "pede libero quis orci nullam molestie nibh in lectus pellentesque at nulla suspendisse",
+    "dependency_type": "justo in hac habitasse platea dictumst etiam faucibus cursus urna ut tellus nulla ut erat id",
+    "expected_close": "10/5/2022",
+    "actual_close": "12/2/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 289,
+    "dependency_name": "justo sit amet sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et",
+    "dependency_type": "ac est lacinia nisi venenatis tristique fusce congue diam id ornare imperdiet",
+    "expected_close": "3/6/2023",
+    "actual_close": "12/20/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 290,
+    "dependency_name": "ornare consequat lectus in est risus auctor sed tristique in tempus sit amet sem fusce consequat",
+    "dependency_type": "nibh quisque id justo sit amet sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus",
+    "expected_close": "8/4/2023",
+    "actual_close": "11/10/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 291,
+    "dependency_name": "a ipsum integer a nibh in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id nulla ultrices aliquet",
+    "dependency_type": "tellus semper interdum mauris ullamcorper purus sit amet nulla quisque arcu libero rutrum ac lobortis vel dapibus",
+    "expected_close": "11/29/2022",
+    "actual_close": "10/24/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 292,
+    "dependency_name": "ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit donec diam neque",
+    "dependency_type": "integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum",
+    "expected_close": "6/15/2023",
+    "actual_close": "8/8/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 293,
+    "dependency_name": "massa donec dapibus duis at velit eu est congue elementum in hac habitasse platea dictumst morbi vestibulum velit id",
+    "dependency_type": "ipsum dolor sit amet consectetuer adipiscing elit proin risus praesent lectus vestibulum",
+    "expected_close": "6/6/2023",
+    "actual_close": "4/22/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 294,
+    "dependency_name": "nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et",
+    "dependency_type": "vehicula consequat morbi a ipsum integer a nibh in quis justo maecenas rhoncus aliquam lacus morbi",
+    "expected_close": "11/28/2022",
+    "actual_close": "10/24/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 295,
+    "dependency_name": "convallis tortor risus dapibus augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet",
+    "dependency_type": "porttitor lacus at turpis donec posuere metus vitae ipsum aliquam non mauris morbi non",
+    "expected_close": "12/14/2022",
+    "actual_close": "12/14/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 296,
+    "dependency_name": "non ligula pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus metus",
+    "dependency_type": "volutpat dui maecenas tristique est et tempus semper est quam pharetra magna ac consequat metus sapien",
+    "expected_close": "2/7/2023",
+    "actual_close": "1/15/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 297,
+    "dependency_name": "nulla sed accumsan felis ut at dolor quis odio consequat varius integer ac leo pellentesque ultrices mattis odio",
+    "dependency_type": "nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit amet eros suspendisse",
+    "expected_close": "5/25/2023",
+    "actual_close": "8/23/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 298,
+    "dependency_name": "lorem ipsum dolor sit amet consectetuer adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit",
+    "dependency_type": "etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus urna ut",
+    "expected_close": "9/29/2023",
+    "actual_close": "4/23/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 299,
+    "dependency_name": "volutpat erat quisque erat eros viverra eget congue eget semper rutrum",
+    "dependency_type": "vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae",
+    "expected_close": "1/11/2023",
+    "actual_close": "5/7/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 300,
+    "dependency_name": "id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et",
+    "dependency_type": "praesent blandit lacinia erat vestibulum sed magna at nunc commodo placerat praesent blandit nam nulla integer",
+    "expected_close": "8/3/2023",
+    "actual_close": "12/14/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 301,
+    "dependency_name": "eros vestibulum ac est lacinia nisi venenatis tristique fusce congue diam id ornare imperdiet sapien urna pretium",
+    "dependency_type": "erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer ac neque duis bibendum morbi",
+    "expected_close": "12/30/2022",
+    "actual_close": "5/19/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 302,
+    "dependency_name": "justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing",
+    "dependency_type": "dapibus dolor vel est donec odio justo sollicitudin ut suscipit",
+    "expected_close": "4/29/2023",
+    "actual_close": "6/6/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 303,
+    "dependency_name": "porttitor id consequat in consequat ut nulla sed accumsan felis ut at dolor quis odio consequat varius integer ac",
+    "dependency_type": "in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id nulla ultrices aliquet maecenas leo odio condimentum id",
+    "expected_close": "3/8/2023",
+    "actual_close": "9/24/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 304,
+    "dependency_name": "eget elit sodales scelerisque mauris sit amet eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas",
+    "dependency_type": "mollis molestie lorem quisque ut erat curabitur gravida nisi at nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin",
+    "expected_close": "11/11/2022",
+    "actual_close": "1/17/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 305,
+    "dependency_name": "condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam",
+    "dependency_type": "consequat lectus in est risus auctor sed tristique in tempus sit amet sem fusce consequat nulla nisl nunc nisl",
+    "expected_close": "8/7/2023",
+    "actual_close": "4/28/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 306,
+    "dependency_name": "sed ante vivamus tortor duis mattis egestas metus aenean fermentum donec ut mauris eget massa",
+    "dependency_type": "eget orci vehicula condimentum curabitur in libero ut massa volutpat convallis morbi odio odio",
+    "expected_close": "11/5/2022",
+    "actual_close": "9/11/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 307,
+    "dependency_name": "justo aliquam quis turpis eget elit sodales scelerisque mauris sit amet eros suspendisse accumsan tortor quis turpis sed",
+    "dependency_type": "ullamcorper purus sit amet nulla quisque arcu libero rutrum ac lobortis vel dapibus at diam nam tristique tortor eu",
+    "expected_close": "6/7/2023",
+    "actual_close": "8/21/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 308,
+    "dependency_name": "vitae nisl aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula condimentum curabitur in libero ut",
+    "dependency_type": "leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet massa id lobortis convallis tortor risus dapibus augue vel",
+    "expected_close": "1/12/2023",
+    "actual_close": "5/3/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 309,
+    "dependency_name": "fusce lacus purus aliquet at feugiat non pretium quis lectus suspendisse potenti in eleifend quam a odio in hac",
+    "dependency_type": "erat fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam quis",
+    "expected_close": "1/14/2023",
+    "actual_close": "3/25/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 310,
+    "dependency_name": "non lectus aliquam sit amet diam in magna bibendum imperdiet",
+    "dependency_type": "non quam nec dui luctus rutrum nulla tellus in sagittis dui vel nisl duis ac",
+    "expected_close": "12/3/2022",
+    "actual_close": "10/28/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 311,
+    "dependency_name": "lorem ipsum dolor sit amet consectetuer adipiscing elit proin risus praesent lectus vestibulum quam sapien",
+    "dependency_type": "dui nec nisi volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris",
+    "expected_close": "7/18/2023",
+    "actual_close": "5/21/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 312,
+    "dependency_name": "posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi",
+    "dependency_type": "duis consequat dui nec nisi volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla",
+    "expected_close": "7/2/2023",
+    "actual_close": "2/12/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 313,
+    "dependency_name": "ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est",
+    "dependency_type": "in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec",
+    "expected_close": "9/17/2023",
+    "actual_close": "2/10/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 314,
+    "dependency_name": "turpis integer aliquet massa id lobortis convallis tortor risus dapibus augue vel accumsan tellus",
+    "dependency_type": "morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc",
+    "expected_close": "8/13/2023",
+    "actual_close": "1/1/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 315,
+    "dependency_name": "at velit vivamus vel nulla eget eros elementum pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget",
+    "dependency_type": "at feugiat non pretium quis lectus suspendisse potenti in eleifend quam a odio in hac habitasse platea",
+    "expected_close": "3/1/2023",
+    "actual_close": "2/13/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 316,
+    "dependency_name": "accumsan tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet",
+    "dependency_type": "nisl ut volutpat sapien arcu sed augue aliquam erat volutpat",
+    "expected_close": "9/29/2023",
+    "actual_close": "12/8/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 317,
+    "dependency_name": "orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in purus eu",
+    "dependency_type": "dapibus augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula",
+    "expected_close": "10/22/2022",
+    "actual_close": "12/16/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 318,
+    "dependency_name": "pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus in felis eu sapien cursus vestibulum",
+    "dependency_type": "tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin",
+    "expected_close": "3/17/2023",
+    "actual_close": "5/30/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 319,
+    "dependency_name": "purus aliquet at feugiat non pretium quis lectus suspendisse potenti in",
+    "dependency_type": "sit amet erat nulla tempus vivamus in felis eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor",
+    "expected_close": "9/7/2023",
+    "actual_close": "12/8/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 320,
+    "dependency_name": "aliquam quis turpis eget elit sodales scelerisque mauris sit amet",
+    "dependency_type": "a libero nam dui proin leo odio porttitor id consequat in consequat ut nulla sed accumsan felis ut at dolor",
+    "expected_close": "10/7/2022",
+    "actual_close": "1/24/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 321,
+    "dependency_name": "sem fusce consequat nulla nisl nunc nisl duis bibendum felis sed interdum venenatis turpis enim blandit mi in",
+    "dependency_type": "varius nulla facilisi cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla eget eros",
+    "expected_close": "11/23/2022",
+    "actual_close": "3/24/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 322,
+    "dependency_name": "nisi at nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer",
+    "dependency_type": "eget elit sodales scelerisque mauris sit amet eros suspendisse accumsan",
+    "expected_close": "11/19/2022",
+    "actual_close": "2/4/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 323,
+    "dependency_name": "platea dictumst morbi vestibulum velit id pretium iaculis diam erat fermentum justo nec condimentum neque sapien",
+    "dependency_type": "vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est risus auctor sed tristique in tempus",
+    "expected_close": "10/23/2022",
+    "actual_close": "11/3/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 324,
+    "dependency_name": "nibh fusce lacus purus aliquet at feugiat non pretium quis lectus suspendisse potenti",
+    "dependency_type": "tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat morbi",
+    "expected_close": "10/25/2022",
+    "actual_close": "6/1/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 325,
+    "dependency_name": "erat volutpat in congue etiam justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus urna",
+    "dependency_type": "rhoncus sed vestibulum sit amet cursus id turpis integer aliquet massa id lobortis convallis tortor risus",
+    "expected_close": "12/26/2022",
+    "actual_close": "2/6/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 326,
+    "dependency_name": "luctus nec molestie sed justo pellentesque viverra pede ac diam",
+    "dependency_type": "et eros vestibulum ac est lacinia nisi venenatis tristique fusce congue diam id ornare imperdiet",
+    "expected_close": "4/7/2023",
+    "actual_close": "10/19/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 327,
+    "dependency_name": "est phasellus sit amet erat nulla tempus vivamus in felis eu sapien cursus",
+    "dependency_type": "velit id pretium iaculis diam erat fermentum justo nec condimentum neque sapien placerat",
+    "expected_close": "11/8/2022",
+    "actual_close": "11/22/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 328,
+    "dependency_name": "malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem",
+    "dependency_type": "ut tellus nulla ut erat id mauris vulputate elementum nullam varius",
+    "expected_close": "10/23/2022",
+    "actual_close": "10/18/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 329,
+    "dependency_name": "et ultrices posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui nec nisi",
+    "dependency_type": "lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus",
+    "expected_close": "6/19/2023",
+    "actual_close": "11/26/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 330,
+    "dependency_name": "nunc proin at turpis a pede posuere nonummy integer non velit donec diam neque vestibulum eget vulputate ut ultrices",
+    "dependency_type": "non ligula pellentesque ultrices phasellus id sapien in sapien iaculis",
+    "expected_close": "5/16/2023",
+    "actual_close": "2/20/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 331,
+    "dependency_name": "turpis sed ante vivamus tortor duis mattis egestas metus aenean fermentum donec ut mauris eget massa",
+    "dependency_type": "nisl nunc rhoncus dui vel sem sed sagittis nam congue risus semper porta volutpat quam pede lobortis",
+    "expected_close": "6/28/2023",
+    "actual_close": "12/27/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 332,
+    "dependency_name": "neque sapien placerat ante nulla justo aliquam quis turpis eget",
+    "dependency_type": "nunc nisl duis bibendum felis sed interdum venenatis turpis enim",
+    "expected_close": "7/24/2023",
+    "actual_close": "6/15/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 333,
+    "dependency_name": "ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum",
+    "dependency_type": "rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus",
+    "expected_close": "2/19/2023",
+    "actual_close": "5/3/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 334,
+    "dependency_name": "eu felis fusce posuere felis sed lacus morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc",
+    "dependency_type": "tempus vivamus in felis eu sapien cursus vestibulum proin eu mi nulla ac",
+    "expected_close": "8/20/2023",
+    "actual_close": "10/1/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 335,
+    "dependency_name": "est risus auctor sed tristique in tempus sit amet sem fusce consequat nulla nisl nunc",
+    "dependency_type": "integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante ipsum primis",
+    "expected_close": "12/13/2022",
+    "actual_close": "12/3/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 336,
+    "dependency_name": "porttitor pede justo eu massa donec dapibus duis at velit eu est",
+    "dependency_type": "habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis",
+    "expected_close": "6/15/2023",
+    "actual_close": "3/9/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 337,
+    "dependency_name": "a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique fusce congue diam id",
+    "dependency_type": "sit amet consectetuer adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit non interdum",
+    "expected_close": "1/9/2023",
+    "actual_close": "12/12/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 338,
+    "dependency_name": "rhoncus aliquam lacus morbi quis tortor id nulla ultrices aliquet maecenas leo odio condimentum id luctus",
+    "dependency_type": "mauris viverra diam vitae quam suspendisse potenti nullam porttitor lacus",
+    "expected_close": "1/17/2023",
+    "actual_close": "8/14/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 339,
+    "dependency_name": "odio in hac habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque",
+    "dependency_type": "ante vivamus tortor duis mattis egestas metus aenean fermentum donec ut mauris eget massa",
+    "expected_close": "3/22/2023",
+    "actual_close": "5/22/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 340,
+    "dependency_name": "convallis eget eleifend luctus ultricies eu nibh quisque id justo sit amet",
+    "dependency_type": "eget semper rutrum nulla nunc purus phasellus in felis donec",
+    "expected_close": "4/27/2023",
+    "actual_close": "4/30/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 341,
+    "dependency_name": "id mauris vulputate elementum nullam varius nulla facilisi cras non velit nec nisi",
+    "dependency_type": "lectus suspendisse potenti in eleifend quam a odio in hac habitasse platea dictumst maecenas ut",
+    "expected_close": "3/6/2023",
+    "actual_close": "6/24/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 342,
+    "dependency_name": "vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula condimentum curabitur in",
+    "dependency_type": "magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis",
+    "expected_close": "5/20/2023",
+    "actual_close": "2/27/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 343,
+    "dependency_name": "faucibus orci luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet",
+    "dependency_type": "ligula in lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus",
+    "expected_close": "11/15/2022",
+    "actual_close": "2/11/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 344,
+    "dependency_name": "sit amet diam in magna bibendum imperdiet nullam orci pede",
+    "dependency_type": "maecenas tristique est et tempus semper est quam pharetra magna",
+    "expected_close": "10/6/2022",
+    "actual_close": "8/22/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 345,
+    "dependency_name": "pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna ac",
+    "dependency_type": "etiam faucibus cursus urna ut tellus nulla ut erat id mauris vulputate elementum nullam varius nulla",
+    "expected_close": "2/8/2023",
+    "actual_close": "5/16/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 346,
+    "dependency_name": "elementum nullam varius nulla facilisi cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus",
+    "dependency_type": "in faucibus orci luctus et ultrices posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat",
+    "expected_close": "1/27/2023",
+    "actual_close": "8/1/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 347,
+    "dependency_name": "quam suspendisse potenti nullam porttitor lacus at turpis donec posuere metus vitae ipsum aliquam non mauris",
+    "dependency_type": "eu mi nulla ac enim in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula",
+    "expected_close": "10/1/2022",
+    "actual_close": "8/22/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 348,
+    "dependency_name": "mauris viverra diam vitae quam suspendisse potenti nullam porttitor lacus at turpis donec posuere",
+    "dependency_type": "faucibus accumsan odio curabitur convallis duis consequat dui nec nisi",
+    "expected_close": "7/10/2023",
+    "actual_close": "10/6/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 349,
+    "dependency_name": "ut suscipit a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique fusce congue diam",
+    "dependency_type": "habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla",
+    "expected_close": "8/1/2023",
+    "actual_close": "11/6/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 350,
+    "dependency_name": "pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus in",
+    "dependency_type": "enim blandit mi in porttitor pede justo eu massa donec dapibus duis",
+    "expected_close": "1/17/2023",
+    "actual_close": "2/10/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 351,
+    "dependency_name": "cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui",
+    "dependency_type": "molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat",
+    "expected_close": "6/1/2023",
+    "actual_close": "3/22/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 352,
+    "dependency_name": "in magna bibendum imperdiet nullam orci pede venenatis non sodales sed tincidunt eu",
+    "dependency_type": "sed interdum venenatis turpis enim blandit mi in porttitor pede justo eu massa donec",
+    "expected_close": "3/31/2023",
+    "actual_close": "9/25/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 353,
+    "dependency_name": "eget eros elementum pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus",
+    "dependency_type": "ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer ac neque duis",
+    "expected_close": "2/20/2023",
+    "actual_close": "8/10/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 354,
+    "dependency_name": "justo morbi ut odio cras mi pede malesuada in imperdiet",
+    "dependency_type": "ut blandit non interdum in ante vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae",
+    "expected_close": "10/12/2022",
+    "actual_close": "5/13/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 355,
+    "dependency_name": "nonummy integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum",
+    "dependency_type": "vitae consectetuer eget rutrum at lorem integer tincidunt ante vel",
+    "expected_close": "11/23/2022",
+    "actual_close": "1/17/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 356,
+    "dependency_name": "sapien urna pretium nisl ut volutpat sapien arcu sed augue aliquam erat volutpat in congue etiam justo etiam pretium",
+    "dependency_type": "tortor risus dapibus augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet",
+    "expected_close": "1/15/2023",
+    "actual_close": "11/23/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 357,
+    "dependency_name": "velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla eget eros elementum pellentesque quisque",
+    "dependency_type": "sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat morbi a ipsum integer a",
+    "expected_close": "4/5/2023",
+    "actual_close": "1/26/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 358,
+    "dependency_name": "felis eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec euismod scelerisque quam turpis adipiscing",
+    "dependency_type": "luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida",
+    "expected_close": "4/1/2023",
+    "actual_close": "6/5/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 359,
+    "dependency_name": "auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi ut",
+    "dependency_type": "porta volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie",
+    "expected_close": "7/1/2023",
+    "actual_close": "2/19/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 360,
+    "dependency_name": "felis eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec",
+    "dependency_type": "et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor",
+    "expected_close": "3/10/2023",
+    "actual_close": "9/22/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 361,
+    "dependency_name": "ut odio cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices",
+    "dependency_type": "vestibulum quam sapien varius ut blandit non interdum in ante vestibulum ante ipsum primis in faucibus orci luctus et ultrices",
+    "expected_close": "1/22/2023",
+    "actual_close": "3/7/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 362,
+    "dependency_name": "ut nunc vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae",
+    "dependency_type": "quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet massa id lobortis convallis",
+    "expected_close": "4/11/2023",
+    "actual_close": "1/20/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 363,
+    "dependency_name": "elementum ligula vehicula consequat morbi a ipsum integer a nibh in quis justo maecenas rhoncus aliquam",
+    "dependency_type": "purus eu magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient",
+    "expected_close": "12/14/2022",
+    "actual_close": "1/9/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 364,
+    "dependency_name": "est risus auctor sed tristique in tempus sit amet sem fusce consequat",
+    "dependency_type": "etiam vel augue vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit",
+    "expected_close": "3/31/2023",
+    "actual_close": "7/27/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 365,
+    "dependency_name": "suscipit ligula in lacus curabitur at ipsum ac tellus semper interdum",
+    "dependency_type": "lacus morbi quis tortor id nulla ultrices aliquet maecenas leo odio condimentum id luctus",
+    "expected_close": "7/16/2023",
+    "actual_close": "4/12/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 366,
+    "dependency_name": "congue etiam justo etiam pretium iaculis justo in hac habitasse platea",
+    "dependency_type": "luctus rutrum nulla tellus in sagittis dui vel nisl duis ac",
+    "expected_close": "3/23/2023",
+    "actual_close": "12/24/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 367,
+    "dependency_name": "blandit nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem id ligula",
+    "dependency_type": "erat quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus",
+    "expected_close": "1/1/2023",
+    "actual_close": "10/17/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 368,
+    "dependency_name": "consequat varius integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero non mattis pulvinar nulla",
+    "dependency_type": "neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit amet eros suspendisse accumsan",
+    "expected_close": "6/28/2023",
+    "actual_close": "5/3/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 369,
+    "dependency_name": "mauris non ligula pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus metus",
+    "dependency_type": "tempus vivamus in felis eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec euismod scelerisque",
+    "expected_close": "4/8/2023",
+    "actual_close": "3/26/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 370,
+    "dependency_name": "eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat morbi a",
+    "dependency_type": "enim blandit mi in porttitor pede justo eu massa donec dapibus duis at velit eu est",
+    "expected_close": "7/27/2023",
+    "actual_close": "8/5/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 371,
+    "dependency_name": "tempus vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est",
+    "dependency_type": "risus praesent lectus vestibulum quam sapien varius ut blandit non interdum in ante",
+    "expected_close": "8/12/2023",
+    "actual_close": "3/11/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 372,
+    "dependency_name": "aliquam sit amet diam in magna bibendum imperdiet nullam orci pede venenatis non sodales sed",
+    "dependency_type": "varius nulla facilisi cras non velit nec nisi vulputate nonummy",
+    "expected_close": "5/6/2023",
+    "actual_close": "11/3/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 373,
+    "dependency_name": "praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi ut odio",
+    "dependency_type": "fusce consequat nulla nisl nunc nisl duis bibendum felis sed interdum venenatis turpis enim blandit mi in porttitor pede",
+    "expected_close": "1/21/2023",
+    "actual_close": "4/2/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 374,
+    "dependency_name": "sapien quis libero nullam sit amet turpis elementum ligula vehicula",
+    "dependency_type": "vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien",
+    "expected_close": "6/30/2023",
+    "actual_close": "7/9/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 375,
+    "dependency_name": "imperdiet sapien urna pretium nisl ut volutpat sapien arcu sed augue aliquam",
+    "dependency_type": "lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus sit amet nulla quisque arcu libero rutrum",
+    "expected_close": "11/12/2022",
+    "actual_close": "5/6/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 376,
+    "dependency_name": "nonummy maecenas tincidunt lacus at velit vivamus vel nulla eget eros elementum pellentesque quisque porta volutpat",
+    "dependency_type": "tincidunt eget tempus vel pede morbi porttitor lorem id ligula",
+    "expected_close": "12/14/2022",
+    "actual_close": "2/1/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 377,
+    "dependency_name": "dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat",
+    "dependency_type": "suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas",
+    "expected_close": "12/4/2022",
+    "actual_close": "7/17/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 378,
+    "dependency_name": "vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id",
+    "dependency_type": "volutpat erat quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus phasellus in",
+    "expected_close": "1/31/2023",
+    "actual_close": "6/27/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 379,
+    "dependency_name": "ornare consequat lectus in est risus auctor sed tristique in tempus sit amet sem fusce",
+    "dependency_type": "dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia",
+    "expected_close": "7/30/2023",
+    "actual_close": "6/1/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 380,
+    "dependency_name": "pede posuere nonummy integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum",
+    "dependency_type": "orci luctus et ultrices posuere cubilia curae duis faucibus accumsan odio",
+    "expected_close": "9/11/2023",
+    "actual_close": "4/7/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 381,
+    "dependency_name": "cubilia curae donec pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi",
+    "dependency_type": "erat vestibulum sed magna at nunc commodo placerat praesent blandit",
+    "expected_close": "7/23/2023",
+    "actual_close": "6/20/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 382,
+    "dependency_name": "aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer ac neque duis bibendum",
+    "dependency_type": "nunc viverra dapibus nulla suscipit ligula in lacus curabitur at ipsum ac tellus semper",
+    "expected_close": "12/9/2022",
+    "actual_close": "10/22/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 383,
+    "dependency_name": "ut erat curabitur gravida nisi at nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget",
+    "dependency_type": "sed ante vivamus tortor duis mattis egestas metus aenean fermentum donec ut mauris",
+    "expected_close": "2/19/2023",
+    "actual_close": "12/16/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 384,
+    "dependency_name": "sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum",
+    "dependency_type": "felis donec semper sapien a libero nam dui proin leo odio porttitor id consequat in consequat ut nulla sed accumsan",
+    "expected_close": "9/19/2023",
+    "actual_close": "11/25/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 385,
+    "dependency_name": "vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum",
+    "dependency_type": "vivamus in felis eu sapien cursus vestibulum proin eu mi nulla ac enim",
+    "expected_close": "7/28/2023",
+    "actual_close": "9/18/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 386,
+    "dependency_name": "orci pede venenatis non sodales sed tincidunt eu felis fusce posuere felis sed lacus morbi sem mauris",
+    "dependency_type": "ante vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere",
+    "expected_close": "7/28/2023",
+    "actual_close": "5/31/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 387,
+    "dependency_name": "pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem id ligula suspendisse",
+    "dependency_type": "sodales sed tincidunt eu felis fusce posuere felis sed lacus",
+    "expected_close": "12/6/2022",
+    "actual_close": "4/12/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 388,
+    "dependency_name": "ultrices mattis odio donec vitae nisi nam ultrices libero non mattis pulvinar nulla",
+    "dependency_type": "sed tincidunt eu felis fusce posuere felis sed lacus morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed",
+    "expected_close": "1/16/2023",
+    "actual_close": "12/9/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 389,
+    "dependency_name": "ornare consequat lectus in est risus auctor sed tristique in",
+    "dependency_type": "pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero non mattis pulvinar",
+    "expected_close": "6/5/2023",
+    "actual_close": "11/12/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 390,
+    "dependency_name": "sagittis dui vel nisl duis ac nibh fusce lacus purus aliquet at feugiat non pretium quis lectus suspendisse",
+    "dependency_type": "enim sit amet nunc viverra dapibus nulla suscipit ligula in lacus",
+    "expected_close": "2/16/2023",
+    "actual_close": "2/10/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 391,
+    "dependency_name": "mauris viverra diam vitae quam suspendisse potenti nullam porttitor lacus at turpis donec posuere metus vitae ipsum aliquam non mauris",
+    "dependency_type": "neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet",
+    "expected_close": "12/23/2022",
+    "actual_close": "5/6/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 392,
+    "dependency_name": "etiam justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus urna ut",
+    "dependency_type": "enim sit amet nunc viverra dapibus nulla suscipit ligula in lacus curabitur at",
+    "expected_close": "4/7/2023",
+    "actual_close": "12/19/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 393,
+    "dependency_name": "id ornare imperdiet sapien urna pretium nisl ut volutpat sapien arcu sed augue aliquam erat volutpat in congue etiam",
+    "dependency_type": "pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus in felis eu sapien cursus vestibulum proin eu mi nulla",
+    "expected_close": "12/17/2022",
+    "actual_close": "1/27/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 394,
+    "dependency_name": "fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet massa",
+    "dependency_type": "tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis",
+    "expected_close": "5/27/2023",
+    "actual_close": "4/24/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 395,
+    "dependency_name": "sem sed sagittis nam congue risus semper porta volutpat quam pede lobortis ligula sit amet eleifend pede",
+    "dependency_type": "libero nullam sit amet turpis elementum ligula vehicula consequat morbi a",
+    "expected_close": "12/27/2022",
+    "actual_close": "1/17/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 396,
+    "dependency_name": "varius ut blandit non interdum in ante vestibulum ante ipsum primis in faucibus orci luctus et ultrices",
+    "dependency_type": "diam cras pellentesque volutpat dui maecenas tristique est et tempus semper",
+    "expected_close": "10/13/2022",
+    "actual_close": "6/12/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 397,
+    "dependency_name": "phasellus in felis donec semper sapien a libero nam dui proin leo odio porttitor id consequat",
+    "dependency_type": "lacus at turpis donec posuere metus vitae ipsum aliquam non mauris morbi non",
+    "expected_close": "4/10/2023",
+    "actual_close": "4/5/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 398,
+    "dependency_name": "arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula",
+    "dependency_type": "pede libero quis orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in",
+    "expected_close": "10/21/2022",
+    "actual_close": "7/8/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 399,
+    "dependency_name": "platea dictumst morbi vestibulum velit id pretium iaculis diam erat fermentum justo nec condimentum neque",
+    "dependency_type": "magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien",
+    "expected_close": "1/10/2023",
+    "actual_close": "1/31/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 400,
+    "dependency_name": "orci pede venenatis non sodales sed tincidunt eu felis fusce posuere felis sed lacus morbi sem mauris",
+    "dependency_type": "nam dui proin leo odio porttitor id consequat in consequat ut nulla",
+    "expected_close": "5/23/2023",
+    "actual_close": "11/9/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 401,
+    "dependency_name": "non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante ipsum primis",
+    "dependency_type": "aliquam sit amet diam in magna bibendum imperdiet nullam orci",
+    "expected_close": "9/3/2023",
+    "actual_close": "8/28/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 402,
+    "dependency_name": "etiam justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus urna",
+    "dependency_type": "arcu sed augue aliquam erat volutpat in congue etiam justo etiam pretium iaculis justo in hac habitasse",
+    "expected_close": "4/28/2023",
+    "actual_close": "7/14/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 403,
+    "dependency_name": "mauris eget massa tempor convallis nulla neque libero convallis eget eleifend luctus ultricies eu nibh quisque id",
+    "dependency_type": "ut massa volutpat convallis morbi odio odio elementum eu interdum eu tincidunt in leo maecenas pulvinar lobortis est phasellus",
+    "expected_close": "11/10/2022",
+    "actual_close": "8/3/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 404,
+    "dependency_name": "vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est risus",
+    "dependency_type": "vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor",
+    "expected_close": "9/12/2023",
+    "actual_close": "10/26/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 405,
+    "dependency_name": "sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla",
+    "dependency_type": "felis donec semper sapien a libero nam dui proin leo odio porttitor id consequat in",
+    "expected_close": "2/27/2023",
+    "actual_close": "11/26/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 406,
+    "dependency_name": "felis ut at dolor quis odio consequat varius integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam",
+    "dependency_type": "nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi",
+    "expected_close": "1/29/2023",
+    "actual_close": "2/5/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 407,
+    "dependency_name": "augue aliquam erat volutpat in congue etiam justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam",
+    "dependency_type": "sed accumsan felis ut at dolor quis odio consequat varius integer ac leo pellentesque ultrices mattis odio donec",
+    "expected_close": "11/19/2022",
+    "actual_close": "12/24/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 408,
+    "dependency_name": "sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque ultrices phasellus",
+    "dependency_type": "rutrum ac lobortis vel dapibus at diam nam tristique tortor",
+    "expected_close": "11/6/2022",
+    "actual_close": "3/3/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 409,
+    "dependency_name": "velit vivamus vel nulla eget eros elementum pellentesque quisque porta volutpat erat quisque",
+    "dependency_type": "augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum",
+    "expected_close": "6/4/2023",
+    "actual_close": "8/3/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 410,
+    "dependency_name": "et ultrices posuere cubilia curae mauris viverra diam vitae quam suspendisse potenti nullam porttitor",
+    "dependency_type": "ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non ligula",
+    "expected_close": "7/3/2023",
+    "actual_close": "3/19/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 411,
+    "dependency_name": "odio elementum eu interdum eu tincidunt in leo maecenas pulvinar lobortis",
+    "dependency_type": "ante vel ipsum praesent blandit lacinia erat vestibulum sed magna at",
+    "expected_close": "11/20/2022",
+    "actual_close": "12/16/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 412,
+    "dependency_name": "blandit nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor",
+    "dependency_type": "donec semper sapien a libero nam dui proin leo odio porttitor id",
+    "expected_close": "12/17/2022",
+    "actual_close": "9/16/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 413,
+    "dependency_name": "scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem",
+    "dependency_type": "massa id lobortis convallis tortor risus dapibus augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero",
+    "expected_close": "6/11/2023",
+    "actual_close": "7/30/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 414,
+    "dependency_name": "porttitor lorem id ligula suspendisse ornare consequat lectus in est risus auctor sed",
+    "dependency_type": "risus semper porta volutpat quam pede lobortis ligula sit amet",
+    "expected_close": "9/12/2023",
+    "actual_close": "10/15/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 415,
+    "dependency_name": "primis in faucibus orci luctus et ultrices posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui nec",
+    "dependency_type": "odio justo sollicitudin ut suscipit a feugiat et eros vestibulum",
+    "expected_close": "11/12/2022",
+    "actual_close": "10/15/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 416,
+    "dependency_name": "vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla eget eros elementum pellentesque quisque porta volutpat erat quisque",
+    "dependency_type": "interdum mauris non ligula pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus metus",
+    "expected_close": "3/1/2023",
+    "actual_close": "3/19/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 417,
+    "dependency_name": "ut dolor morbi vel lectus in quam fringilla rhoncus mauris enim leo rhoncus",
+    "dependency_type": "pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl",
+    "expected_close": "5/5/2023",
+    "actual_close": "8/15/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 418,
+    "dependency_name": "mi integer ac neque duis bibendum morbi non quam nec dui luctus rutrum nulla tellus in sagittis dui vel",
+    "dependency_type": "luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit",
+    "expected_close": "10/10/2022",
+    "actual_close": "6/26/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 419,
+    "dependency_name": "cras in purus eu magna vulputate luctus cum sociis natoque penatibus",
+    "dependency_type": "neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit amet",
+    "expected_close": "11/13/2022",
+    "actual_close": "5/23/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 420,
+    "dependency_name": "risus semper porta volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie nibh in",
+    "dependency_type": "quis odio consequat varius integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero",
+    "expected_close": "12/7/2022",
+    "actual_close": "8/2/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 421,
+    "dependency_name": "integer ac neque duis bibendum morbi non quam nec dui luctus rutrum nulla tellus in",
+    "dependency_type": "interdum mauris ullamcorper purus sit amet nulla quisque arcu libero rutrum ac",
+    "expected_close": "6/28/2023",
+    "actual_close": "10/5/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 422,
+    "dependency_name": "vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis orci eget",
+    "dependency_type": "lectus in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus",
+    "expected_close": "6/6/2023",
+    "actual_close": "9/28/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 423,
+    "dependency_name": "penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis natoque",
+    "dependency_type": "porttitor lorem id ligula suspendisse ornare consequat lectus in est risus auctor sed tristique in tempus sit",
+    "expected_close": "5/17/2023",
+    "actual_close": "11/28/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 424,
+    "dependency_name": "vestibulum ac est lacinia nisi venenatis tristique fusce congue diam id ornare imperdiet sapien urna pretium nisl",
+    "dependency_type": "elementum in hac habitasse platea dictumst morbi vestibulum velit id pretium",
+    "expected_close": "12/15/2022",
+    "actual_close": "10/12/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 425,
+    "dependency_name": "morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est",
+    "dependency_type": "nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi",
+    "expected_close": "12/5/2022",
+    "actual_close": "8/14/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 426,
+    "dependency_name": "in purus eu magna vulputate luctus cum sociis natoque penatibus et magnis",
+    "dependency_type": "aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras",
+    "expected_close": "4/30/2023",
+    "actual_close": "6/5/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 427,
+    "dependency_name": "vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum praesent blandit lacinia",
+    "dependency_type": "suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas metus aenean fermentum donec ut",
+    "expected_close": "8/24/2023",
+    "actual_close": "5/4/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 428,
+    "dependency_name": "pede ullamcorper augue a suscipit nulla elit ac nulla sed vel enim",
+    "dependency_type": "porta volutpat erat quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus",
+    "expected_close": "3/24/2023",
+    "actual_close": "1/2/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 429,
+    "dependency_name": "eleifend luctus ultricies eu nibh quisque id justo sit amet sapien dignissim vestibulum vestibulum ante ipsum primis",
+    "dependency_type": "nullam sit amet turpis elementum ligula vehicula consequat morbi a ipsum integer a nibh in quis justo",
+    "expected_close": "2/15/2023",
+    "actual_close": "9/29/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 430,
+    "dependency_name": "vel enim sit amet nunc viverra dapibus nulla suscipit ligula in lacus curabitur at ipsum ac tellus semper interdum",
+    "dependency_type": "mi integer ac neque duis bibendum morbi non quam nec dui luctus rutrum nulla tellus in sagittis dui",
+    "expected_close": "4/16/2023",
+    "actual_close": "11/8/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 431,
+    "dependency_name": "consequat lectus in est risus auctor sed tristique in tempus sit amet sem fusce consequat nulla nisl nunc",
+    "dependency_type": "aliquet massa id lobortis convallis tortor risus dapibus augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero",
+    "expected_close": "9/13/2023",
+    "actual_close": "5/29/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 432,
+    "dependency_name": "ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus et",
+    "dependency_type": "orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat",
+    "expected_close": "1/12/2023",
+    "actual_close": "9/4/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 433,
+    "dependency_name": "venenatis turpis enim blandit mi in porttitor pede justo eu massa donec dapibus duis at velit eu",
+    "dependency_type": "sed nisl nunc rhoncus dui vel sem sed sagittis nam congue risus semper porta volutpat quam",
+    "expected_close": "7/4/2023",
+    "actual_close": "12/5/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 434,
+    "dependency_name": "libero ut massa volutpat convallis morbi odio odio elementum eu interdum eu tincidunt in leo",
+    "dependency_type": "tortor quis turpis sed ante vivamus tortor duis mattis egestas metus aenean fermentum donec ut",
+    "expected_close": "12/20/2022",
+    "actual_close": "11/5/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 435,
+    "dependency_name": "id nisl venenatis lacinia aenean sit amet justo morbi ut odio cras mi pede malesuada in imperdiet et commodo vulputate",
+    "dependency_type": "amet cursus id turpis integer aliquet massa id lobortis convallis",
+    "expected_close": "5/24/2023",
+    "actual_close": "5/31/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 436,
+    "dependency_name": "ut massa volutpat convallis morbi odio odio elementum eu interdum eu tincidunt in leo maecenas pulvinar lobortis est",
+    "dependency_type": "molestie lorem quisque ut erat curabitur gravida nisi at nibh in",
+    "expected_close": "2/6/2023",
+    "actual_close": "1/16/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 437,
+    "dependency_name": "donec diam neque vestibulum eget vulputate ut ultrices vel augue",
+    "dependency_type": "vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula",
+    "expected_close": "1/29/2023",
+    "actual_close": "10/16/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 438,
+    "dependency_name": "vel enim sit amet nunc viverra dapibus nulla suscipit ligula in lacus curabitur at ipsum ac tellus",
+    "dependency_type": "vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc",
+    "expected_close": "3/3/2023",
+    "actual_close": "3/13/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 439,
+    "dependency_name": "consequat varius integer ac leo pellentesque ultrices mattis odio donec",
+    "dependency_type": "condimentum neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit amet eros suspendisse accumsan",
+    "expected_close": "7/3/2023",
+    "actual_close": "10/29/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 440,
+    "dependency_name": "id turpis integer aliquet massa id lobortis convallis tortor risus dapibus augue vel accumsan",
+    "dependency_type": "non interdum in ante vestibulum ante ipsum primis in faucibus orci luctus",
+    "expected_close": "3/25/2023",
+    "actual_close": "6/16/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 441,
+    "dependency_name": "viverra diam vitae quam suspendisse potenti nullam porttitor lacus at turpis donec posuere metus vitae ipsum aliquam non mauris morbi",
+    "dependency_type": "nunc donec quis orci eget orci vehicula condimentum curabitur in libero ut massa volutpat convallis",
+    "expected_close": "2/23/2023",
+    "actual_close": "3/5/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 442,
+    "dependency_name": "ut at dolor quis odio consequat varius integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices",
+    "dependency_type": "bibendum morbi non quam nec dui luctus rutrum nulla tellus in sagittis dui vel nisl",
+    "expected_close": "9/20/2023",
+    "actual_close": "3/19/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 443,
+    "dependency_name": "porta volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie nibh in lectus",
+    "dependency_type": "ultrices phasellus id sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie",
+    "expected_close": "9/5/2023",
+    "actual_close": "6/11/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 444,
+    "dependency_name": "adipiscing elit proin interdum mauris non ligula pellentesque ultrices phasellus id sapien in sapien iaculis congue",
+    "dependency_type": "praesent blandit lacinia erat vestibulum sed magna at nunc commodo placerat praesent blandit nam nulla",
+    "expected_close": "2/15/2023",
+    "actual_close": "9/24/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 445,
+    "dependency_name": "nisl ut volutpat sapien arcu sed augue aliquam erat volutpat in congue etiam justo etiam",
+    "dependency_type": "morbi a ipsum integer a nibh in quis justo maecenas rhoncus aliquam",
+    "expected_close": "7/1/2023",
+    "actual_close": "7/22/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 446,
+    "dependency_name": "posuere nonummy integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante ipsum primis",
+    "dependency_type": "quam nec dui luctus rutrum nulla tellus in sagittis dui vel nisl duis ac nibh fusce",
+    "expected_close": "9/26/2023",
+    "actual_close": "3/21/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 447,
+    "dependency_name": "scelerisque mauris sit amet eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor",
+    "dependency_type": "et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices erat",
+    "expected_close": "9/2/2023",
+    "actual_close": "7/13/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 448,
+    "dependency_name": "dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et magnis",
+    "dependency_type": "lectus pellentesque eget nunc donec quis orci eget orci vehicula condimentum curabitur",
+    "expected_close": "5/2/2023",
+    "actual_close": "5/26/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 449,
+    "dependency_name": "ligula sit amet eleifend pede libero quis orci nullam molestie",
+    "dependency_type": "proin risus praesent lectus vestibulum quam sapien varius ut blandit non interdum in",
+    "expected_close": "4/14/2023",
+    "actual_close": "9/8/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 450,
+    "dependency_name": "integer ac neque duis bibendum morbi non quam nec dui luctus",
+    "dependency_type": "porta volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie nibh in lectus pellentesque",
+    "expected_close": "2/13/2023",
+    "actual_close": "8/15/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 451,
+    "dependency_name": "ultricies eu nibh quisque id justo sit amet sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus",
+    "dependency_type": "odio elementum eu interdum eu tincidunt in leo maecenas pulvinar lobortis est phasellus",
+    "expected_close": "2/8/2023",
+    "actual_close": "3/29/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 452,
+    "dependency_name": "lectus vestibulum quam sapien varius ut blandit non interdum in ante vestibulum ante ipsum primis",
+    "dependency_type": "vel nisl duis ac nibh fusce lacus purus aliquet at feugiat non",
+    "expected_close": "2/19/2023",
+    "actual_close": "5/28/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 453,
+    "dependency_name": "nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla eget eros elementum pellentesque quisque porta volutpat",
+    "dependency_type": "penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus",
+    "expected_close": "5/13/2023",
+    "actual_close": "4/28/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 454,
+    "dependency_name": "nunc donec quis orci eget orci vehicula condimentum curabitur in libero ut massa volutpat convallis",
+    "dependency_type": "augue vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet",
+    "expected_close": "5/30/2023",
+    "actual_close": "12/9/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 455,
+    "dependency_name": "dolor vel est donec odio justo sollicitudin ut suscipit a feugiat et",
+    "dependency_type": "integer aliquet massa id lobortis convallis tortor risus dapibus augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis",
+    "expected_close": "1/13/2023",
+    "actual_close": "10/27/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 456,
+    "dependency_name": "sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque ultrices phasellus id sapien in sapien iaculis",
+    "dependency_type": "ut blandit non interdum in ante vestibulum ante ipsum primis in faucibus orci luctus",
+    "expected_close": "6/26/2023",
+    "actual_close": "5/13/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 457,
+    "dependency_name": "lacinia erat vestibulum sed magna at nunc commodo placerat praesent",
+    "dependency_type": "luctus et ultrices posuere cubilia curae mauris viverra diam vitae",
+    "expected_close": "6/8/2023",
+    "actual_close": "8/28/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 458,
+    "dependency_name": "lacus at turpis donec posuere metus vitae ipsum aliquam non mauris morbi non lectus aliquam sit amet diam in",
+    "dependency_type": "neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit amet",
+    "expected_close": "9/9/2023",
+    "actual_close": "4/5/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 459,
+    "dependency_name": "morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est risus auctor sed tristique in",
+    "dependency_type": "duis ac nibh fusce lacus purus aliquet at feugiat non pretium quis lectus suspendisse potenti in",
+    "expected_close": "11/8/2022",
+    "actual_close": "10/20/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 460,
+    "dependency_name": "justo in hac habitasse platea dictumst etiam faucibus cursus urna ut tellus nulla ut erat id mauris",
+    "dependency_type": "congue diam id ornare imperdiet sapien urna pretium nisl ut volutpat sapien arcu sed augue aliquam erat volutpat",
+    "expected_close": "12/26/2022",
+    "actual_close": "11/21/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 461,
+    "dependency_name": "viverra diam vitae quam suspendisse potenti nullam porttitor lacus at turpis donec posuere",
+    "dependency_type": "sit amet consectetuer adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit non interdum in ante",
+    "expected_close": "7/16/2023",
+    "actual_close": "7/1/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 462,
+    "dependency_name": "in tempus sit amet sem fusce consequat nulla nisl nunc nisl duis bibendum felis sed interdum venenatis turpis enim blandit",
+    "dependency_type": "augue a suscipit nulla elit ac nulla sed vel enim sit amet nunc viverra dapibus nulla suscipit ligula in lacus",
+    "expected_close": "7/18/2023",
+    "actual_close": "9/8/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 463,
+    "dependency_name": "leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero non mattis pulvinar nulla pede ullamcorper",
+    "dependency_type": "accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas",
+    "expected_close": "7/11/2023",
+    "actual_close": "1/24/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 464,
+    "dependency_name": "donec semper sapien a libero nam dui proin leo odio porttitor id consequat",
+    "dependency_type": "erat nulla tempus vivamus in felis eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec",
+    "expected_close": "4/23/2023",
+    "actual_close": "9/24/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 465,
+    "dependency_name": "vestibulum proin eu mi nulla ac enim in tempor turpis nec euismod scelerisque quam turpis adipiscing",
+    "dependency_type": "vel est donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac est",
+    "expected_close": "4/10/2023",
+    "actual_close": "10/3/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 466,
+    "dependency_name": "cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec",
+    "dependency_type": "vivamus tortor duis mattis egestas metus aenean fermentum donec ut mauris eget massa tempor convallis nulla",
+    "expected_close": "8/16/2023",
+    "actual_close": "2/6/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 467,
+    "dependency_name": "vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est risus auctor sed tristique",
+    "dependency_type": "quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum praesent",
+    "expected_close": "1/17/2023",
+    "actual_close": "6/3/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 468,
+    "dependency_name": "interdum mauris non ligula pellentesque ultrices phasellus id sapien in",
+    "dependency_type": "quis turpis eget elit sodales scelerisque mauris sit amet eros suspendisse accumsan tortor quis turpis sed ante",
+    "expected_close": "6/5/2023",
+    "actual_close": "1/9/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 469,
+    "dependency_name": "natoque penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque",
+    "dependency_type": "non mattis pulvinar nulla pede ullamcorper augue a suscipit nulla elit ac nulla sed",
+    "expected_close": "10/14/2022",
+    "actual_close": "6/12/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 470,
+    "dependency_name": "bibendum felis sed interdum venenatis turpis enim blandit mi in porttitor pede",
+    "dependency_type": "cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue",
+    "expected_close": "6/7/2023",
+    "actual_close": "1/9/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 471,
+    "dependency_name": "ornare consequat lectus in est risus auctor sed tristique in tempus",
+    "dependency_type": "convallis morbi odio odio elementum eu interdum eu tincidunt in leo maecenas pulvinar",
+    "expected_close": "4/14/2023",
+    "actual_close": "8/23/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 472,
+    "dependency_name": "fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet massa id lobortis convallis",
+    "dependency_type": "posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui nec nisi volutpat eleifend donec",
+    "expected_close": "10/19/2022",
+    "actual_close": "3/31/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 473,
+    "dependency_name": "vitae ipsum aliquam non mauris morbi non lectus aliquam sit",
+    "dependency_type": "ac nulla sed vel enim sit amet nunc viverra dapibus nulla suscipit ligula in",
+    "expected_close": "6/17/2023",
+    "actual_close": "4/28/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 474,
+    "dependency_name": "velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla eget eros elementum pellentesque quisque porta",
+    "dependency_type": "felis fusce posuere felis sed lacus morbi sem mauris laoreet ut rhoncus aliquet pulvinar",
+    "expected_close": "9/13/2023",
+    "actual_close": "8/18/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 475,
+    "dependency_name": "amet lobortis sapien sapien non mi integer ac neque duis bibendum morbi non quam nec dui luctus rutrum nulla",
+    "dependency_type": "aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel",
+    "expected_close": "1/6/2023",
+    "actual_close": "10/20/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 476,
+    "dependency_name": "vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel",
+    "dependency_type": "sit amet sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae",
+    "expected_close": "4/28/2023",
+    "actual_close": "8/29/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 477,
+    "dependency_name": "est et tempus semper est quam pharetra magna ac consequat metus sapien ut nunc vestibulum ante ipsum primis",
+    "dependency_type": "ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna",
+    "expected_close": "12/11/2022",
+    "actual_close": "6/3/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 478,
+    "dependency_name": "erat tortor sollicitudin mi sit amet lobortis sapien sapien non",
+    "dependency_type": "a ipsum integer a nibh in quis justo maecenas rhoncus aliquam lacus morbi",
+    "expected_close": "11/17/2022",
+    "actual_close": "2/23/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 479,
+    "dependency_name": "congue elementum in hac habitasse platea dictumst morbi vestibulum velit id pretium iaculis diam erat fermentum justo nec condimentum neque",
+    "dependency_type": "eget eros elementum pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget semper rutrum nulla",
+    "expected_close": "4/14/2023",
+    "actual_close": "10/8/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 480,
+    "dependency_name": "a odio in hac habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque",
+    "dependency_type": "ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque",
+    "expected_close": "1/13/2023",
+    "actual_close": "3/12/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 481,
+    "dependency_name": "congue eget semper rutrum nulla nunc purus phasellus in felis donec semper sapien a",
+    "dependency_type": "suspendisse ornare consequat lectus in est risus auctor sed tristique in tempus sit",
+    "expected_close": "4/20/2023",
+    "actual_close": "1/21/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 482,
+    "dependency_name": "consequat varius integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam",
+    "dependency_type": "faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam suspendisse potenti",
+    "expected_close": "2/5/2023",
+    "actual_close": "5/29/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 483,
+    "dependency_name": "nunc commodo placerat praesent blandit nam nulla integer pede justo",
+    "dependency_type": "vel nisl duis ac nibh fusce lacus purus aliquet at feugiat non pretium quis lectus suspendisse",
+    "expected_close": "6/8/2023",
+    "actual_close": "12/28/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 484,
+    "dependency_name": "blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque ultrices phasellus id",
+    "dependency_type": "congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis orci eget",
+    "expected_close": "6/6/2023",
+    "actual_close": "6/15/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 485,
+    "dependency_name": "natoque penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor gravida",
+    "dependency_type": "leo odio condimentum id luctus nec molestie sed justo pellentesque viverra",
+    "expected_close": "10/7/2022",
+    "actual_close": "9/24/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 486,
+    "dependency_name": "nonummy maecenas tincidunt lacus at velit vivamus vel nulla eget eros elementum pellentesque",
+    "dependency_type": "cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla eget eros elementum",
+    "expected_close": "7/31/2023",
+    "actual_close": "10/14/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 487,
+    "dependency_name": "pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus",
+    "dependency_type": "porttitor id consequat in consequat ut nulla sed accumsan felis ut at dolor quis odio consequat varius integer ac",
+    "expected_close": "5/8/2023",
+    "actual_close": "6/10/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 488,
+    "dependency_name": "curae nulla dapibus dolor vel est donec odio justo sollicitudin ut suscipit a feugiat et",
+    "dependency_type": "vel sem sed sagittis nam congue risus semper porta volutpat quam pede lobortis ligula sit amet eleifend",
+    "expected_close": "6/23/2023",
+    "actual_close": "1/18/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 489,
+    "dependency_name": "volutpat sapien arcu sed augue aliquam erat volutpat in congue etiam justo etiam pretium iaculis justo in hac",
+    "dependency_type": "ac neque duis bibendum morbi non quam nec dui luctus",
+    "expected_close": "5/29/2023",
+    "actual_close": "11/22/2022",
+    "status": "Completed"
+  },
+  {
+    "id": 490,
+    "dependency_name": "odio elementum eu interdum eu tincidunt in leo maecenas pulvinar lobortis est phasellus sit",
+    "dependency_type": "faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam suspendisse potenti nullam porttitor lacus at",
+    "expected_close": "7/17/2023",
+    "actual_close": "4/16/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 491,
+    "dependency_name": "elementum pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget semper rutrum nulla nunc",
+    "dependency_type": "felis donec semper sapien a libero nam dui proin leo odio porttitor id consequat in consequat",
+    "expected_close": "1/18/2023",
+    "actual_close": "3/1/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 492,
+    "dependency_name": "id mauris vulputate elementum nullam varius nulla facilisi cras non velit nec",
+    "dependency_type": "at dolor quis odio consequat varius integer ac leo pellentesque",
+    "expected_close": "2/2/2023",
+    "actual_close": "10/2/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 493,
+    "dependency_name": "sem duis aliquam convallis nunc proin at turpis a pede posuere",
+    "dependency_type": "mauris vulputate elementum nullam varius nulla facilisi cras non velit nec",
+    "expected_close": "1/6/2023",
+    "actual_close": "11/4/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 494,
+    "dependency_name": "mollis molestie lorem quisque ut erat curabitur gravida nisi at",
+    "dependency_type": "enim in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem",
+    "expected_close": "4/20/2023",
+    "actual_close": "8/17/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 495,
+    "dependency_name": "vel sem sed sagittis nam congue risus semper porta volutpat quam pede",
+    "dependency_type": "vestibulum sagittis sapien cum sociis natoque penatibus et magnis dis parturient montes",
+    "expected_close": "5/15/2023",
+    "actual_close": "3/16/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 496,
+    "dependency_name": "nisl duis ac nibh fusce lacus purus aliquet at feugiat non pretium quis lectus suspendisse potenti in eleifend",
+    "dependency_type": "convallis eget eleifend luctus ultricies eu nibh quisque id justo",
+    "expected_close": "9/1/2023",
+    "actual_close": "3/16/2023",
+    "status": "In-Progress"
+  },
+  {
+    "id": 497,
+    "dependency_name": "morbi non lectus aliquam sit amet diam in magna bibendum imperdiet",
+    "dependency_type": "volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris enim leo rhoncus",
+    "expected_close": "2/13/2023",
+    "actual_close": "4/1/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 498,
+    "dependency_name": "a nibh in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id",
+    "dependency_type": "blandit lacinia erat vestibulum sed magna at nunc commodo placerat praesent",
+    "expected_close": "9/1/2023",
+    "actual_close": "12/31/2022",
+    "status": "In-Progress"
+  },
+  {
+    "id": 499,
+    "dependency_name": "blandit lacinia erat vestibulum sed magna at nunc commodo placerat praesent blandit",
+    "dependency_type": "donec pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi",
+    "expected_close": "5/24/2023",
+    "actual_close": "2/23/2023",
+    "status": "Completed"
+  },
+  {
+    "id": 500,
+    "dependency_name": "pede venenatis non sodales sed tincidunt eu felis fusce posuere felis sed",
+    "dependency_type": "tempus semper est quam pharetra magna ac consequat metus sapien ut nunc",
+    "expected_close": "9/21/2023",
+    "actual_close": "11/23/2022",
+    "status": "Completed"
+  }
+]

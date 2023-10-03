@@ -12,16 +12,15 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { toast } from "react-toastify";
-
+import Notifications from "@/assets/images/notifications.svg";
 import { useAppSelector } from "../../app/hooks";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout, selectAuth } from "../../features/authSlice";
 import { setMenu } from "../../features/menuSlice";
+import menuIcon from "@/assets/images/menu_open.svg";
 const AppBar = styled(
   MuiAppBar,
   {}
@@ -64,7 +63,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: "20ch",
+      width: "50ch",
     },
   },
 }));
@@ -148,26 +147,6 @@ export default function Navbar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {/* <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem> */}
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -185,55 +164,68 @@ export default function Navbar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" elevation={0}>
+      <AppBar
+        position="fixed"
+        className="main-header"
+        elevation={0}
+        sx={{ background: "#fff", borderBottom: "1px solid #F1F1F2" }}
+      >
         <Toolbar>
           <IconButton
-            size="large"
+            size="medium"
             edge="start"
-            color="inherit"
             aria-label="open drawer"
-            sx={{ mr: 2 }}
             onClick={() => dispatch(setMenu(!dopen))}
+            sx={{
+              backgroundColor: "#F1F1F2",
+              borderRadius: "10px",
+              width: "40px",
+              height: "40px",
+            }}
           >
-            <MenuIcon />
+            <img src={menuIcon} alt="menuIcon" height={21} width={21} />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+          <Search
+            sx={{
+              border: "1px solid #E1E3EA",
+              color: "black",
+              fontSize: "5px",
+              borderRadius: "9px",
+            }}
           >
-            MUI
-          </Typography>
-          <Search>
             <SearchIconWrapper>
-              <SearchIcon />
+              <SearchIcon sx={{ color: "grey" }} />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…"
+              placeholder="Search"
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            {/* <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex", gap: "20px" },
+            }}
+          >
             <IconButton
               size="large"
               aria-label="show 17 new notifications"
-              color="inherit"
+              sx={{
+                backgroundColor: "#F1F1F2",
+                borderRadius: "5px",
+                width: "45px",
+                height: "45px",
+              }}
             >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
+              <Badge badgeContent={3} color="primary">
+                <img
+                  src={Notifications}
+                  alt="notify_Icon"
+                  height={19}
+                  width={19}
+                />
               </Badge>
-            </IconButton> */}
+            </IconButton>
             <IconButton
               size="large"
               edge="end"
@@ -241,9 +233,14 @@ export default function Navbar() {
               aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
-              color="inherit"
+              sx={{
+                backgroundColor: "#F1F1F2",
+                width: "45px",
+                height: "45px",
+                color: "skyblue",
+              }}
             >
-              <AccountCircle />
+              <span>J</span>
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
@@ -253,7 +250,9 @@ export default function Navbar() {
               aria-controls={mobileMenuId}
               aria-haspopup="true"
               onClick={handleMobileMenuOpen}
-              color="inherit"
+              sx={{
+                backgroundColor: "#F1F1F2",
+              }}
             >
               <MoreIcon />
             </IconButton>

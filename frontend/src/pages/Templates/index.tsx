@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Layout from "../Layout";
-import Header from "@/components/Header";
+import Header from "@/components/table/Header";
 import { Box, Button, Stack } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";

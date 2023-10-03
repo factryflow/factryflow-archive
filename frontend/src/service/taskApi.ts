@@ -14,7 +14,7 @@ export const taskApi = createApi({
     // getAllTask Api
     getAllTasks: builder.query<any[], void>({
       query: () => {
-        return `api/tasks/tasks-list/`;
+        return `api/tasks/`;
       },
       transformResponse: (res: { data: any[] }) => {
         const data = res.data;
@@ -39,7 +39,7 @@ export const taskApi = createApi({
     createTasks: builder.mutation({
       query: (body: any) => {
         return {
-          url: "api/tasks/create-task/",
+          url: "api/tasks/",
           method: "post",
           body,
         };
@@ -50,7 +50,7 @@ export const taskApi = createApi({
     deleteTasks: builder.mutation({
       query: (id: number) => {
         return {
-          url: `api/tasks/delete-task/${id}/`,
+          url: `api/tasks/${id}/`,
           method: "delete",
         };
       },
@@ -60,7 +60,7 @@ export const taskApi = createApi({
     updateTasks: builder.mutation({
       query: ({ id, data }) => {
         return {
-          url: `api/tasks/update-tasks/${id}/`,
+          url: `api/tasks/${id}/`,
           method: "put",
           body: data,
         };

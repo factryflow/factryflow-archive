@@ -15,14 +15,22 @@ import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
-import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
+import {
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  FormHelperText,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import {
   useCreateTasksMutation,
   useUpdateTasksMutation,
 } from "../../service/taskApi";
+import { setJobies } from "@/features/jobSlice";
+import { useGetAllJobsQuery } from "@/service/jobApi";
 // "id": 4,
 // "external_id": "565",
 // "name": "test task2",
@@ -41,22 +49,36 @@ import {
 const validationSchema = yup.object().shape({
   external_id: yup.string().required("External Id is required"),
   name: yup.string().required("Name is required").nullable(),
-  task_status: yup.string().required("Task Status is required").nullable(),
+  task_status: yup.number().required("Task Status is required").nullable(),
   setup_time: yup.string().required("Setup Time is required").nullable(),
   run_time_per_unit: yup.string().required("Run Time Per Unit is required"),
   teardown_time: yup.string().required("teardown Time is required"),
   quantity: yup.string().required("Quantity is required"),
   predecessors: yup.array(),
   item: yup.string().required("Item is required"),
+  jobs: yup.number().required("jobs is required"),
 });
 
+const taskStatus = [
+  { id: 1, name: "open" },
+  { id: 2, name: "close" },
+];
+
 const TaskForm = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const params = useParams();
   const isEdit = !!params.id;
 
   const taskSelector = useAppSelector((state: any) => state.task.taskies);
+  const jobiesSelector = useAppSelector((state) => state.job.jobies);
   //   console.log(jobiesSelector, "jobselector");
+
+  const {
+    data: getjobData,
+    isLoading: jobisLoading,
+    // refetch,
+  } = useGetAllJobsQuery(undefined, {});
 
   const [
     createTasks,
@@ -78,17 +100,28 @@ const TaskForm = () => {
 
   const [isEditData, setIsEditData] = useState({});
   const [selectedIds, setSelectedIds] = useState([]);
+  const [selectedJobIds, setSelectedJobIds] = useState(null);
+  const [selectedTaskStatusId, setSelectedTaskStatusId] = useState(null);
   // console.log(selectedIds, "selectedId");
-  const handleSelectChange = (event: any) => {
-    setSelectedIds(event.target.value);
-  };
-
   const {
     control,
     handleSubmit,
     watch,
     formState: { errors },
   } = form;
+  const handleSelectChange = (event: any) => {
+    setSelectedIds(event.target.value);
+  };
+
+  const handleSelectJob = (event: any) => {
+    form.setValue("jobs", event.target.value);
+    setSelectedJobIds(event.target.value);
+  };
+
+  const handleSelectTask = (event: any) => {
+    form.setValue("task_status", event.target.value);
+    setSelectedTaskStatusId(event.target.value);
+  };
 
   const onSubmit = (data: any) => {
     console.log(`>>>>>`);
@@ -98,10 +131,12 @@ const TaskForm = () => {
       external_id: data.external_id,
       name: data.name,
       task_status: data.task_status,
+      task_type: 1,
       setup_time: data.setup_time,
       run_time_per_unit: data.run_time_per_unit,
       teardown_time: data.teardown_time,
       quantity: data.quantity,
+      jobs: selectedJobIds,
       predecessors: selectedIds,
       item: data.item,
     };
@@ -155,6 +190,12 @@ const TaskForm = () => {
       });
     }
   }, [isEditData]);
+
+  useEffect(() => {
+    if (!jobisLoading && getjobData) {
+      dispatch(setJobies(getjobData));
+    }
+  }, [jobisLoading, getjobData]);
 
   return (
     <>
@@ -214,23 +255,33 @@ const TaskForm = () => {
                     />
                   </Grid>
                   <Grid item xs={6}>
-                    <Controller
-                      name="task_status"
-                      control={control}
-                      defaultValue=""
-                      render={({ field }) => (
-                        <TextField
-                          label="Task Status"
-                          variant="outlined"
-                          type="number"
-                          margin="normal"
-                          error={!!errors.task_status}
-                          helperText={errors.task_status?.message}
-                          fullWidth
-                          {...field}
-                        />
-                      )}
-                    />
+                    <FormControl fullWidth variant="outlined">
+                      <InputLabel>Task Status</InputLabel>
+                      <Controller
+                        name="task_status"
+                        control={control}
+                        render={({ field }) => (
+                          <>
+                            <Select
+                              {...field}
+                              value={selectedTaskStatusId}
+                              error={!!errors.task_status}
+                              onChange={handleSelectTask}
+                              label="Task Status"
+                            >
+                              {taskStatus.map((item: any) => (
+                                <MenuItem key={item.id} value={item.id}>
+                                  {item.name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                            <FormHelperText sx={{ color: "red" }}>
+                              {errors.task_status?.message}
+                            </FormHelperText>
+                          </>
+                        )}
+                      />
+                    </FormControl>
                   </Grid>
                   <Grid item xs={6}>
                     <Controller
@@ -354,6 +405,35 @@ const TaskForm = () => {
                         />
                       )}
                     />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FormControl fullWidth variant="outlined">
+                      <InputLabel>Jobs</InputLabel>
+                      <Controller
+                        name="jobs"
+                        control={control}
+                        render={({ field }) => (
+                          <>
+                            <Select
+                              {...field}
+                              value={selectedJobIds}
+                              error={!!errors.jobs}
+                              onChange={handleSelectJob}
+                              label="jobs"
+                            >
+                              {jobiesSelector.map((item: any) => (
+                                <MenuItem key={item.id} value={item.id}>
+                                  {item.name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                            <FormHelperText sx={{ color: "red" }}>
+                              {errors.jobs?.message}
+                            </FormHelperText>
+                          </>
+                        )}
+                      />
+                    </FormControl>
                   </Grid>
 
                   <Grid item xs={12}>

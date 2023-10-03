@@ -11,7 +11,7 @@ import {
   useGetAllDependencyTypeQuery,
   useDeleteDependencytypeMutation,
 } from "../../../service/dependencytypeApi";
-import Header from "../../../components/Header";
+import Header from "../../../components/table/Header";
 import Layout from "../../Layout";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { setDependenciestype } from "../../../features/dependencytypeSlice";

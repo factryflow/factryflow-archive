@@ -15,7 +15,7 @@ export const dependencyApi = createApi({
     // getAllDependency Api
     getAllDependencys: builder.query<any[], void>({
       query: () => {
-        return `api/dependency/get-dependency-list/`;
+        return `api/dependency/`;
       },
       transformResponse: (res: { data: any[] }) => {
         const data = res.data;
@@ -40,7 +40,7 @@ export const dependencyApi = createApi({
     createDependency: builder.mutation({
       query: (body: any) => {
         return {
-          url: "api/dependency/create-dependency/",
+          url: "api/dependency/",
           method: "post",
           body,
         };
@@ -51,7 +51,7 @@ export const dependencyApi = createApi({
     deleteDependency: builder.mutation({
       query: (id: number) => {
         return {
-          url: `api/dependency/delete-dependency/${id}/`,
+          url: `api/dependency/${id}/`,
           method: "delete",
         };
       },
@@ -61,7 +61,7 @@ export const dependencyApi = createApi({
     updateDependency: builder.mutation({
       query: ({ id, data }) => {
         return {
-          url: `api/dependency/update-dependency/${id}/`,
+          url: `api/dependency/${id}/`,
           method: "put",
           body: data,
         };

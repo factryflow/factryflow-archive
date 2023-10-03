@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import { ToastContainer } from "react-toastify";
@@ -21,62 +21,64 @@ import Exception from "./pages/Exception";
 import ExceptionType from "./pages/Exception/ExceptionType";
 import Template from "./pages/Templates";
 import TemplateForm from "./pages/Templates/Form";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import theme from "./theme";
 import AuthorizedUser from "./middleware/AuthorizedUser";
 function App() {
   return (
     <>
-      <ToastContainer />
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<Register />} />
-        <Route element={<PrivateRoutes />}>
-          <Route path="/change-password" element={<ChangePass />} />
-          <Route path="/jobs" element={<Jobs />} />
-          <Route path="/jobs/form" element={<JobForm />} />
-          <Route path="/jobs/form/:id" element={<JobForm />} />
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/signup" element={<Register />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/change-password" element={<ChangePass />} />
+            <Route path="/jobs" element={<Outlet />}>
+              <Route index element={<Jobs />} />
+              <Route path="form" element={<JobForm />} />
+              <Route path="form/:id" element={<JobForm />} />
+            </Route>
 
-          <Route path="/tasks" element={<Tasks />} />
-          <Route path="/tasks/form" element={<TaskForm />} />
-          <Route path="/tasks/form/:id" element={<TaskForm />} />
+            <Route path="/tasks" element={<Outlet />}>
+              <Route index element={<Tasks />} />
+              <Route path="form" element={<TaskForm />} />
+              <Route path="form/:id" element={<TaskForm />} />
+            </Route>
 
-          <Route path="/dependency" element={<Dependencys />} />
-          <Route path="/dependency/form" element={<DependencyForm />} />
-          <Route path="/dependency/form/:id" element={<DependencyForm />} />
-          <Route
-            path="/dependency/dependencytype"
-            element={<DependencyType />}
-          />
-          <Route
-            path="/dependency/dependencytype/form"
-            element={<DependencyTypeForm />}
-          />
-          <Route
-            path="/dependency/dependencytype/form/:id"
-            element={<DependencyTypeForm />}
-          />
+            <Route path="/dependency" element={<Outlet />}>
+              <Route index element={<Dependencys />} />
+              <Route path="form" element={<DependencyForm />} />
+              <Route path="form/:id" element={<DependencyForm />} />
+              <Route path="dependencytype" element={<Outlet />}>
+                <Route index element={<DependencyType />} />
+                <Route path="form" element={<DependencyTypeForm />} />
+                <Route path="form/:id" element={<DependencyTypeForm />} />
+              </Route>
+            </Route>
 
-          <Route path="/resources" element={<Resources />} />
-          <Route path="/resources/form" element={<ResourceForm />} />
-          <Route path="/resources/form/:id" element={<ResourceForm />} />
+            <Route path="/resources" element={<Outlet />}>
+              <Route index element={<Resources />} />
+              <Route path="form" element={<ResourceForm />} />
+              <Route path="form/:id" element={<ResourceForm />} />
 
-          <Route path="/resources/resourcegroup" element={<ResourcesGroup />} />
-          <Route
-            path="/resources/resourcegroup/form"
-            element={<ResourceGroupForm />}
-          />
-          <Route
-            path="/resources/resourcegroup/form/:id"
-            element={<ResourceGroupForm />}
-          />
+              <Route path="resourcegroup" element={<Outlet />}>
+                <Route index element={<ResourcesGroup />} />
+                <Route path="form" element={<ResourceGroupForm />} />
+                <Route path="form/:id" element={<ResourceGroupForm />} />
+              </Route>
+            </Route>
 
-          <Route path="/exception" element={<Exception />} />
-          <Route path="/exception/exception-type" element={<ExceptionType />} />
-
-          <Route path="/template" element={<Template />} />
-          <Route path="/template/form" element={<TemplateForm />} />
-          <Route path="/template/form/:id" element={<TemplateForm />} />
-        </Route>
-      </Routes>
+            <Route path="/exception" element={<Outlet />}>
+              <Route path="/exception" index element={<Exception />} />
+              <Route path="exception-type" element={<ExceptionType />} />
+            </Route>
+            <Route path="/template" element={<Template />} />
+            <Route path="/template/form" element={<TemplateForm />} />
+            <Route path="/template/form/:id" element={<TemplateForm />} />
+          </Route>
+        </Routes>
+      </ThemeProvider>
     </>
   );
 }

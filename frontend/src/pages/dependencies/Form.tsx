@@ -21,14 +21,17 @@ import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
-import { useAppSelector } from "../../app/hooks";
-
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { setJobies } from "@/features/jobSlice";
+import { setTaskies } from "@/features/taskSlice";
 import Box from "@mui/material/Box";
 
 import {
   useCreateDependencyMutation,
   useUpdateDependencyMutation,
 } from "../../service/dependencyApi";
+import { useGetAllJobsQuery } from "@/service/jobApi";
+import { useGetAllTasksQuery } from "@/service/taskApi";
 //   "id": 1,
 //   "name": "dependency test",
 //   "dependency_type": 1,
@@ -60,6 +63,7 @@ const validationSchema = yup.object().shape({
 const DependencyForm = () => {
   const navigate = useNavigate();
   const params = useParams();
+  const dispatch = useAppDispatch();
   const isEdit = !!params.id;
 
   const jobselector = useAppSelector((state: any) => state.job.jobies);
@@ -67,7 +71,7 @@ const DependencyForm = () => {
   const dependencySelector = useAppSelector(
     (state: any) => state.dependency.dependencies
   );
-  console.log(jobselector, "jobselector");
+
   const [
     createDependency,
     {
@@ -77,7 +81,17 @@ const DependencyForm = () => {
     },
   ] = useCreateDependencyMutation();
 
-  console.log(dependencyError, "dependencyDtaa");
+  const {
+    data: getjobData,
+    isLoading: jobisLoading,
+    // refetch,
+  } = useGetAllJobsQuery(undefined, {});
+
+  const {
+    data: getTaskData,
+    isLoading: taskIsLoading,
+    error,
+  } = useGetAllTasksQuery(undefined);
 
   // const [
   //   createTasks,
@@ -205,6 +219,18 @@ const DependencyForm = () => {
       }
     }
   }, [isEdit, params.id]);
+
+  useEffect(() => {
+    if (!jobisLoading && getjobData) {
+      dispatch(setJobies(getjobData));
+    }
+  }, [jobisLoading, getjobData]);
+
+  useEffect(() => {
+    if (!taskIsLoading && getTaskData) {
+      dispatch(setTaskies(getTaskData));
+    }
+  }, [taskIsLoading, getTaskData]);
 
   return (
     <>

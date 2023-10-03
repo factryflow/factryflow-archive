@@ -13,7 +13,7 @@ export const templateApi = createApi({
     // getAllTemplate Api
     getAllTemplate: builder.query<any[] | undefined, void>({
       query: () => {
-        return `api/weekly-shift/get-template-list/`;
+        return `api/weekly-shift-template/`;
       },
       transformResponse: (res: { data: any[] }) => {
         const data = res.data;
@@ -27,7 +27,7 @@ export const templateApi = createApi({
     createTemplate: builder.mutation({
       query: (body: any) => {
         return {
-          url: "api/weekly-shift/create-template/",
+          url: "api/weekly-shift-template/",
           method: "post",
           body,
         };
@@ -38,7 +38,7 @@ export const templateApi = createApi({
     deleteTemplate: builder.mutation({
       query: (id: number) => {
         return {
-          url: `api/weekly-shift/delete-template/${id}/`,
+          url: `api/weekly-shift-template/${id}/`,
           method: "delete",
         };
       },
@@ -48,7 +48,7 @@ export const templateApi = createApi({
     updateTemplate: builder.mutation({
       query: ({ id, data }) => {
         return {
-          url: `api/weekly-shift/update-template/${id}/`,
+          url: `api/weekly-shift-template/${id}/`,
           method: "put",
           body: data,
         };

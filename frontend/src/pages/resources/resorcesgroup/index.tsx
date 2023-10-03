@@ -12,7 +12,7 @@ import {
   useDeleteResourcesGroupMutation,
   useGetAllResourcesGroupQuery,
 } from "../../../service/resourcegroupApi";
-import Header from "../../../components/Header";
+import Header from "../../../components/table/Header";
 import Layout from "../../Layout";
 import { setResourceGroups } from "../../../features/resourceGroupSlice";
 import Loading from "@/components/loading/loading";
