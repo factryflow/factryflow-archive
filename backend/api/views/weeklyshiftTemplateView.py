@@ -112,29 +112,29 @@ class GetUpdateDeleteWeeklyShiftDetailsView(APIView):
         """
         update weekly shift template.
         """
-        result = template_service.update_weekly_shift_template(request, id, format=None)
+        result = template_service.update_template_details(request, id, format=None)
         return Response(result, status=result["code"])
 
     @swagger_auto_schema(
-        responses=response_create_update_weekly_shift_template,
+        responses=response_create_update_template_details,
         operation_summary="get weekly shift template by id",
     )
     def get(self, request, id, format=None):
         """
         get weekly shift template by id
         """
-        result = template_service.get_weekly_shift_template_by_id(request, id, format=None)
+        result = template_service.get_template_details_by_id(request, id, format=None)
         return Response(result, status=result["code"])
     
     @swagger_auto_schema(
-        responses=response_delete_weekly_shift_template,
+        responses=response_delete_template_details,
         operation_summary="delete weekly shift template by id",
     )
     def delete(self, request, id, format=None):
         """
         delete weekly shift template by id
         """
-        result = template_service.delete_weekly_shift_template(request, id, format=None)
+        result = template_service.delete_template_details(request, id, format=None)
         return Response(result, status=result["code"])
     
 
