@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from .job import Jobs
+from .job import Job
 from .taskStatus import TaskStatus
 from .taskType import TaskType
 from simple_history.models import HistoricalRecords
@@ -18,7 +18,7 @@ class Tasks(models.Model):
     run_time_per_unit = models.IntegerField(blank=True, null=True)
     teardown_time = models.IntegerField(blank=True, null=True)
     quantity = models.IntegerField(blank=True, null=True)
-    jobs = models.ForeignKey(Jobs, on_delete=models.CASCADE, related_name="tasks_list", blank=True, null=True)
+    jobs = models.ForeignKey(Job, on_delete=models.CASCADE, related_name="tasks_list", blank=True, null=True)
     predecessors = models.ManyToManyField("self", symmetrical=False, related_name="successors", blank=True)
     item = models.CharField(max_length=250, blank=True, null=True)
     planned_start_datetime = models.DateTimeField(blank=True, null=True)

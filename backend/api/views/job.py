@@ -1,4 +1,4 @@
-from api.models import Jobs, JobType, JobStatus
+from api.models import Job, JobType, JobStatus
 from api.schemas import JobOut, JobIn, JobTypeOut, JobStatusOut
 from api.utils.crud_views import SoftDeleteModelView
 from api.utils.model_utils import (
@@ -36,7 +36,7 @@ JobStatusViewSet.register_routes(job_status_router)
 
 job_router = Router()
 class JobViewSet(ModelViewSet):
-    model_class = Jobs
+    model_class = Job
 
     # AbstractModelView subclasses can be used as-is
     list = ListModelView(output_schema=JobOut)

@@ -3,13 +3,13 @@ from django.db import models
 from django.utils import timezone
 from simple_history.models import HistoricalRecords
 from api.utils.model_manager import ActiveManager
-from .job import Jobs
+from .job import Job
 from .dependency import Dependency
 
 
 class JobDependency(models.Model):
     id = models.AutoField(primary_key=True)
-    job = models.ForeignKey(Jobs, on_delete=models.CASCADE, blank=True, null=True)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE, blank=True, null=True)
     dependency = models.ForeignKey(Dependency, on_delete=models.CASCADE, blank=True, null=True)
     
     # Metadata

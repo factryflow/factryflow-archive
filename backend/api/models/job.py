@@ -7,7 +7,7 @@ from .jobType import JobType
 from api.utils.model_manager import ActiveManager
 
 
-class Jobs(models.Model):
+class Job(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)

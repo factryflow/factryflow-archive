@@ -1,4 +1,4 @@
-from api.models import Jobs, TasksResourceAssignment, AssignmentRule
+from api.models import Job, TasksResourceAssignment, AssignmentRule
 from api.serializers.assignmentRule import *
 from api.serializers.taskResourceAssignment import *
 from rest_framework import status
