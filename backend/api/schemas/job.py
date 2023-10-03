@@ -5,6 +5,13 @@ from api.models import Jobs, JobStatus, JobType, JobDependency
 from ninja import Schema, ModelSchema
 
 
+
+class JobTypeIn(Schema):
+    id:int
+    
+class JobStatusIn(Schema):
+    id:int
+    
 class JobIn(Schema):
     name: str
     description: Optional[str] = None
@@ -15,8 +22,8 @@ class JobIn(Schema):
     planned_end_datetime: datetime
     external_id: str
     note: Optional[str] = None
-    job_status: str
-    job_type: str
+    job_status: JobStatusIn
+    job_type: JobTypeIn
     
 
 
