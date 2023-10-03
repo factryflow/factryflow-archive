@@ -1,4 +1,4 @@
-from api.models import Tasks, Jobs, ResourceGroups, Resources
+from api.models import Tasks, Job, ResourceGroups, Resources
 from api.serializers.tasks import *
 from api.serializers.job import *
 from api.serializers.resources import *
@@ -21,7 +21,7 @@ class SearchService(SearchBaseService):
         """
         Retun all the search_datas
         """
-        job_obj = Jobs.objects.all()
+        job_obj = Job.objects.all()
         task_obj = Tasks.objects.all()
         resource_obj = Resources.objects.all()
         resource_group_obj = ResourceGroups.objects.all()
@@ -52,7 +52,7 @@ class SearchService(SearchBaseService):
         """Get Search data details"""
         search_type = request.data.get("type")
         if search_type == "job":
-            model = Jobs
+            model = Job
             serializers = GetJobsDetailsSerializer
         elif search_type == "task":
             model = Tasks

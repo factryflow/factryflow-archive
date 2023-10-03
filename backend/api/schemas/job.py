@@ -1,7 +1,7 @@
 # schemas.py
 from datetime import datetime, date
 from typing import Optional
-from api.models import Jobs, JobStatus, JobType, JobDependency
+from api.models import Job, JobStatus, JobType, JobDependency
 from ninja import Schema, ModelSchema
 
 
@@ -29,7 +29,7 @@ class JobIn(Schema):
 
 class JobOut(ModelSchema):
     class Config:
-        model = Jobs
+        model = Job
         model_fields = ["id", "name", "description",  "customer", "due_date", "priority", "planned_start_datetime", "planned_end_datetime", "external_id", "note", "job_status", "job_type", "created_at", "created_by", "updated_at", "updated_by", "is_active", "is_deleted"]
 
 

@@ -5,7 +5,7 @@ from api.models import *
 
 admin.site.register(Dependency)
 admin.site.register(DependencyTypes)
-admin.site.register(Jobs)
+admin.site.register(Job)
 admin.site.register(OperationalException)
 admin.site.register(OperationalExceptionType)
 admin.site.register(ResourceGroups)

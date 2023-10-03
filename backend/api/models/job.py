@@ -2,12 +2,12 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from simple_history.models import HistoricalRecords
-from .jobStatus import JobStatus
-from .jobType import JobType
+from api.models.job_status import JobStatus
+from api.models.job_type import JobType
 from api.utils.model_manager import ActiveManager
 
 
-class Jobs(models.Model):
+class Job(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
