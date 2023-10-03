@@ -6,7 +6,7 @@ from utils import create_tasks_dict, set_predecessors
 app = FastAPI()
 
 
-@app.post("/schedule/")
+@app.post("/run-schedule/")
 async def schedule(input: ScheduleInput):
     # Create resources
     resources = {res.id: Resource(**res.dict()) for res in input.resources}

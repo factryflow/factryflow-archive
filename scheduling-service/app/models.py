@@ -9,12 +9,12 @@ class TaskCreate(BaseModel):
     priority: int
     resource_ids: List[int]
     predecessor_ids: List[int] = []
+    resource_count: int = 1
 
 
 class ResourceCreate(BaseModel):
     id: int
     available_windows: List[tuple[int, int]] = []
-    efficiency_multiplier: float = 1
 
 
 class ScheduleInput(BaseModel):
