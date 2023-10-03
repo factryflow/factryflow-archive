@@ -10,9 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from pathlib import Path
 import os
-import datetime
+from pathlib import Path
+
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = "django-insecure-4%xy&*^e5-r=$(@83r)%vr3h6_d^p6(724(v5sqxgiy#er!#0t"
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', cast=bool)
+DEBUG = config("DEBUG", cast=bool)
 
 ALLOWED_HOSTS = ["*"]
 
@@ -51,7 +51,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    'corsheaders.middleware.CorsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -65,7 +65,7 @@ ROOT_URLCONF = "backend.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [ os.path.join(BASE_DIR, 'api/templates')],
+        "DIRS": [os.path.join(BASE_DIR, "api/templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -84,16 +84,27 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT', cast=int)
+DB_ENGINE = config("DB_ENGINE", default="sqlite3")
+if DB_ENGINE == "postgres":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": config("DB_NAME"),
+            "USER": config("DB_USER"),
+            "PASSWORD": config("DB_PASSWORD"),
+            "HOST": config("DB_HOST"),
+            "PORT": config("DB_PORT", cast=int),
+        }
     }
-}
+elif DB_ENGINE == "sqlite3":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+else:
+    raise ValueError(f"Unsupported DB_ENGINE value: {DB_ENGINE}")
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -131,15 +142,15 @@ DATEFORMAT = "%m/%d/%Y"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-MEDIA_URL = '/media/'
+MEDIA_URL = "/media/"
 
-#CORS Configuration
+# CORS Configuration
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Default primary key field type
@@ -153,4 +164,5 @@ AUTH_USER_MODEL = "api.User"
 NINJA_JWT_SECRET = SECRET_KEY
 NINJA_JWT_ALGORITHM = "HS256"
 NINJA_JWT_ACCESS_TOKEN_LIFETIME = 3600  # 1 hour
+NINJA_JWT_REFRESH_TOKEN_LIFETIME = 86400  # 1 day
 NINJA_JWT_REFRESH_TOKEN_LIFETIME = 86400  # 1 day
