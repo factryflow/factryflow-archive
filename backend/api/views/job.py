@@ -30,16 +30,6 @@ class JobStatusViewSet(ModelViewSet):
     
 JobStatusViewSet.register_routes(job_status_router)
 
-def set_job_type_and_status(request, instance) -> None:
-    # Assuming the payload contains job_type_id and job_status_id
-    job_type_id = getattr(instance, 'job_type_id', None)
-    job_status_id = getattr(instance, 'job_status_id', None)
-
-    if job_type_id:
-        instance.job_type = JobType.objects.get(id=int(job_type_id))
-    if job_status_id:
-        instance.job_status = JobStatus.objects.get(id=int(job_status_id))
-
 
 job_router = Router()
 class JobViewSet(ModelViewSet):
