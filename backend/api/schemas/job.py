@@ -15,13 +15,15 @@ class JobIn(Schema):
     planned_end_datetime: datetime
     external_id: str
     note: Optional[str] = None
+    job_status_id: int
+    job_type_id: int
     
 
 
 class JobOut(ModelSchema):
     class Config:
         model = Job
-        model_fields = ["id", "name", "description",  "customer", "due_date", "priority", "planned_start_datetime", "planned_end_datetime", "external_id", "note", "job_status", "job_type", "created_at", "created_by", "updated_at", "updated_by", "is_active", "is_deleted"]
+        model_fields = "__all__"
 
 
 class JobTypeOut(ModelSchema):
@@ -33,4 +35,4 @@ class JobTypeOut(ModelSchema):
 class JobStatusOut(ModelSchema):
     class Config:
         model = JobStatus
-        model_fields = ["id", "name", "created_at", "created_by", "updated_at", "updated_by", "is_active", "is_deleted"]
+        model_fields = "__all__"

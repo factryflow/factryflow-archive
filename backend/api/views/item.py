@@ -1,10 +1,7 @@
 from api.models import Item
 from api.schemas import ItemIn, ItemOut
 from api.utils.crud_views import SoftDeleteModelView
-from api.utils.model_utils import (
-    set_created_updated_by_on_create,
-    set_updated_by_on_update,
-)
+from api.utils.model_utils import pre_save_hook
 from ninja import Router
 from ninja_crud.views import (
     CreateModelView,
@@ -25,13 +22,13 @@ class ItemViewSet(ModelViewSet):
     create = CreateModelView(
         input_schema=ItemIn,
         output_schema=ItemOut,
-        pre_save=set_created_updated_by_on_create,
+        pre_save=pre_save_hook(),
     )
     retrieve = RetrieveModelView(output_schema=ItemOut)
     update = UpdateModelView(
         input_schema=ItemIn,
         output_schema=ItemOut,
-        pre_save=set_updated_by_on_update,
+        pre_save=pre_save_hook(),
     )
     delete = SoftDeleteModelView()
 

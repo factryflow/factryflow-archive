@@ -1,74 +1,50 @@
-from api.models import *
-import json
-
-def set_created_updated_by_on_create(request, instance):
-    """
-    Set created_by and updated_by fields for the model instance during creation.
-
-    :param request: HttpRequest object
-    :param instance: Instance of the model being created
-    """
-    user = request.user
-    instance.created_by = user
-    instance.updated_by = user
+from typing import List, Optional
+from django.core.exceptions import FieldError
+from django.shortcuts import get_object_or_404
+from django.db import models
+from django.db.models import Model
 
 
-def set_updated_by_on_update(request, old_instance, new_instance):
-    """
-    Set updated_by field for the model instance during update.
+def set_created_updated_by(request, instance: 'Model', action: str) -> None:
+	"""
+	Set 'created_by' and 'updated_by' fields based on the action.
+	"""
+	user = request.user
+	if action == 'update':
+		instance.updated_by = user
+	else:
+		instance.created_by = user
 
-    :param request: HttpRequest object
-    :param old_instance: Instance of the model before update
-    :param new_instance: Instance of the model after update
-    """
-    user = request.user
-    new_instance.updated_by = user
 
 
-def set_job_foreign_keys_on_create(request, instance):
-    """
-    Set created_by and updated_by fields for the model instance during creation.
+def set_foreign_keys(instance: Model, field_names: List[str]) -> None:
+	"""
+	Dynamically set foreign keys on the instance based on provided field names.
+	"""
+	for field_name in field_names:
+		# Ensure the field is a ForeignKey
+		field = instance._meta.get_field(field_name)
+		if not isinstance(field, models.ForeignKey):
+			raise FieldError(f"'{field_name}' is not a ForeignKey on {instance.__class__.__name__}")
 
-    :param request: HttpRequest object
-    :param instance: Instance of the model being created
-    """
-    data = json.loads(request.body)
-    try:
-        job_type = JobType.objects.get(id=data.get("job_type"))
-    except JobType.DoesNotExist:
-        job_type = None
-    
-    try:
-        job_status = JobStatus.objects.get(id=data.get("job_status"))
-    except JobStatus.DoesNotExist:
-        job_status = None
-        
-    user = request.user
-    instance.created_by = user
-    instance.updated_by = user
-    instance.job_type = job_type
-    instance.job_status = job_status
-     
+		# Fetch the related model instance and set it
+		related_model_id = getattr(instance, f"{field_name}_id", None)
+		if related_model_id:
+			related_model_class = field.related_model
+			related_instance = get_object_or_404(related_model_class, id=related_model_id)
+			setattr(instance, field_name, related_instance)
 
-def set_job_foreign_keys_on_update(request, old_instance, new_instance):
-    """
-    Set updated_by field for the model instance during update.
 
-    :param request: HttpRequest object
-    :param old_instance: Instance of the model before update
-    :param new_instance: Instance of the model after update
-    """
-    data = json.loads(request.body)
-    try:
-        job_type = JobType.objects.get(id=data.get("job_type"))
-    except JobType.DoesNotExist:
-        job_type = None
-    
-    try:
-        job_status = JobStatus.objects.get(id=data.get("job_status"))
-    except JobStatus.DoesNotExist:
-        job_status = None
-    user = request.user
-    new_instance.updated_by = user
-    new_instance.job_type = job_type
-    new_instance.job_status = job_status
+
+
+def pre_save_hook(field_names: Optional[List[str]] = None):
+	"""
+	Return a pre-save function to set 'created_by', 'updated_by', and foreign keys.
+	"""
+	def pre_save(request, create_instance, update_instance=None) -> None:
+		instance = update_instance or create_instance
+		action = 'update' if update_instance else 'create'
+		set_created_updated_by(request, instance, action)
+		if field_names:
+			set_foreign_keys(instance, field_names)
+	return pre_save

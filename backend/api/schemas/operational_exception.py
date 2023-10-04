@@ -12,7 +12,7 @@ class OperationalExceptionTypeIn(Schema):
 class OperationalExceptionTypeOut(ModelSchema):
     class Config:
         model = OperationalExceptionType
-        model_fields = ["id", "name", "created_at", "created_by", "updated_at", "updated_by", "is_active", "is_deleted"]
+        model_fields = "__all__"
         
         
 class OperationalExceptionIn(Schema):
@@ -20,12 +20,12 @@ class OperationalExceptionIn(Schema):
     start_datetime: datetime
     end_datetime: datetime
     notes: Optional[str] = None
-    
+    weekly_shift_template_id: int
 
 
 class OperationalExceptionOut(ModelSchema):
     class Config:
         model = OperationalException
-        model_fields = ["id","external_id", "operational_exception_type", "start_datetime", "end_datetime", "notes", "weekly_shift_template", "created_at", "created_by", "updated_at", "updated_by", "is_active", "is_deleted"]
+        model_fields = "__all__"
 
         
