@@ -4,7 +4,7 @@ from typing import Optional
 from api.models import Job, JobStatus, JobType
 from ninja import Schema, ModelSchema
 
-
+    
 class JobIn(Schema):
     name: str
     description: Optional[str] = None

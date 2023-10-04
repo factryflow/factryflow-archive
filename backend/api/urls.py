@@ -77,3 +77,4 @@ def handle_field_error(request, exc: FieldError):
         data={"message": "FieldError", "detail": str(exc)},
         status=HTTPStatus.BAD_REQUEST,
     )
+
