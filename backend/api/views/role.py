@@ -1,10 +1,7 @@
 from api.models import Role
 from api.schemas import RoleIn, RoleOut
 from api.utils.crud_views import SoftDeleteModelView
-from api.utils.model_utils import (
-    set_created_updated_by_on_create,
-    set_updated_by_on_update,
-)
+from api.utils.model_utils import pre_save_hook
 from ninja import Router
 from ninja_crud.views import (
     CreateModelView,
@@ -24,13 +21,13 @@ class RoleViewSet(ModelViewSet):
     create = CreateModelView(
         input_schema=RoleIn,
         output_schema=RoleOut,
-        pre_save=set_created_updated_by_on_create,
+        pre_save=pre_save_hook,
     )
     retrieve = RetrieveModelView(output_schema=RoleOut)
     update = UpdateModelView(
         input_schema=RoleIn,
         output_schema=RoleOut,
-        pre_save=set_updated_by_on_update,
+        pre_save=pre_save_hook,
     )
     delete = SoftDeleteModelView()
 

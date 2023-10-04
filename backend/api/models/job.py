@@ -18,8 +18,8 @@ class Job(models.Model):
     planned_end_datetime = models.DateTimeField(blank=True, null=True)
     external_id = models.CharField(max_length=150, blank=True, null=True)
     note = models.CharField(max_length=150, blank=True, null=True)
-    job_status = models.ForeignKey(JobStatus, on_delete=models.DO_NOTHING, blank=True, null=True)
-    job_type = models.ForeignKey(JobType, on_delete=models.DO_NOTHING, blank=True, null=True)
+    job_status = models.ForeignKey(JobStatus, on_delete=models.DO_NOTHING)
+    job_type = models.ForeignKey(JobType, on_delete=models.DO_NOTHING)
     
     # Metadata
     created_at = models.DateTimeField(default=timezone.now)
