@@ -1,10 +1,7 @@
 from api.models import Job, JobType, JobStatus
 from api.schemas import JobOut, JobIn, JobTypeOut, JobStatusOut
 from api.utils.crud_views import SoftDeleteModelView
-from api.utils.model_utils import (
-    set_created_updated_by_on_create,
-    set_updated_by_on_update,
-)
+from api.utils.model_utils import pre_save_hook
 from ninja import Router
 from ninja_crud.views import (
     CreateModelView,
@@ -33,6 +30,16 @@ class JobStatusViewSet(ModelViewSet):
     
 JobStatusViewSet.register_routes(job_status_router)
 
+def set_job_type_and_status(request, instance) -> None:
+    # Assuming the payload contains job_type_id and job_status_id
+    job_type_id = getattr(instance, 'job_type_id', None)
+    job_status_id = getattr(instance, 'job_status_id', None)
+
+    if job_type_id:
+        instance.job_type = JobType.objects.get(id=int(job_type_id))
+    if job_status_id:
+        instance.job_status = JobStatus.objects.get(id=int(job_status_id))
+
 
 job_router = Router()
 class JobViewSet(ModelViewSet):
@@ -43,13 +50,13 @@ class JobViewSet(ModelViewSet):
     create = CreateModelView(
         input_schema=JobIn,
         output_schema=JobOut,
-        pre_save=set_created_updated_by_on_create,
+        pre_save=pre_save_hook(['job_type', 'job_status']),
     )
     retrieve = RetrieveModelView(output_schema=JobOut)
     update = UpdateModelView(
         input_schema=JobIn,
         output_schema=JobOut,
-        pre_save=set_updated_by_on_update,
+        pre_save=pre_save_hook(['job_type', 'job_status']),
     )
     delete = SoftDeleteModelView()
 
