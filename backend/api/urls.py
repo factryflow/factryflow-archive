@@ -23,6 +23,10 @@ api.add_router("/roles", role_router, tags=["roles"])
 api.add_router("/jobs", job_router, auth=JWTAuth(), tags=["jobs"])
 api.add_router("/job-types", job_type_router, auth=JWTAuth(), tags=["job-types"])
 api.add_router("/job-status", job_status_router, auth=JWTAuth(), tags=["job-status"])
+api.add_router("/operational-exception-type", operational_exception_type_router, auth=JWTAuth(), tags=["operational-exception-type"])
+api.add_router("/operational-exception", operational_exception_router, auth=JWTAuth(), tags=["operational-exception"])
+api.add_router("/weekly-shift-template-detail", weeklyshift_template_detail_router, auth=JWTAuth(), tags=["weekly-shift-template-detail"])
+api.add_router("/weekly-shift-template", weeklyshift_template_router, auth=JWTAuth(), tags=["weekly-shift-template"])
 
 
 @api.exception_handler(ObjectDoesNotExist)
