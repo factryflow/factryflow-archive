@@ -1,7 +1,3 @@
-from api.models import Item
-from api.schemas import ItemIn, ItemOut
-from api.utils.crud_views import SoftDeleteModelView
-from api.utils.model_utils import pre_save_hook
 from ninja import Router
 from ninja_crud.views import (
     CreateModelView,
@@ -10,6 +6,11 @@ from ninja_crud.views import (
     RetrieveModelView,
     UpdateModelView,
 )
+
+from api.models import Item
+from api.schemas import ItemIn, ItemOut
+from api.utils.crud_views import SoftDeleteModelView
+from api.utils.pre_save_hook import pre_save_hook
 
 item_router = Router()
 

@@ -1,7 +1,3 @@
-from api.models import Role
-from api.schemas import RoleIn, RoleOut
-from api.utils.crud_views import SoftDeleteModelView
-from api.utils.model_utils import pre_save_hook
 from ninja import Router
 from ninja_crud.views import (
     CreateModelView,
@@ -11,11 +7,17 @@ from ninja_crud.views import (
     UpdateModelView,
 )
 
+from api.models import Role
+from api.schemas import RoleIn, RoleOut
+from api.utils.crud_views import SoftDeleteModelView
+from api.utils.pre_save_hook import pre_save_hook
+
 role_router = Router()
+
 
 class RoleViewSet(ModelViewSet):
     model_class = Role
-    
+
     # AbstractModelView subclasses can be used as-is
     list = ListModelView(output_schema=RoleOut)
     create = CreateModelView(

@@ -1,7 +1,3 @@
-from api.models import Job, JobType, JobStatus
-from api.schemas import JobOut, JobIn, JobTypeOut, JobStatusOut
-from api.utils.crud_views import SoftDeleteModelView
-from api.utils.model_utils import pre_save_hook
 from ninja import Router
 from ninja_crud.views import (
     CreateModelView,
@@ -11,27 +7,40 @@ from ninja_crud.views import (
     UpdateModelView,
 )
 
+from api.models import Job, JobStatus, JobType
+from api.schemas import JobIn, JobOut, JobStatusOut, JobTypeOut
+from api.utils.crud_views import SoftDeleteModelView
+from api.utils.pre_save_hook import pre_save_hook
+
 job_type_router = Router()
+
+
 class JobTypeViewSet(ModelViewSet):
     model_class = JobType
 
     # AbstractModelView subclasses can be used as-is
     list = ListModelView(output_schema=JobTypeOut)
-    
+
+
 JobTypeViewSet.register_routes(job_type_router)
 
 
 job_status_router = Router()
+
+
 class JobStatusViewSet(ModelViewSet):
     model_class = JobStatus
 
     # AbstractModelView subclasses can be used as-is
     list = ListModelView(output_schema=JobStatusOut)
-    
+
+
 JobStatusViewSet.register_routes(job_status_router)
 
 
 job_router = Router()
+
+
 class JobViewSet(ModelViewSet):
     model_class = Job
 
@@ -40,13 +49,13 @@ class JobViewSet(ModelViewSet):
     create = CreateModelView(
         input_schema=JobIn,
         output_schema=JobOut,
-        pre_save=pre_save_hook(['job_type', 'job_status']),
+        pre_save=pre_save_hook(),
     )
     retrieve = RetrieveModelView(output_schema=JobOut)
     update = UpdateModelView(
         input_schema=JobIn,
         output_schema=JobOut,
-        pre_save=pre_save_hook(['job_type', 'job_status']),
+        pre_save=pre_save_hook(),
     )
     delete = SoftDeleteModelView()
 
