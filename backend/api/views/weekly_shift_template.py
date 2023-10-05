@@ -1,7 +1,3 @@
-from api.models import WeeklyShiftTemplate, WeeklyShiftTemplateDetail
-from api.schemas import WeeklyShiftTemplateIn, WeeklyShiftTemplateOut, WeeklyShiftTemplateDetailIn, WeeklyShiftTemplateDetailOut
-from api.utils.crud_views import SoftDeleteModelView
-from api.utils.model_utils import pre_save_hook
 from ninja import Router
 from ninja_crud.views import (
     CreateModelView,
@@ -11,8 +7,17 @@ from ninja_crud.views import (
     UpdateModelView,
 )
 
-weeklyshift_template_router = Router()
+from api.models import WeeklyShiftTemplate, WeeklyShiftTemplateDetail
+from api.schemas import (
+    WeeklyShiftTemplateDetailIn,
+    WeeklyShiftTemplateDetailOut,
+    WeeklyShiftTemplateIn,
+    WeeklyShiftTemplateOut,
+)
+from api.utils.crud_views import SoftDeleteModelView
+from api.utils.pre_save_hook import pre_save_hook
 
+weeklyshift_template_router = Router()
 
 
 class WeeklyShiftTemplateViewSet(ModelViewSet):
@@ -38,8 +43,6 @@ class WeeklyShiftTemplateViewSet(ModelViewSet):
 WeeklyShiftTemplateViewSet.register_routes(weeklyshift_template_router)
 
 
-
-
 weeklyshift_template_detail_router = Router()
 
 
@@ -51,13 +54,13 @@ class WeeklyShiftTemplateDetailsViewSet(ModelViewSet):
     create = CreateModelView(
         input_schema=WeeklyShiftTemplateDetailIn,
         output_schema=WeeklyShiftTemplateDetailOut,
-        pre_save=pre_save_hook(['template']),
+        pre_save=pre_save_hook(),
     )
     retrieve = RetrieveModelView(output_schema=WeeklyShiftTemplateDetailOut)
     update = UpdateModelView(
         input_schema=WeeklyShiftTemplateDetailIn,
         output_schema=WeeklyShiftTemplateDetailOut,
-        pre_save=pre_save_hook(['template']),
+        pre_save=pre_save_hook(),
     )
     delete = SoftDeleteModelView()
 
