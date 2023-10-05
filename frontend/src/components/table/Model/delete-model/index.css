@@ -1,0 +1,60 @@
+.main-model{
+    height: 300px;
+  
+}
+
+.h3{
+    font-size: 20px !important;
+    color: #3F4254;
+}
+
+.h6{
+    color: #7E8299 !important;
+    line-height: 22px !important;
+}
+.frist_row{
+    padding: 10px;
+    gap: 15px;
+  
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+h3{
+    font-size: 16px;
+}
+
+
+.delete-icon{
+    background-color: #FFF5F8 !important;
+    border-radius: 50% !important;
+    width: 60px !important;
+    height: 60px !important;
+}
+
+.btn-model-row{
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    gap: 25px;
+}
+.btn-cancel-model {
+    height: 48px;
+    width: 110px;
+    font-size: 17px;
+     background-color:#F1F1F2 !important;
+    color: #7E8299 !important;
+    box-shadow: none !important;
+}
+.btn-delete-model{
+    height: 48px;
+    width: 110px;
+    font-size: 19px;
+    text-transform: capitalize !important;
+    background-color:#F1416C !important;
+   color: #fff !important;
+   box-shadow: none !important;
+}

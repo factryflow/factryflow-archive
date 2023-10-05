@@ -1,1 +1,77 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+/* @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap");
+
+html,
+body,
+#root,
+.app,
+.content {
+ height: auto;
+ width: 100%;
+ display: flex;
+
+}
+
+.app {
+  display: flex;
+  position: relative;
+
+} */
+
+.btn-cancel{
+  padding: 16px 30px 16px 24px !important;
+  background-color:#F1F1F2 !important;
+  color: #7E8299 !important;
+  box-shadow: none !important;
+}
+
+.btn-cancel:hover{
+  background-color:#F1F1F2 !important;
+  color: #7E8299 !important;
+  box-shadow: none !important;
+}
+
+.btn-success{
+  padding: 16px 24px 16px 24px !important;
+  background-color:#2884EF !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+.main-header{
+  position: sticky!important;
+  top: 0px!important;
+  width: 100%!important;
+}
+
+.main-content{
+  padding: 20px;
+  border-radius: 18px !important;
+  background: #FAFAFB !important;
+}
+.main{
+  flex-grow: 1;
+  margin-top: 0px!important;
+  padding: 0px!important;
+  height: "auto";
+  width: calc(800px - -98px);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #1976d2; 
+  border-radius: 50px;
+}
+.css-12i7wg6-MuiPaper-root-MuiDrawer-paper{
+  border-right: 0px!important;
+}
