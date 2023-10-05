@@ -5,8 +5,8 @@ from .job import *
 from .tasksView import *
 from .dependencyView import *
 from .resourcesView import *
-from .operationalExceptionView import *
-from .weeklyshiftTemplateView import *
+from .operational_exception import *
+from .weekly_shift_template import *
 from .scheduleRunView import *
 from .searchView import *
 from .assignmentRuleView import *
