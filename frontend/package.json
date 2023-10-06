@@ -26,6 +26,7 @@
     "@mui/x-date-pickers": "^6.12.1",
     "@reduxjs/toolkit": "^1.9.5",
     "@tabler/icons-react": "^2.34.0",
+    "async-mutex": "^0.4.0",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.9",
     "mantine-react-table": "^1.2.1",

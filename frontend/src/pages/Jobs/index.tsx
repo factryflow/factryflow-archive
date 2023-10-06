@@ -194,7 +194,6 @@ const Jobs = () => {
     if (!jobLoading && getjobData) {
       dispatch(setJobies(getjobData));
     }
-
     // [TODO]: letter set status in state => tabs
   }, [jobLoading, getjobData]);
 
@@ -269,18 +268,18 @@ const Jobs = () => {
                 data={data}
                 setFilterData={setFilterData}
               />
-              {false ? (
+              {jobLoading ? (
                 <>
                   <Loading />
                 </>
               ) : (
-                true && (
+                jobsSelector && (
                   <>
                     <DataGrid
                       className="dataGrid"
                       autoHeight={true}
-                      // rows={jobsSelector ?? []}
-                      rows={filterData ?? []}
+                      rows={jobsSelector ?? []}
+                      // rows={filterData ?? []}
                       columns={columns}
                       initialState={{
                         pagination: {
