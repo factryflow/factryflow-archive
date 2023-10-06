@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { GetAllJobType } from "../types/jobs.types";
+import { GetAllJobType } from "@/types/jobs.types";
 import config from "@/config/default";
 
 export const dependencyApi = createApi({
