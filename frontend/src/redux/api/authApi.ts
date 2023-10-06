@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import config from "@/config/default";
-
+import customFetchBase from "./customeFetchBase";
 import {
   Login,
   Register,
@@ -11,14 +10,12 @@ import {
 
 export const authApi = createApi({
   reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: config.API_ENDPOINT,
-  }),
+  baseQuery: customFetchBase,
   endpoints: (builder) => ({
     loginUser: builder.mutation<GenericResponse<LoginResponse>, Login>({
       query: (body) => {
         return {
-          url: "api/auth-login/",
+          url: "api/token/pair",
           method: "post",
           body,
         };
@@ -33,7 +30,7 @@ export const authApi = createApi({
           password: string;
         }) => {
           return {
-            url: "api/auth-sign-up/",
+            url: "api/users",
             method: "post",
             body,
           };

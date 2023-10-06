@@ -2,7 +2,7 @@
 export type GenericResponse<T> = {
   code: number;
   message: string;
-  data?: T;
+  items?: T;
 };
 
 export type Params = {
@@ -12,19 +12,14 @@ export type Params = {
 
 //#region login api types
 export type Login = {
-  email: string;
+  username: string;
   password: string;
 };
 
 export type LoginResponse = {
-  id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
-  role: string | null;
-  is_active: boolean;
-  is_deleted: boolean;
-  token: string;
+  access: string;
+  refresh: string;
+  username: string;
 } | null;
 //#endregion
 
@@ -64,11 +59,39 @@ export type JobResponse = {
   customer: Nullable<string>;
   description: Nullable<string>;
   note: Nullable<string>;
-  planned_start: Nullable<string>;
-  planned_end: Nullable<string>;
+  planned_start_datetime: Nullable<string>;
+  planned_end_datetime: Nullable<string>;
   is_active: boolean;
   is_deleted: boolean;
+  external_id: Nullable<string>;
+  job_status: number;
+  job_type: number;
+  created_at: Nullable<string>;
+  created_by: number;
+  updated_at: Nullable<string>;
+  updated_by: number;
+  deleted_at: Nullable<string>;
 };
+
+// id": 0,
+//       "name": "string",
+//       "description": "string",
+//       "customer": "string",
+//       "due_date": "2023-10-06",
+//       "priority": 0,
+//       "planned_start_datetime": "2023-10-06T11:31:13.137Z",
+//       "planned_end_datetime": "2023-10-06T11:31:13.137Z",
+//       "external_id": "string",
+//       "note": "string",
+//       "job_status": 0,
+//       "job_type": 0,
+//       "created_at": "2023-10-06T11:31:13.138Z",
+//       "created_by": 0,
+//       "updated_at": "2023-10-06T11:31:13.138Z",
+//       "updated_by": 0,
+//       "deleted_at": "2023-10-06T11:31:13.138Z",
+//       "is_active": true,
+//       "is_deleted": false
 
 export type CreateJob = {
   name: string;

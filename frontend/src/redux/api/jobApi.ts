@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { GetAllJobType } from "../types/jobs.types";
+
 import { REHYDRATE } from "redux-persist";
 import config from "@/config/default";
 import {
@@ -9,15 +9,10 @@ import {
   UpdateJob,
   GenericResponse,
 } from "@/types/api.types";
-
+import customFetchBase from "./customeFetchBase";
 export const jobApi = createApi({
   reducerPath: "jobApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: config.API_ENDPOINT,
-    prepareHeaders: (header) => {
-      header.set("Authorization", `Bearer ${localStorage.getItem("token")}`);
-    },
-  }),
+  baseQuery: customFetchBase,
   tagTypes: ["getAllJobs"],
   endpoints: (builder) => ({
     // getAllJobs Api
@@ -26,7 +21,7 @@ export const jobApi = createApi({
         return `api/jobs/`;
       },
       transformResponse: (res: GenericResponse<JobResponse[]>) => {
-        const result = res.data?.filter(
+        const result = res.items?.filter(
           (item: any) => item.is_deleted === false
         );
         return result ?? [];
@@ -41,7 +36,7 @@ export const jobApi = createApi({
           url: `aapi/jobs/${id}/`,
         };
       },
-      transformResponse: (res: GenericResponse<JobResponse>) => res.data,
+      transformResponse: (res: GenericResponse<JobResponse>) => res.items,
     }),
     // create job api
     createJobs: builder.mutation<

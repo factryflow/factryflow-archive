@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { toast } from "react-toastify";
 import { setUser } from "@/redux/features/authSlice";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { Controller, useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -21,10 +21,13 @@ const LogIn = () => {
   const [loginUser, { data, error, isSuccess, isLoading }] =
     useLoginUserMutation();
   const navigate = useNavigate();
+  const location = useLocation();
+
   const dispatch = useAppDispatch();
   console.log(data, "login Data");
   const validationSchema = yup.object().shape({
-    email: yup.string().email("invalid email").required("required Email"),
+    // email: yup.string().email("invalid email").required("required Email"),
+    username: yup.string().required("required username"),
     password: yup.string().required("required password"),
   });
 
@@ -43,24 +46,15 @@ const LogIn = () => {
     await loginUser(data);
   };
 
-  useEffect(() => {
-    if (!isLoading && data) {
-      const { data: response } = data;
-      if (response) {
-        const token = response.token;
+  // const from = ((location.state as any)?.from.pathname as string) || "/jobs";
 
-        dispatch(setUser({ token }));
-      }
+  useEffect(() => {
+    if (isSuccess && data) {
+      dispatch(setUser(data));
+      toast.success("You successfully logged in");
       navigate("/jobs");
-      data.code >= 400
-        ? toast.error(data.message)
-        : toast.success(data.message);
     }
-    if (!isLoading && error) {
-      console.error(error);
-      // toast.error(data.message);
-    }
-  }, [isLoading, data, error]);
+  }, [isLoading, data]);
 
   return (
     <Grid>
@@ -86,17 +80,17 @@ const LogIn = () => {
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Controller
-              name="email"
+              name="username"
               control={control}
               defaultValue=""
               render={({ field }) => (
                 <TextField
-                  label="Email Address"
+                  label="username"
                   variant="outlined"
-                  error={!!errors.email}
+                  error={!!errors.username}
                   margin="normal"
                   autoComplete="email"
-                  helperText={errors.email?.message}
+                  helperText={errors.username?.message}
                   fullWidth
                   {...field}
                 />

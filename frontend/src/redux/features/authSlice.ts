@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../app/store";
+import { RootState } from "@/redux/store";
 
 export interface AuthState {
-  token: string | null;
+  user: any | null;
 }
 
 const initialState: AuthState = {
-  token: null,
+  user: null,
 };
 
 export const authSlice = createSlice({
@@ -18,14 +18,21 @@ export const authSlice = createSlice({
       //     name:action.payload.name,
       //     token:action.payload.token
       // }))
-      localStorage.setItem("token", action.payload.token);
+      localStorage.setItem(
+        "token",
+        JSON.stringify({
+          access: action.payload.access,
+          refresh: action.payload.refresh,
+        })
+      );
+      state.user = action.payload;
       // state.name= action.payload.name;
-      state.token = action.payload.token;
+      // state.token = action.payload;
     },
     logout: (state) => {
       localStorage.clear();
       // state.name=null;
-      state.token = null;
+      state.user = null;
     },
   },
 });
