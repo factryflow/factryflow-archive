@@ -6,3 +6,4 @@ from .operational_exception import *
 from .weekly_shift_template import *
 from .assignment_rule import *
 from .resource import *
+from .dependency import *

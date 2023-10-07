@@ -32,6 +32,10 @@ api.add_router("/assignment-rule-criteria", assignment_rule_criteria_router, aut
 api.add_router("/assignment-rule-resource-group", assignment_rule_resource_group_router, auth=JWTAuth(), tags=["assignment-rule-resource-group"])
 api.add_router("/resource", resource_router, auth=JWTAuth(), tags=["resource"])
 api.add_router("/resource-group", resource_group_router, auth=JWTAuth(), tags=["resource-group"])
+api.add_router("/dependency-status", dependency_status_router, auth=JWTAuth(), tags=["dependency-status"])
+api.add_router("/dependency-types", dependency_type_router, auth=JWTAuth(), tags=["dependency-types"])
+api.add_router("/dependency", dependency_router, auth=JWTAuth(), tags=["dependency"])
+
 
 
 @api.exception_handler(ObjectDoesNotExist)

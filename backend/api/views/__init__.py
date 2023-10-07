@@ -3,7 +3,7 @@ from .role import *
 from .item import *
 from .job import *
 from .tasksView import *
-from .dependencyView import *
+from .dependency import *
 from .resource import *
 from .operational_exception import *
 from .weekly_shift_template import *
