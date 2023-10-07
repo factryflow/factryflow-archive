@@ -27,6 +27,15 @@ api.add_router("/operational-exception-type", operational_exception_type_router,
 api.add_router("/operational-exception", operational_exception_router, auth=JWTAuth(), tags=["operational-exception"])
 api.add_router("/weekly-shift-template-detail", weeklyshift_template_detail_router, auth=JWTAuth(), tags=["weekly-shift-template-detail"])
 api.add_router("/weekly-shift-template", weeklyshift_template_router, auth=JWTAuth(), tags=["weekly-shift-template"])
+api.add_router("/assignment-rule", assignment_rule_router, auth=JWTAuth(), tags=["assignment-rule"])
+api.add_router("/assignment-rule-criteria", assignment_rule_criteria_router, auth=JWTAuth(), tags=["assignment-rule-criteria"])
+api.add_router("/assignment-rule-resource-group", assignment_rule_resource_group_router, auth=JWTAuth(), tags=["assignment-rule-resource-group"])
+api.add_router("/resource", resource_router, auth=JWTAuth(), tags=["resource"])
+api.add_router("/resource-group", resource_group_router, auth=JWTAuth(), tags=["resource-group"])
+api.add_router("/dependency-status", dependency_status_router, auth=JWTAuth(), tags=["dependency-status"])
+api.add_router("/dependency-types", dependency_type_router, auth=JWTAuth(), tags=["dependency-types"])
+api.add_router("/dependency", dependency_router, auth=JWTAuth(), tags=["dependency"])
+
 
 
 @api.exception_handler(ObjectDoesNotExist)
