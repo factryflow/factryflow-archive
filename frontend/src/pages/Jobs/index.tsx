@@ -9,9 +9,13 @@ import { Badge, Card } from "@mantine/core";
 
 import Header from "../../components/table/Header";
 import Layout from "../Layout";
-import { useGetAllJobsQuery, useDeleteJobsMutation } from "@/redux/api/jobApi";
+import {
+  useGetAllJobsQuery,
+  useDeleteJobsMutation,
+  useGetJobStatusQuery,
+} from "@/redux/api/jobApi";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { setJobies } from "@/redux/features/jobSlice";
+import { setJobies, setJobStatus } from "@/redux/features/jobSlice";
 import Loading from "@/components/loading/loading";
 import useTabs from "@/hooks/useTabs";
 import { getString } from "@/helpers";
@@ -39,14 +43,21 @@ interface WithJobResponse extends JobResponse {
 }
 
 const Jobs = () => {
-  const [data, setData] = useState<
-    Array<Omit<WithJobResponse, excluded_fields>> | []
-  >([]);
   const dispatch = useAppDispatch();
   const jobsSelector = useAppSelector((state: any) => state.job.jobies);
-  const [filterData, setFilterData] = useState<any[]>(jobs);
-  // console.log(filterData, "dataaaaaaa");
+  const jobstatusSelector = useAppSelector((state: any) => state.job.jobstatus);
+  const [data, setData] = useState<
+    Array<Omit<WithJobResponse, excluded_fields>> | []
+  >();
+
+  //call api joblist
   const { data: getjobData, isLoading: jobLoading } = useGetAllJobsQuery(
+    undefined,
+    {}
+  );
+
+  // call api jobstatus
+  const { data: jobstatus, isLoading: jsIsLoading } = useGetJobStatusQuery(
     undefined,
     {}
   );
@@ -106,7 +117,13 @@ const Jobs = () => {
       headerAlign: "center",
       align: "center",
       renderCell: (row) => {
-        // console.log("🚀 ~ file: index.tsx:78 ~ Jobs ~ param:", row);
+        // console.log(
+        //   "🚀 ~ file: index.tsx:78 ~ Jobs ~ param:",
+        //   row.row.job_status
+        // );
+        const filterjobstatus = jobstatusSelector.filter(
+          (job: any) => job.id === row.row.job_status
+        );
 
         const badgeColor: BadgeType = {
           completed: "green",
@@ -118,10 +135,10 @@ const Jobs = () => {
         return (
           <Badge
             variant="light"
-            color={badgeColor[row.value]}
+            color={badgeColor[filterjobstatus[0].name]}
             sx={{ textTransform: "unset" }}
           >
-            {getString(row.value)}
+            {getString(filterjobstatus[0].name)}
           </Badge>
         );
       },
@@ -185,10 +202,6 @@ const Jobs = () => {
   const handleClick = () => {
     navigate("/jobs/form");
   };
-  // const setJobDataList = (data: WithJobResponse[]) => {
-  //   console.log(data, "setJobDataList");
-  //   setData(data);
-  // };
 
   useEffect(() => {
     if (!jobLoading && getjobData) {
@@ -198,10 +211,14 @@ const Jobs = () => {
   }, [jobLoading, getjobData]);
 
   useEffect(() => {
-    if (jobs.length) {
-      setData(jobs as any);
+    if (!jsIsLoading && jobstatus) {
+      dispatch(setJobStatus(jobstatus));
     }
-  }, [jobs]);
+  }, [jsIsLoading, jobstatus]);
+
+  useEffect(() => {
+    setData(jobsSelector);
+  }, [jobsSelector]);
 
   return (
     <>
@@ -217,9 +234,7 @@ const Jobs = () => {
             m="30px 0 0 0"
             height="auto"
             sx={{
-              "& .MuiDataGrid-root": {
-                mt: 4,
-              },
+              "& .MuiDataGrid-root": {},
 
               "& .name-column--cell": {
                 color: "bold !important",
@@ -232,7 +247,6 @@ const Jobs = () => {
                 color: "	#000000",
                 fontSize: "14px",
                 fontWeight: "bold !important",
-
                 borderTop: "1px solid #F0F0F0",
               },
               "& .MuiDataGrid-virtualScroller": {
@@ -241,9 +255,21 @@ const Jobs = () => {
               "& .MuiDataGrid-footerContainer": {
                 backgroundColor: "#FFFFFF",
               },
-              "& .MuiCheckbox-root": {
-                color: `1677FF !important`,
+              "& .MuiCheckbox-root svg": {
+                width: 23,
+                height: 23,
+                backgroundColor: "#F1F1F2",
+                border: `0px solid #E1E3EA`,
+                borderRadius: 1,
               },
+              "& .MuiCheckbox-root svg path": {
+                display: "none",
+              },
+              "& .MuiCheckbox-root.Mui-checked:not(.MuiCheckbox-indeterminate) svg":
+                {
+                  backgroundColor: "#1890ff",
+                  borderColor: "#1890ff",
+                },
               ".MuiDataGrid-cell:focus": {
                 outline: "none !important",
               },
@@ -259,14 +285,15 @@ const Jobs = () => {
               },
             }}
           >
-            <Card withBorder>
+            <Card withBorder sx={{ padding: "0px !important" }}>
               <StatusTabs
                 statusTabs={[
                   "all",
-                  ...new Set(data.map((job: any) => job.status)),
+                  ...jobstatusSelector?.map((status: any) => status.name),
                 ]}
-                data={data}
-                setFilterData={setFilterData}
+                data={jobsSelector ?? []}
+                jobstatus={jobstatusSelector}
+                setFilterData={setData}
               />
               {jobLoading ? (
                 <>
@@ -278,7 +305,7 @@ const Jobs = () => {
                     <DataGrid
                       className="dataGrid"
                       autoHeight={true}
-                      rows={jobsSelector ?? []}
+                      rows={data ?? []}
                       // rows={filterData ?? []}
                       columns={columns}
                       initialState={{
@@ -322,38 +349,44 @@ export default Jobs;
 
 export const StatusTabs = ({
   statusTabs,
+  jobstatus,
   data,
   setFilterData,
 }: {
   statusTabs: string[];
-
+  jobstatus: any[];
   data: any;
   setFilterData: any;
 }) => {
+  // console.log(data, "jhjhjhj");
   const { Tabs } = useTabs();
+  const statusCount: { [key: string]: any } = {};
 
   const filterJobDataWithActiveTab = (tab: string) => {
-    // console.log(tab, "tabssss");
     if (tab === "all") {
       setFilterData(data);
     } else {
-      setFilterData(data.filter((job: any) => job.status === tab));
+      let tabid = jobstatus.find((status) => status.name === tab).id;
+      if (tabid)
+        setFilterData(data.filter((job: any) => job.job_status === tabid));
     }
   };
-
-  const statusCounts = data.reduce((acc: any, item: any) => {
-    acc[item.status] = (acc[item.status] || 0) + 1;
-    acc["all"] = (acc["all"] || 0) + 1;
-    return acc;
-  }, {});
-
-  // console.log(statusCounts, "statusCounts");
+  if (data) {
+    // Iterate through the job list and count the status
+    data.forEach((job: any) => {
+      const statusName = jobstatus.find(
+        (status: any) => status.id === job.job_status
+      ).name;
+      statusCount[statusName] = (statusCount[statusName] || 0) + 1;
+      statusCount["all"] = data.length;
+    });
+  }
 
   return (
     <Tabs
       tabs={statusTabs}
       filterDataWithActiveTab={filterJobDataWithActiveTab}
-      statusCounts={statusCounts}
+      statusCounts={statusCount}
     />
   );
 };
