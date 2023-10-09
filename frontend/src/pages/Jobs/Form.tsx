@@ -2,6 +2,7 @@ import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
 import * as yup from "yup";
 import "../../index.css";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
+
 import {
   TextField,
   Typography,
@@ -30,15 +31,34 @@ import TaskDetails from "@/components/data-tables/tasks/TaskDetails";
 import DependencyDetails from "@/components/data-tables/dependency/dependencyDetails";
 import taskData from "@/data/tasks.json";
 import dependencyData from "@/data/dependancy.json";
+
+import { FormInputText } from "@/components/form-components/FormInputText";
 const validationSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
   priority: yup.string().required("priority is required").nullable(),
   due_date: yup.date().required("Date is required").nullable(),
+  planned_start_datetime: yup.string().required("Date is required").nullable(),
+
+  // planned_end_datetime: yup.date().required("Date is required").nullable(),
   customer: yup.string().required("customer is required").nullable(),
   description: yup.string().required("description is required"),
   note: yup.string().required("note is required"),
-  status: yup.string().required("status is required"),
+  status: yup.string().required("status is required").nullable(),
 });
+
+// {
+//   "name": "string",
+//   "description": "string",
+//   "customer": "string",
+//   "due_date": "2023-10-09",
+//   "priority": 0,
+//   "planned_start_datetime": "2023-10-09T09:10:46.206Z",
+//   "planned_end_datetime": "2023-10-09T09:10:46.206Z",
+//   "external_id": "string",
+//   "note": "string",
+//   "job_status_id": 0,
+//   "job_type_id": 0
+// }
 
 const MyForm = () => {
   const navigate = useNavigate();
@@ -49,6 +69,7 @@ const MyForm = () => {
   const [statuschange, setStatus] = useState(0);
   const [createJobs, { data, isLoading, error }] = useCreateJobsMutation();
   const [activeTab, setActiveTab] = useState<string | null>("tasks");
+
   const [
     updateJobs,
     {
@@ -59,7 +80,19 @@ const MyForm = () => {
     },
   ] = useUpdateJobsMutation();
 
+  const Defaultvalues = {
+    name: "",
+    priority: "",
+    due_date: new Date(),
+    customer: "",
+    description: "",
+    note: "",
+    status: "",
+    planned_start_datetime: "",
+  };
+
   const form = useForm({
+    defaultValues: Defaultvalues,
     resolver: yupResolver(validationSchema),
   });
 
@@ -169,100 +202,49 @@ const MyForm = () => {
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
                 <Grid item xs={6}>
-                  <Typography variant="subtitle1">Job Name</Typography>
-                  <Controller
-                    name="name"
+                  <FormInputText
+                    name={"name"}
                     control={control}
-                    defaultValue=""
-                    render={({ field }) => (
-                      <TextField
-                        error={!!errors.name}
-                        size="small"
-                        placeholder=" Enter Job Name"
-                        helperText={errors.name?.message}
-                        fullWidth
-                        {...field}
-                        InputProps={{
-                          style: {
-                            borderRadius: "5px",
-                          },
-                        }}
-                      />
-                    )}
+                    label={"Job Name"}
+                    placeholder={"Enter Job Name"}
+                    type={"text"}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
-                  <Typography variant="subtitle1">Description</Typography>
-                  <Controller
-                    name="description"
+                  <FormInputText
+                    name={"description"}
                     control={control}
-                    defaultValue=""
-                    render={({ field }) => (
-                      <TextField
-                        size="small"
-                        placeholder="Write Description"
-                        error={!!errors.description}
-                        helperText={errors.description?.message}
-                        fullWidth
-                        {...field}
-                        InputProps={{
-                          style: {
-                            borderRadius: "5px",
-                          },
-                        }}
-                      />
-                    )}
+                    label={"Description"}
+                    placeholder={"Write Description"}
+                    type={"text"}
                   />
                 </Grid>
                 <Grid item xs={6}>
-                  <Typography variant="subtitle1"> Due Date</Typography>
-                  <Controller
-                    name="due_date"
+                  <FormInputText
+                    name={"due_date"}
                     control={control}
-                    defaultValue={new Date()}
-                    render={({ field }) => (
-                      <TextField
-                        variant="outlined"
-                        type="date"
-                        size="small"
-                        error={!!errors.due_date}
-                        helperText={errors.due_date?.message}
-                        {...field}
-                        fullWidth
-                        inputProps={{
-                          style: {
-                            borderRadius: "5px",
-                          },
-                        }}
-                      />
-                    )}
+                    label={"Due Date"}
+                    placeholder={""}
+                    type={"date"}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
-                  <Typography variant="subtitle1">priority</Typography>
-                  <Controller
-                    name="priority"
+                  <FormInputText
+                    name={"priority"}
                     control={control}
-                    defaultValue=""
-                    render={({ field }) => (
-                      <TextField
-                        type="number"
-                        size="small"
-                        error={!!errors.priority}
-                        helperText={errors.priority?.message}
-                        fullWidth
-                        {...field}
-                        InputProps={{
-                          style: {
-                            borderRadius: "5px",
-                          },
-                        }}
-                      />
-                    )}
+                    label={"priority"}
+                    placeholder={""}
+                    type={"number"}
                   />
                 </Grid>
+                {/* <Grid item xs={6}>
+                  <FormInputDate
+                    name={"planned_start_datetime"}
+                    control={control}
+                  />
+                </Grid> */}
 
                 <Grid item xs={6}>
                   <Typography variant="subtitle1">Status</Typography>
