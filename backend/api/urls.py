@@ -35,6 +35,11 @@ api.add_router("/resource-group", resource_group_router, auth=JWTAuth(), tags=["
 api.add_router("/dependency-status", dependency_status_router, auth=JWTAuth(), tags=["dependency-status"])
 api.add_router("/dependency-types", dependency_type_router, auth=JWTAuth(), tags=["dependency-types"])
 api.add_router("/dependency", dependency_router, auth=JWTAuth(), tags=["dependency"])
+api.add_router("/schedule-run", schedule_run_router, auth=JWTAuth(), tags=["schedule-run"])
+api.add_router("/schedule-run-status", schedule_run_status_router, auth=JWTAuth(), tags=["schedule-run-status"])
+api.add_router("/tasks", task_router, auth=JWTAuth(), tags=["tasks"])
+api.add_router("/task-types", task_type_router, auth=JWTAuth(), tags=["task-types"])
+api.add_router("/task-status", task_status_router, auth=JWTAuth(), tags=["task-status"])
 
 
 
