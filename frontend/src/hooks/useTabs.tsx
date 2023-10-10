@@ -20,11 +20,13 @@ const useTabs = () => {
     filterDataWithActiveTab: (e: string) => void;
     statusCounts: any;
   }) => {
+    // console.log("alll tabs", tabs);
     const filterStatusRecords = (
       e: React.SyntheticEvent<HTMLButtonElement>,
       tab?: string
     ) => {
       e.preventDefault();
+
       if (tab) {
         filterDataWithActiveTab(tab);
         setActiveTab(tab);

@@ -30,7 +30,7 @@ import ResourceIcon from "@/assets/sidebar/resource.svg";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import Dote from "@/assets/images/Dote.svg";
 import FactoryFlowIcon from "@/assets/images/factryflow .svg";
-
+import FFLogo from "@/assets/images/FFlogo.svg";
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -102,12 +102,16 @@ export default function Sidenav() {
 
       <Drawer variant="permanent" open={open}>
         <DrawerHeader sx={{ marginRight: "14px !important" }}>
-          <img
-            src={FactoryFlowIcon}
-            alt="FactoryFlowIcon"
-            height={50}
-            width={200}
-          />
+          {open && open ? (
+            <img
+              src={FactoryFlowIcon}
+              alt="FactoryFlowIcon"
+              height={50}
+              width={200}
+            />
+          ) : (
+            <img src={FFLogo} alt="FFlogo" height={30} width={30} />
+          )}
         </DrawerHeader>
         {/* <Divider /> */}
         <List>

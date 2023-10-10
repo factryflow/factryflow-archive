@@ -5,11 +5,13 @@ import { JobResponse } from "@/types/api.types";
 type JobSliceTypes = {
   job: JobResponse | null;
   jobies: JobResponse[] | [];
+  jobstatus: any;
 };
 
 const initialState: JobSliceTypes = {
   job: null,
   jobies: [],
+  jobstatus: [],
 };
 
 const JobSlice = createSlice({
@@ -23,7 +25,9 @@ const JobSlice = createSlice({
     setJobies: (state, action: PayloadAction<JobResponse[]>) => {
       state.jobies = action.payload;
     },
-
+    setJobStatus: (state, action: PayloadAction<any>) => {
+      state.jobstatus = action.payload;
+    },
     resetJobies: (state) => {
       return {
         ...state,
@@ -40,5 +44,6 @@ const JobSlice = createSlice({
   },
 });
 
-export const { setJobies, setJob, resetJobies, resetJob } = JobSlice.actions;
+export const { setJobies, setJob, resetJobies, resetJob, setJobStatus } =
+  JobSlice.actions;
 export default JobSlice.reducer;
