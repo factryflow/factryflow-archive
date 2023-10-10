@@ -1,5 +1,5 @@
 from api.models.user import User
-from api.schemas.user import UserIn, UserOut
+from api.schemas.user import UserIn, UserOut, UserForgotPassword
 from django.contrib.auth import get_user_model
 from ninja import Router
 from ninja_crud.views import (
@@ -38,14 +38,23 @@ class UserViewSet(ModelViewSet):
 UserViewSet.register_routes(user_auth_router)
 
 
-# @auth_router.get("/me")
-# def get_current_user(request):
-#     """
-#     Get the current authenticated user.
-#     """
-#     user = request.user
+auth_me_router = Router()
 
-#     if user.is_authenticated:
-#         return UserOut(id=user.id, username=user.username, email=user.email)
-#     else:
-#         return {"detail": "Authentication credentials were not provided."}
+@auth_me_router.get("/", response=UserOut)
+def get_current_user(request):
+    """
+    Get the current authenticated user.
+    """
+    user = request.user
+
+    if user.is_authenticated:
+        return user
+    else:
+        return {"detail": "Authentication credentials were not provided."}
+
+user_forgot_password_router = Router()
+
+@user_forgot_password_router.post("/", response=UserOut)
+def forgot_password(request, user_in: UserForgotPassword):
+    email = UserForgotPassword.email
+    
