@@ -42,11 +42,22 @@ export const jobApi = createApi({
       },
     }),
 
+    //getJobType
+    getJobType: builder.query<any, void>({
+      query: () => {
+        return `api/job-types/`;
+      },
+      transformResponse: (res: any) => {
+        const result = res.items;
+        return result ?? [];
+      },
+    }),
+
     //   getJobbyId Api
     getJobById: builder.mutation<JobResponse | undefined, number>({
       query: (id: number) => {
         return {
-          url: `aapi/jobs/${id}/`,
+          url: `api/jobs/${id}/`,
         };
       },
       transformResponse: (res: GenericResponse<JobResponse>) => res.items,
@@ -69,7 +80,7 @@ export const jobApi = createApi({
     deleteJobs: builder.mutation<GenericResponse<null>, number>({
       query: (id) => {
         return {
-          url: `api/jobs/${id}/`,
+          url: `api/jobs/${id}`,
           method: "delete",
         };
       },
@@ -82,7 +93,7 @@ export const jobApi = createApi({
     >({
       query: ({ id, data }) => {
         return {
-          url: `api/jobs/${id}/`,
+          url: `api/jobs/${id}`,
           method: "put",
           body: data,
         };
@@ -95,6 +106,7 @@ export const jobApi = createApi({
 export const {
   useGetAllJobsQuery,
   useGetJobStatusQuery,
+  useGetJobTypeQuery,
   useCreateJobsMutation,
   useDeleteJobsMutation,
   useGetJobByIdMutation,

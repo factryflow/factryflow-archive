@@ -5,7 +5,12 @@ import { Modal, Button } from "@mantine/core";
 import { Box, IconButton, Typography } from "@mui/material";
 import Deleteicon from "@/assets/images/delete.svg";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
-const DeleteModel = ({ deleteModel, setDeleteModel }: any) => {
+const DeleteModel = ({
+  deleteModel,
+  setDeleteModel,
+  handleCancle,
+  handleDelete,
+}: any) => {
   return (
     <>
       <Modal
@@ -40,7 +45,7 @@ const DeleteModel = ({ deleteModel, setDeleteModel }: any) => {
               variant="contained"
               size="large"
               className="btn-cancel-model"
-              onClick={() => setDeleteModel(false)}
+              onClick={() => handleCancle()}
             >
               Cancel
             </Button>
@@ -50,6 +55,7 @@ const DeleteModel = ({ deleteModel, setDeleteModel }: any) => {
               loading={false}
               variant="contained"
               className="btn-delete-model"
+              onClick={() => handleDelete()}
             >
               Delete
             </LoadingButton>
