@@ -1,5 +1,5 @@
 from api.models.user import User
-from api.schemas.user import UserIn, UserOut, UserForgotPassword
+from api.schemas.user import UserIn, UserOut, UserForgotPassword, VerifyOtpIn, UpdatePasswordIn, ChangePasswordIn
 from django.contrib.auth import get_user_model
 from ninja import Router
 from ninja_crud.views import (
@@ -9,6 +9,8 @@ from ninja_crud.views import (
     RetrieveModelView,
     UpdateModelView,
 )
+from api.utils.sendMail import send_mail
+from api.utils.verify_otp import verify_otp
 
 user_no_auth_router = Router()
 
@@ -52,9 +54,38 @@ def get_current_user(request):
     else:
         return {"detail": "Authentication credentials were not provided."}
 
-user_forgot_password_router = Router()
 
-@user_forgot_password_router.post("/", response=UserOut)
+@user_no_auth_router.post("/forgot-password")
 def forgot_password(request, user_in: UserForgotPassword):
-    email = UserForgotPassword.email
+    email = user_in.email
+    status, message = send_mail(email)
+    return{"message":message}
+
+@user_no_auth_router.post("/verify-otp")
+def verify_otp(request, otp_in:VerifyOtpIn):
+    user, message = verify_otp(otp_in.email, otp_in.otp)    
+    return {"user":user, "message":message}
+
+
+@user_no_auth_router.post("/update-password")
+def update_password(request, update_password:UpdatePasswordIn):
+    try:
+        user = User.objects.get(id=update_password.id)
+        user.set_password(update_password.password)
+        user.save()
+    except User.DoesNotExist:
+        return{'error':'User not forund!'}
+    
+
+change_password_router = Router()
+
+@change_password_router.put('/')
+def change_password(request, change_password:ChangePasswordIn):
+    user = request.user
+    if user.check_password(change_password.current_password):
+        user.set_password(change_password.new_password)
+        user.save()
+        return {"message": "Password changed successfully"}
+    else:
+        return {"message": "Current password is incorrect"}
     
