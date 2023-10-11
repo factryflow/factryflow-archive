@@ -1,7 +1,5 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 
-import { REHYDRATE } from "redux-persist";
-import config from "@/config/default";
 import {
   JobResponse,
   JobError,
@@ -27,30 +25,6 @@ export const jobApi = createApi({
         return result ?? [];
       },
       providesTags: ["getAllJobs"],
-    }),
-
-    //getJobStatus
-    getJobStatus: builder.query<any, void>({
-      query: () => {
-        return `api/job-status/`;
-      },
-      transformResponse: (res: any) => {
-        const result = res.items?.filter(
-          (item: any) => item.is_deleted === false
-        );
-        return result ?? [];
-      },
-    }),
-
-    //getJobType
-    getJobType: builder.query<any, void>({
-      query: () => {
-        return `api/job-types/`;
-      },
-      transformResponse: (res: any) => {
-        const result = res.items;
-        return result ?? [];
-      },
     }),
 
     //   getJobbyId Api
@@ -99,6 +73,30 @@ export const jobApi = createApi({
         };
       },
       invalidatesTags: ["getAllJobs"],
+    }),
+
+    //getJobStatus
+    getJobStatus: builder.query<any, void>({
+      query: () => {
+        return `api/job-status/`;
+      },
+      transformResponse: (res: any) => {
+        const result = res.items?.filter(
+          (item: any) => item.is_deleted === false
+        );
+        return result ?? [];
+      },
+    }),
+
+    //getJobType
+    getJobType: builder.query<any, void>({
+      query: () => {
+        return `api/job-types/`;
+      },
+      transformResponse: (res: any) => {
+        const result = res.items;
+        return result ?? [];
+      },
     }),
   }),
 });
