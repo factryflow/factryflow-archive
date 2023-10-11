@@ -1,13 +1,10 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import config from "@/config/default";
+import { createApi } from "@reduxjs/toolkit/query/react";
+
+import customFetchBase from "./customeFetchBase";
+import { GenericResponse } from "@/types/api.types";
 export const dependencytypeApi = createApi({
   reducerPath: "dependencytypeApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: config.API_ENDPOINT,
-    prepareHeaders: (header) => {
-      header.set("Authorization", `Bearer ${localStorage.getItem("token")}`);
-    },
-  }),
+  baseQuery: customFetchBase,
   tagTypes: ["getAllDependencyType"],
   endpoints: (builder) => ({
     //get All depency type Api
@@ -15,24 +12,14 @@ export const dependencytypeApi = createApi({
       query: () => {
         return `api/dependency-types/`;
       },
-      transformResponse: (res: { data: any[] }) => {
-        const data = res.data;
-        const result = data;
-        return result;
+      transformResponse: (res: GenericResponse<any[]>) => {
+        const result = res.items?.filter(
+          (item: any) => item.is_deleted === false
+        );
+        return result ?? [];
       },
       providesTags: ["getAllDependencyType"],
     }),
-
-    //   getJobbyId Api
-    //   getJobById:builder.mutation({
-    //     query:(id:number)=>{
-    //         return{
-    //             url:`api/jobs/get-job-details/${id}/`,
-
-    //         }
-    //     },
-    //     transformResponse: (res: any) => res.data
-    // }),
 
     // create depency type Api
     createDependencytype: builder.mutation({
@@ -49,7 +36,7 @@ export const dependencytypeApi = createApi({
     deleteDependencytype: builder.mutation({
       query: (id: number) => {
         return {
-          url: `api/dependency-types/${id}/`,
+          url: `api/dependency-types/${id}`,
           method: "delete",
         };
       },
@@ -59,7 +46,7 @@ export const dependencytypeApi = createApi({
     updateDependencyType: builder.mutation({
       query: ({ id, data }) => {
         return {
-          url: `api/dependency-types/${id}/`,
+          url: `api/dependency-types/${id}`,
           method: "put",
           body: data,
         };

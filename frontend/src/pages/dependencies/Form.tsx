@@ -1,19 +1,7 @@
 import * as yup from "yup";
-import { useForm, Controller } from "react-hook-form";
-import { format } from "date-fns";
-import {
-  TextField,
-  Typography,
-  Card,
-  Grid,
-  CardContent,
-  Button,
-  FormHelperText,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-} from "@mui/material";
+import { useForm } from "react-hook-form";
+
+import { Typography, Card, Grid, CardContent } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Layout from "../Layout";
 import { useEffect, useState } from "react";
@@ -22,42 +10,39 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { setJobies } from "@/redux/features/jobSlice";
-import { setTaskies } from "@/redux/features/taskSlice";
-import Box from "@mui/material/Box";
 
 import {
   useCreateDependencyMutation,
   useUpdateDependencyMutation,
 } from "@/redux/api/dependencyApi";
-import { useGetAllJobsQuery } from "@/redux/api/jobApi";
-import { useGetAllTasksQuery } from "@/redux/api/taskApi";
-//   "id": 1,
-//   "name": "dependency test",
-//   "dependency_type": 1,
-//   "dependency_status": 1,
-//   "expected_closed": "2023-09-6T09:00:00Z",
-//   "closed_date": "2023-09-01T08:00:00Z",
-//   "notes": "test notes",
-//   "jobs": 1,
-//   "tasks": 1,
-//   "is_active": true,
-//   "is_deleted": false
+
+import {
+  FormInputDropdown,
+  FormInputText,
+} from "@/components/form-components/FormInputText";
+import { useGetAllDependencyTypeQuery } from "@/redux/api/dependencytypeApi";
+import { setDependenciestype } from "@/redux/features/dependencytypeSlice";
+
 const validationSchema = yup.object().shape({
   name: yup.string().required("Name is required").nullable(),
-  dependency_type: yup.string().required("dependency_type is required"),
-  dependency_status: yup
+  external_id: yup.string().required("External id is required").nullable(),
+  dependency_type_id: yup
+    .string()
+    .required("Dependency type is required")
+    .nullable(),
+  dependency_status_id: yup
     .string()
     .required("Dependency Status is required")
     .nullable(),
-  expected_closed: yup
-    .date()
+  expected_close_datetime: yup
+    .string()
     .required("Expected Closed is required")
     .nullable(),
-  closed_date: yup.date().required("Closed Date is required").nullable(),
-  notes: yup.string().required("Note is required"),
-  jobs: yup.string().required("jobs is required"),
-  tasks: yup.string().required("Task is rquired"),
+  actual_close_datetime: yup
+    .string()
+    .required("Closed Date is required")
+    .nullable(),
+  notes: yup.string().required("Note is required").nullable(),
 });
 
 const DependencyForm = () => {
@@ -65,11 +50,14 @@ const DependencyForm = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
   const isEdit = !!params.id;
-
-  const jobselector = useAppSelector((state: any) => state.job.jobies);
-  const taskSelector = useAppSelector((state: any) => state.task.taskies);
   const dependencySelector = useAppSelector(
     (state: any) => state.dependency.dependencies
+  );
+  const dependenciesStatusSelector = useAppSelector(
+    (state) => state.dependency.dependencyStatus
+  );
+  const dependencytypeselector = useAppSelector(
+    (state) => state.dependencytype.dependenciestype
   );
 
   const [
@@ -81,17 +69,25 @@ const DependencyForm = () => {
     },
   ] = useCreateDependencyMutation();
 
-  const {
-    data: getjobData,
-    isLoading: jobisLoading,
-    // refetch,
-  } = useGetAllJobsQuery(undefined, {});
+  //call api dependency type
 
   const {
-    data: getTaskData,
-    isLoading: taskIsLoading,
-    error,
-  } = useGetAllTasksQuery(undefined);
+    data: dtData,
+    isLoading: dtisloading,
+    error: dterror,
+  } = useGetAllDependencyTypeQuery();
+
+  // const {
+  //   data: getjobData,
+  //   isLoading: jobisLoading,
+  //   // refetch,
+  // } = useGetAllJobsQuery(undefined, {});
+
+  // const {
+  //   data: getTaskData,
+  //   isLoading: taskIsLoading,
+  //   error,
+  // } = useGetAllTasksQuery(undefined);
 
   // const [
   //   createTasks,
@@ -106,18 +102,26 @@ const DependencyForm = () => {
   //     error: updateTaskError,
   //   },
   // ] = useUpdateTasksMutation();
-
   const [
     updateDependency,
     { data: updateDataDependency, isLoading: UddIsLoading, error: UddError },
   ] = useUpdateDependencyMutation();
+
+  const Defaultvalues = {
+    name: "",
+    external_id: "",
+    dependency_type_id: "",
+    dependency_status_id: "",
+    expected_close_datetime: "",
+    actual_close_datetime: "",
+    notes: "",
+  };
+
   const form = useForm({
+    defaultValues: Defaultvalues,
     resolver: yupResolver(validationSchema),
   });
 
-  const [selectedJobIds, setSelectedJobIds] = useState("");
-  const [selectedTaskIds, setSelectedTaskIds] = useState("");
-  console.log(selectedTaskIds, "selectedtaskId");
   const {
     control,
     handleSubmit,
@@ -126,67 +130,34 @@ const DependencyForm = () => {
     formState: { errors },
   } = form;
 
-  const handleSelectChange = (event: any) => {
-    setValue("jobs", event.target.value);
-    setSelectedJobIds(event.target.value);
-  };
-
-  const handleSelectTask = (event: any) => {
-    setValue("tasks", event.target.value);
-    setSelectedTaskIds(JSON.stringify(event.target.value));
-  };
-
   const onSubmit = (data: any) => {
-    const expected_closed_date = format(
-      data.expected_closed,
-      "yyyy-MM-dd HH:mm:ss"
-    );
-    const closed_date_date = format(
-      data.expected_closed,
-      "yyyy-MM-dd HH:mm:ss"
-    );
-
-    const requestData = {
-      name: data.name,
-      dependency_type: data.dependency_type,
-      dependency_status: data.dependency_status,
-      expected_closed: expected_closed_date,
-      closed_date: closed_date_date,
-      notes: data.notes,
-      jobs: data.jobs,
-      tasks: data.tasks,
-    };
-
     console.log(data, "Data");
     if (isEdit) {
-      updateDependency({ id: params.id, data: requestData });
+      updateDependency({ id: params.id, data: data });
     } else {
-      createDependency(requestData);
+      createDependency(data);
     }
   };
 
   useEffect(() => {
-    if (!dependencyIsLoading && dependencyData && dependencyError) {
-      dependencyData.code === 400
-        ? toast.error(dependencyData.message)
-        : toast.success(dependencyData.message) && navigate("/dependencys");
+    if (!dependencyIsLoading && dependencyData) {
+      toast.success("/Dependency Create Successfully");
+      navigate("/dependency");
     }
-  }, [dependencyIsLoading, dependencyError, dependencyData]);
+  }, [dependencyIsLoading, dependencyData]);
 
   useEffect(() => {
     if (!UddIsLoading && updateDataDependency) {
-      updateDataDependency.code >= 400
-        ? toast.error(updateDataDependency.message)
-        : toast.success(updateDataDependency.message) &&
-          navigate("/dependencys");
+      toast.success("Update dependency Successfully");
+      navigate("/dependency");
     }
-  }, [UddIsLoading, UddError, updateDataDependency]);
+  }, [UddIsLoading, updateDataDependency]);
 
   useEffect(() => {
-    const excluded_fields_jobs = ["jobs"];
-    const excluded_fields_tasks = ["tasks"];
-    const excluded_fields_expected_closed = ["expected_closed"];
-    const excluded_fields_closed_date = ["closed_date"];
+    const excluded_fields_dependency_type = ["dependency_type"];
+    const excluded_fields_dependency_status = ["dependency_status"];
+    const excludede_field_expected_close_datetime = ["expected_close_datetime"];
+    const excludede_actual_close_datetime = ["actual_close_datetime"];
     if (isEdit) {
       if (dependencySelector) {
         const getDependency = dependencySelector.filter(
@@ -194,24 +165,20 @@ const DependencyForm = () => {
         );
         console.log(getDependency[0], "getDependency");
         Object.entries(getDependency[0] ?? []).forEach(([name, value]: any) => {
-          console.log(name, "value", value);
-          // console.log(name,">>>>",value,"<<<<<<");
-          if (excluded_fields_jobs.includes(name)) {
-            form.setValue("jobs", value);
-            setSelectedJobIds(value);
+          if (excludede_field_expected_close_datetime.includes(name)) {
+            form.setValue(name, value?.slice(0, 16));
             return;
           }
-          if (excluded_fields_tasks.includes(name)) {
-            form.setValue("tasks", value);
-            setSelectedTaskIds(value);
+          if (excludede_actual_close_datetime.includes(name)) {
+            form.setValue(name, value?.slice(0, 16));
             return;
           }
-          if (excluded_fields_expected_closed.includes(name)) {
-            form.setValue("expected_closed", value.slice(0, 10));
+          if (excluded_fields_dependency_type.includes(name)) {
+            form.setValue("dependency_type_id", value);
             return;
           }
-          if (excluded_fields_closed_date.includes(name)) {
-            form.setValue("closed_date", value.slice(0, 10));
+          if (excluded_fields_dependency_status.includes(name)) {
+            form.setValue("dependency_status_id", value);
             return;
           }
           form.setValue(name, value);
@@ -221,16 +188,10 @@ const DependencyForm = () => {
   }, [isEdit, params.id]);
 
   useEffect(() => {
-    if (!jobisLoading && getjobData) {
-      dispatch(setJobies(getjobData));
+    if (!dtisloading && dtData) {
+      dispatch(setDependenciestype(dtData));
     }
-  }, [jobisLoading, getjobData]);
-
-  useEffect(() => {
-    if (!taskIsLoading && getTaskData) {
-      dispatch(setTaskies(getTaskData));
-    }
-  }, [taskIsLoading, getTaskData]);
+  }, [dtisloading, dtData]);
 
   return (
     <>
@@ -242,7 +203,7 @@ const DependencyForm = () => {
           >
             <CardContent>
               <Typography gutterBottom variant="h5">
-                {isEdit ? "Edit Dependency" : "Create Dependency"}
+                Dependency Details
               </Typography>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Grid
@@ -251,192 +212,76 @@ const DependencyForm = () => {
                   columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                 >
                   <Grid item xs={6}>
-                    <Controller
-                      name="name"
+                    <FormInputText
+                      name={"external_id"}
                       control={control}
-                      defaultValue=""
-                      render={({ field }) => (
-                        <TextField
-                          label="Name"
-                          variant="outlined"
-                          margin="normal"
-                          error={!!errors.name}
-                          helperText={errors.name?.message}
-                          fullWidth
-                          {...field}
-                        />
-                      )}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Controller
-                      name="dependency_type"
-                      control={control}
-                      defaultValue=""
-                      render={({ field }) => (
-                        <TextField
-                          label="Dependency Type "
-                          variant="outlined"
-                          type="number"
-                          margin="normal"
-                          error={!!errors.dependency_type}
-                          helperText={errors.dependency_type?.message}
-                          fullWidth
-                          {...field}
-                        />
-                      )}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Controller
-                      name="dependency_status"
-                      control={control}
-                      defaultValue=""
-                      render={({ field }) => (
-                        <TextField
-                          label="Dependency Status"
-                          variant="outlined"
-                          type="number"
-                          margin="normal"
-                          error={!!errors.dependency_status}
-                          helperText={errors.dependency_status?.message}
-                          fullWidth
-                          {...field}
-                        />
-                      )}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Controller
-                      name="expected_closed"
-                      defaultValue={new Date()}
-                      control={control}
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          label="expected_closed "
-                          type="date"
-                          variant="outlined"
-                          margin="normal"
-                          error={!!errors.expected_closed}
-                          helperText={errors.expected_closed?.message}
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                          fullWidth
-                        />
-                      )}
+                      label={"External Id"}
+                      placeholder={"Enter Job Name"}
+                      type={"text"}
                     />
                   </Grid>
 
                   <Grid item xs={6}>
-                    <Controller
-                      name="closed_date"
+                    <FormInputText
+                      name={"name"}
                       control={control}
-                      defaultValue={new Date()}
-                      render={({ field }) => (
-                        <TextField
-                          label="closed_date"
-                          variant="outlined"
-                          margin="normal"
-                          type="date"
-                          error={!!errors.closed_date}
-                          helperText={errors.closed_date?.message}
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                          {...field}
-                          fullWidth
-                        />
-                      )}
+                      label={"Name"}
+                      placeholder={"Enter  Name"}
+                      type={"text"}
+                    />
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <FormInputText
+                      name={"notes"}
+                      control={control}
+                      label={"Notes"}
+                      placeholder={"write notes"}
+                      type={"text"}
+                    />
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <FormInputText
+                      name={"expected_close_datetime"}
+                      control={control}
+                      label={"Due Date"}
+                      placeholder={"expected_close_datetime"}
+                      type={"datetime-local"}
                     />
                   </Grid>
                   <Grid item xs={6}>
-                    <Controller
-                      name="notes"
+                    <FormInputText
+                      name={"actual_close_datetime"}
                       control={control}
-                      defaultValue={""}
-                      render={({ field }) => (
-                        <TextField
-                          label="Notes"
-                          variant="outlined"
-                          margin="normal"
-                          type="text"
-                          error={!!errors.notes}
-                          helperText={errors.notes?.message}
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                          {...field}
-                          fullWidth
-                        />
-                      )}
+                      label={"Due Date"}
+                      placeholder={""}
+                      type={"datetime-local"}
                     />
                   </Grid>
                   <Grid item xs={6}>
-                    <FormControl fullWidth variant="outlined">
-                      <InputLabel>Jobs</InputLabel>
-                      <Controller
-                        name="jobs"
-                        control={control}
-                        render={({ field }) => (
-                          <>
-                            <Select
-                              {...field}
-                              value={selectedJobIds}
-                              onChange={handleSelectChange}
-                              error={!!errors.jobs}
-                              label="jobs"
-                            >
-                              {jobselector.map((item: any) => (
-                                <MenuItem key={item.id} value={item.id}>
-                                  {item.name}
-                                </MenuItem>
-                              ))}
-                            </Select>
-                            <FormHelperText sx={{ color: "red" }}>
-                              {errors.jobs?.message}
-                            </FormHelperText>
-                          </>
-                        )}
-                      />
-                    </FormControl>
+                    <FormInputDropdown
+                      name={"dependency_status_id"}
+                      control={control}
+                      label={"Status"}
+                      options={dependenciesStatusSelector ?? []}
+                    />
                   </Grid>
+
                   <Grid item xs={6}>
-                    <FormControl fullWidth variant="outlined">
-                      <InputLabel>Tasks</InputLabel>
-                      <Controller
-                        name="tasks"
-                        control={control}
-                        render={({ field }) => (
-                          <>
-                            <Select
-                              {...field}
-                              value={selectedTaskIds}
-                              error={!!errors.tasks}
-                              onChange={handleSelectTask}
-                              label="Tasks"
-                            >
-                              {taskSelector.map((item: any) => (
-                                <MenuItem key={item.id} value={item.id}>
-                                  {item.name}
-                                </MenuItem>
-                              ))}
-                            </Select>
-                            <FormHelperText sx={{ color: "red" }}>
-                              {errors.tasks?.message}
-                            </FormHelperText>
-                          </>
-                        )}
-                      />
-                    </FormControl>
+                    <FormInputDropdown
+                      name={"dependency_type_id"}
+                      control={control}
+                      label={"Type"}
+                      options={dependencytypeselector ?? []}
+                    />
                   </Grid>
 
                   <Grid item xs={12}>
                     <LoadingButton
                       size="small"
                       type="submit"
-                      loading={dependencyIsLoading || UddIsLoading}
+                      // loading={dependencyIsLoading || UddIsLoading}
                       color="primary"
                       variant="contained"
                       sx={{ marginBottom: 5 }}

@@ -40,6 +40,8 @@ import {
   FormInputDropdown,
 } from "@/components/form-components/FormInputText";
 import { setJobStatus, setJobType } from "@/redux/features/jobSlice";
+import { useGetAllDependencyQuery } from "@/redux/api/dependencyApi";
+import { setDependencies } from "@/redux/features/dependencySlice";
 
 const validationSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
@@ -96,6 +98,13 @@ const MyForm = () => {
     undefined,
     {}
   );
+
+  const {
+    data: getDependencyData,
+    isLoading: dependencyIsLoading,
+    error,
+  } = useGetAllDependencyQuery(undefined);
+
   const Defaultvalues = {
     name: "",
     priority: "",
@@ -143,6 +152,12 @@ const MyForm = () => {
       toast.success("Update job Successfully") && navigate("/jobs");
     }
   }, [updateJobData, updateError, updateIsLoading]);
+
+  useEffect(() => {
+    if (!dependencyIsLoading && getDependencyData && isEdit) {
+      dispatch(setDependencies(getDependencyData));
+    }
+  }, [dependencyIsLoading, getDependencyData, isEdit]);
 
   useEffect(() => {
     const planned_start_datetime = ["planned_start_datetime"];

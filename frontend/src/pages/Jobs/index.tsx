@@ -162,7 +162,13 @@ const Jobs = () => {
           <Badge
             variant="light"
             color={badgeColor[filterjobstatus[0].name]}
-            sx={{ textTransform: "unset" }}
+            sx={{
+              textTransform: "unset",
+              borderRadius: "5px",
+              fontSize: "10px",
+              padding: "10px",
+              height: "35px",
+            }}
           >
             {getString(filterjobstatus[0].name)}
           </Badge>
@@ -174,23 +180,11 @@ const Jobs = () => {
       headerName: "Action",
       width: 180,
       sortable: false,
-
       renderCell: (params: any) => {
         const handleDeleteAction = (e: React.SyntheticEvent<any>) => {
           const currentRowId = params.row.id;
           setDeleteModel(true);
           setDeleteId(currentRowId);
-
-          // if (window.confirm("Are you sure you want to remove this Job?")) {
-          //   // return alert(JSON.stringify(currentRow, null, 4));
-          //   deleteJobs(currentRow?.id);
-          //   const newJobiesData = jobsSelector.filter(
-          //     (item: any) => item.id !== currentRow?.id
-          //   );
-          //   dispatch(setJobies(newJobiesData));
-          //   toast.success("Job Delete Successfully");
-          // }
-          // return;
         };
 
         const handleEditAction = (e: React.SyntheticEvent<any>) => {
@@ -200,22 +194,21 @@ const Jobs = () => {
 
         return (
           <Stack direction="row" spacing={2}>
-            <img src={viewicon} alt="view_Icon" height={30} width={24} />
+            <img src={viewicon} alt="view_Icon" height={17} width={17} />
             <img
               src={editicon}
               alt="edit_Icon"
-              height={30}
-              width={24}
+              height={17}
+              width={17}
               onClick={handleEditAction}
             />
             <img
               src={deleteicon}
               alt="delete_Icon"
-              height={30}
-              width={24}
+              height={17}
+              width={17}
               onClick={handleDeleteAction}
             />
-            {/*<DeleteIcon onClick={handleDeleteAction} /> */}
           </Stack>
         );
       },

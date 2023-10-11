@@ -1,40 +1,28 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { GetAllJobType } from "@/types/jobs.types";
-import config from "@/config/default";
-
+import { createApi } from "@reduxjs/toolkit/query/react";
+import customFetchBase from "./customeFetchBase";
+import {
+  DependencyResponse,
+  DependencyStatusResponse,
+  GenericResponse,
+} from "@/types/api.types";
 export const dependencyApi = createApi({
   reducerPath: "dependencyApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: config.API_ENDPOINT,
-    prepareHeaders: (header) => {
-      header.set("Authorization", `Bearer ${localStorage.getItem("token")}`);
-    },
-  }),
+  baseQuery: customFetchBase,
   tagTypes: ["getAllDependencys"],
   endpoints: (builder) => ({
     // getAllDependency Api
-    getAllDependencys: builder.query<any[], void>({
+    getAllDependency: builder.query<DependencyResponse[], void>({
       query: () => {
         return `api/dependency/`;
       },
-      transformResponse: (res: { data: any[] }) => {
-        const data = res.data;
-        const result = data.filter((item: any) => item.is_deleted === false);
-        return result;
+      transformResponse: (res: GenericResponse<DependencyResponse[]>) => {
+        const result = res.items?.filter(
+          (item: any) => item.is_deleted === false
+        );
+        return result ?? [];
       },
       providesTags: ["getAllDependencys"],
     }),
-
-    //   getJobbyId Api
-    //   getJobById:builder.mutation({
-    //     query:(id:number)=>{
-    //         return{
-    //             url:`api/jobs/get-job-details/${id}/`,
-
-    //         }
-    //     },
-    //     transformResponse: (res: any) => res.data
-    // }),
 
     // create Dependency Api
     createDependency: builder.mutation({
@@ -51,7 +39,7 @@ export const dependencyApi = createApi({
     deleteDependency: builder.mutation({
       query: (id: number) => {
         return {
-          url: `api/dependency/${id}/`,
+          url: `api/dependency/${id}`,
           method: "delete",
         };
       },
@@ -61,21 +49,35 @@ export const dependencyApi = createApi({
     updateDependency: builder.mutation({
       query: ({ id, data }) => {
         return {
-          url: `api/dependency/${id}/`,
+          url: `api/dependency/${id}`,
           method: "put",
           body: data,
         };
       },
       invalidatesTags: ["getAllDependencys"],
     }),
+
+    //getAll dependency Status
+    getAllDependecyStatus: builder.query({
+      query: () => {
+        return `api/dependency-status/`;
+      },
+      transformResponse: (res: GenericResponse<DependencyStatusResponse[]>) => {
+        const result = res.items?.filter(
+          (item: any) => item.is_deleted === false
+        );
+        return result ?? [];
+      },
+    }),
   }),
 });
 
 export const {
-  useGetAllDependencysQuery,
+  useGetAllDependencyQuery,
   useCreateDependencyMutation,
   useDeleteDependencyMutation,
   useUpdateDependencyMutation,
+  useGetAllDependecyStatusQuery,
   // useUpdateTasksMutation,
   // useDeleteJobsMutation,
   // useGetJobByIdMutation,

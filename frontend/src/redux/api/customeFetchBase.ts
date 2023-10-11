@@ -17,10 +17,8 @@ const baseQuery = fetchBaseQuery({
   baseUrl,
   prepareHeaders: (header) => {
     if (localStorage.getItem("token")) {
-      const { access, refresh } = JSON.parse(
-        localStorage.getItem("token") as string
-      );
-      console.log(access, "access");
+      const { access } = JSON.parse(localStorage.getItem("token") as string);
+
       header.set("Authorization", `Bearer ${access}`);
     }
   },
@@ -44,8 +42,6 @@ const customFetchBase: BaseQueryFn<
         const { refresh } = JSON.parse(localStorage.getItem("token") as string);
 
         token = refresh;
-
-        console.log(refresh, "refresh");
       }
 
       try {
