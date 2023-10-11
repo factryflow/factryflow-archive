@@ -1,27 +1,33 @@
-import { AnyAction, PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 // import { GetAlldependencyType } from '../types/dependencys.types';
 
 type dependencySliceTypes = {
   dependency: any | null;
   dependencies: any[] | [];
+  dependencyStatus: any[] | [];
 };
 
 const initialState: dependencySliceTypes = {
-    dependency: null,
-    dependencies: [],
+  dependency: null,
+  dependencies: [],
+  dependencyStatus: [],
 };
 
 const dependencySlice = createSlice({
-  name: 'dependency',
+  name: "dependency",
   initialState,
   reducers: {
     setDependency: (state, action) => {
       state.dependency = action.payload;
     },
 
-    setDependencies: (state, action:PayloadAction<any[]>) => {
+    setDependencies: (state, action: PayloadAction<any[]>) => {
       state.dependencies = action.payload;
+    },
+
+    setDependenciesStatus: (state, action: PayloadAction<any[]>) => {
+      state.dependencyStatus = action.payload;
     },
 
     resetDependencies: (state) => {
@@ -40,6 +46,11 @@ const dependencySlice = createSlice({
   },
 });
 
-export const { setDependencies, setDependency, resetDependencies, resetDependency } = dependencySlice.actions;
+export const {
+  setDependencies,
+  setDependency,
+  resetDependencies,
+  resetDependency,
+  setDependenciesStatus,
+} = dependencySlice.actions;
 export default dependencySlice.reducer;
-

@@ -110,3 +110,33 @@ export type UpdateJob = {
   data: Partial<CreateJob>;
 };
 //#endregion
+
+export type DependencyResponse = {
+  id: number;
+  external_id: Nullable<string>;
+  name: string;
+  dependency_type: number;
+  dependency_status: number;
+  expected_close_datetime: Nullable<string>;
+  actual_close_datetime: Nullable<string>;
+  notes: Nullable<string>;
+  created_at: Nullable<string>;
+  created_by: number;
+  updated_at: Nullable<string>;
+  updated_by: number;
+  deleted_at: Nullable<string>;
+  is_active: boolean;
+  is_deleted: boolean;
+};
+
+export type DependencyStatusResponse = {
+  id: number;
+  name: string;
+  created_at: Nullable<string>;
+  created_by: number;
+  updated_at: Nullable<string>;
+  updated_by: number;
+  deleted_at: Nullable<string>;
+  is_active: boolean;
+  is_deleted: boolean;
+};

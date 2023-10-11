@@ -29,7 +29,7 @@ import SupportIcon from "@/assets/sidebar/support_agent.svg";
 import ResourceIcon from "@/assets/sidebar/resource.svg";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import Dote from "@/assets/images/Dote.svg";
-import FactoryFlowIcon from "@/assets/images/factryflow .svg";
+import FactoryFlowIcon from "@/assets/images/FactryFlow.svg";
 import FFLogo from "@/assets/images/FFlogo.svg";
 const drawerWidth = 240;
 

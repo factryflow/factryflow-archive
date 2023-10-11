@@ -4,6 +4,8 @@ import { Badge } from "@mantine/core";
 import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
 
 import { useNavigate } from "react-router-dom";
+import { getString } from "@/helpers";
+import { useAppSelector } from "@/app/hooks";
 
 type BadgeType = {
   [key in string]: string;
@@ -12,35 +14,59 @@ type BadgeType = {
 const DependencyDetails = ({ data }: any) => {
   const navigate = useNavigate();
 
+  const dependenciesSelector = useAppSelector(
+    (state) => state.dependency.dependencies
+  );
+
+  const dependenciesStatusSelector = useAppSelector(
+    (state) => state.dependency.dependencyStatus
+  );
+
   const columns: GridColDef<any>[] = [
-    { field: "id", headerName: "Id" },
+    { field: "id", headerName: "ID" }, // Adjust the width as needed
     {
-      field: "dependency_name",
-      headerName: "Dependency Name",
+      field: "external_id",
+      headerName: "external_id",
       flex: 1,
-      headerAlign: "center",
-      align: "center",
     },
     {
-      field: "dependency_type",
-      headerName: "Dependency Type",
+      field: "name",
+      headerName: "name",
       flex: 1,
-      headerAlign: "center",
-      align: "center",
     },
+
     {
-      field: "expected_close",
+      field: "expected_close_datetime",
       headerName: "Expected Close",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
+      flex: 1, // Adjust the width as needed
+      renderCell: (row) => {
+        return (
+          <span>
+            {row.row.expected_close_datetime
+              ? row.row.expected_close_datetime?.slice(0, 10)
+              : ""}
+          </span>
+        );
+      },
     },
     {
-      field: "actual_close",
+      field: "actual_close_datetime",
       headerName: "Actual Close",
+      flex: 1, // Adjust the width as needed
+      renderCell: (row) => {
+        return (
+          <span>
+            {row.row.actual_close_datetime
+              ? row.row.actual_close_datetime?.slice(0, 10)
+              : ""}
+          </span>
+        );
+      },
+    },
+    {
+      field: "notes",
+      headerName: "Notes",
       flex: 1,
-      headerAlign: "center",
-      align: "center",
     },
     {
       field: "status",
@@ -49,20 +75,30 @@ const DependencyDetails = ({ data }: any) => {
       headerAlign: "center",
       align: "center",
       renderCell: (row) => {
-        // console.log("🚀 ~ file: index.tsx:78 ~ Jobs ~ param:", row);
+        const filterjobstatus = dependenciesStatusSelector.filter(
+          (dependency: any) => dependency.id === row.row.dependency_status
+        );
 
         const badgeColor: BadgeType = {
-          Completed: "green",
-          "in-progress": "yellow",
+          completed: "green",
+          "not-planned": "red",
+          planned: "violet",
+          progress: "yellow",
         };
 
         return (
           <Badge
             variant="light"
-            color={badgeColor[row.value]}
-            sx={{ textTransform: "unset" }}
+            color={badgeColor[filterjobstatus[0]?.name]}
+            sx={{
+              textTransform: "unset",
+              borderRadius: "5px",
+              fontSize: "10px",
+              padding: "10px",
+              height: "35px",
+            }}
           >
-            {row.value}
+            {getString(filterjobstatus[0]?.name)}
           </Badge>
         );
       },
@@ -125,7 +161,7 @@ const DependencyDetails = ({ data }: any) => {
               <DataGrid
                 className="dataGrid"
                 autoHeight={true}
-                rows={data ?? []}
+                rows={dependenciesSelector ?? []}
                 columns={columns}
                 initialState={{
                   pagination: {

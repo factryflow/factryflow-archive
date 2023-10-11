@@ -2,30 +2,26 @@ import { Box, Stack } from "@mui/material";
 import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
+
 import { toast } from "react-toastify";
 import { Badge, Card } from "@mantine/core";
-
 import Header from "../../components/table/Header";
 import Layout from "../Layout";
-import {
-  useGetAllJobsQuery,
-  useDeleteJobsMutation,
-  useGetJobStatusQuery,
-} from "@/redux/api/jobApi";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { setJobies, setJobStatus } from "@/redux/features/jobSlice";
 import Loading from "@/components/loading/loading";
 import useTabs from "@/hooks/useTabs";
 import { getString } from "@/helpers";
 import { JobResponse } from "@/types/api.types";
-import jobs from "@/data/jobs.json";
-// import { ReactComponent as DeleteIcon } from "@/assets/images/delete.svg";
 import deleteicon from "@/assets/images/delete.svg";
 import editicon from "@/assets/images/border_color.svg";
 import viewicon from "@/assets/images/visibility.svg";
 import DeleteModel from "@/components/table/Model/delete-model";
+import {
+  useGetAllJobsQuery,
+  useDeleteJobsMutation,
+  useGetJobStatusQuery,
+} from "@/redux/api/jobApi";
 
 type BadgeType = {
   [key in string]: string;
@@ -65,33 +61,13 @@ const Jobs = () => {
   const navigate = useNavigate();
   const [deleteJobs] = useDeleteJobsMutation();
   const [deleteModel, setDeleteModel] = useState<boolean>(false);
+  const [deleteId, setDeleteId] = useState<any>("");
 
   const columns: GridColDef<Omit<WithJobResponse, excluded_fields>>[] = [
     { field: "id", headerName: "ID" },
     {
       field: "name",
-      headerName: "Name",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      field: "priority",
-      headerName: "Priority Number",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      field: "due_date",
-      headerName: "Due Date",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      field: "customer",
-      headerName: "Customer",
+      headerName: "Job Name",
       flex: 1,
       headerAlign: "center",
       align: "center",
@@ -104,12 +80,66 @@ const Jobs = () => {
       align: "center",
     },
     {
+      field: "customer",
+      headerName: "Customer",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "due_date",
+      headerName: "Due Date",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "planned_start_datetime",
+      headerName: "Planned Start",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (row) => {
+        return (
+          <span>
+            {row.row.planned_start_datetime
+              ? row.row.planned_start_datetime?.slice(0, 10)
+              : ""}
+          </span>
+        );
+      },
+    },
+    {
+      field: "planned_end_datetime",
+      headerName: "Planned End",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (row) => {
+        return (
+          <span>
+            {row.row.planned_end_datetime
+              ? row.row.planned_end_datetime?.slice(0, 10)
+              : ""}
+          </span>
+        );
+      },
+    },
+    {
+      field: "priority",
+      headerName: "Priority",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
       field: "note",
       headerName: "Note",
       flex: 1,
       headerAlign: "center",
       align: "center",
     },
+
     {
       field: "status",
       headerName: "Status",
@@ -117,10 +147,6 @@ const Jobs = () => {
       headerAlign: "center",
       align: "center",
       renderCell: (row) => {
-        // console.log(
-        //   "🚀 ~ file: index.tsx:78 ~ Jobs ~ param:",
-        //   row.row.job_status
-        // );
         const filterjobstatus = jobstatusSelector.filter(
           (job: any) => job.id === row.row.job_status
         );
@@ -136,7 +162,13 @@ const Jobs = () => {
           <Badge
             variant="light"
             color={badgeColor[filterjobstatus[0].name]}
-            sx={{ textTransform: "unset" }}
+            sx={{
+              textTransform: "unset",
+              borderRadius: "5px",
+              fontSize: "10px",
+              padding: "10px",
+              height: "35px",
+            }}
           >
             {getString(filterjobstatus[0].name)}
           </Badge>
@@ -148,22 +180,12 @@ const Jobs = () => {
       headerName: "Action",
       width: 180,
       sortable: false,
-
       renderCell: (params: any) => {
-        //   const handleDeleteAction = (e: React.SyntheticEvent<any>) => {
-        //     const currentRow = params.row;
-        //     // setDeleteModel(true);
-        //     // if (window.confirm("Are you sure you want to remove this Job?")) {
-        //     //   // return alert(JSON.stringify(currentRow, null, 4));
-        //     //   deleteJobs(currentRow?.id);
-        //     //   const newJobiesData = jobsSelector.filter(
-        //     //     (item: any) => item.id !== currentRow?.id
-        //     //   );
-        //     //   dispatch(setJobies(newJobiesData));
-        //     //   toast.success("Job Delete Successfully");
-        //     // }
-        //     // return;
-        //   };
+        const handleDeleteAction = (e: React.SyntheticEvent<any>) => {
+          const currentRowId = params.row.id;
+          setDeleteModel(true);
+          setDeleteId(currentRowId);
+        };
 
         const handleEditAction = (e: React.SyntheticEvent<any>) => {
           const currentRow = params.row;
@@ -172,27 +194,21 @@ const Jobs = () => {
 
         return (
           <Stack direction="row" spacing={2}>
-            {/* <ModeEditOutlinedIcon
-              sx={{ color: "blue", cursor: "pointer" }}
-              onClick={handleEditAction}
-            /> */}
-
-            <img src={viewicon} alt="view_Icon" height={30} width={24} />
+            <img src={viewicon} alt="view_Icon" height={17} width={17} />
             <img
               src={editicon}
               alt="edit_Icon"
-              height={30}
-              width={24}
+              height={17}
+              width={17}
               onClick={handleEditAction}
             />
             <img
               src={deleteicon}
               alt="delete_Icon"
-              height={30}
-              width={24}
-              onClick={() => setDeleteModel(true)}
+              height={17}
+              width={17}
+              onClick={handleDeleteAction}
             />
-            {/*<DeleteIcon onClick={handleDeleteAction} /> */}
           </Stack>
         );
       },
@@ -201,6 +217,27 @@ const Jobs = () => {
 
   const handleClick = () => {
     navigate("/jobs/form");
+  };
+
+  //handle cancle function  in custom delete modal
+  const handleCancle = () => {
+    setDeleteModel(false);
+    if (deleteId) {
+      setDeleteId("");
+    }
+    return;
+  };
+  //handle delete function  in custom delete modal
+  const handleDelete = () => {
+    if (deleteId) {
+      deleteJobs(deleteId);
+      setDeleteModel(false);
+      const newJobiesData = jobsSelector.filter(
+        (item: any) => item.id !== deleteId
+      );
+      dispatch(setJobies(newJobiesData));
+    }
+    return;
   };
 
   useEffect(() => {
@@ -289,7 +326,7 @@ const Jobs = () => {
               <StatusTabs
                 statusTabs={[
                   "all",
-                  ...jobstatusSelector?.map((status: any) => status.name),
+                  ...jobstatusSelector?.map((status: any) => status?.name),
                 ]}
                 data={jobsSelector ?? []}
                 jobstatus={jobstatusSelector}
@@ -336,6 +373,8 @@ const Jobs = () => {
               <DeleteModel
                 deleteModel={deleteModel}
                 setDeleteModel={setDeleteModel}
+                handleCancle={handleCancle}
+                handleDelete={handleDelete}
               />
             </Card>
           </Box>

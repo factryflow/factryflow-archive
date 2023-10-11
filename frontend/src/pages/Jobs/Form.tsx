@@ -17,58 +17,65 @@ import {
 import { format } from "date-fns";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Layout from "../Layout";
-import { useCreateJobsMutation } from "@/redux/api/jobApi";
+import {
+  useCreateJobsMutation,
+  useGetJobStatusQuery,
+  useGetJobTypeQuery,
+} from "@/redux/api/jobApi";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUpdateJobsMutation } from "@/redux/api/jobApi";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import { CreateJob } from "@/types/api.types";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { Tabs, Card } from "@mantine/core";
 import Loading from "@/components/loading/loading";
 import TaskDetails from "@/components/data-tables/tasks/TaskDetails";
 import DependencyDetails from "@/components/data-tables/dependency/dependencyDetails";
 import taskData from "@/data/tasks.json";
 import dependencyData from "@/data/dependancy.json";
+import {
+  FormInputText,
+  FormInputDropdown,
+} from "@/components/form-components/FormInputText";
+import { setJobStatus, setJobType } from "@/redux/features/jobSlice";
+import { useGetAllDependencyQuery } from "@/redux/api/dependencyApi";
+import { setDependencies } from "@/redux/features/dependencySlice";
 
-import { FormInputText } from "@/components/form-components/FormInputText";
 const validationSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
   priority: yup.string().required("priority is required").nullable(),
-  due_date: yup.date().required("Date is required").nullable(),
+  due_date: yup.string().required("Date is required").nullable(),
   planned_start_datetime: yup.string().required("Date is required").nullable(),
-
-  // planned_end_datetime: yup.date().required("Date is required").nullable(),
+  planned_end_datetime: yup.string().required("Date is required").nullable(),
   customer: yup.string().required("customer is required").nullable(),
   description: yup.string().required("description is required"),
   note: yup.string().required("note is required"),
-  status: yup.string().required("status is required").nullable(),
+  job_status_id: yup.string().required("status is required").nullable(),
+  external_id: yup.string().required("External id is required").nullable(),
+  job_type_id: yup.string().required("Job Type id is required").nullable(),
 });
-
-// {
-//   "name": "string",
-//   "description": "string",
-//   "customer": "string",
-//   "due_date": "2023-10-09",
-//   "priority": 0,
-//   "planned_start_datetime": "2023-10-09T09:10:46.206Z",
-//   "planned_end_datetime": "2023-10-09T09:10:46.206Z",
-//   "external_id": "string",
-//   "note": "string",
-//   "job_status_id": 0,
-//   "job_type_id": 0
-// }
 
 const MyForm = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const params = useParams();
   const isEdit = !!params.id;
   const jobiesSelector = useAppSelector((state) => state.job.jobies);
-  console.log(jobiesSelector, "jobselector");
-  const [statuschange, setStatus] = useState(0);
-  const [createJobs, { data, isLoading, error }] = useCreateJobsMutation();
+
+  const [
+    createJobs,
+    {
+      data: AddJob,
+      isLoading: AddJobIsLoading,
+      error: AddJoberror,
+      isSuccess: addjobissuccess,
+    },
+  ] = useCreateJobsMutation();
   const [activeTab, setActiveTab] = useState<string | null>("tasks");
+  const jobstatusSelector = useAppSelector((state: any) => state.job.jobstatus);
+  const jobtypeSelector = useAppSelector((state: any) => state.job.jobtype);
 
   const [
     updateJobs,
@@ -80,15 +87,36 @@ const MyForm = () => {
     },
   ] = useUpdateJobsMutation();
 
+  // call api jobstatus
+  const { data: jobstatus, isLoading: jsIsLoading } = useGetJobStatusQuery(
+    undefined,
+    {}
+  );
+
+  // call api jobtype
+  const { data: jobtype, isLoading: jtIsLoading } = useGetJobTypeQuery(
+    undefined,
+    {}
+  );
+
+  const {
+    data: getDependencyData,
+    isLoading: dependencyIsLoading,
+    error,
+  } = useGetAllDependencyQuery(undefined);
+
   const Defaultvalues = {
     name: "",
     priority: "",
-    due_date: new Date(),
+    due_date: "",
     customer: "",
     description: "",
     note: "",
-    status: "",
     planned_start_datetime: "",
+    planned_end_datetime: "",
+    job_status_id: "",
+    external_id: "",
+    job_type_id: "",
   };
 
   const form = useForm({
@@ -100,55 +128,57 @@ const MyForm = () => {
     control,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = form;
 
   const onSubmit: SubmitHandler<any> = (data) => {
-    // Inside the onSubmit function
-    if (!data) return;
-    const formattedDate = format(data.due_date, "MM/dd/yyyy");
-    const requestData = {
-      name: data.name,
-      priority: data.priority,
-      due_date: formattedDate,
-      customer: data.customer,
-      description: data.description,
-      note: data.note,
-    };
-
     if (isEdit) {
-      updateJobs({ id: params.id!, data: requestData });
+      updateJobs({ id: params.id!, data: data });
     } else {
-      createJobs(requestData);
+      createJobs(data);
+      toast.success("Job created SuccessFully");
     }
   };
 
   useEffect(() => {
-    if (!isLoading && data) {
-      data.code >= 400
-        ? toast.error(data.message)
-        : toast.success(data.message) && navigate("/jobs");
+    if (!AddJobIsLoading && AddJob && addjobissuccess) {
+      navigate("/jobs");
     }
-  }, [isLoading, error, data]);
+  }, [AddJobIsLoading, AddJob, addjobissuccess]);
 
   useEffect(() => {
     if (!updateIsLoading && updateJobData) {
-      updateJobData.code >= 400
-        ? toast.error(updateJobData.message)
-        : toast.success(updateJobData.message) && navigate("/jobs");
+      toast.success("Update job Successfully") && navigate("/jobs");
     }
   }, [updateJobData, updateError, updateIsLoading]);
 
   useEffect(() => {
+    if (!dependencyIsLoading && getDependencyData && isEdit) {
+      dispatch(setDependencies(getDependencyData));
+    }
+  }, [dependencyIsLoading, getDependencyData, isEdit]);
+
+  useEffect(() => {
+    const planned_start_datetime = ["planned_start_datetime"];
+    const planned_end_datetime = ["planned_end_datetime"];
     if (isEdit) {
       if (jobiesSelector) {
         const getJob = jobiesSelector.filter(
           (item: any) => item.id === Number(params.id)
         );
-        // console.log(getJob, "GetJob", params.id);
-        Object.entries(getJob[0] ?? []).forEach(([name, value]: any) =>
-          form.setValue(name, value)
-        );
+        // console.log(getJob[0], "GetJob", params.id);
+        Object.entries(getJob[0] ?? []).forEach(([name, value]: any) => {
+          if (planned_start_datetime.includes(name)) {
+            form.setValue("planned_start_datetime", value?.slice(0, 16));
+            return;
+          }
+          if (planned_end_datetime.includes(name)) {
+            form.setValue("planned_end_datetime", value?.slice(0, 16));
+            return;
+          }
+          form.setValue(name, value);
+        });
       }
     }
   }, [isEdit, params.id]);
@@ -158,10 +188,6 @@ const MyForm = () => {
     padding: "20px",
     backgroundColor: "white",
     width: "100%",
-  };
-
-  const handleStatus = (e: any) => {
-    setStatus(e.target.value);
   };
 
   const handleTabChange = (newTabValue: any) => {
@@ -174,6 +200,17 @@ const MyForm = () => {
     [key in string]: string;
   };
 
+  useEffect(() => {
+    if (!jsIsLoading && jobstatus) {
+      dispatch(setJobStatus(jobstatus));
+    }
+  }, [jsIsLoading, jobstatus]);
+
+  useEffect(() => {
+    if (!jtIsLoading && jobtype) {
+      dispatch(setJobType(jobtype));
+    }
+  }, [jsIsLoading, jobtype]);
   const TabsList = Tabs.List;
   const TabsPannel = Tabs.Panel;
 
@@ -239,99 +276,73 @@ const MyForm = () => {
                     type={"number"}
                   />
                 </Grid>
-                {/* <Grid item xs={6}>
-                  <FormInputDate
-                    name={"planned_start_datetime"}
-                    control={control}
-                  />
-                </Grid> */}
 
                 <Grid item xs={6}>
-                  <Typography variant="subtitle1">Status</Typography>
-                  <Controller
-                    name="status"
+                  <FormInputText
+                    name={"external_id"}
                     control={control}
-                    render={({ field }) => (
-                      <>
-                        <Select
-                          {...field}
-                          fullWidth
-                          size="small"
-                          value={statuschange}
-                          onChange={handleStatus}
-                          sx={{
-                            background: "#F9F9F9 !important",
-                          }}
-                          inputProps={{
-                            style: {
-                              borderRadius: "5px",
-                            },
-                          }}
-                        >
-                          <MenuItem defaultChecked value={0}>
-                            Not Planned
-                          </MenuItem>
-                          <MenuItem value={1}>True</MenuItem>
-                          <MenuItem value={2}>False</MenuItem>
-                        </Select>
-                      </>
-                    )}
+                    label={"External Id"}
+                    placeholder={""}
+                    type={"text"}
                   />
                 </Grid>
 
-                {/* <Grid item xs={6} sx={{ mb: 1 }}>
-                  <Typography variant="subtitle1" sx={{ mb: 1 }}>
-                    Customer
-                  </Typography>
-
-                  <Controller
-                    name="customer"
+                <Grid item xs={6}>
+                  <FormInputText
+                    name={"planned_start_datetime"}
                     control={control}
-                    defaultValue=""
-                    render={({ field }) => (
-                      <TextField
-                        type="number"
-                        size="small"
-                        error={!!errors.customer}
-                        helperText={errors.customer?.message}
-                        {...field}
-                        fullWidth
-                        InputProps={{
-                          style: {
-                            borderRadius: "5px",
-                          },
-                        }}
-                      />
-                    )}
+                    label={"Planned Start"}
+                    placeholder={""}
+                    type={"datetime-local"}
                   />
-                </Grid> */}
+                </Grid>
 
-                {/* <Grid item xs={6}>
-                  <Typography variant="subtitle1" sx={{ mb: 1 }}>
-                    {" "}
-                    Note
-                  </Typography>
-
-                  <Controller
-                    name="note"
+                <Grid item xs={6}>
+                  <FormInputText
+                    name={"planned_end_datetime"}
                     control={control}
-                    defaultValue=""
-                    render={({ field }) => (
-                      <TextField
-                        size="small"
-                        error={!!errors.note}
-                        helperText={errors.note?.message}
-                        fullWidth
-                        {...field}
-                        InputProps={{
-                          style: {
-                            borderRadius: "5px",
-                          },
-                        }}
-                      />
-                    )}
+                    label={"Planned End"}
+                    placeholder={""}
+                    type={"datetime-local"}
                   />
-                </Grid> */}
+                </Grid>
+
+                <Grid item xs={6}>
+                  <FormInputText
+                    name={"note"}
+                    control={control}
+                    label={"Note"}
+                    placeholder={"Write Note"}
+                    type={"text"}
+                  />
+                </Grid>
+
+                <Grid item xs={6}>
+                  <FormInputText
+                    name={"customer"}
+                    control={control}
+                    label={"Customer"}
+                    type={"text"}
+                  />
+                </Grid>
+
+                <Grid item xs={6}>
+                  <FormInputDropdown
+                    name={"job_status_id"}
+                    control={control}
+                    label={"Status"}
+                    options={jobstatusSelector ? jobstatusSelector : []}
+                  />
+                </Grid>
+
+                <Grid item xs={6}>
+                  <FormInputDropdown
+                    name={"job_type_id"}
+                    control={control}
+                    label={"Job Type"}
+                    options={jobtypeSelector ? jobtypeSelector : []}
+                  />
+                </Grid>
 
                 <Grid item xs={12} sx={{ mt: 3 }}>
                   <Box
@@ -351,7 +362,7 @@ const MyForm = () => {
                     <LoadingButton
                       size="large"
                       type="submit"
-                      loading={isLoading || updateIsLoading}
+                      loading={AddJobIsLoading || updateIsLoading}
                       color="primary"
                       variant="contained"
                       className="btn-success"

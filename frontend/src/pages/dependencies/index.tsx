@@ -1,93 +1,141 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../Layout";
 import { Box, Button, Stack, useTheme } from "@mui/material";
 
 import Header from "../../components/table/Header";
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
-import { useDeleteTasksMutation } from "@/redux/api/taskApi";
-import AddBoxIcon from "@mui/icons-material/AddBox";
+
+import { Badge, Card } from "@mantine/core";
 import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import Loading from "@/components/loading/loading";
 import {
   useDeleteDependencyMutation,
-  useGetAllDependencysQuery,
+  useGetAllDependecyStatusQuery,
+  useGetAllDependencyQuery,
 } from "@/redux/api/dependencyApi";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { setDependencies } from "@/redux/features/dependencySlice";
-const Dependencys = () => {
-  const theme = useTheme();
+import {
+  setDependencies,
+  setDependenciesStatus,
+} from "@/redux/features/dependencySlice";
+import useTabs from "@/hooks/useTabs";
+import DeleteModel from "@/components/table/Model/delete-model";
+import { DependencyResponse } from "@/types/api.types";
+import deleteicon from "@/assets/images/delete.svg";
+import editicon from "@/assets/images/border_color.svg";
+import viewicon from "@/assets/images/visibility.svg";
+import { getString } from "@/helpers";
 
+type BadgeType = {
+  [key in string]: string;
+};
+const Dependencys = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [deleteDependency] = useDeleteDependencyMutation();
+  const [deleteModel, setDeleteModel] = useState<boolean>(false);
+  const [deleteId, setDeleteId] = useState<any>("");
+
+  const dependenciesSelector = useAppSelector(
+    (state) => state.dependency.dependencies
+  );
+
+  const dependenciesStatusSelector = useAppSelector(
+    (state) => state.dependency.dependencyStatus
+  );
+
   const {
     data: getDependencyData,
     isLoading: dependencyIsLoading,
     error,
-  } = useGetAllDependencysQuery(undefined);
+  } = useGetAllDependencyQuery(undefined);
 
-  const [deleteDependency] = useDeleteDependencyMutation();
-  const dispatch = useAppDispatch();
-  const dependenciesSelector = useAppSelector(
-    (state) => state.dependency.dependencies
-  );
-  //   console.log(dependenciesSelector, "selector");
+  // call api jobstatus
+  const { data: dependencystatus, isLoading: dsIsLoading } =
+    useGetAllDependecyStatusQuery(undefined, {});
 
-  //   "id": 1,
-  //   "name": "dependency test",
-  //   "dependency_type": 1,
-  //   "dependency_status": 1,
-  //   "expected_closed": "2023-09-12T09:00:00Z",
-  //   "closed_date": "2023-09-01T08:00:00Z",
-  //   "notes": "test notes",
-  //   "jobs": 1,
-  //   "tasks": 1,
-  //   "is_active": true,
-  //   "is_deleted": false
+  const [data, setData] = useState<Array<DependencyResponse> | []>();
 
   const columns: GridColDef<any>[] = [
     { field: "id", headerName: "ID" }, // Adjust the width as needed
     {
-      field: "name",
-      headerName: "Name",
+      field: "external_id",
+      headerName: "external_id",
       flex: 1,
     },
     {
-      field: "dependency_type",
-      headerName: "Dependency Type",
+      field: "name",
+      headerName: "name",
       flex: 1,
     },
 
     {
-      field: "dependency_status",
-      headerName: "Dependency Status",
+      field: "expected_close_datetime",
+      headerName: "Expected Close",
       flex: 1, // Adjust the width as needed
+      renderCell: (row) => {
+        return (
+          <span>
+            {row.row.expected_close_datetime
+              ? row.row.expected_close_datetime?.slice(0, 10)
+              : ""}
+          </span>
+        );
+      },
     },
     {
-      field: "expected_closed",
-      headerName: "Expecte Closed",
+      field: "actual_close_datetime",
+      headerName: "Actual Close",
       flex: 1, // Adjust the width as needed
-    },
-    {
-      field: "closed_date",
-      headerName: "Closed Date",
-      flex: 1,
+      renderCell: (row) => {
+        return (
+          <span>
+            {row.row.actual_close_datetime
+              ? row.row.actual_close_datetime?.slice(0, 10)
+              : ""}
+          </span>
+        );
+      },
     },
     {
       field: "notes",
       headerName: "Notes",
-      flex: 1, // Adjust the width as needed
-    },
-    {
-      field: "jobs",
-      headerName: "Jobes",
       flex: 1,
     },
     {
-      field: "tasks",
-      headerName: "Tasks",
+      field: "status",
+      headerName: "Status",
       flex: 1,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (row) => {
+        const filterjobstatus = dependenciesStatusSelector.filter(
+          (dependency: any) => dependency.id === row.row.dependency_status
+        );
+
+        const badgeColor: BadgeType = {
+          completed: "green",
+          "not-planned": "red",
+          planned: "violet",
+          progress: "yellow",
+        };
+
+        return (
+          <Badge
+            variant="light"
+            color={badgeColor[filterjobstatus[0]?.name]}
+            sx={{
+              textTransform: "unset",
+              borderRadius: "5px",
+              fontSize: "10px",
+              padding: "10px",
+              height: "35px",
+            }}
+          >
+            {getString(filterjobstatus[0]?.name)}
+          </Badge>
+        );
+      },
     },
     {
       field: "action",
@@ -96,37 +144,31 @@ const Dependencys = () => {
       sortable: false,
       // disableClickEventBubbling: true,
       renderCell: (params: any) => {
-        const handleDeleteAction = (e: React.SyntheticEvent<any>) => {
-          const currentRow = params.row;
-
-          if (
-            window.confirm("Are you sure you want to remove this Dependency?")
-          ) {
-            // return alert(JSON.stringify(currentRow, null, 4));
-            deleteDependency(currentRow?.id);
-            const newDependenciesData = dependenciesSelector.filter(
-              (item: any) => item.id !== currentRow?.id
-            );
-            dispatch(setDependencies(newDependenciesData));
-            toast.success("Dependency Delete Successfully");
-          }
-          return;
+        const handleDeleteAction = () => {
+          const currentRowId = params.row.id;
+          setDeleteModel(true);
+          setDeleteId(currentRowId);
         };
-
-        const handleEditAction = (e: React.SyntheticEvent<any>) => {
+        const handleEditAction = () => {
           const currentRow = params.row;
-          navigate(`/dependencys/form/${currentRow?.id}`);
+          navigate(`/dependency/form/${currentRow?.id}`);
         };
 
         return (
           <Stack direction="row" spacing={2}>
-            <ModeEditOutlinedIcon
-              sx={{ color: "blue", cursor: "pointer" }}
+            <img src={viewicon} alt="view_Icon" height={17} width={17} />
+            <img
+              src={editicon}
+              alt="edit_Icon"
+              height={17}
+              width={17}
               onClick={handleEditAction}
             />
-
-            <DeleteOutlinedIcon
-              sx={{ color: "red", cursor: "pointer" }}
+            <img
+              src={deleteicon}
+              alt="delete_Icon"
+              height={17}
+              width={17}
               onClick={handleDeleteAction}
             />
           </Stack>
@@ -134,6 +176,41 @@ const Dependencys = () => {
       },
     },
   ];
+
+  const handleClick = () => {
+    navigate(`/dependency/form`);
+  };
+
+  //handle cancle function  in custom delete modal
+  const handleCancle = () => {
+    setDeleteModel(false);
+    if (deleteId) {
+      setDeleteId("");
+    }
+    return;
+  };
+  //handle delete function  in custom delete modal
+  const handleDelete = () => {
+    if (deleteId) {
+      deleteDependency(deleteId);
+      setDeleteModel(false);
+      const newDependencyData = dependenciesSelector.filter(
+        (item: any) => item.id !== deleteId
+      );
+      dispatch(setDependencies(newDependencyData));
+    }
+    return;
+  };
+
+  useEffect(() => {
+    setData(dependenciesSelector);
+  }, [dependenciesSelector]);
+
+  useEffect(() => {
+    if (!dsIsLoading && dependencystatus) {
+      dispatch(setDependenciesStatus(dependencystatus));
+    }
+  }, [dsIsLoading, dependencystatus]);
 
   useEffect(() => {
     if (!dependencyIsLoading && getDependencyData) {
@@ -144,7 +221,11 @@ const Dependencys = () => {
     <>
       <Layout>
         <Box m="20px">
-          <Header title="Dependency" subtitle="List of Dependency " />
+          <Header
+            title="Dependency"
+            buttonname="Create New Dependency"
+            onClick={handleClick}
+          />
           <Box
             sx={{
               width: "auto",
@@ -152,23 +233,16 @@ const Dependencys = () => {
               justifyContent: "space-between",
             }}
           >
-            <Link to="/dependency/form">
-              <Button variant="contained" startIcon={<AddBoxIcon />}>
-                Dependency
-              </Button>
-            </Link>
             <Link to="/dependency/dependencytype">
               <Button variant="contained">Manage Dependency type</Button>
             </Link>
           </Box>
           <Box
             m="30px 0 0 0"
-            height="75vh"
+            height="auto"
             sx={{
               "& .MuiDataGrid-root": {},
-              "& .MuiDataGrid-cell": {
-                // borderBottom: "none",
-              },
+
               "& .name-column--cell": {
                 color: "bold !important",
               },
@@ -178,9 +252,8 @@ const Dependencys = () => {
               "& .MuiDataGrid-columnHeaders": {
                 backgroundColor: "#FAFAFA",
                 color: "	#000000",
-                fontSize: "10px",
+                fontSize: "14px",
                 fontWeight: "bold !important",
-                textTransform: "uppercase",
                 borderTop: "1px solid #F0F0F0",
               },
               "& .MuiDataGrid-virtualScroller": {
@@ -189,9 +262,21 @@ const Dependencys = () => {
               "& .MuiDataGrid-footerContainer": {
                 backgroundColor: "#FFFFFF",
               },
-              "& .MuiCheckbox-root": {
-                color: `1677FF !important`,
+              "& .MuiCheckbox-root svg": {
+                width: 23,
+                height: 23,
+                backgroundColor: "#F1F1F2",
+                border: `0px solid #E1E3EA`,
+                borderRadius: 1,
               },
+              "& .MuiCheckbox-root svg path": {
+                display: "none",
+              },
+              "& .MuiCheckbox-root.Mui-checked:not(.MuiCheckbox-indeterminate) svg":
+                {
+                  backgroundColor: "#1890ff",
+                  borderColor: "#1890ff",
+                },
               ".MuiDataGrid-cell:focus": {
                 outline: "none !important",
               },
@@ -207,43 +292,63 @@ const Dependencys = () => {
               },
             }}
           >
-            {dependencyIsLoading ? (
-              <Loading />
-            ) : (
-              dependenciesSelector && (
+            <Card withBorder sx={{ padding: "0px !important" }}>
+              <StatusTabs
+                statusTabs={[
+                  "all",
+                  ...dependenciesStatusSelector?.map(
+                    (dependency) => dependency?.name
+                  ),
+                ]}
+                data={dependenciesSelector ?? []}
+                statusdata={dependenciesStatusSelector ?? []}
+                setFilterData={setData}
+              />
+              {dependencyIsLoading ? (
                 <>
-                  <DataGrid
-                    className="dataGrid"
-                    rows={dependenciesSelector ?? []}
-                    columns={columns}
-                    initialState={{
-                      pagination: {
-                        paginationModel: {
-                          pageSize: 10,
-                        },
-                      },
-                    }}
-                    slots={{ toolbar: GridToolbar }}
-                    slotProps={{
-                      toolbar: {
-                        showQuickFilter: true,
-                        quickFilterProps: { debounceMs: 500 },
-                      },
-                    }}
-                    pageSizeOptions={[5, 10, 25]}
-                    checkboxSelection
-                    disableRowSelectionOnClick
-                    disableColumnFilter
-                    disableColumnMenu
-                    disableDensitySelector
-                    disableColumnSelector
-                    // checkboxSelection
-                    // rows={jobData}
-                    // columns={columns}
-                  />
+                  <Loading />
                 </>
-              )
-            )}
+              ) : (
+                dependenciesSelector && (
+                  <>
+                    <DataGrid
+                      className="dataGrid"
+                      autoHeight={true}
+                      rows={data ?? []}
+                      // rows={filterData ?? []}
+                      columns={columns}
+                      initialState={{
+                        pagination: {
+                          paginationModel: {
+                            pageSize: 10,
+                          },
+                        },
+                      }}
+                      slots={{ toolbar: GridToolbar }}
+                      slotProps={{
+                        toolbar: {
+                          showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
+                        },
+                      }}
+                      pageSizeOptions={[5, 10, 25]}
+                      checkboxSelection
+                      disableRowSelectionOnClick
+                      disableColumnFilter
+                      disableColumnMenu
+                      disableDensitySelector
+                      disableColumnSelector
+                    />
+                  </>
+                )
+              )}
+              <DeleteModel
+                deleteModel={deleteModel}
+                setDeleteModel={setDeleteModel}
+                handleCancle={handleCancle}
+                handleDelete={handleDelete}
+              />
+            </Card>
           </Box>
         </Box>
       </Layout>
@@ -252,3 +357,51 @@ const Dependencys = () => {
 };
 
 export default Dependencys;
+
+export const StatusTabs = ({
+  statusTabs,
+  statusdata,
+  data,
+  setFilterData,
+}: {
+  statusTabs: string[];
+  statusdata: any[];
+  data: any;
+  setFilterData: any;
+}) => {
+  // console.log(data, "jhjhjhj");
+  const { Tabs } = useTabs();
+  const statusCount: { [key: string]: any } = {};
+
+  const filterJobDataWithActiveTab = (tab: string) => {
+    if (tab === "all") {
+      setFilterData(data);
+    } else {
+      let tabid = statusdata.find((status: any) => status.name === tab).id;
+      if (tabid)
+        setFilterData(
+          data.filter(
+            (dependancy: any) => dependancy.dependency_status === tabid
+          )
+        );
+    }
+  };
+  if (data) {
+    // Iterate through the job list and count the status
+    data.forEach((dependancy: any) => {
+      const statusName = statusdata.find(
+        (status: any) => status.id === dependancy.dependency_status
+      ).name;
+      statusCount[statusName] = (statusCount[statusName] || 0) + 1;
+      statusCount["all"] = data.length;
+    });
+  }
+
+  return (
+    <Tabs
+      tabs={statusTabs}
+      filterDataWithActiveTab={filterJobDataWithActiveTab}
+      statusCounts={statusCount}
+    />
+  );
+};
