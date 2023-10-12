@@ -14,24 +14,34 @@ from api.utils.pre_save_hook import pre_save_hook
 
 
 task_type_router = Router()
+
+
 class TaskTypeViewSet(ModelViewSet):
     model_class = TaskType
 
     # AbstractModelView subclasses can be used as-is
     list = ListModelView(output_schema=TaskTypeOut)
+
+
 TaskTypeViewSet.register_routes(task_type_router)
 
 
 task_status_router = Router()
+
+
 class TaskStatusViewSet(ModelViewSet):
     model_class = TaskStatus
 
     # AbstractModelView subclasses can be used as-is
     list = ListModelView(output_schema=TaskStatusOut)
+
+
 TaskStatusViewSet.register_routes(task_status_router)
 
 
 task_router = Router()
+
+
 class TaskViewSet(ModelViewSet):
     model_class = Tasks
 
@@ -49,5 +59,7 @@ class TaskViewSet(ModelViewSet):
         pre_save=pre_save_hook(),
     )
     delete = SoftDeleteModelView()
+
+
 # The register_routes method must be called to register the routes with the router
 TaskViewSet.register_routes(task_router)

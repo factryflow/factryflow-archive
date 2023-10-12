@@ -1,6 +1,6 @@
-RESOURCES_CREATED = 'Resources created successfully'
-RESOURCES_UPDATED = 'Resources updated successfully'
-RESOURCES_DELETED = 'Resources deleted successfully'
-RESOURCE_GROUPS_CREATED = 'Resource Groups created successfully'
-RESOURCE_GROUPS_UPDATED = 'Resource Groups updated successfully'
-RESOURCE_GROUPS_DELETED = 'Resource Groups deleted successfully'
+RESOURCES_CREATED = "Resources created successfully"
+RESOURCES_UPDATED = "Resources updated successfully"
+RESOURCES_DELETED = "Resources deleted successfully"
+RESOURCE_GROUPS_CREATED = "Resource Groups created successfully"
+RESOURCE_GROUPS_UPDATED = "Resource Groups updated successfully"
+RESOURCE_GROUPS_DELETED = "Resource Groups deleted successfully"

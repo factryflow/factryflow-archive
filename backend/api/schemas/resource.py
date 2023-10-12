@@ -2,12 +2,11 @@
 from api.models import Resources, ResourceGroups
 from ninja import Schema, ModelSchema
 
-    
+
 class ResourceIn(Schema):
     name: str
     weekly_shift_template_id: int
     resource_groups_list: list
-    
 
 
 class ResourceOut(ModelSchema):
@@ -19,8 +18,8 @@ class ResourceOut(ModelSchema):
 class ResourceGroupsIn(Schema):
     name: str
     resources_list: list
-    
-    
+
+
 class ResourceGroupsOut(ModelSchema):
     class Config:
         model = ResourceGroups

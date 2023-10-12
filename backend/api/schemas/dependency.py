@@ -4,7 +4,7 @@ from typing import Optional
 from api.models import Dependency, DependencyTypes, DependencyStatus
 from ninja import Schema, ModelSchema
 
-    
+
 class DependencyIn(Schema):
     name: str
     external_id: str
@@ -18,10 +18,11 @@ class DependencyIn(Schema):
 class DependencyTypeIn(Schema):
     name: str
     description: Optional[str] = None
-    
+
+
 class DependencyStatusIn(Schema):
     name: str
-    
+
 
 class DependencyOut(ModelSchema):
     class Config:
@@ -33,7 +34,7 @@ class DependencyTypeOut(ModelSchema):
     class Config:
         model = DependencyTypes
         model_fields = "__all__"
-        
+
 
 class DependencyStatusOut(ModelSchema):
     class Config:

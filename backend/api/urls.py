@@ -19,30 +19,82 @@ api.register_controllers(NinjaJWTDefaultController)
 api.add_router("/users", user_no_auth_router, tags=["users"])
 api.add_router("/users", user_auth_router, auth=JWTAuth(), tags=["users"])
 api.add_router("/users/me", auth_me_router, auth=JWTAuth(), tags=["users"])
-api.add_router("/users/change-password", change_password_router, auth=JWTAuth(), tags=["users"])
+api.add_router(
+    "/users/change-password", change_password_router, auth=JWTAuth(), tags=["users"]
+)
 api.add_router("/items", item_router, auth=JWTAuth(), tags=["items"])
 api.add_router("/roles", role_router, tags=["roles"])
 api.add_router("/jobs", job_router, auth=JWTAuth(), tags=["jobs"])
 api.add_router("/job-types", job_type_router, auth=JWTAuth(), tags=["job-types"])
 api.add_router("/job-status", job_status_router, auth=JWTAuth(), tags=["job-status"])
-api.add_router("/operational-exception-type", operational_exception_type_router, auth=JWTAuth(), tags=["operational-exception-type"])
-api.add_router("/operational-exception", operational_exception_router, auth=JWTAuth(), tags=["operational-exception"])
-api.add_router("/weekly-shift-template-detail", weeklyshift_template_detail_router, auth=JWTAuth(), tags=["weekly-shift-template-detail"])
-api.add_router("/weekly-shift-template", weeklyshift_template_router, auth=JWTAuth(), tags=["weekly-shift-template"])
-api.add_router("/assignment-rule", assignment_rule_router, auth=JWTAuth(), tags=["assignment-rule"])
-api.add_router("/assignment-rule-criteria", assignment_rule_criteria_router, auth=JWTAuth(), tags=["assignment-rule-criteria"])
-api.add_router("/assignment-rule-resource-group", assignment_rule_resource_group_router, auth=JWTAuth(), tags=["assignment-rule-resource-group"])
+api.add_router(
+    "/operational-exception-type",
+    operational_exception_type_router,
+    auth=JWTAuth(),
+    tags=["operational-exception-type"],
+)
+api.add_router(
+    "/operational-exception",
+    operational_exception_router,
+    auth=JWTAuth(),
+    tags=["operational-exception"],
+)
+api.add_router(
+    "/weekly-shift-template-detail",
+    weeklyshift_template_detail_router,
+    auth=JWTAuth(),
+    tags=["weekly-shift-template-detail"],
+)
+api.add_router(
+    "/weekly-shift-template",
+    weeklyshift_template_router,
+    auth=JWTAuth(),
+    tags=["weekly-shift-template"],
+)
+api.add_router(
+    "/assignment-rule", assignment_rule_router, auth=JWTAuth(), tags=["assignment-rule"]
+)
+api.add_router(
+    "/assignment-rule-criteria",
+    assignment_rule_criteria_router,
+    auth=JWTAuth(),
+    tags=["assignment-rule-criteria"],
+)
+api.add_router(
+    "/assignment-rule-resource-group",
+    assignment_rule_resource_group_router,
+    auth=JWTAuth(),
+    tags=["assignment-rule-resource-group"],
+)
 api.add_router("/resource", resource_router, auth=JWTAuth(), tags=["resource"])
-api.add_router("/resource-group", resource_group_router, auth=JWTAuth(), tags=["resource-group"])
-api.add_router("/dependency-status", dependency_status_router, auth=JWTAuth(), tags=["dependency-status"])
-api.add_router("/dependency-types", dependency_type_router, auth=JWTAuth(), tags=["dependency-types"])
+api.add_router(
+    "/resource-group", resource_group_router, auth=JWTAuth(), tags=["resource-group"]
+)
+api.add_router(
+    "/dependency-status",
+    dependency_status_router,
+    auth=JWTAuth(),
+    tags=["dependency-status"],
+)
+api.add_router(
+    "/dependency-types",
+    dependency_type_router,
+    auth=JWTAuth(),
+    tags=["dependency-types"],
+)
 api.add_router("/dependency", dependency_router, auth=JWTAuth(), tags=["dependency"])
-api.add_router("/schedule-run", schedule_run_router, auth=JWTAuth(), tags=["schedule-run"])
-api.add_router("/schedule-run-status", schedule_run_status_router, auth=JWTAuth(), tags=["schedule-run-status"])
+api.add_router(
+    "/schedule-run", schedule_run_router, auth=JWTAuth(), tags=["schedule-run"]
+)
+api.add_router(
+    "/schedule-run-status",
+    schedule_run_status_router,
+    auth=JWTAuth(),
+    tags=["schedule-run-status"],
+)
 api.add_router("/tasks", task_router, auth=JWTAuth(), tags=["tasks"])
 api.add_router("/task-types", task_type_router, auth=JWTAuth(), tags=["task-types"])
 api.add_router("/task-status", task_status_router, auth=JWTAuth(), tags=["task-status"])
-
 
 
 @api.exception_handler(ObjectDoesNotExist)
@@ -97,4 +149,3 @@ def handle_field_error(request, exc: FieldError):
         data={"message": "FieldError", "detail": str(exc)},
         status=HTTPStatus.BAD_REQUEST,
     )
-

@@ -7,8 +7,19 @@ from ninja_crud.views import (
     UpdateModelView,
 )
 
-from api.models import AssignmentRule, AssignmentRuleCriteria, AssignmentRuleResourceGroup
-from api.schemas import AssignmentRuleIn, AssignmentRuleOut, AssignmentRuleCriteriaIn, AssignmentRuleCriteriaOut, AssignmentRuleResourceGroupIn, AssignmentRuleResourceGroupOut
+from api.models import (
+    AssignmentRule,
+    AssignmentRuleCriteria,
+    AssignmentRuleResourceGroup,
+)
+from api.schemas import (
+    AssignmentRuleIn,
+    AssignmentRuleOut,
+    AssignmentRuleCriteriaIn,
+    AssignmentRuleCriteriaOut,
+    AssignmentRuleResourceGroupIn,
+    AssignmentRuleResourceGroupOut,
+)
 from api.utils.crud_views import SoftDeleteModelView
 from api.utils.pre_save_hook import pre_save_hook
 
@@ -38,7 +49,7 @@ class AssignmentRuleViewSet(ModelViewSet):
 # The register_routes method must be called to register the routes with the router
 AssignmentRuleViewSet.register_routes(assignment_rule_router)
 
-#Assignment Rule Criteria
+# Assignment Rule Criteria
 assignment_rule_criteria_router = Router()
 
 
@@ -64,7 +75,7 @@ class AssignmentRuleCriteriaViewSet(ModelViewSet):
 # The register_routes method must be called to register the routes with the router
 AssignmentRuleCriteriaViewSet.register_routes(assignment_rule_criteria_router)
 
-#AssignmentRuleResourceGroup
+# AssignmentRuleResourceGroup
 assignment_rule_resource_group_router = Router()
 
 
@@ -88,4 +99,6 @@ class AssignmentRuleResourceGroupViewSet(ModelViewSet):
 
 
 # The register_routes method must be called to register the routes with the router
-AssignmentRuleResourceGroupViewSet.register_routes(assignment_rule_resource_group_router)
+AssignmentRuleResourceGroupViewSet.register_routes(
+    assignment_rule_resource_group_router
+)
