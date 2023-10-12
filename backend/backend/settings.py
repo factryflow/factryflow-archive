@@ -168,12 +168,17 @@ NINJA_JWT_REFRESH_TOKEN_LIFETIME = 86400  # 1 day
 NINJA_JWT_REFRESH_TOKEN_LIFETIME = 86400  # 1 day
 
 
-#SMTP
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# SMTP
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
-DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_PORT = config('EMAIL_PORT')
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_PORT = config("EMAIL_PORT")
 EMAIL_USE_TLS = True
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+
+# disable migrations
+MIGRATION_MODULES = {
+    "api": None,
+}
