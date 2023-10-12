@@ -13,4 +13,12 @@ class RoleIn(Schema):
 class RoleOut(ModelSchema):
     class Config:
         model = Role
-        model_fields = ["id", "name", "created_at", "created_by", "updated_at", "updated_by", "is_active"]
+        model_fields = [
+            "id",
+            "name",
+            "created_at",
+            "created_by",
+            "updated_at",
+            "updated_by",
+            "is_active",
+        ]

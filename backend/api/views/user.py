@@ -1,5 +1,12 @@
 from api.models.user import User
-from api.schemas.user import UserIn, UserOut, UserForgotPassword, VerifyOtpIn, UpdatePasswordIn, ChangePasswordIn
+from api.schemas.user import (
+    UserIn,
+    UserOut,
+    UserForgotPassword,
+    VerifyOtpIn,
+    UpdatePasswordIn,
+    ChangePasswordIn,
+)
 from django.contrib.auth import get_user_model
 from ninja import Router
 from ninja_crud.views import (
@@ -42,6 +49,7 @@ UserViewSet.register_routes(user_auth_router)
 
 auth_me_router = Router()
 
+
 @auth_me_router.get("/", response=UserOut)
 def get_current_user(request):
     """
@@ -59,28 +67,30 @@ def get_current_user(request):
 def forgot_password(request, user_in: UserForgotPassword):
     email = user_in.email
     status, message = send_mail(email)
-    return{"message":message}
+    return {"message": message}
+
 
 @user_no_auth_router.post("/verify-otp")
-def verify_otp(request, otp_in:VerifyOtpIn):
-    user, message = verify_otp(otp_in.email, otp_in.otp)    
-    return {"user":user, "message":message}
+def verify_otp(request, otp_in: VerifyOtpIn):
+    user, message = verify_otp(otp_in.email, otp_in.otp)
+    return {"user": user, "message": message}
 
 
 @user_no_auth_router.post("/update-password")
-def update_password(request, update_password:UpdatePasswordIn):
+def update_password(request, update_password: UpdatePasswordIn):
     try:
         user = User.objects.get(id=update_password.id)
         user.set_password(update_password.password)
         user.save()
     except User.DoesNotExist:
-        return{'error':'User not forund!'}
-    
+        return {"error": "User not forund!"}
+
 
 change_password_router = Router()
 
-@change_password_router.put('/')
-def change_password(request, change_password:ChangePasswordIn):
+
+@change_password_router.put("/")
+def change_password(request, change_password: ChangePasswordIn):
     user = request.user
     if user.check_password(change_password.current_password):
         user.set_password(change_password.new_password)
@@ -88,4 +98,3 @@ def change_password(request, change_password:ChangePasswordIn):
         return {"message": "Password changed successfully"}
     else:
         return {"message": "Current password is incorrect"}
-    

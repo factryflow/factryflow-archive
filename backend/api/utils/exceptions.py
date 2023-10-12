@@ -5,6 +5,7 @@ from rest_framework.views import exception_handler
 
 from api.utils.messages.commonMessages import *
 
+
 def custom_exception_handler(exc, context):
     """
     If an exception is thrown that we don't explicitly handle here, we want
@@ -31,63 +32,76 @@ def custom_exception_handler(exc, context):
     # print ('context {}'.format(context))
     # print ('response {}'.format(response))
 
-    if (error_type == 'MethodNotAllowed'):
-        response = Response(data={
-            'data': None,
-            'message': METHOD_NOT_ALLOWED,
-            'code':status.HTTP_405_METHOD_NOT_ALLOWED
-        }, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    if error_type == "MethodNotAllowed":
+        response = Response(
+            data={
+                "data": None,
+                "message": METHOD_NOT_ALLOWED,
+                "code": status.HTTP_405_METHOD_NOT_ALLOWED,
+            },
+            status=status.HTTP_405_METHOD_NOT_ALLOWED,
+        )
 
-    elif (error_type == 'ValidationError'):
+    elif error_type == "ValidationError":
         error = {}
-        
+
         for field, value in exc:
-            error.update({field : value })
+            error.update({field: value})
 
-        response = Response(data={
-            'data': error,
-            'message': BAD_REQUEST,
-            'code':status.HTTP_400_BAD_REQUEST
-        }, status=status.HTTP_200_OK)
+        response = Response(
+            data={
+                "data": error,
+                "message": BAD_REQUEST,
+                "code": status.HTTP_400_BAD_REQUEST,
+            },
+            status=status.HTTP_200_OK,
+        )
 
-    elif (error_type == 'IntegrityError' or error_type == 'NameError'):
+    elif error_type == "IntegrityError" or error_type == "NameError":
         # Send Email
         send_error_email(exc, context, error_type)
 
         # Return Response
-        response = Response(data={
-            'data': None,
-            'message': INTERNAL_SERVER_ERROR,
-            'code':status.HTTP_500_INTERNAL_SERVER_ERROR
-        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        response = Response(
+            data={
+                "data": None,
+                "message": INTERNAL_SERVER_ERROR,
+                "code": status.HTTP_500_INTERNAL_SERVER_ERROR,
+            },
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
     else:
         if not response:
             # Unhandled exceptions (500 internal server errors)
-            response = Response(data={
-                'data': "{}".format(exc),
-                'message': BAD_REQUEST,
-                'code':status.HTTP_400_BAD_REQUEST
-            }, status=status.HTTP_200_OK)
-        
-        if hasattr(exc, 'default_error'):
-            response.data['data'] = None
+            response = Response(
+                data={
+                    "data": "{}".format(exc),
+                    "message": BAD_REQUEST,
+                    "code": status.HTTP_400_BAD_REQUEST,
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        if hasattr(exc, "default_error"):
+            response.data["data"] = None
         else:
-            response.data['data'] = None
+            response.data["data"] = None
 
-        response.data['code'] = status.HTTP_400_BAD_REQUEST
+        response.data["code"] = status.HTTP_400_BAD_REQUEST
 
-        if hasattr(exc, 'default_detail'):
-            response.data['message'] = "{}".format(exc.default_detail)
-        elif 'detail' in response.data:
-            response.data['message'] = "{}".format(response.data['details'])
+        if hasattr(exc, "default_detail"):
+            response.data["message"] = "{}".format(exc.default_detail)
+        elif "detail" in response.data:
+            response.data["message"] = "{}".format(response.data["details"])
 
-        if 'detail' in response.data:
-            del response.data['detail']
+        if "detail" in response.data:
+            del response.data["detail"]
 
-        if (error_type != 'AuthenticationFailed'):
+        if error_type != "AuthenticationFailed":
             send_error_email(exc, context, error_type)
 
     return response
+
 
 def send_error_email(exc, context, error_type):
     """

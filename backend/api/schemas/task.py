@@ -4,7 +4,7 @@ from typing import Optional
 from api.models import Tasks, TaskType, TaskStatus
 from ninja import Schema, ModelSchema
 
-    
+
 class TaskIn(Schema):
     external_id: str
     name: str
@@ -15,11 +15,10 @@ class TaskIn(Schema):
     teardown_time: int
     quantity: int
     jobs_id: Optional[int] = None
-    predecessors_id:  Optional[list] = []
+    predecessors_id: Optional[list] = []
     item: Optional[str] = None
     planned_start_datetime: datetime
     planned_end_datetime: datetime
-    
 
 
 class TaskOut(ModelSchema):
@@ -32,7 +31,7 @@ class TaskTypeOut(ModelSchema):
     class Config:
         model = TaskType
         model_fields = "__all__"
-        
+
 
 class TaskStatusOut(ModelSchema):
     class Config:

@@ -10,8 +10,10 @@ from .dependency import Dependency
 class JobDependency(models.Model):
     id = models.AutoField(primary_key=True)
     job = models.ForeignKey(Job, on_delete=models.CASCADE, blank=True, null=True)
-    dependency = models.ForeignKey(Dependency, on_delete=models.CASCADE, blank=True, null=True)
-    
+    dependency = models.ForeignKey(
+        Dependency, on_delete=models.CASCADE, blank=True, null=True
+    )
+
     # Metadata
     created_at = models.DateTimeField(default=timezone.now)
     created_by = models.ForeignKey(
@@ -32,7 +34,7 @@ class JobDependency(models.Model):
     deleted_at = models.DateTimeField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_deleted = models.BooleanField(default=False)
-    history = HistoricalRecords(table_name='job_dependency_history')
+    history = HistoricalRecords(table_name="job_dependency_history")
 
     objects = ActiveManager()
 
@@ -40,7 +42,5 @@ class JobDependency(models.Model):
         return str(self.id)
 
     class Meta:
-        db_table = 'job_dependency'
-        indexes = [
-            models.Index(fields=['id'])
-        ]
+        db_table = "job_dependency"
+        indexes = [models.Index(fields=["id"])]

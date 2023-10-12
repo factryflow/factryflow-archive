@@ -12,19 +12,20 @@ class UserOut(Schema):
     username: str
     email: str
 
+
 class UserForgotPassword(Schema):
     email: str
-    
-    
+
+
 class VerifyOtpIn(Schema):
-    email:str
+    email: str
     otp: int
-    
+
 
 class UpdatePasswordIn(Schema):
     id: int
     password: str
-    
+
 
 class ChangePasswordIn(Schema):
     current_password: str

@@ -9,7 +9,7 @@ from api.utils.model_manager import ActiveManager
 class ScheduleRunStatus(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=250, blank=True, null=True)
-    
+
     # Metadata
     created_at = models.DateTimeField(default=timezone.now)
     created_by = models.ForeignKey(
@@ -30,15 +30,13 @@ class ScheduleRunStatus(models.Model):
     deleted_at = models.DateTimeField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_deleted = models.BooleanField(default=False)
-    history = HistoricalRecords(table_name='schedule_run_status_history')
+    history = HistoricalRecords(table_name="schedule_run_status_history")
 
     objects = ActiveManager()
-    
+
     def __str__(self):
         return self.name
 
     class Meta:
-        db_table = 'schedule_run_status'
-        indexes = [
-            models.Index(fields=['id'])
-        ]
+        db_table = "schedule_run_status"
+        indexes = [models.Index(fields=["id"])]
