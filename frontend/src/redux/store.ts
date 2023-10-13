@@ -40,6 +40,7 @@ import {
   exceptionTypeApi,
   templateApi,
   templateDetailsApi,
+  userApi,
 } from "@/redux/api";
 
 const reducer = combineReducers({
@@ -67,6 +68,7 @@ const reducer = combineReducers({
   [exceptionTypeApi.reducerPath]: exceptionTypeApi.reducer,
   [templateApi.reducerPath]: templateApi.reducer,
   [templateDetailsApi.reducerPath]: templateDetailsApi.reducer,
+  [userApi.reducerPath]: userApi.reducer,
 });
 
 type RootReducer = ReturnType<typeof reducer>;
@@ -85,17 +87,9 @@ const config: PersistConfig<any> = {
     exceptionTypeApi.reducerPath,
     templateApi.reducerPath,
     templateDetailsApi.reducerPath,
+    userApi.reducerPath,
   ],
-  whitelist: [
-    "menu",
-    "job",
-    "dependency",
-    "task",
-    "resource",
-    "resourceGroup",
-    "user",
-    "template",
-  ],
+  whitelist: [],
 };
 
 const peristedReducer = persistReducer<RootReducer, AnyAction>(config, reducer);
@@ -116,7 +110,8 @@ export const store = configureStore({
       .concat(exceptionApi.middleware)
       .concat(exceptionTypeApi.middleware)
       .concat(templateApi.middleware)
-      .concat(templateDetailsApi.middleware);
+      .concat(templateDetailsApi.middleware)
+      .concat(userApi.middleware);
   },
 });
 
