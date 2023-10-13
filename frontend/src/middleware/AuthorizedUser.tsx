@@ -34,24 +34,34 @@
 
 // export default AuthorizedUser;
 
-import React from "react";
-import { useCookies } from "react-cookie";
 import Loading from "@/components/loading/loading";
+import { userApi } from "@/redux/api";
+import React from "react";
+// import { useCookies } from "react-cookie";
+// import Loading from "@/components/loading/loading";
 import { Navigate } from "react-router-dom";
-// import { userApi } from "../redux/api/userApi";
 
 type IAuthMiddleware = {
   children: React.ReactElement;
 };
 
 const AuthMiddleware: React.FC<IAuthMiddleware> = ({ children }) => {
-  // const { isLoading } = userApi.endpoints.getMe.useQuery(null, {
-  //   skip: !cookies.logged_in,
-  // });
+  let userprofile = false;
 
-  // if (isLoading) {
-  //   return <Loading />;
-  // }
+  if (localStorage.getItem("token")) {
+    const { access } = JSON.parse(localStorage.getItem("token") as string);
+
+    if (access) {
+      userprofile = true;
+    }
+  }
+  const { isLoading } = userApi.endpoints.getMe.useQuery(null, {
+    skip: !userprofile,
+  });
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return children;
 };
