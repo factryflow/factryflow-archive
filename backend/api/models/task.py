@@ -11,27 +11,19 @@ from api.utils.model_manager import ActiveManager
 
 class Task(models.Model):
     id = models.AutoField(primary_key=True)
-    external_id = models.CharField(max_length=150, blank=True, null=True)
+    external_id = models.CharField(max_length=150, blank=True)
     name = models.CharField(max_length=150)
     task_status = models.ForeignKey(
-        TaskStatus,
-        on_delete=models.CASCADE,
-        related_name="tasks_status",
-        blank=True,
-        null=True,
+        TaskStatus, on_delete=models.CASCADE, related_name="tasks_status"
     )
     task_type = models.ForeignKey(
-        TaskType,
-        on_delete=models.CASCADE,
-        related_name="tasks_type",
-        blank=True,
-        null=True,
+        TaskType, on_delete=models.CASCADE, related_name="tasks_type"
     )
-    setup_time = models.IntegerField(blank=True, null=True)
+    setup_time = models.IntegerField(blank=True, null=True, default=0)
     run_time_per_unit = models.IntegerField(blank=True, null=True)
-    teardown_time = models.IntegerField(blank=True, null=True)
-    quantity = models.IntegerField(blank=True, null=True)
-    jobs = models.ForeignKey(
+    teardown_time = models.IntegerField(default=0)
+    quantity = models.IntegerField(default=1)
+    job = models.ForeignKey(
         Job, on_delete=models.CASCADE, related_name="tasks_list", blank=True, null=True
     )
     predecessors = models.ManyToManyField(
