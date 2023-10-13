@@ -1,14 +1,15 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
+from simple_history.models import HistoricalRecords
+
 from api.models.job import Job
 from api.models.task_status import TaskStatus
 from api.models.task_type import TaskType
-from simple_history.models import HistoricalRecords
 from api.utils.model_manager import ActiveManager
 
 
-class Tasks(models.Model):
+class Task(models.Model):
     id = models.AutoField(primary_key=True)
     external_id = models.CharField(max_length=150, blank=True, null=True)
     name = models.CharField(max_length=150)

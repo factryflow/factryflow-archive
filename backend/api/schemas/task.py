@@ -1,8 +1,10 @@
 # schemas.py
-from datetime import datetime, date
+from datetime import datetime
 from typing import Optional
-from api.models import Tasks, TaskType, TaskStatus
-from ninja import Schema, ModelSchema
+
+from ninja import ModelSchema, Schema
+
+from api.models import Task, TaskStatus, TaskType
 
 
 class TaskIn(Schema):
@@ -23,7 +25,7 @@ class TaskIn(Schema):
 
 class TaskOut(ModelSchema):
     class Config:
-        model = Tasks
+        model = Task
         model_fields = "__all__"
 
 

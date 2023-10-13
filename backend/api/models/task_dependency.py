@@ -2,14 +2,16 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from simple_history.models import HistoricalRecords
+
 from api.utils.model_manager import ActiveManager
-from .task import Tasks
+
 from .dependency import Dependency
+from .task import Task
 
 
 class TaskDependency(models.Model):
     id = models.AutoField(primary_key=True)
-    task = models.ForeignKey(Tasks, on_delete=models.CASCADE, blank=True, null=True)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, blank=True, null=True)
     dependency = models.ForeignKey(
         Dependency,
         on_delete=models.CASCADE,
