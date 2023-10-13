@@ -6,11 +6,11 @@ from ninja_crud.views import (
     RetrieveModelView,
     UpdateModelView,
 )
-from api.models import Resources, ResourceGroups
-from api.schemas import ResourceIn, ResourceOut, ResourceGroupsIn, ResourceGroupsOut
+
+from api.models import ResourceGroup, Resources
+from api.schemas import ResourceGroupsIn, ResourceGroupsOut, ResourceIn, ResourceOut
 from api.utils.crud_views import SoftDeleteModelView
 from api.utils.pre_save_hook import pre_save_hook
-
 
 resource_router = Router()
 
@@ -42,7 +42,7 @@ resource_group_router = Router()
 
 
 class ResourceGroupsViewSet(ModelViewSet):
-    model_class = ResourceGroups
+    model_class = ResourceGroup
 
     # AbstractModelView subclasses can be used as-is
     list = ListModelView(output_schema=ResourceGroupsOut)

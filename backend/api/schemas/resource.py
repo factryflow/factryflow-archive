@@ -1,6 +1,7 @@
 # schemas.py
-from api.models import Resources, ResourceGroups
-from ninja import Schema, ModelSchema
+from ninja import ModelSchema, Schema
+
+from api.models import ResourceGroup, Resources
 
 
 class ResourceIn(Schema):
@@ -22,5 +23,5 @@ class ResourceGroupsIn(Schema):
 
 class ResourceGroupsOut(ModelSchema):
     class Config:
-        model = ResourceGroups
+        model = ResourceGroup
         model_fields = "__all__"

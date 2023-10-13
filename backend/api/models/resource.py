@@ -1,9 +1,10 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from .resource_group import ResourceGroups
 from simple_history.models import HistoricalRecords
+
 from api.utils.model_manager import ActiveManager
+
 from .weekly_shift_template import WeeklyShiftTemplate
 
 
