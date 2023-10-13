@@ -9,7 +9,6 @@ from api.utils.model_manager import ActiveManager
 class ResourceGroup(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    resources_list = models.JSONField(blank=True, null=True)
 
     # Metadata
     created_at = models.DateTimeField(default=timezone.now)

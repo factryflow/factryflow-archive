@@ -14,7 +14,7 @@ class Resources(models.Model):
     weekly_shift_template = models.ForeignKey(
         WeeklyShiftTemplate, on_delete=models.DO_NOTHING, blank=True, null=True
     )
-    resource_groups_list = models.JSONField(blank=True, null=True)
+    resource_groups = models.ManyToManyField("ResourceGroup", related_name="resources")
 
     # Metadata
     created_at = models.DateTimeField(default=timezone.now)
