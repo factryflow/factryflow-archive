@@ -5,7 +5,7 @@ from simple_history.models import HistoricalRecords
 
 from api.utils.model_manager import ActiveManager
 
-from .resource import Resources
+from .resource import Resource
 from .task import Task
 
 
@@ -19,7 +19,7 @@ class TasksResourceAssignment(models.Model):
         null=True,
     )
     resource = models.ForeignKey(
-        Resources,
+        Resource,
         on_delete=models.CASCADE,
         related_name="resource_assignment",
         blank=True,

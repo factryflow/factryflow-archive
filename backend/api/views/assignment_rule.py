@@ -13,16 +13,15 @@ from api.models import (
     AssignmentRuleResourceGroup,
 )
 from api.schemas import (
-    AssignmentRuleIn,
-    AssignmentRuleOut,
     AssignmentRuleCriteriaIn,
     AssignmentRuleCriteriaOut,
+    AssignmentRuleIn,
+    AssignmentRuleOut,
     AssignmentRuleResourceGroupIn,
     AssignmentRuleResourceGroupOut,
 )
+from api.utils.crud_hooks import pre_save_hook
 from api.utils.crud_views import SoftDeleteModelView
-from api.utils.pre_save_hook import pre_save_hook
-
 
 assignment_rule_router = Router()
 

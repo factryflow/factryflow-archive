@@ -6,7 +6,8 @@ from ninja_crud.views import (
     RetrieveModelView,
     UpdateModelView,
 )
-from api.models import Dependency, DependencyTypes, DependencyStatus
+
+from api.models import Dependency, DependencyStatus, DependencyTypes
 from api.schemas import (
     DependencyIn,
     DependencyOut,
@@ -15,9 +16,8 @@ from api.schemas import (
     DependencyTypeIn,
     DependencyTypeOut,
 )
+from api.utils.crud_hooks import pre_save_hook
 from api.utils.crud_views import SoftDeleteModelView
-from api.utils.pre_save_hook import pre_save_hook
-
 
 dependency_type_router = Router()
 

@@ -9,8 +9,8 @@ from ninja_crud.views import (
 
 from api.models import Role
 from api.schemas import RoleIn, RoleOut
+from api.utils.crud_hooks import pre_save_hook
 from api.utils.crud_views import SoftDeleteModelView
-from api.utils.pre_save_hook import pre_save_hook
 
 role_router = Router()
 
