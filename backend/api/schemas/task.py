@@ -7,12 +7,33 @@ from pydantic import Field
 from api.models import Task, TaskStatus, TaskType
 
 
+class TaskTypeOut(ModelSchema):
+    class Config:
+        model = TaskType
+        model_fields = ["id", "name"]
+
+
+class TaskStatusOut(ModelSchema):
+    class Config:
+        model = TaskStatus
+        model_fields = ["id", "name"]
+
+
+class Predecessor(ModelSchema):
+    task_status: TaskStatusOut
+    task_type: TaskTypeOut
+
+    class Config:
+        model = Task
+        model_exclude = ["predecessors"]
+
+
 class TaskIn(ModelSchema):
     task_status_id: int
     task_type_id: int
-    job_id: Optional[int] = None
-    predecessor_ids: List[int] = Field(default=[], alias="predecessors_id")
+    job_id: int = None
     item_id: int = None
+    predecessor_ids: List[int] = Field(default=[])
 
     class Config:
         model = Task
@@ -27,23 +48,11 @@ class TaskIn(ModelSchema):
 
 
 class TaskOut(ModelSchema):
-    task_status_id: int
-    task_type_id: int
+    task_status: TaskStatusOut
+    task_type: TaskTypeOut
     job_id: Optional[int] = None
-    predecessor_ids: List[int] = Field(default=[], alias="predecessors_id")
+    predecessors: List[Predecessor]
 
     class Config:
         model = Task
-        model_exclude = ["task_status", "task_type", "job", "predecessors"]
-
-
-class TaskTypeOut(ModelSchema):
-    class Config:
-        model = TaskType
-        model_fields = "__all__"
-
-
-class TaskStatusOut(ModelSchema):
-    class Config:
-        model = TaskStatus
-        model_fields = "__all__"
+        model_exclude = ["job"]

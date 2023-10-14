@@ -1,6 +1,5 @@
 from http import HTTPStatus
 
-from api.views import *
 from django.core.exceptions import (
     FieldError,
     ObjectDoesNotExist,
@@ -11,6 +10,8 @@ from ninja.errors import ValidationError as NinjaValidationError
 from ninja_extra import NinjaExtraAPI
 from ninja_jwt.authentication import JWTAuth
 from ninja_jwt.controller import NinjaJWTDefaultController
+
+from api.views import *
 
 api = NinjaExtraAPI(urls_namespace="api")
 api.register_controllers(NinjaJWTDefaultController)
@@ -66,9 +67,9 @@ api.add_router(
     auth=JWTAuth(),
     tags=["assignment-rule-resource-group"],
 )
-api.add_router("/resource", resource_router, auth=JWTAuth(), tags=["resource"])
+api.add_router("/resources", resource_router, auth=JWTAuth(), tags=["resources"])
 api.add_router(
-    "/resource-group", resource_group_router, auth=JWTAuth(), tags=["resource-group"]
+    "/resource-groups", resource_group_router, auth=JWTAuth(), tags=["resource-groups"]
 )
 api.add_router(
     "/dependency-status",

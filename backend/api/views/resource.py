@@ -7,16 +7,16 @@ from ninja_crud.views import (
     UpdateModelView,
 )
 
-from api.models import ResourceGroup, Resources
-from api.schemas import ResourceGroupsIn, ResourceGroupsOut, ResourceIn, ResourceOut
+from api.models import Resource
+from api.schemas import ResourceIn, ResourceOut
+from api.utils.crud_hooks import post_save_hook, pre_save_hook
 from api.utils.crud_views import SoftDeleteModelView
-from api.utils.pre_save_hook import pre_save_hook
 
 resource_router = Router()
 
 
 class ResourceViewSet(ModelViewSet):
-    model_class = Resources
+    model_class = Resource
 
     # AbstractModelView subclasses can be used as-is
     list = ListModelView(output_schema=ResourceOut)
@@ -24,6 +24,7 @@ class ResourceViewSet(ModelViewSet):
         input_schema=ResourceIn,
         output_schema=ResourceOut,
         pre_save=pre_save_hook(),
+        post_save=post_save_hook("resource_groups", "resource_group_ids"),
     )
     retrieve = RetrieveModelView(output_schema=ResourceOut)
     update = UpdateModelView(
@@ -36,29 +37,3 @@ class ResourceViewSet(ModelViewSet):
 
 # The register_routes method must be called to register the routes with the router
 ResourceViewSet.register_routes(resource_router)
-
-# Assignment Rule Criteria
-resource_group_router = Router()
-
-
-class ResourceGroupsViewSet(ModelViewSet):
-    model_class = ResourceGroup
-
-    # AbstractModelView subclasses can be used as-is
-    list = ListModelView(output_schema=ResourceGroupsOut)
-    create = CreateModelView(
-        input_schema=ResourceGroupsIn,
-        output_schema=ResourceGroupsOut,
-        pre_save=pre_save_hook(),
-    )
-    retrieve = RetrieveModelView(output_schema=ResourceGroupsOut)
-    update = UpdateModelView(
-        input_schema=ResourceGroupsIn,
-        output_schema=ResourceGroupsOut,
-        pre_save=pre_save_hook(),
-    )
-    delete = SoftDeleteModelView()
-
-
-# The register_routes method must be called to register the routes with the router
-ResourceGroupsViewSet.register_routes(resource_group_router)

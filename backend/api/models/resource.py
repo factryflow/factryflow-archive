@@ -8,7 +8,7 @@ from api.utils.model_manager import ActiveManager
 from .weekly_shift_template import WeeklyShiftTemplate
 
 
-class Resources(models.Model):
+class Resource(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     weekly_shift_template = models.ForeignKey(

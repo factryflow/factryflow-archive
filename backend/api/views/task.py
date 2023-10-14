@@ -9,8 +9,8 @@ from ninja_crud.views import (
 
 from api.models import Task, TaskStatus, TaskType
 from api.schemas import TaskIn, TaskOut, TaskStatusOut, TaskTypeOut
+from api.utils.crud_hooks import post_save_hook, pre_save_hook
 from api.utils.crud_views import SoftDeleteModelView
-from api.utils.pre_save_hook import pre_save_hook
 
 task_type_router = Router()
 
@@ -50,6 +50,7 @@ class TaskViewSet(ModelViewSet):
         input_schema=TaskIn,
         output_schema=TaskOut,
         pre_save=pre_save_hook(),
+        post_save=post_save_hook("predecessors", "predecessor_ids"),
     )
     retrieve = RetrieveModelView(output_schema=TaskOut)
     update = UpdateModelView(
