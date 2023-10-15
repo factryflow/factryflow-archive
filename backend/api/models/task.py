@@ -24,7 +24,7 @@ class Task(models.Model):
     teardown_time = models.IntegerField(default=0)
     quantity = models.IntegerField(default=1)
     job = models.ForeignKey(
-        Job, on_delete=models.CASCADE, related_name="tasks_list", blank=True, null=True
+        Job, on_delete=models.CASCADE, related_name="tasks", blank=True, null=True
     )
     predecessors = models.ManyToManyField(
         "self", symmetrical=False, related_name="successors", blank=True
@@ -32,6 +32,7 @@ class Task(models.Model):
     item = models.CharField(max_length=250, blank=True, null=True)
     planned_start_datetime = models.DateTimeField(blank=True, null=True)
     planned_end_datetime = models.DateTimeField(blank=True, null=True)
+    dependencies = models.ManyToManyField("Dependency", related_name="tasks")
 
     # Metadata
     created_at = models.DateTimeField(default=timezone.now)

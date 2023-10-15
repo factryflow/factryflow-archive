@@ -9,7 +9,7 @@ from ninja_crud.views import (
 
 from api.models import Job, JobStatus, JobType
 from api.schemas import JobIn, JobOut, JobStatusOut, JobTypeOut
-from api.utils.crud_hooks import pre_save_hook
+from api.utils.crud_hooks import post_save_hook, pre_save_hook
 from api.utils.crud_views import SoftDeleteModelView
 
 job_type_router = Router()
@@ -50,6 +50,7 @@ class JobViewSet(ModelViewSet):
         input_schema=JobIn,
         output_schema=JobOut,
         pre_save=pre_save_hook(),
+        post_save=post_save_hook(("dependencies", "dependency_ids")),
     )
     retrieve = RetrieveModelView(output_schema=JobOut)
     update = UpdateModelView(

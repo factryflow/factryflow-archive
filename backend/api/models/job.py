@@ -21,6 +21,7 @@ class Job(models.Model):
     note = models.CharField(max_length=150, blank=True)
     job_status = models.ForeignKey(JobStatus, on_delete=models.DO_NOTHING)
     job_type = models.ForeignKey(JobType, on_delete=models.DO_NOTHING)
+    dependencies = models.ManyToManyField("Dependency", related_name="jobs")
 
     # Metadata
     created_at = models.DateTimeField(default=timezone.now)

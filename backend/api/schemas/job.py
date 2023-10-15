@@ -1,28 +1,22 @@
 # schemas.py
+from typing import List
 
 from ninja import ModelSchema
+from pydantic import Field
 
-from api.models import Job, JobStatus, JobType
+from api.models import Dependency, Job, JobStatus, JobType
 
 
-class JobIn(ModelSchema):
-    job_status_id: int
-    job_type_id: int
-
+class Depdendency(ModelSchema):
     class Config:
-        model = Job
-        model_fields = ["name", "customer", "due_date", "priority", "external_id"]
-        # model_fields_optional = ["description", "customer", "note"]
+        model = Dependency
+        model_fields = ["id", "name"]
 
 
-class JobOut(ModelSchema):
-    job_status_id: int
-    job_type_id: int
-
+class JobStatusOut(ModelSchema):
     class Config:
-        model = Job
-        model_exclude = ["job_status", "job_type"]
-        # model_fields = ["id", "name", "customer", "due_date", "priority", "external_id"]
+        model = JobStatus
+        model_fields = ["id", "name"]
 
 
 class JobTypeOut(ModelSchema):
@@ -31,7 +25,21 @@ class JobTypeOut(ModelSchema):
         model_fields = ["id", "name"]
 
 
-class JobStatusOut(ModelSchema):
+class JobIn(ModelSchema):
+    job_status_id: int
+    job_type_id: int
+    dependency_ids: List[int] = Field(default=[])
+
     class Config:
-        model = JobStatus
+        model = Job
+        model_fields = ["name", "customer", "due_date", "priority", "external_id"]
+
+
+class JobOut(ModelSchema):
+    job_status: JobStatusOut
+    job_type: JobTypeOut
+    dependencies: List[Depdendency]
+
+    class Config:
+        model = Job
         model_fields = "__all__"
