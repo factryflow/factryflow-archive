@@ -21,6 +21,10 @@ operational_exception_router = Router()
 
 
 class OperationalExceptionViewSet(ModelViewSet):
+    """
+    This View is related to operational exception Views
+    Here we are including the all CRUD operations
+    """
     model_class = OperationalException
 
     # AbstractModelView subclasses can be used as-is
@@ -47,6 +51,10 @@ operational_exception_type_router = Router()
 
 
 class OperationalExceptionTypeViewSet(ModelViewSet):
+    """
+    This View is related to operational exception Type Views
+    Here we are including the all CRUD operations
+    """
     model_class = OperationalExceptionType
 
     # AbstractModelView subclasses can be used as-is

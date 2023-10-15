@@ -8,7 +8,11 @@ from django.template.loader import render_to_string
 from backend.settings import DEFAULT_FROM_EMAIL
 
 
-def send_mail(email):                                                                                                                                                                                                                                                                           
+def send_mail(email):     
+    """
+    This method is using for sending forgot email to user where we are sending Otp to user and,
+    On portal when user will verify otp then user can set password
+    """                                                                                                                                                                                                                                                                      
     try:
         tz = pytz.timezone ('Asia/Kolkata')
         current_time = datetime.now (tz)

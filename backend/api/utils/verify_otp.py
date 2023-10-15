@@ -4,6 +4,9 @@ from api.models import User
 
 
 def verify_otp(email, otp):
+    """
+    This method is using for verifying otp
+    """
     tz = pytz.timezone ('Asia/Kolkata')
     current_time = datetime.now (tz)
     now_date = current_time.strftime ('%m/%d/%y')

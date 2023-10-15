@@ -16,6 +16,10 @@ resource_router = Router()
 
 
 class ResourceViewSet(ModelViewSet):
+    """
+    This View is related to Resource Views
+    Here we are including the all CRUD operations
+    """
     model_class = Resources
 
     # AbstractModelView subclasses can be used as-is
@@ -42,6 +46,10 @@ resource_group_router = Router()
 
 
 class ResourceGroupsViewSet(ModelViewSet):
+    """
+    This View is related to Resource Group Views
+    Here we are including the all CRUD operations
+    """
     model_class = ResourceGroups
 
     # AbstractModelView subclasses can be used as-is

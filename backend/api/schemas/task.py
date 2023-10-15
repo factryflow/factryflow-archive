@@ -1,11 +1,14 @@
 # schemas.py
-from datetime import datetime, date
+from datetime import datetime
 from typing import Optional
 from api.models import Tasks, TaskType, TaskStatus
 from ninja import Schema, ModelSchema
 
     
 class TaskIn(Schema):
+    """
+    This schema is using for getting the input data for the Tasks model.
+    """
     external_id: str
     name: str
     task_status_id: Optional[int] = None
@@ -23,18 +26,27 @@ class TaskIn(Schema):
 
 
 class TaskOut(ModelSchema):
+    """
+    This schema is using for returning the output of the Tasks
+    """
     class Config:
         model = Tasks
         model_fields = "__all__"
 
 
 class TaskTypeOut(ModelSchema):
+    """
+    This schema is using for returning the output of the TaskType
+    """
     class Config:
         model = TaskType
         model_fields = "__all__"
         
 
 class TaskStatusOut(ModelSchema):
+    """
+    This schema is using for returning the output of the TaskStatus
+    """
     class Config:
         model = TaskStatus
         model_fields = "__all__"

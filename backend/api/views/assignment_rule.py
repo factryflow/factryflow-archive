@@ -6,7 +6,6 @@ from ninja_crud.views import (
     RetrieveModelView,
     UpdateModelView,
 )
-
 from api.models import AssignmentRule, AssignmentRuleCriteria, AssignmentRuleResourceGroup
 from api.schemas import AssignmentRuleIn, AssignmentRuleOut, AssignmentRuleCriteriaIn, AssignmentRuleCriteriaOut, AssignmentRuleResourceGroupIn, AssignmentRuleResourceGroupOut
 from api.utils.crud_views import SoftDeleteModelView
@@ -17,6 +16,10 @@ assignment_rule_router = Router()
 
 
 class AssignmentRuleViewSet(ModelViewSet):
+    """
+    This View is related to assignment Rule Views
+    Here we are including the all CRUD operations
+    """
     model_class = AssignmentRule
 
     # AbstractModelView subclasses can be used as-is
@@ -43,6 +46,10 @@ assignment_rule_criteria_router = Router()
 
 
 class AssignmentRuleCriteriaViewSet(ModelViewSet):
+    """
+    This View is related to assignment Rule Criteria Views
+    Here we are including the all CRUD operations
+    """
     model_class = AssignmentRuleCriteria
 
     # AbstractModelView subclasses can be used as-is
@@ -69,6 +76,10 @@ assignment_rule_resource_group_router = Router()
 
 
 class AssignmentRuleResourceGroupViewSet(ModelViewSet):
+    """
+    This View is related to assignment Rule Resource Group Views
+    Here we are including the all CRUD operations
+    """
     model_class = AssignmentRuleResourceGroup
 
     # AbstractModelView subclasses can be used as-is

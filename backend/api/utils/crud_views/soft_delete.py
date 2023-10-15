@@ -10,6 +10,9 @@ from ninja_crud.views.types import PostDeleteHook, PreDeleteHook
 
 
 class SoftDeleteModelView(AbstractModelView):
+    """
+    This class is using for soft delete to any record
+    """
     def __init__(
         self,
         pre_delete: PreDeleteHook = None,

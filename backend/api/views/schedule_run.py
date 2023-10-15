@@ -15,6 +15,10 @@ from api.utils.pre_save_hook import pre_save_hook
 
 schedule_run_status_router = Router()
 class ScheduleRunStatusViewSet(ModelViewSet):
+    """
+    This View is related to Schedule Run Status Views
+    Here we are including the List operations
+    """
     model_class = ScheduleRunStatus
 
     # AbstractModelView subclasses can be used as-is
@@ -26,6 +30,10 @@ ScheduleRunStatusViewSet.register_routes(schedule_run_status_router)
 
 schedule_run_router = Router()
 class ScheduleRunViewSet(ModelViewSet):
+    """
+    This View is related to Schedule Run Views
+    Here we are including the all CRUD operations
+    """
     model_class = ScheduleRun
 
     # AbstractModelView subclasses can be used as-is

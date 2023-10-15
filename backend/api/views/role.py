@@ -16,6 +16,10 @@ role_router = Router()
 
 
 class RoleViewSet(ModelViewSet):
+    """
+    This View is related to Role Views
+    Here we are including the all CRUD operations
+    """
     model_class = Role
 
     # AbstractModelView subclasses can be used as-is

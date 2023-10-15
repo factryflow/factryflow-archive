@@ -14,6 +14,10 @@ from api.utils.pre_save_hook import pre_save_hook
 
 dependency_type_router = Router()
 class DependencyTypeViewSet(ModelViewSet):
+    """
+    This View is related to Dependency type Views
+    Here we are including the all CRUD operations
+    """
     model_class = DependencyTypes
 
     # AbstractModelView subclasses can be used as-is
@@ -37,6 +41,10 @@ DependencyTypeViewSet.register_routes(dependency_type_router)
 
 dependency_status_router = Router()
 class DependencyStatusViewSet(ModelViewSet):
+    """
+    This View is related to Dependency status Views
+    Here we are including the all CRUD operations
+    """
     model_class = DependencyStatus
 
     # AbstractModelView subclasses can be used as-is
@@ -58,6 +66,10 @@ DependencyStatusViewSet.register_routes(dependency_status_router)
 
 dependency_router = Router()
 class DependencyViewSet(ModelViewSet):
+    """
+    This View is related to Dependency Views
+    Here we are including the all CRUD operations
+    """
     model_class = Dependency
 
     # AbstractModelView subclasses can be used as-is

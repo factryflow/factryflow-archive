@@ -16,6 +16,10 @@ item_router = Router()
 
 
 class ItemViewSet(ModelViewSet):
+    """
+    This View is related to Items
+    Here we are including the all CRUD operations
+    """
     model_class = Item
 
     # AbstractModelView subclasses can be used as-is

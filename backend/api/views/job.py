@@ -16,6 +16,10 @@ job_type_router = Router()
 
 
 class JobTypeViewSet(ModelViewSet):
+    """
+    This View is related to Job type Views
+    Here we are including only list operation
+    """
     model_class = JobType
 
     # AbstractModelView subclasses can be used as-is
@@ -29,6 +33,10 @@ job_status_router = Router()
 
 
 class JobStatusViewSet(ModelViewSet):
+    """
+    This View is related to Job status Views
+    Here we are including only list operation
+    """
     model_class = JobStatus
 
     # AbstractModelView subclasses can be used as-is
@@ -42,6 +50,10 @@ job_router = Router()
 
 
 class JobViewSet(ModelViewSet):
+    """
+    This View is related to Job Views
+    Here we are including the all CRUD operations
+    """
     model_class = Job
 
     # AbstractModelView subclasses can be used as-is

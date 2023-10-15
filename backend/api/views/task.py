@@ -15,6 +15,10 @@ from api.utils.pre_save_hook import pre_save_hook
 
 task_type_router = Router()
 class TaskTypeViewSet(ModelViewSet):
+    """
+    This View is related to Task Type Views
+    Here we are including the List operations
+    """
     model_class = TaskType
 
     # AbstractModelView subclasses can be used as-is
@@ -24,6 +28,10 @@ TaskTypeViewSet.register_routes(task_type_router)
 
 task_status_router = Router()
 class TaskStatusViewSet(ModelViewSet):
+    """
+    This View is related to Task Status Views
+    Here we are including the List operations
+    """
     model_class = TaskStatus
 
     # AbstractModelView subclasses can be used as-is
@@ -33,6 +41,10 @@ TaskStatusViewSet.register_routes(task_status_router)
 
 task_router = Router()
 class TaskViewSet(ModelViewSet):
+    """
+    This View is related to Task Views
+    Here we are including the all CRUD operations
+    """
     model_class = Tasks
 
     # AbstractModelView subclasses can be used as-is

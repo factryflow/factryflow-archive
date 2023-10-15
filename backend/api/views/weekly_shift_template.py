@@ -21,6 +21,10 @@ weeklyshift_template_router = Router()
 
 
 class WeeklyShiftTemplateViewSet(ModelViewSet):
+    """
+    This View is related to Weekly Shift Template Views
+    Here we are including the all CRUD operations
+    """
     model_class = WeeklyShiftTemplate
 
     # AbstractModelView subclasses can be used as-is
@@ -47,6 +51,10 @@ weeklyshift_template_detail_router = Router()
 
 
 class WeeklyShiftTemplateDetailsViewSet(ModelViewSet):
+    """
+    This View is related to Weekly Shift Template Details Views
+    Here we are including the all CRUD operations
+    """
     model_class = WeeklyShiftTemplateDetail
 
     # AbstractModelView subclasses can be used as-is
