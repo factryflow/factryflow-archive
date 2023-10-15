@@ -27,14 +27,10 @@ class UserForgotPassword(Schema):
 
 
 class VerifyOtpIn(Schema):
-<<<<<<< HEAD
     """
     This schema is using for getting the input data for Verify Otp
     """
     email:str
-=======
-    email: str
->>>>>>> cd8c6341b3aa0248ba26a652945b2612a155ab6e
     otp: int
 
 

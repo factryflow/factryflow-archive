@@ -6,25 +6,19 @@ from ninja_crud.views import (
     RetrieveModelView,
     UpdateModelView,
 )
-<<<<<<< HEAD
-from api.models import AssignmentRule, AssignmentRuleCriteria, AssignmentRuleResourceGroup
-from api.schemas import AssignmentRuleIn, AssignmentRuleOut, AssignmentRuleCriteriaIn, AssignmentRuleCriteriaOut, AssignmentRuleResourceGroupIn, AssignmentRuleResourceGroupOut
-=======
-
 from api.models import (
-    AssignmentRule,
-    AssignmentRuleCriteria,
-    AssignmentRuleResourceGroup,
-)
+    AssignmentRule, 
+    AssignmentRuleCriteria, 
+    AssignmentRuleResourceGroup
+    )
 from api.schemas import (
-    AssignmentRuleIn,
-    AssignmentRuleOut,
-    AssignmentRuleCriteriaIn,
-    AssignmentRuleCriteriaOut,
+    AssignmentRuleIn, 
+    AssignmentRuleOut, 
+    AssignmentRuleCriteriaIn, 
+    AssignmentRuleCriteriaOut, 
     AssignmentRuleResourceGroupIn,
-    AssignmentRuleResourceGroupOut,
-)
->>>>>>> cd8c6341b3aa0248ba26a652945b2612a155ab6e
+    AssignmentRuleResourceGroupOut
+    )
 from api.utils.crud_views import SoftDeleteModelView
 from api.utils.pre_save_hook import pre_save_hook
 

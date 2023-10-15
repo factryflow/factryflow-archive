@@ -4,7 +4,6 @@ from api.models import User
 
 
 def verify_otp(email, otp):
-<<<<<<< HEAD
     """
     This method is using for verifying otp
     """
@@ -12,13 +11,7 @@ def verify_otp(email, otp):
     current_time = datetime.now (tz)
     now_date = current_time.strftime ('%m/%d/%y')
     now_time = current_time.strftime ('%H:%M')
-=======
-    tz = pytz.timezone("Asia/Kolkata")
-    current_time = datetime.now(tz)
-    now_date = current_time.strftime("%m/%d/%y")
-    now_time = current_time.strftime("%H:%M")
->>>>>>> cd8c6341b3aa0248ba26a652945b2612a155ab6e
-
+    
     user = None
     try:
         user = User.objects.get(email=email)

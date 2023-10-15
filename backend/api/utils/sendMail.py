@@ -9,15 +9,11 @@ from factryflow.settings import DEFAULT_FROM_EMAIL
 from api.models.user import User
 
 
-<<<<<<< HEAD
 def send_mail(email):     
     """
     This method is using for sending forgot email to user where we are sending Otp to user and,
     On portal when user will verify otp then user can set password
     """                                                                                                                                                                                                                                                                      
-=======
-def send_mail(email):
->>>>>>> cd8c6341b3aa0248ba26a652945b2612a155ab6e
     try:
         tz = pytz.timezone("Asia/Kolkata")
         current_time = datetime.now(tz)
