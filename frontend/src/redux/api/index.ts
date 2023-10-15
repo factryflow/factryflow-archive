@@ -9,3 +9,4 @@ export { default as exceptionApi } from "./exceptionApi";
 export { default as exceptionTypeApi } from "./exceptionTypeApi";
 export { default as templateApi } from "./templateApi";
 export { default as templateDetailsApi } from "./templateDetailsApi";
+export { userApi } from "./userApi";

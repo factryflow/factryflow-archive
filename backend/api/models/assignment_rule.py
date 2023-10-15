@@ -31,7 +31,7 @@ class AssignmentRule(models.Model):
     deleted_at = models.DateTimeField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_deleted = models.BooleanField(default=False)
-    history = HistoricalRecords(table_name='assignment_rule_history')
+    history = HistoricalRecords(table_name="assignment_rule_history")
 
     objects = ActiveManager()
 
@@ -39,7 +39,5 @@ class AssignmentRule(models.Model):
         return self.name
 
     class Meta:
-        db_table = 'assignment_rule'
-        indexes = [
-            models.Index(fields=['id', 'name'])
-        ]
+        db_table = "assignment_rule"
+        indexes = [models.Index(fields=["id", "name"])]

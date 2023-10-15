@@ -3,7 +3,7 @@ from datetime import datetime
 from api.models import ScheduleRun, ScheduleRunStatus
 from ninja import Schema, ModelSchema
 
-    
+
 class ScheduleRunIn(Schema):
     """
     This schema is using for getting the input data for the ScheduleRun model.
@@ -11,7 +11,6 @@ class ScheduleRunIn(Schema):
     triggered_on: datetime
     triggered_by_id: int
     schedule_status_id: int
-    
 
 
 class ScheduleRunOut(ModelSchema):
@@ -22,7 +21,6 @@ class ScheduleRunOut(ModelSchema):
         model = ScheduleRun
         model_fields = "__all__"
 
-        
 
 class ScheduleRunStatusOut(ModelSchema):
     """

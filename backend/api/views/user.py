@@ -1,5 +1,12 @@
 from api.models.user import User
-from api.schemas.user import UserIn, UserOut, UserForgotPassword, VerifyOtpIn, UpdatePasswordIn, ChangePasswordIn
+from api.schemas.user import (
+    UserIn,
+    UserOut,
+    UserForgotPassword,
+    VerifyOtpIn,
+    UpdatePasswordIn,
+    ChangePasswordIn,
+)
 from django.contrib.auth import get_user_model
 from ninja import Router
 from ninja_crud.views import (
@@ -47,6 +54,7 @@ UserViewSet.register_routes(user_auth_router)
 
 auth_me_router = Router()
 
+
 @auth_me_router.get("/", response=UserOut)
 def get_current_user(request):
     """
@@ -67,7 +75,8 @@ def forgot_password(request, user_in: UserForgotPassword):
     """
     email = user_in.email
     status, message = send_mail(email)
-    return{"message":message}
+    return {"message": message}
+
 
 @user_no_auth_router.post("/verify-otp")
 def verify_otp(request, otp_in:VerifyOtpIn):
@@ -88,8 +97,8 @@ def update_password(request, update_password:UpdatePasswordIn):
         user.set_password(update_password.password)
         user.save()
     except User.DoesNotExist:
-        return{'error':'User not forund!'}
-    
+        return {"error": "User not forund!"}
+
 
 change_password_router = Router()
 
@@ -105,4 +114,3 @@ def change_password(request, change_password:ChangePasswordIn):
         return {"message": "Password changed successfully"}
     else:
         return {"message": "Current password is incorrect"}
-    

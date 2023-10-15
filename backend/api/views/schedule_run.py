@@ -12,8 +12,9 @@ from api.utils.crud_views import SoftDeleteModelView
 from api.utils.pre_save_hook import pre_save_hook
 
 
-
 schedule_run_status_router = Router()
+
+
 class ScheduleRunStatusViewSet(ModelViewSet):
     """
     This View is related to Schedule Run Status Views
@@ -24,11 +25,13 @@ class ScheduleRunStatusViewSet(ModelViewSet):
     # AbstractModelView subclasses can be used as-is
     list = ListModelView(output_schema=ScheduleRunStatusOut)
 
+
 ScheduleRunStatusViewSet.register_routes(schedule_run_status_router)
 
 
-
 schedule_run_router = Router()
+
+
 class ScheduleRunViewSet(ModelViewSet):
     """
     This View is related to Schedule Run Views
@@ -50,6 +53,7 @@ class ScheduleRunViewSet(ModelViewSet):
         pre_save=pre_save_hook(),
     )
     delete = SoftDeleteModelView()
+
 
 # The register_routes method must be called to register the routes with the router
 ScheduleRunViewSet.register_routes(schedule_run_router)

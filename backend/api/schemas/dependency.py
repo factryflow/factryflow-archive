@@ -4,7 +4,7 @@ from typing import Optional
 from api.models import Dependency, DependencyTypes, DependencyStatus
 from ninja import Schema, ModelSchema
 
-    
+
 class DependencyIn(Schema):
     """
     This schema is using for getting the input data for the Dependency model.
@@ -24,13 +24,14 @@ class DependencyTypeIn(Schema):
     """
     name: str
     description: Optional[str] = None
-    
+
+
 class DependencyStatusIn(Schema):
     """
     This schema is using for getting the input data for the DependencyStatus model.
     """
     name: str
-    
+
 
 class DependencyOut(ModelSchema):
     """
@@ -48,7 +49,7 @@ class DependencyTypeOut(ModelSchema):
     class Config:
         model = DependencyTypes
         model_fields = "__all__"
-        
+
 
 class DependencyStatusOut(ModelSchema):
     """

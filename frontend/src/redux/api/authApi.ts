@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import customFetchBase from "./customeFetchBase";
+import { userApi } from "./userApi";
 import {
   Login,
   Register,
@@ -20,6 +21,12 @@ export const authApi = createApi({
           body,
         };
       },
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          await dispatch(userApi.endpoints.getMe.initiate(null));
+        } catch (error) {}
+      },
     }),
     registerUser: builder.mutation<GenericResponse<RegisterResponse>, Register>(
       {
@@ -30,7 +37,7 @@ export const authApi = createApi({
           password: string;
         }) => {
           return {
-            url: "api/users",
+            url: "api/users/",
             method: "post",
             body,
           };

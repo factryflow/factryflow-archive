@@ -1,6 +1,10 @@
 # schemas.py
 from typing import Optional
-from api.models import AssignmentRule, AssignmentRuleCriteria, AssignmentRuleResourceGroup
+from api.models import (
+    AssignmentRule,
+    AssignmentRuleCriteria,
+    AssignmentRuleResourceGroup,
+)
 from ninja import Schema, ModelSchema
 
 
@@ -11,8 +15,8 @@ class AssignmentRuleIn(Schema):
     name: str
     description: Optional[str] = None
     priority: int
-    resource_count:int
-    use_all_resources:bool
+    resource_count: int
+    use_all_resources: bool
 
 
 class AssignmentRuleOut(ModelSchema):
@@ -31,8 +35,8 @@ class AssignmentRuleCriteriaIn(Schema):
     field: str
     operator: int
     value: int
-    parent_id:Optional[int] = None
-    assignment_rule_id:int
+    parent_id: Optional[int] = None
+    assignment_rule_id: int
 
 
 class AssignmentRuleCriteriaOut(ModelSchema):
@@ -42,14 +46,14 @@ class AssignmentRuleCriteriaOut(ModelSchema):
     class Config:
         model = AssignmentRuleCriteria
         model_fields = "__all__"
-        
+
 
 class AssignmentRuleResourceGroupIn(Schema):
     """
     This schema is using for getting the input data for the AssignmentRuleResourceGroup model.
     """
     assignment_id: int
-    resource_id:int
+    resource_id: int
 
 
 class AssignmentRuleResourceGroupOut(ModelSchema):

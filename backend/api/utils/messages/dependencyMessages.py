@@ -1,0 +1,6 @@
+DEPENDENCY_TYPES_CREATED = "Dependency type created successfully"
+DEPENDENCY_TYPES_UPDATED = "Dependency type updated successfully"
+DEPENDENCY_TYPES_DELETED = "Dependency type deleted successfully"
+DEPENDENCY_CREATED = "Dependency created successfully"
+DEPENDENCY_UPDATED = "Dependency updated successfully"
+DEPENDENCY_DELETED = "Dependency deleted successfully"

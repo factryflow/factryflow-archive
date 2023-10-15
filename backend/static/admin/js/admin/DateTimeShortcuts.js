@@ -57,7 +57,7 @@
                 return new Date();
             }
         },
-        // Add a warning when the time zone in the browser and backend do not match.
+        // Add a warning when the time zone in the browser and factryflow do not match.
         addTimezoneWarning: function(inp) {
             const warningClass = DateTimeShortcuts.timezoneWarningClass;
             let timezoneOffset = DateTimeShortcuts.timezoneOffset / 3600;

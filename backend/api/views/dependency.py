@@ -7,12 +7,21 @@ from ninja_crud.views import (
     UpdateModelView,
 )
 from api.models import Dependency, DependencyTypes, DependencyStatus
-from api.schemas import DependencyIn, DependencyOut, DependencyStatusIn, DependencyStatusOut, DependencyTypeIn, DependencyTypeOut
+from api.schemas import (
+    DependencyIn,
+    DependencyOut,
+    DependencyStatusIn,
+    DependencyStatusOut,
+    DependencyTypeIn,
+    DependencyTypeOut,
+)
 from api.utils.crud_views import SoftDeleteModelView
 from api.utils.pre_save_hook import pre_save_hook
 
 
 dependency_type_router = Router()
+
+
 class DependencyTypeViewSet(ModelViewSet):
     """
     This View is related to Dependency type Views
@@ -40,6 +49,8 @@ DependencyTypeViewSet.register_routes(dependency_type_router)
 
 
 dependency_status_router = Router()
+
+
 class DependencyStatusViewSet(ModelViewSet):
     """
     This View is related to Dependency status Views
@@ -61,10 +72,14 @@ class DependencyStatusViewSet(ModelViewSet):
         pre_save=pre_save_hook(),
     )
     delete = SoftDeleteModelView()
+
+
 DependencyStatusViewSet.register_routes(dependency_status_router)
 
 
 dependency_router = Router()
+
+
 class DependencyViewSet(ModelViewSet):
     """
     This View is related to Dependency Views

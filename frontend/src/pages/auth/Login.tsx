@@ -10,26 +10,34 @@ import { useEffect } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { toast } from "react-toastify";
 import { setUser } from "@/redux/features/authSlice";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import * as yup from "yup";
 import { Controller, useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Card } from "@mui/material";
+import { Box, Card } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import type { Login } from "@/types/api.types";
+import { FormInputText } from "@/components/form-components/FormInputText";
+
 const LogIn = () => {
-  const [loginUser, { data, error, isSuccess, isLoading }] =
+  const [loginUser, { data, error, isLoading, isSuccess }] =
     useLoginUserMutation();
   const navigate = useNavigate();
   const location = useLocation();
 
   const dispatch = useAppDispatch();
-  console.log(data, "login Data");
+
   const validationSchema = yup.object().shape({
     // email: yup.string().email("invalid email").required("required Email"),
     username: yup.string().required("required username"),
     password: yup.string().required("required password"),
   });
+
+  const boxStyle = {
+    boxShadow: "0.3px 0.3px 1px rgba(0, 0, 0, 0.16)", // Adjust values as needed
+    padding: "20px",
+    backgroundColor: "white",
+  };
 
   const form = useForm({
     resolver: yupResolver(validationSchema),
@@ -46,98 +54,102 @@ const LogIn = () => {
     await loginUser(data);
   };
 
-  // const from = ((location.state as any)?.from.pathname as string) || "/jobs";
+  const from = ((location.state as any)?.from.pathname as string) || "/jobs";
 
   useEffect(() => {
-    if (isSuccess && data) {
+    if (!isLoading && data) {
       dispatch(setUser(data));
+    }
+    if (isSuccess) {
       toast.success("You successfully logged in");
-      navigate("/jobs");
+      navigate(from);
     }
   }, [isLoading, data]);
-
   return (
-    <Grid>
-      <Container component="main" maxWidth="sm">
-        <Card
+    <Box sx={{ display: "flex" }}>
+      <Box component="main" className="main">
+        <Box
+          component="div"
           sx={{
-            boxShadow: 3,
-            borderRadius: 2,
-            px: 4,
-            py: 6,
-            marginTop: 8,
             display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            justifyContent: "center",
+            height: "100vh",
+            background: "#023E8A",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOpenIcon />
-          </Avatar>
-
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Controller
-              name="username"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <TextField
-                  label="username"
-                  variant="outlined"
-                  error={!!errors.username}
-                  margin="normal"
-                  autoComplete="email"
-                  helperText={errors.username?.message}
-                  fullWidth
-                  {...field}
-                />
-              )}
-            />
-
-            <Controller
-              name="password"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <TextField
-                  label="Password"
-                  variant="outlined"
-                  type="password"
-                  error={!!errors.password}
-                  margin="normal"
-                  autoComplete="email"
-                  helperText={errors.password?.message}
-                  fullWidth
-                  {...field}
-                />
-              )}
-            />
-            <LoadingButton
-              size="large"
-              type="submit"
-              loading={isLoading}
-              color="primary"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </LoadingButton>
-            <Grid container>
-              <Grid item>
-                Don't have an account?
-                <Link href="/signup" variant="body2">
-                  {"Sign Up"}
-                </Link>
+          <Card
+            sx={{
+              width: 800,
+              height: 500,
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: 3,
+              borderRadius: 2,
+              px: 6,
+              py: 6,
+            }}
+            style={boxStyle}
+          >
+            <Typography component="h1" variant="h5">
+              Sign In for an account
+            </Typography>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <FormInputText
+                    name={"username"}
+                    control={control}
+                    label={"Username*"}
+                    placeholder={"Enter Username"}
+                    type={"text"}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormInputText
+                    name={"password"}
+                    control={control}
+                    label={"Enter Password"}
+                    placeholder={"Enter username"}
+                    type={"password"}
+                  />
+                </Grid>
               </Grid>
-            </Grid>
-          </form>
-        </Card>
-      </Container>
-    </Grid>
+              <LoadingButton
+                size="large"
+                type="submit"
+                loading={isLoading}
+                color="primary"
+                fullWidth
+                variant="contained"
+                sx={{
+                  mt: 3,
+                  mb: 3,
+                  padding: 2,
+                  backgroundColor: "#023E8A",
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                  textTransform: "none",
+                  borderRadius: "6px",
+                }}
+              >
+                Sign In
+              </LoadingButton>
+              <Grid container>
+                <Grid item>
+                  Don't have an account?
+                  <Link href="/signup" variant="body2">
+                    {"Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid>
+            </form>
+          </Card>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 export default LogIn;

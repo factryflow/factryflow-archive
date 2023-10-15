@@ -10,7 +10,7 @@ class OperationalExceptionTypeIn(Schema):
     This schema is using for getting the input data for the OperationalExceptionType model.
     """
     name: str
-    
+
 
 class OperationalExceptionTypeOut(ModelSchema):
     """
@@ -19,8 +19,8 @@ class OperationalExceptionTypeOut(ModelSchema):
     class Config:
         model = OperationalExceptionType
         model_fields = ["id", "name"]
-        
-        
+
+
 class OperationalExceptionIn(Schema):
     """
     This schema is using for getting the input data for the OperationalException model.
@@ -30,7 +30,7 @@ class OperationalExceptionIn(Schema):
     end_datetime: datetime
     notes: Optional[str] = None
     weekly_shift_template_id: int
-    operational_exception_type_id:int
+    operational_exception_type_id: int
 
 
 class OperationalExceptionOut(ModelSchema):
@@ -40,5 +40,3 @@ class OperationalExceptionOut(ModelSchema):
     class Config:
         model = OperationalException
         model_fields = "__all__"
-
-        

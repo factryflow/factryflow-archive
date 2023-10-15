@@ -41,7 +41,7 @@ class ResourceViewSet(ModelViewSet):
 # The register_routes method must be called to register the routes with the router
 ResourceViewSet.register_routes(resource_router)
 
-#Assignment Rule Criteria
+# Assignment Rule Criteria
 resource_group_router = Router()
 
 
@@ -70,4 +70,3 @@ class ResourceGroupsViewSet(ModelViewSet):
 
 # The register_routes method must be called to register the routes with the router
 ResourceGroupsViewSet.register_routes(resource_group_router)
-
