@@ -1,6 +1,5 @@
 from http import HTTPStatus
 
-from api.views import *
 from django.core.exceptions import (
     FieldError,
     ObjectDoesNotExist,
@@ -11,6 +10,8 @@ from ninja.errors import ValidationError as NinjaValidationError
 from ninja_extra import NinjaExtraAPI
 from ninja_jwt.authentication import JWTAuth
 from ninja_jwt.controller import NinjaJWTDefaultController
+
+from api.views import *
 
 api = NinjaExtraAPI(urls_namespace="api")
 api.register_controllers(NinjaJWTDefaultController)
@@ -54,44 +55,41 @@ api.add_router(
 api.add_router(
     "/assignment-rule", assignment_rule_router, auth=JWTAuth(), tags=["assignment-rule"]
 )
+# api.add_router(
+#     "/assignment-rule-criteria",
+#     assignment_rule_criteria_router,
+#     auth=JWTAuth(),
+#     tags=["assignment-rule-criteria"],
+# )
+# api.add_router(
+#     "/assignment-rule-resource-group",
+#     assignment_rule_resource_group_router,
+#     auth=JWTAuth(),
+#     tags=["assignment-rule-resource-group"],
+# )
+api.add_router("/resources", resource_router, auth=JWTAuth(), tags=["resources"])
 api.add_router(
-    "/assignment-rule-criteria",
-    assignment_rule_criteria_router,
-    auth=JWTAuth(),
-    tags=["assignment-rule-criteria"],
+    "/resource-groups", resource_group_router, auth=JWTAuth(), tags=["resource-groups"]
+)
+# api.add_router(
+#     "/dependency-status",
+#     dependency_status_router,
+#     auth=JWTAuth(),
+#     tags=["dependency-status"],
+# )
+# api.add_router(
+#     "/dependency-types",
+#     dependency_type_router,
+#     auth=JWTAuth(),
+#     tags=["dependency-types"],
+# )
+api.add_router(
+    "/dependencies", dependency_router, auth=JWTAuth(), tags=["dependencies"]
 )
 api.add_router(
-    "/assignment-rule-resource-group",
-    assignment_rule_resource_group_router,
-    auth=JWTAuth(),
-    tags=["assignment-rule-resource-group"],
+    "/schedule-runs", schedule_run_router, auth=JWTAuth(), tags=["schedule-runs"]
 )
-api.add_router("/resource", resource_router, auth=JWTAuth(), tags=["resource"])
-api.add_router(
-    "/resource-group", resource_group_router, auth=JWTAuth(), tags=["resource-group"]
-)
-api.add_router(
-    "/dependency-status",
-    dependency_status_router,
-    auth=JWTAuth(),
-    tags=["dependency-status"],
-)
-api.add_router(
-    "/dependency-types",
-    dependency_type_router,
-    auth=JWTAuth(),
-    tags=["dependency-types"],
-)
-api.add_router("/dependency", dependency_router, auth=JWTAuth(), tags=["dependency"])
-api.add_router(
-    "/schedule-run", schedule_run_router, auth=JWTAuth(), tags=["schedule-run"]
-)
-api.add_router(
-    "/schedule-run-status",
-    schedule_run_status_router,
-    auth=JWTAuth(),
-    tags=["schedule-run-status"],
-)
+
 api.add_router("/tasks", task_router, auth=JWTAuth(), tags=["tasks"])
 api.add_router("/task-types", task_type_router, auth=JWTAuth(), tags=["task-types"])
 api.add_router("/task-status", task_status_router, auth=JWTAuth(), tags=["task-status"])

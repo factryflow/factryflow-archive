@@ -14,8 +14,8 @@ from api.schemas import (
     WeeklyShiftTemplateIn,
     WeeklyShiftTemplateOut,
 )
+from api.utils.crud_hooks import pre_save_hook
 from api.utils.crud_views import SoftDeleteModelView
-from api.utils.pre_save_hook import pre_save_hook
 
 weeklyshift_template_router = Router()
 

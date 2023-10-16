@@ -1,42 +1,30 @@
 # schemas.py
-from datetime import datetime, date
-from typing import Optional
-from api.models import Dependency, DependencyTypes, DependencyStatus
-from ninja import Schema, ModelSchema
+from typing import List
+
+from ninja import ModelSchema
+from pydantic import Field
+
+from api.models import Dependency
+from api.schemas.base import DependencyBaseOut, JobBaseOut, TaskBaseOut
 
 
-class DependencyIn(Schema):
-    name: str
-    external_id: str
-    dependency_type_id: Optional[int] = None
-    dependency_status_id: Optional[int] = None
-    expected_close_datetime: datetime
-    actual_close_datetime: datetime
-    notes: Optional[str] = None
+class DependencyIn(ModelSchema):
+    dependency_status_id: int
+    dependency_type_id: int
+    job_ids: List[int] = Field(default=[])
+    task_ids: List[int] = Field(default=[])
 
-
-class DependencyTypeIn(Schema):
-    name: str
-    description: Optional[str] = None
-
-
-class DependencyStatusIn(Schema):
-    name: str
-
-
-class DependencyOut(ModelSchema):
     class Config:
         model = Dependency
-        model_fields = "__all__"
+        model_fields = [
+            "name",
+            "external_id",
+            "expected_close_datetime",
+            "actual_close_datetime",
+            "notes",
+        ]
 
 
-class DependencyTypeOut(ModelSchema):
-    class Config:
-        model = DependencyTypes
-        model_fields = "__all__"
-
-
-class DependencyStatusOut(ModelSchema):
-    class Config:
-        model = DependencyStatus
-        model_fields = "__all__"
+class DependencyOut(DependencyBaseOut):
+    jobs: List[JobBaseOut]
+    tasks: List[TaskBaseOut]

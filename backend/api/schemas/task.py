@@ -1,39 +1,43 @@
 # schemas.py
-from datetime import datetime, date
-from typing import Optional
-from api.models import Tasks, TaskType, TaskStatus
-from ninja import Schema, ModelSchema
+from typing import List
+
+from ninja import ModelSchema
+from pydantic import Field
+
+from api.models import Task
+from api.schemas.base import DependencyBaseOut, TaskBaseOut
 
 
-class TaskIn(Schema):
-    external_id: str
-    name: str
-    task_status_id: Optional[int] = None
-    task_type_id: Optional[int] = None
-    setup_time: int
-    run_time_per_unit: int
-    teardown_time: int
-    quantity: int
-    jobs_id: Optional[int] = None
-    predecessors_id: Optional[list] = []
-    item: Optional[str] = None
-    planned_start_datetime: datetime
-    planned_end_datetime: datetime
-
-
-class TaskOut(ModelSchema):
+class Predecessor(TaskBaseOut):
     class Config:
-        model = Tasks
-        model_fields = "__all__"
+        model = Task
+        model_exclude = ["predecessors"]
 
 
-class TaskTypeOut(ModelSchema):
+class TaskIn(ModelSchema):
+    task_status_id: int
+    task_type_id: int
+    job_id: int = None
+    item_id: int = None
+    predecessor_ids: List[int] = Field(default=[])
+    dependency_ids: List[int] = Field(default=[])
+
     class Config:
-        model = TaskType
-        model_fields = "__all__"
+        model = Task
+        model_fields = [
+            "name",
+            "external_id",
+            "setup_time",
+            "run_time_per_unit",
+            "teardown_time",
+            "quantity",
+        ]
 
 
-class TaskStatusOut(ModelSchema):
+class TaskOut(TaskBaseOut):
+    predecessors: List[Predecessor]
+    dependencies: List[DependencyBaseOut]
+
     class Config:
-        model = TaskStatus
+        model = Task
         model_fields = "__all__"

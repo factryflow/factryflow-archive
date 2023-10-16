@@ -1,19 +1,20 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from .resource_group import ResourceGroups
 from simple_history.models import HistoricalRecords
+
 from api.utils.model_manager import ActiveManager
+
 from .weekly_shift_template import WeeklyShiftTemplate
 
 
-class Resources(models.Model):
+class Resource(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     weekly_shift_template = models.ForeignKey(
         WeeklyShiftTemplate, on_delete=models.DO_NOTHING, blank=True, null=True
     )
-    resource_groups_list = models.JSONField(blank=True, null=True)
+    resource_groups = models.ManyToManyField("ResourceGroup", related_name="resources")
 
     # Metadata
     created_at = models.DateTimeField(default=timezone.now)

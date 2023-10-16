@@ -1,23 +1,25 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from .task import Tasks
-from .resource import Resources
 from simple_history.models import HistoricalRecords
+
 from api.utils.model_manager import ActiveManager
+
+from .resource import Resource
+from .task import Task
 
 
 class TasksResourceAssignment(models.Model):
     id = models.AutoField(primary_key=True)
     task = models.ForeignKey(
-        Tasks,
+        Task,
         on_delete=models.CASCADE,
         related_name="task_assignment",
         blank=True,
         null=True,
     )
     resource = models.ForeignKey(
-        Resources,
+        Resource,
         on_delete=models.CASCADE,
         related_name="resource_assignment",
         blank=True,
