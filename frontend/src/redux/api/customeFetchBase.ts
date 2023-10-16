@@ -17,8 +17,8 @@ const baseQuery = fetchBaseQuery({
   baseUrl,
   prepareHeaders: (header) => {
     if (localStorage.getItem("token")) {
+      console.log(localStorage.getItem("token"), "tohjhjh");
       const { access } = JSON.parse(localStorage.getItem("token") as string);
-
       header.set("Authorization", `Bearer ${access}`);
     }
   },
@@ -32,6 +32,7 @@ const customFetchBase: BaseQueryFn<
   // wait until the mutex is available without locking it
   await mutex.waitForUnlock();
   let result = await baseQuery(args, api, extraOptions);
+
   if ((result.error?.data as any)?.code === "token_not_valid") {
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
@@ -47,11 +48,7 @@ const customFetchBase: BaseQueryFn<
       try {
         const refreshResult = await baseQuery(
           {
-            // credentials: "include",
             url: "api/token/refresh",
-            // headers: {
-            //   authorization: refresh,
-            // },
             method: "POST",
             body: {
               refresh: token,
@@ -88,6 +85,10 @@ const customFetchBase: BaseQueryFn<
       result = await baseQuery(args, api, extraOptions);
     }
   }
+  // if ((result.error?.data as any)?.detail === "Unauthorized") {
+  //   api.dispatch(logout());
+  //   window.location.href = "/";
+  // }
 
   return result;
 };

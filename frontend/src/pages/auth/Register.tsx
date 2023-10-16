@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
-import { Card } from "@mui/material";
+import { Box, Card } from "@mui/material";
 import * as yup from "yup";
 import { useRegisterUserMutation } from "@/redux/api/authApi";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { setUser } from "@/redux/features/authSlice";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
+import { FormInputText } from "@/components/form-components/FormInputText";
 
 export default function Register() {
   const [registerUser, { data, isLoading, isSuccess, isError }] =
@@ -25,11 +26,16 @@ export default function Register() {
   const dispatch = useAppDispatch();
 
   const validationSchema = yup.object().shape({
-    first_name: yup.string().required("required Frist Name"),
-    last_name: yup.string().required("required Last Name"),
+    username: yup.string().required("required username"),
     email: yup.string().email("invalid email").required("required Email"),
     password: yup.string().required("required password"),
   });
+
+  const boxStyle = {
+    boxShadow: "0.3px 0.3px 1px rgba(0, 0, 0, 0.16)", // Adjust values as needed
+    padding: "20px",
+    backgroundColor: "white",
+  };
 
   const form = useForm({
     resolver: yupResolver(validationSchema),
@@ -48,143 +54,106 @@ export default function Register() {
 
   useEffect(() => {
     if (isSuccess) {
-      if (data?.code === 200) {
+      if (data) {
         toast.success("User Register Successfully");
-        dispatch(
-          setUser({
-            token: data?.data?.token,
-          })
-        );
-        navigate("/jobs");
-      } else if (data?.code === 400) {
-        toast.error(data.message);
+        navigate("/");
       }
     }
   }, [isSuccess]);
 
   return (
-    <Grid>
-      <Container component="main" maxWidth="sm">
-        <Card
+    <Box sx={{ display: "flex" }}>
+      <Box component="main" className="main">
+        <Box
+          component="div"
           sx={{
-            marginTop: 8,
             display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            boxShadow: 3,
-            borderRadius: 2,
-            px: 4,
-            py: 6,
+            justifyContent: "center",
+            height: "100vh",
+            background: "#023E8A",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5" sx={{ mb: 2 }}>
-            Sign up
-          </Typography>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <Controller
-                  name="first_name"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <TextField
-                      label="Frist Name"
-                      variant="outlined"
-                      error={!!errors.first_name}
-                      margin="normal"
-                      autoComplete="off"
-                      helperText={errors.first_name?.message}
-                      fullWidth
-                      {...field}
-                    />
-                  )}
-                />
+          <Card
+            sx={{
+              width: 800,
+              height: 500,
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: 3,
+              borderRadius: 2,
+              px: 6,
+              py: 6,
+            }}
+            style={boxStyle}
+          >
+            <Typography component="h1" variant="h5" sx={{ mb: 2 }}>
+              Sign up for an account
+            </Typography>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <FormInputText
+                    name={"email"}
+                    control={control}
+                    label={"Email Address*"}
+                    placeholder={"Enter Email Address"}
+                    type={"email"}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormInputText
+                    name={"username"}
+                    control={control}
+                    label={"User Name"}
+                    placeholder={"Enter username"}
+                    type={"text"}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <FormInputText
+                    name={"password"}
+                    control={control}
+                    label={"Password*"}
+                    placeholder={"password"}
+                    type={"password"}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <Controller
-                  name="last_name"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <TextField
-                      label="Last Name"
-                      variant="outlined"
-                      error={!!errors.last_name}
-                      margin="normal"
-                      autoComplete="off"
-                      helperText={errors.last_name?.message}
-                      fullWidth
-                      {...field}
-                    />
-                  )}
-                />
+              <LoadingButton
+                size="large"
+                type="submit"
+                loading={isLoading}
+                fullWidth
+                variant="contained"
+                sx={{
+                  mt: 3,
+                  mb: 3,
+                  padding: 2,
+                  backgroundColor: "#023E8A",
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                  textTransform: "none",
+                  borderRadius: "6px",
+                }}
+              >
+                Sign Up
+              </LoadingButton>
+              <Grid container justifyContent="center">
+                <Grid item>
+                  Already have an account?
+                  <Link href="/" variant="body2">
+                    {"Sign in"}
+                  </Link>
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <Controller
-                  name="email"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <TextField
-                      label="Email Address"
-                      variant="outlined"
-                      error={!!errors.email}
-                      margin="normal"
-                      autoComplete="off"
-                      helperText={errors.email?.message}
-                      fullWidth
-                      {...field}
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Controller
-                  name="password"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <TextField
-                      label="Password"
-                      variant="outlined"
-                      type="password"
-                      error={!!errors.email}
-                      margin="normal"
-                      autoComplete="off"
-                      helperText={errors.password?.message}
-                      fullWidth
-                      {...field}
-                    />
-                  )}
-                />
-              </Grid>
-            </Grid>
-            <LoadingButton
-              size="large"
-              type="submit"
-              loading={isLoading}
-              color="primary"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </LoadingButton>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                Already have an account?
-                <Link href="/" variant="body2">
-                  {"Sign in"}
-                </Link>
-              </Grid>
-            </Grid>
-          </form>
-        </Card>
-      </Container>
-    </Grid>
+            </form>
+          </Card>
+        </Box>
+      </Box>
+    </Box>
   );
 }

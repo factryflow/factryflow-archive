@@ -9,5 +9,6 @@ export { default as exceptionReducer } from "./exceptionSlice";
 export { default as exceptionTypeReducer } from "./exceptiontypeSlice";
 export { default as menureducer } from "./menuSlice";
 export { default as templateReducer } from "./templateSlice";
-export { default as userReducer } from "./userSlice";
 export { default as templateDetailsReducer } from "./templateDetailsSlice";
+
+export { default as userReducer } from "./userSlice";
