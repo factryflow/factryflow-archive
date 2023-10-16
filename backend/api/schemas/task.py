@@ -4,37 +4,11 @@ from typing import List
 from ninja import ModelSchema
 from pydantic import Field
 
-from api.models import Dependency, Job, Task, TaskStatus, TaskType
+from api.models import Task
+from api.schemas.base import DependencyBaseOut, TaskBaseOut
 
 
-class Depdendency(ModelSchema):
-    class Config:
-        model = Dependency
-        model_fields = ["id", "name"]
-
-
-class Job(ModelSchema):
-    class Config:
-        model = Job
-        model_fields = ["id", "name"]
-
-
-class TaskTypeOut(ModelSchema):
-    class Config:
-        model = TaskType
-        model_fields = ["id", "name"]
-
-
-class TaskStatusOut(ModelSchema):
-    class Config:
-        model = TaskStatus
-        model_fields = ["id", "name"]
-
-
-class Predecessor(ModelSchema):
-    task_status: TaskStatusOut
-    task_type: TaskTypeOut
-
+class Predecessor(TaskBaseOut):
     class Config:
         model = Task
         model_exclude = ["predecessors"]
@@ -60,12 +34,9 @@ class TaskIn(ModelSchema):
         ]
 
 
-class TaskOut(ModelSchema):
-    task_status: TaskStatusOut
-    task_type: TaskTypeOut
-    job: Job
+class TaskOut(TaskBaseOut):
     predecessors: List[Predecessor]
-    dependencies: List[Depdendency]
+    dependencies: List[DependencyBaseOut]
 
     class Config:
         model = Task

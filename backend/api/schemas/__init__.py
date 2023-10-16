@@ -1,4 +1,5 @@
 from .assignment_rule import *
+from .base import *
 from .dependency import *
 from .item import *
 from .job import *

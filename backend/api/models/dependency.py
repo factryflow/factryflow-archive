@@ -42,6 +42,14 @@ class Dependency(models.Model):
 
     objects = ActiveManager()
 
+    @property
+    def job_id_list(self):
+        return list(self.jobs.values_list("id", flat=True))
+
+    @property
+    def task_id_list(self):
+        return list(self.tasks.values_list("id", flat=True))
+
     def __str__(self):
         return self.name
 

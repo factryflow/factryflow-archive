@@ -58,6 +58,14 @@ class Task(models.Model):
 
     objects = ActiveManager()
 
+    @property
+    def predecessor_id_list(self):
+        return list(self.predecessors.values_list("id", flat=True))
+
+    @property
+    def dependency_id_list(self):
+        return list(self.dependencies.values_list("id", flat=True))
+
     def __str__(self):
         return self.name
 

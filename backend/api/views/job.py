@@ -50,7 +50,10 @@ class JobViewSet(ModelViewSet):
         input_schema=JobIn,
         output_schema=JobOut,
         pre_save=pre_save_hook(),
-        post_save=post_save_hook(("dependencies", "dependency_ids")),
+        post_save=post_save_hook(
+            ("tasks", "task_ids"),
+            ("dependencies", "dependency_ids"),
+        ),
     )
     retrieve = RetrieveModelView(output_schema=JobOut)
     update = UpdateModelView(
