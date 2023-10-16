@@ -51,8 +51,8 @@ class TaskViewSet(ModelViewSet):
         output_schema=TaskOut,
         pre_save=pre_save_hook(),
         post_save=post_save_hook(
-            ("predecessors", "predecessor_ids"),
-            ("dependencies", "dependency_ids"),
+            ("m2m", "predecessors", "predecessor_ids"),
+            ("m2m", "dependencies", "dependency_ids"),
         ),
     )
     retrieve = RetrieveModelView(output_schema=TaskOut)

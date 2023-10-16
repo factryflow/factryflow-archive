@@ -24,7 +24,7 @@ class ResourceViewSet(ModelViewSet):
         input_schema=ResourceIn,
         output_schema=ResourceOut,
         pre_save=pre_save_hook(),
-        post_save=post_save_hook(("resource_groups", "resource_group_ids")),
+        post_save=post_save_hook(("m2m", "resource_groups", "resource_group_ids")),
     )
     retrieve = RetrieveModelView(output_schema=ResourceOut)
     update = UpdateModelView(

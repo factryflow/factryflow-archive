@@ -51,8 +51,8 @@ class JobViewSet(ModelViewSet):
         output_schema=JobOut,
         pre_save=pre_save_hook(),
         post_save=post_save_hook(
-            ("tasks", "task_ids"),
-            ("dependencies", "dependency_ids"),
+            ("m2m", "dependencies", "dependency_ids"),
+            ("reverse_fk", "tasks", "task_ids"),
         ),
     )
     retrieve = RetrieveModelView(output_schema=JobOut)

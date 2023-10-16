@@ -75,8 +75,8 @@ class DependencyViewSet(ModelViewSet):
         output_schema=DependencyOut,
         pre_save=pre_save_hook(),
         post_save=post_save_hook(
-            ("jobs", "job_ids"),
-            ("tasks", "task_ids"),
+            ("m2m", "jobs", "job_ids"),
+            ("m2m", "tasks", "task_ids"),
         ),
     )
     retrieve = RetrieveModelView(output_schema=DependencyOut)

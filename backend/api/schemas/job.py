@@ -5,7 +5,7 @@ from ninja import ModelSchema
 from pydantic import Field
 
 from api.models import Job
-from api.schemas.base import DependencyBaseOut, JobBaseOut
+from api.schemas.base import DependencyBaseOut, JobBaseOut, TaskBaseOut
 
 
 class JobIn(ModelSchema):
@@ -20,5 +20,5 @@ class JobIn(ModelSchema):
 
 
 class JobOut(JobBaseOut):
-    # tasks: List["TaskBase"]
+    tasks: List[TaskBaseOut]
     dependencies: List[DependencyBaseOut]
