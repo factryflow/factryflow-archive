@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { toast } from "react-toastify";
 import { setUser } from "@/redux/features/authSlice";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Navigate } from "react-router-dom";
 import * as yup from "yup";
 import { Controller, useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -20,11 +20,14 @@ import type { Login } from "@/types/api.types";
 import { FormInputText } from "@/components/form-components/FormInputText";
 
 const LogIn = () => {
+  if (localStorage.getItem("token")) {
+    return <Navigate to="/jobs" />;
+  }
+
   const [loginUser, { data, error, isLoading, isSuccess }] =
     useLoginUserMutation();
   const navigate = useNavigate();
   const location = useLocation();
-
   const dispatch = useAppDispatch();
 
   const validationSchema = yup.object().shape({
@@ -39,7 +42,13 @@ const LogIn = () => {
     backgroundColor: "white",
   };
 
+  const defaultValues = {
+    username: "",
+    password: "",
+  };
+
   const form = useForm({
+    defaultValues: defaultValues,
     resolver: yupResolver(validationSchema),
   });
 

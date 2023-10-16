@@ -99,11 +99,11 @@ const MyForm = () => {
     {}
   );
 
-  const {
-    data: getDependencyData,
-    isLoading: dependencyIsLoading,
-    error,
-  } = useGetAllDependencyQuery(undefined);
+  // const {
+  //   data: getDependencyData,
+  //   isLoading: dependencyIsLoading,
+  //   error,
+  // } = useGetAllDependencyQuery(undefined);
 
   const Defaultvalues = {
     name: "",
@@ -136,8 +136,8 @@ const MyForm = () => {
     if (isEdit) {
       updateJobs({ id: params.id!, data: data });
     } else {
-      createJobs(data);
-      toast.success("Job created SuccessFully");
+      console.log(data, "hjjhjh");
+      // createJobs(data);
     }
   };
 
@@ -153,15 +153,17 @@ const MyForm = () => {
     }
   }, [updateJobData, updateError, updateIsLoading]);
 
-  useEffect(() => {
-    if (!dependencyIsLoading && getDependencyData && isEdit) {
-      dispatch(setDependencies(getDependencyData));
-    }
-  }, [dependencyIsLoading, getDependencyData, isEdit]);
+  // useEffect(() => {
+  //   if (!dependencyIsLoading && getDependencyData && isEdit) {
+  //     dispatch(setDependencies(getDependencyData));
+  //   }
+  // }, [dependencyIsLoading, getDependencyData, isEdit]);
 
   useEffect(() => {
     const planned_start_datetime = ["planned_start_datetime"];
     const planned_end_datetime = ["planned_end_datetime"];
+    const job_status = ["job_status"];
+    const job_type = ["job_type"];
     if (isEdit) {
       if (jobiesSelector) {
         const getJob = jobiesSelector.filter(
@@ -176,6 +178,12 @@ const MyForm = () => {
           if (planned_end_datetime.includes(name)) {
             form.setValue("planned_end_datetime", value?.slice(0, 16));
             return;
+          }
+          if (job_status.includes(name)) {
+            form.setValue("job_status_id", value?.id);
+          }
+          if (job_type.includes(name)) {
+            form.setValue("job_type_id", value?.id);
           }
           form.setValue(name, value);
         });
@@ -365,7 +373,6 @@ const MyForm = () => {
                       loading={AddJobIsLoading || updateIsLoading}
                       color="primary"
                       variant="contained"
-                      className="btn-success"
                     >
                       {isEdit ? "Edit" : "Create"}
                     </LoadingButton>

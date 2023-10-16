@@ -1,39 +1,35 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-
 import Loading from "./loading/loading";
 import { userApi } from "@/redux/api";
 
 const RequireUser = () => {
   const location = useLocation();
-  let userprofile = false;
-  const { isLoading, isFetching } = userApi.endpoints.getMe.useQuery(null, {
-    skip: false,
-    refetchOnMountOrArgChange: true,
-  });
 
-  const loading = isLoading || isFetching;
+  const tokenInLocalStorage = () => {
+    const token = localStorage.getItem("token");
+    return token && JSON.parse(token).access;
+  };
 
-  const user = userApi.endpoints.getMe.useQueryState(null, {
-    selectFromResult: ({ data }) => data,
-  });
+  const {
+    data: user,
+    isLoading,
+    isFetching,
+  } = tokenInLocalStorage()
+    ? userApi.endpoints.getMe.useQuery(null)
+    : { data: null, isLoading: false, isFetching: false };
 
-  if (loading) {
+  // Show loading indicator while fetching data
+  if (isLoading || isFetching) {
     return <Loading />;
   }
 
-  if (localStorage.getItem("token")) {
-    const { access } = JSON.parse(localStorage.getItem("token") as string);
-    if (access) {
-      userprofile = true;
-    }
+  // Check if user data exists from API call
+  if (user) {
+    return <Outlet />;
   }
 
-  console.log(userprofile, "userprofile");
-  return userprofile || user ? (
-    <Outlet />
-  ) : (
-    <Navigate to="/" state={{ from: location }} replace />
-  );
+  // Redirect if user is not authenticated
+  return <Navigate to="/" state={{ from: location }} replace />;
 };
 
 export default RequireUser;

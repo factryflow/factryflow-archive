@@ -64,8 +64,8 @@ export type JobResponse = {
   is_active: boolean;
   is_deleted: boolean;
   external_id: Nullable<string>;
-  job_status: number;
-  job_type: number;
+  job_status: Nullable<any>;
+  job_type: Nullable<any>;
   created_at: Nullable<string>;
   created_by: number;
   updated_at: Nullable<string>;

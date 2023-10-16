@@ -30,12 +30,7 @@ body,
   box-shadow: none !important;
 }
 
-.btn-success{
-  padding: 16px 24px 16px 24px !important;
-  background-color:#2884EF !important;
-  color: #fff !important;
-  box-shadow: none !important;
-}
+
 
 .main-header{
   position: sticky!important;
