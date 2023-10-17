@@ -3,13 +3,8 @@ from typing import List
 from ninja import ModelSchema
 from pydantic import Field
 
-from api.models import Resource, ResourceGroup
-
-
-class Resource(ModelSchema):
-    class Config:
-        model = Resource
-        model_exclude = ["resource_groups"]
+from api.models import ResourceGroup
+from api.schemas import ResourceBaseOut, ResourceGroupBaseOut
 
 
 class ResourceGroupIn(ModelSchema):
@@ -22,10 +17,5 @@ class ResourceGroupIn(ModelSchema):
         ]
 
 
-class ResourceGroupOut(ModelSchema):
-    # resource_ids: List[int] = Field(default=[],)
-    resources: List[Resource]
-
-    class Config:
-        model = ResourceGroup
-        model_fields = "__all__"
+class ResourceGroupOut(ResourceGroupBaseOut):
+    resources: List[ResourceBaseOut]
