@@ -27,7 +27,7 @@ def register_user(request, user_in: UserIn):
     This is related to register user.
     """
     user = get_user_model().objects.create_user(
-        username=user_in.username, email=user_in.email, password=user_in.password
+        username=user_in.username, email=user_in.email, password=user_in.password, role_id=user_in.role_id
     )
     return user
 
