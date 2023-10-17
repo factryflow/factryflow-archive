@@ -34,6 +34,10 @@ class ResourceGroup(models.Model):
 
     objects = ActiveManager()
 
+    @property
+    def resource_id_list(self):
+        return list(self.resources.values_list("id", flat=True))
+
     def __str__(self):
         return self.name
 

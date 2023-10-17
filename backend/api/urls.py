@@ -29,28 +29,23 @@ api.add_router("/jobs", job_router, auth=JWTAuth(), tags=["jobs"])
 api.add_router("/job-types", job_type_router, auth=JWTAuth(), tags=["job-types"])
 api.add_router("/job-status", job_status_router, auth=JWTAuth(), tags=["job-status"])
 api.add_router(
-    "/operational-exception-type",
+    "/operational-exception-types",
     operational_exception_type_router,
     auth=JWTAuth(),
-    tags=["operational-exception-type"],
+    tags=["operational-exception-types"],
 )
 api.add_router(
-    "/operational-exception",
+    "/operational-exceptions",
     operational_exception_router,
     auth=JWTAuth(),
     tags=["operational-exception"],
 )
+
 api.add_router(
-    "/weekly-shift-template-detail",
-    weeklyshift_template_detail_router,
-    auth=JWTAuth(),
-    tags=["weekly-shift-template-detail"],
-)
-api.add_router(
-    "/weekly-shift-template",
+    "/weekly-shift-templates",
     weeklyshift_template_router,
     auth=JWTAuth(),
-    tags=["weekly-shift-template"],
+    tags=["weekly-shift-templates"],
 )
 api.add_router(
     "/assignment-rule", assignment_rule_router, auth=JWTAuth(), tags=["assignment-rule"]

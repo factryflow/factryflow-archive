@@ -21,4 +21,3 @@ from .task_status import TaskStatus
 from .task_type import TaskType
 from .user import User
 from .weekly_shift_template import WeeklyShiftTemplate
-from .weekly_shift_template_detail import WeeklyShiftTemplateDetail

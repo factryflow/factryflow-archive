@@ -12,9 +12,12 @@ from api.models import (
     Job,
     JobStatus,
     JobType,
+    Resource,
+    ResourceGroup,
     Task,
     TaskStatus,
     TaskType,
+    WeeklyShiftTemplate,
 )
 
 # ====================================
@@ -101,3 +104,43 @@ class TaskBaseOut(ModelSchema):
     class Config:
         model = Task
         model_exclude = ["dependencies", "predecessors", "job"]
+
+
+# ====================================
+# =============== Resource ===============
+# ====================================
+
+
+class ResourceBaseOut(ModelSchema):
+    resource_group_ids: List[int] = Field([], alias="resource_group_id_list")
+    weekly_shift_template_id: int = None
+
+    class Config:
+        model = Resource
+        model_exclude = ["resource_groups", "weekly_shift_template"]
+
+
+# ====================================
+# =============== ResourceGroup ===============
+# ====================================
+
+
+class ResourceGroupBaseOut(ModelSchema):
+    resource_ids: List[int] = Field([], alias="resource_id_list")
+
+    class Config:
+        model = ResourceGroup
+        model_fields = "__all__"
+
+
+# ====================================
+# =============== WeeklyShiftTemplate ===============
+# ====================================
+
+
+class WeeklyShiftTemplateBaseOut(ModelSchema):
+    resource_ids: List[int] = Field([], alias="resource_id_list")
+
+    class Config:
+        model = WeeklyShiftTemplate
+        model_fields = "__all__"
