@@ -1,12 +1,3 @@
-from api.models.user import User
-from api.schemas.user import (
-    UserIn,
-    UserOut,
-    UserForgotPassword,
-    VerifyOtpIn,
-    UpdatePasswordIn,
-    ChangePasswordIn,
-)
 from django.contrib.auth import get_user_model
 from ninja import Router
 from ninja_crud.views import (
@@ -16,7 +7,17 @@ from ninja_crud.views import (
     RetrieveModelView,
     UpdateModelView,
 )
-from api.utils.sendMail import send_mail
+
+from api.models.user import User
+from api.schemas.user import (
+    ChangePasswordIn,
+    UpdatePasswordIn,
+    UserForgotPassword,
+    UserIn,
+    UserOut,
+    VerifyOtpIn,
+)
+from api.utils.send_mail import send_mail
 from api.utils.verify_otp import verify_otp
 
 user_no_auth_router = Router()
