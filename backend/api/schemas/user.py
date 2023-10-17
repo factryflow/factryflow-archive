@@ -1,4 +1,5 @@
 from ninja import Schema
+from pydantic import BaseModel
 
 
 class UserIn(Schema):
@@ -9,6 +10,17 @@ class UserIn(Schema):
     email: str
     password: str
     role_id:int
+
+
+class UserTestIn(Schema):
+    """
+    This schema is using for getting the input data for the User model.
+    """
+    id : int
+    username: str
+    email: str
+    password: str
+    
 
 
 class UserOut(Schema):

@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.core.management import call_command
 from django.test import Client
 from ninja_jwt.tokens import RefreshToken
+from api.tests.factories import UserFactory
 
 client = Client()
 
@@ -39,3 +40,4 @@ def load_specific_fixtures(db):
             call_command("loaddata", f"fixtures/{filename}.json")
 
     return _load_files
+
