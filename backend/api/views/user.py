@@ -21,7 +21,7 @@ from api.utils.verify_otp import verify_otp
 
 user_no_auth_router = Router()
 
-@user_no_auth_router.post("/", response=UserOut)
+@user_no_auth_router.post("/", response={201:UserOut})
 def register_user(request, user_in: UserIn):
     """
     This is related to register user.
@@ -75,7 +75,7 @@ def forgot_password(request, user_in: UserForgotPassword):
     """
     email = user_in.email
     status, message = send_mail(email)
-    return {"message": message}
+    return {"message":message}
 
 
 @user_no_auth_router.post("/verify-otp")

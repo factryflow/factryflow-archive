@@ -41,3 +41,17 @@ def load_specific_fixtures(db):
 
     return _load_files
 
+
+@pytest.fixture
+def test_change_password_data():
+    return {
+        "current_password": "testpass",
+        "new_password": "updatedtestpass",
+    }
+
+@pytest.fixture
+def test_update_password_data():
+    return {
+        "id": 1,
+        "password": "updatedtestpass",
+    }
