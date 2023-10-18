@@ -1,6 +1,11 @@
 # schemas.py
+from typing import List
+
 from ninja import ModelSchema
-from api.models import Job, JobStatus, JobType
+from pydantic import Field
+
+from api.models import Job
+from api.schemas.base import DependencyBaseOut, JobBaseOut, TaskBaseOut
 
 
 class JobIn(ModelSchema):
@@ -9,39 +14,14 @@ class JobIn(ModelSchema):
     """
     job_status_id: int
     job_type_id: int
+    dependency_ids: List[int] = Field(default=[])
+    task_ids: List[int] = Field(default=[])
 
     class Config:
         model = Job
         model_fields = ["name", "customer", "due_date", "priority", "external_id"]
-        # model_fields_optional = ["description", "customer", "note"]
 
 
-class JobOut(ModelSchema):
-    """
-    This schema is using for returning the output of the Job
-    """
-    job_status_id: int
-    job_type_id: int
-
-    class Config:
-        model = Job
-        model_exclude = ["job_status", "job_type"]
-        # model_fields = ["id", "name", "customer", "due_date", "priority", "external_id"]
-
-
-class JobTypeOut(ModelSchema):
-    """
-    This schema is using for returning the output of the JobType
-    """
-    class Config:
-        model = JobType
-        model_fields = ["id", "name"]
-
-
-class JobStatusOut(ModelSchema):
-    """
-    This schema is using for returning the output of the JobStatus
-    """
-    class Config:
-        model = JobStatus
-        model_fields = "__all__"
+class JobOut(JobBaseOut):
+    tasks: List[TaskBaseOut]
+    dependencies: List[DependencyBaseOut]

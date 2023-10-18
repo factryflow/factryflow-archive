@@ -6,11 +6,11 @@ from ninja_crud.views import (
     RetrieveModelView,
     UpdateModelView,
 )
+
 from api.models import ScheduleRun, ScheduleRunStatus
 from api.schemas import ScheduleRunIn, ScheduleRunOut, ScheduleRunStatusOut
+from api.utils.crud_hooks import pre_save_hook
 from api.utils.crud_views import SoftDeleteModelView
-from api.utils.pre_save_hook import pre_save_hook
-
 
 schedule_run_status_router = Router()
 

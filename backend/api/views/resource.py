@@ -6,11 +6,11 @@ from ninja_crud.views import (
     RetrieveModelView,
     UpdateModelView,
 )
-from api.models import Resources, ResourceGroups
-from api.schemas import ResourceIn, ResourceOut, ResourceGroupsIn, ResourceGroupsOut
-from api.utils.crud_views import SoftDeleteModelView
-from api.utils.pre_save_hook import pre_save_hook
 
+from api.models import Resource
+from api.schemas import ResourceIn, ResourceOut
+from api.utils.crud_hooks import post_save_hook, pre_save_hook
+from api.utils.crud_views import SoftDeleteModelView
 
 resource_router = Router()
 
@@ -20,7 +20,7 @@ class ResourceViewSet(ModelViewSet):
     This View is related to Resource Views
     Here we are including the all CRUD operations
     """
-    model_class = Resources
+    model_class = Resource
 
     # AbstractModelView subclasses can be used as-is
     list = ListModelView(output_schema=ResourceOut)
@@ -28,6 +28,7 @@ class ResourceViewSet(ModelViewSet):
         input_schema=ResourceIn,
         output_schema=ResourceOut,
         pre_save=pre_save_hook(),
+        post_save=post_save_hook(("m2m", "resource_groups", "resource_group_ids")),
     )
     retrieve = RetrieveModelView(output_schema=ResourceOut)
     update = UpdateModelView(
@@ -40,33 +41,3 @@ class ResourceViewSet(ModelViewSet):
 
 # The register_routes method must be called to register the routes with the router
 ResourceViewSet.register_routes(resource_router)
-
-# Assignment Rule Criteria
-resource_group_router = Router()
-
-
-class ResourceGroupsViewSet(ModelViewSet):
-    """
-    This View is related to Resource Group Views
-    Here we are including the all CRUD operations
-    """
-    model_class = ResourceGroups
-
-    # AbstractModelView subclasses can be used as-is
-    list = ListModelView(output_schema=ResourceGroupsOut)
-    create = CreateModelView(
-        input_schema=ResourceGroupsIn,
-        output_schema=ResourceGroupsOut,
-        pre_save=pre_save_hook(),
-    )
-    retrieve = RetrieveModelView(output_schema=ResourceGroupsOut)
-    update = UpdateModelView(
-        input_schema=ResourceGroupsIn,
-        output_schema=ResourceGroupsOut,
-        pre_save=pre_save_hook(),
-    )
-    delete = SoftDeleteModelView()
-
-
-# The register_routes method must be called to register the routes with the router
-ResourceGroupsViewSet.register_routes(resource_group_router)

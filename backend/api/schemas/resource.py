@@ -1,38 +1,27 @@
-# schemas.py
-from api.models import Resources, ResourceGroups
-from ninja import Schema, ModelSchema
+from typing import List, Optional
+
+from ninja import ModelSchema
+from pydantic import Field
+
+from api.models import Resource
+from api.schemas import (
+    ResourceBaseOut,
+    ResourceGroupBaseOut,
+    WeeklyShiftTemplateBaseOut,
+)
 
 
-class ResourceIn(Schema):
-    """
-    This schema is using for getting the input data for the Resource model.
-    """
-    name: str
-    weekly_shift_template_id: int
-    resource_groups_list: list
+class ResourceIn(ModelSchema):
+    weekly_shift_template_id: Optional[int] = None
+    resource_group_ids: List[int] = Field(default=[])
 
-
-class ResourceOut(ModelSchema):
-    """
-    This schema is using for returning the output of the Resource
-    """
     class Config:
-        model = Resources
-        model_fields = "__all__"
+        model = Resource
+        model_fields = [
+            "name",
+        ]
 
 
-class ResourceGroupsIn(Schema):
-    """
-    This schema is using for getting the input data for the ResourceGroups model.
-    """
-    name: str
-    resources_list: list
-
-
-class ResourceGroupsOut(ModelSchema):
-    """
-    This schema is using for returning the output of the ResourceGroups
-    """
-    class Config:
-        model = ResourceGroups
-        model_fields = "__all__"
+class ResourceOut(ResourceBaseOut):
+    weekly_shift_template: WeeklyShiftTemplateBaseOut = None
+    resource_groups: List[ResourceGroupBaseOut]

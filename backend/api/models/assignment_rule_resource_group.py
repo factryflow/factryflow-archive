@@ -2,9 +2,11 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from simple_history.models import HistoricalRecords
-from .assignment_rule import AssignmentRule
-from .resource_group import ResourceGroups
+
 from api.utils.model_manager import ActiveManager
+
+from .assignment_rule import AssignmentRule
+from .resource_group import ResourceGroup
 
 
 class AssignmentRuleResourceGroup(models.Model):
@@ -17,7 +19,7 @@ class AssignmentRuleResourceGroup(models.Model):
         null=True,
     )
     resource = models.ForeignKey(
-        ResourceGroups,
+        ResourceGroup,
         on_delete=models.CASCADE,
         related_name="resource_assignment_ids",
         blank=True,
