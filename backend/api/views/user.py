@@ -23,10 +23,10 @@ from api.utils.verify_otp import verify_otp
 user_no_auth_router = Router()
 
 
-@user_no_auth_router.post("/", response=UserOut)
+@user_no_auth_router.post("/", response={201:UserOut})
 def register_user(request, user_in: UserIn):
     user = get_user_model().objects.create_user(
-        username=user_in.username, email=user_in.email, password=user_in.password
+        username=user_in.username, email=user_in.email, password=user_in.password, role_id=user_in.role_id
     )
     return user
 
