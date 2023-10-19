@@ -23,7 +23,7 @@ class Job(models.Model):
     job_type = models.ForeignKey(JobType, on_delete=models.DO_NOTHING)
     dependencies = models.ManyToManyField("Dependency", related_name="jobs")
 
-    # Metadata
+    # Metadatanfg
     created_at = models.DateTimeField(default=timezone.now)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,

@@ -5,6 +5,7 @@ from simple_history.models import HistoricalRecords
 from api.utils.model_manager import ActiveManager
 
 
+
 class Role(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
