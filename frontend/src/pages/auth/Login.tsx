@@ -1,18 +1,15 @@
-import Avatar from "@mui/material/Avatar";
-import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import LockOpenIcon from "@mui/icons-material/LockOpen";
+
 import { useLoginUserMutation } from "@/redux/api/authApi";
 import { useEffect } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { toast } from "react-toastify";
 import { setUser } from "@/redux/features/authSlice";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Navigate } from "react-router-dom";
 import * as yup from "yup";
-import { Controller, useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Card } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
@@ -20,6 +17,9 @@ import type { Login } from "@/types/api.types";
 import { FormInputText } from "@/components/form-components/FormInputText";
 
 const LogIn = () => {
+  if (localStorage.getItem("token")) {
+    return <Navigate to="/jobs" />;
+  }
   const [loginUser, { data, error, isLoading, isSuccess }] =
     useLoginUserMutation();
   const navigate = useNavigate();
@@ -39,14 +39,19 @@ const LogIn = () => {
     backgroundColor: "white",
   };
 
+  const defaultValues = {
+    username: "",
+    password: "",
+  };
+
   const form = useForm({
+    defaultValues: defaultValues,
     resolver: yupResolver(validationSchema),
   });
 
   const {
     control,
     handleSubmit,
-    watch,
     formState: { errors },
   } = form;
 

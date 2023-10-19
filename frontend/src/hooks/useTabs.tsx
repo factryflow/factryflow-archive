@@ -60,7 +60,7 @@ const useTabs = () => {
                     color={badgeColor[tab]}
                     sx={{ textTransform: "unset", marginLeft: "10px" }}
                   >
-                    {statusCounts?.[tab]}
+                    {statusCounts?.[tab] ?? 0}
                   </Badge>
                 )}
               </Tab>

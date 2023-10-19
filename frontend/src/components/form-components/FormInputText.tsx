@@ -78,13 +78,14 @@ export const FormInputDropdown: React.FC<FormInputProps> = ({
       <Controller
         name={name}
         control={control}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { onChange, value }, fieldState: { error } }) => (
           <>
             <Select
               fullWidth
               size="small"
               value={value}
               onChange={onChange}
+              error={!!error}
               sx={{
                 background: "#F9F9F9 !important",
               }}
@@ -95,6 +96,56 @@ export const FormInputDropdown: React.FC<FormInputProps> = ({
               }}
             >
               {generateSingleOptions()}
+            </Select>
+          </>
+        )}
+      />
+    </>
+  );
+};
+
+export const FormInputMultipleDropdown: React.FC<FormInputProps> = ({
+  name,
+  control,
+  label,
+  options,
+}) => {
+  const generateMultipleOptions = () => {
+    return (
+      options &&
+      options.map((option: any) => {
+        return (
+          <MenuItem key={option.id} value={Number(option?.id)}>
+            {option.name}
+          </MenuItem>
+        );
+      })
+    );
+  };
+  return (
+    <>
+      <InputLabel sx={{ color: "black" }}>{label}</InputLabel>
+      <Controller
+        name={name}
+        control={control}
+        render={({ field: { onChange, value } }) => (
+          <>
+            <Select
+              fullWidth
+              size="small"
+              value={value}
+              multiple
+              onChange={onChange}
+              sx={{
+                background: "#F9F9F9 !important",
+              }}
+              inputProps={{
+                style: {
+                  borderRadius: "5px",
+                },
+              }}
+            >
+              {generateMultipleOptions()}
             </Select>
           </>
         )}

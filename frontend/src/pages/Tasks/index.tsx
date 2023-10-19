@@ -29,7 +29,7 @@ const Tasks = () => {
 
   const [deleteTasks] = useDeleteTasksMutation();
   const dispatch = useAppDispatch();
-  const taskiesSelector = useAppSelector((state) => state.task.taskies);
+  const taskiesSelector = useAppSelector((state: any) => state.task.taskies);
 
   const handleClick = () => {
     navigate("/tasks/form");
