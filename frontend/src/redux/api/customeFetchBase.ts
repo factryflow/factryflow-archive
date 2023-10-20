@@ -17,7 +17,6 @@ const baseQuery = fetchBaseQuery({
   baseUrl,
   prepareHeaders: (header) => {
     if (localStorage.getItem("token")) {
-      console.log(localStorage.getItem("token"), "tohjhjh");
       const { access } = JSON.parse(localStorage.getItem("token") as string);
       header.set("Authorization", `Bearer ${access}`);
     }
@@ -85,10 +84,14 @@ const customFetchBase: BaseQueryFn<
       result = await baseQuery(args, api, extraOptions);
     }
   }
-  // if ((result.error?.data as any)?.detail === "Unauthorized") {
-  //   api.dispatch(logout());
-  //   window.location.href = "/";
-  // }
+  if ((result.error?.data as any)?.detail === "Unauthorized") {
+    api.dispatch(logout());
+    window.location.href = "/";
+  }
+  if ((result.error?.data as any)?.detail === "User not found") {
+    api.dispatch(logout());
+    window.location.href = "/";
+  }
 
   return result;
 };

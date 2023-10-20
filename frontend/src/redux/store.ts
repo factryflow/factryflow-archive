@@ -89,7 +89,7 @@ const config: PersistConfig<any> = {
     templateDetailsApi.reducerPath,
     userApi.reducerPath,
   ],
-  whitelist: [],
+  whitelist: ["job"],
 };
 
 const peristedReducer = persistReducer<RootReducer, AnyAction>(config, reducer);

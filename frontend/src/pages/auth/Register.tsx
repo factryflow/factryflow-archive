@@ -1,25 +1,26 @@
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Box, Card } from "@mui/material";
 import * as yup from "yup";
 import { useRegisterUserMutation } from "@/redux/api/authApi";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { setUser } from "@/redux/features/authSlice";
+
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import { FormInputText } from "@/components/form-components/FormInputText";
 
 export default function Register() {
+  if (localStorage.getItem("token")) {
+    return <Navigate to="/jobs" />;
+  }
+
   const [registerUser, { data, isLoading, isSuccess, isError }] =
     useRegisterUserMutation();
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ export default function Register() {
   const {
     control,
     handleSubmit,
-    watch,
+
     formState: { errors },
   } = form;
 
