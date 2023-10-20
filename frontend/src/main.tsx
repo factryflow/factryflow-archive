@@ -9,15 +9,15 @@ import { Provider } from "react-redux";
 
 import AuthMiddleware from "./middleware/AuthorizedUser.tsx";
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <PersistGate persistor={persistor}>
-          <AuthMiddleware>
-            <App />
-          </AuthMiddleware>
-        </PersistGate>
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <BrowserRouter>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <AuthMiddleware>
+          <App />
+        </AuthMiddleware>
+      </PersistGate>
+    </Provider>
+  </BrowserRouter>
+  // </React.StrictMode>
 );

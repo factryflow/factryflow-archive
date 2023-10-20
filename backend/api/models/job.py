@@ -1,20 +1,21 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
+from ordered_model.models import OrderedModelBase
 from simple_history.models import HistoricalRecords
 
 from api.models.job_status import JobStatus
 from api.models.job_type import JobType
-from api.utils.model_manager import ActiveManager
 
 
-class Job(models.Model):
+class Job(OrderedModelBase):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     customer = models.CharField(max_length=250, blank=True)
     due_date = models.DateField(blank=True, null=True)
-    priority = models.IntegerField(blank=True, null=True)
+    priority = models.PositiveIntegerField(editable=False, db_index=True)
+    order_field_name = "priority"
     planned_start_datetime = models.DateTimeField(null=True, blank=True)
     planned_end_datetime = models.DateTimeField(null=True, blank=True)
     external_id = models.CharField(max_length=150, blank=True)
@@ -45,7 +46,7 @@ class Job(models.Model):
     is_deleted = models.BooleanField(default=False)
     history = HistoricalRecords(table_name="job_history")
 
-    objects = ActiveManager()
+    # objects = ActiveManager()
 
     @property
     def task_id_list(self):
@@ -61,3 +62,4 @@ class Job(models.Model):
     class Meta:
         db_table = "job"
         indexes = [models.Index(fields=["id", "name"])]
+        ordering = ("priority",)

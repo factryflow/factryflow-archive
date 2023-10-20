@@ -1,7 +1,7 @@
 import { Box, Stack } from "@mui/material";
 import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import { Badge, Card } from "@mantine/core";
@@ -72,13 +72,13 @@ const Jobs = () => {
       headerAlign: "center",
       align: "center",
     },
-    {
-      field: "description",
-      headerName: "Description",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
-    },
+    // {
+    //   field: "description",
+    //   headerName: "Description",
+    //   flex: 1,
+    //   headerAlign: "center",
+    //   align: "center",
+    // },
     {
       field: "customer",
       headerName: "Customer",
@@ -93,38 +93,38 @@ const Jobs = () => {
       headerAlign: "center",
       align: "center",
     },
-    {
-      field: "planned_start_datetime",
-      headerName: "Planned Start",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
-      renderCell: (row) => {
-        return (
-          <span>
-            {row.row.planned_start_datetime
-              ? row.row.planned_start_datetime?.slice(0, 10)
-              : ""}
-          </span>
-        );
-      },
-    },
-    {
-      field: "planned_end_datetime",
-      headerName: "Planned End",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
-      renderCell: (row) => {
-        return (
-          <span>
-            {row.row.planned_end_datetime
-              ? row.row.planned_end_datetime?.slice(0, 10)
-              : ""}
-          </span>
-        );
-      },
-    },
+    // {
+    //   field: "planned_start_datetime",
+    //   headerName: "Planned Start",
+    //   flex: 1,
+    //   headerAlign: "center",
+    //   align: "center",
+    //   renderCell: (row) => {
+    //     return (
+    //       <span>
+    //         {row.row.planned_start_datetime
+    //           ? row.row.planned_start_datetime?.slice(0, 10)
+    //           : ""}
+    //       </span>
+    //     );
+    //   },
+    // },
+    // {
+    //   field: "planned_end_datetime",
+    //   headerName: "Planned End",
+    //   flex: 1,
+    //   headerAlign: "center",
+    //   align: "center",
+    //   renderCell: (row) => {
+    //     return (
+    //       <span>
+    //         {row.row.planned_end_datetime
+    //           ? row.row.planned_end_datetime?.slice(0, 10)
+    //           : ""}
+    //       </span>
+    //     );
+    //   },
+    // },
     {
       field: "priority",
       headerName: "Priority",
@@ -147,10 +147,6 @@ const Jobs = () => {
       headerAlign: "center",
       align: "center",
       renderCell: (row) => {
-        const filterjobstatus = jobstatusSelector.filter(
-          (job: any) => job.id === row.row.job_status
-        );
-
         const badgeColor: BadgeType = {
           completed: "green",
           "not-planned": "red",
@@ -161,7 +157,7 @@ const Jobs = () => {
         return (
           <Badge
             variant="light"
-            color={badgeColor[filterjobstatus[0].name]}
+            color={badgeColor[`${row.row.job_status?.name as string}`]}
             sx={{
               textTransform: "unset",
               borderRadius: "5px",
@@ -170,7 +166,7 @@ const Jobs = () => {
               height: "35px",
             }}
           >
-            {getString(filterjobstatus[0].name)}
+            {getString(`${row.row.job_status?.name}`)}
           </Badge>
         );
       },
@@ -181,27 +177,19 @@ const Jobs = () => {
       width: 180,
       sortable: false,
       renderCell: (params: any) => {
+        const currentRowId = params.row.id;
         const handleDeleteAction = (e: React.SyntheticEvent<any>) => {
-          const currentRowId = params.row.id;
           setDeleteModel(true);
           setDeleteId(currentRowId);
-        };
-
-        const handleEditAction = (e: React.SyntheticEvent<any>) => {
-          const currentRow = params.row;
-          navigate(`/jobs/form/${currentRow?.id}`);
         };
 
         return (
           <Stack direction="row" spacing={2}>
             <img src={viewicon} alt="view_Icon" height={17} width={17} />
-            <img
-              src={editicon}
-              alt="edit_Icon"
-              height={17}
-              width={17}
-              onClick={handleEditAction}
-            />
+            <Link to={`/jobs/form/${currentRowId}`}>
+              <img src={editicon} alt="edit_Icon" height={17} width={17} />
+            </Link>
+
             <img
               src={deleteicon}
               alt="delete_Icon"
@@ -260,125 +248,122 @@ const Jobs = () => {
   return (
     <>
       <Layout>
-        <Box>
-          <Header
-            title="Job Management"
-            buttonname="Create New job"
-            onClick={handleClick}
+        <Header
+          title="Job Management"
+          buttonname="Create New job"
+          onClick={handleClick}
+        />
+        <Card withBorder sx={{ padding: "0px !important", marginTop: 12 }}>
+          <StatusTabs
+            statusTabs={[
+              "all",
+              ...jobstatusSelector?.map((status: any) => status?.name),
+            ]}
+            data={jobsSelector ?? []}
+            jobstatus={jobstatusSelector}
+            setFilterData={setData}
           />
+          {jobLoading ? (
+            <>
+              <Loading />
+            </>
+          ) : (
+            jobsSelector && (
+              <>
+                <Box
+                  m="10px 0px 0px 0px"
+                  height="auto"
+                  sx={{
+                    "& .MuiDataGrid-root": {},
 
-          <Box
-            m="30px 0 0 0"
-            height="auto"
-            sx={{
-              "& .MuiDataGrid-root": {},
-
-              "& .name-column--cell": {
-                color: "bold !important",
-              },
-              "& .MuiDataGrid-row": {
-                cursor: "pointer",
-              },
-              "& .MuiDataGrid-columnHeaders": {
-                backgroundColor: "#FAFAFA",
-                color: "	#000000",
-                fontSize: "14px",
-                fontWeight: "bold !important",
-                borderTop: "1px solid #F0F0F0",
-              },
-              "& .MuiDataGrid-virtualScroller": {
-                backgroundColor: "#fff",
-              },
-              "& .MuiDataGrid-footerContainer": {
-                backgroundColor: "#FFFFFF",
-              },
-              "& .MuiCheckbox-root svg": {
-                width: 23,
-                height: 23,
-                backgroundColor: "#F1F1F2",
-                border: `0px solid #E1E3EA`,
-                borderRadius: 1,
-              },
-              "& .MuiCheckbox-root svg path": {
-                display: "none",
-              },
-              "& .MuiCheckbox-root.Mui-checked:not(.MuiCheckbox-indeterminate) svg":
-                {
-                  backgroundColor: "#1890ff",
-                  borderColor: "#1890ff",
-                },
-              ".MuiDataGrid-cell:focus": {
-                outline: "none !important",
-              },
-              ".MuiDataGrid-columnHeader:focus-within": {
-                outline: "none !important",
-              },
-              ".MuiDataGrid-cell:focus-within": {
-                outline: "none !important",
-              },
-              ".MuiDataGrid-toolbarContainer": {
-                padding: "15px",
-                flexDirection: "row-reverse",
-              },
-            }}
-          >
-            <Card withBorder sx={{ padding: "0px !important" }}>
-              <StatusTabs
-                statusTabs={[
-                  "all",
-                  ...jobstatusSelector?.map((status: any) => status?.name),
-                ]}
-                data={jobsSelector ?? []}
-                jobstatus={jobstatusSelector}
-                setFilterData={setData}
-              />
-              {jobLoading ? (
-                <>
-                  <Loading />
-                </>
-              ) : (
-                jobsSelector && (
-                  <>
-                    <DataGrid
-                      className="dataGrid"
-                      autoHeight={true}
-                      rows={data ?? []}
-                      // rows={filterData ?? []}
-                      columns={columns}
-                      initialState={{
-                        pagination: {
-                          paginationModel: {
-                            pageSize: 10,
-                          },
+                    "& .name-column--cell": {
+                      color: "bold !important",
+                    },
+                    "& .MuiDataGrid-row": {
+                      cursor: "pointer",
+                    },
+                    "& .MuiDataGrid-columnHeaders": {
+                      backgroundColor: "#FAFAFA",
+                      color: "	#000000",
+                      fontSize: "14px",
+                      fontWeight: "bold !important",
+                      borderTop: "1px solid #F0F0F0",
+                    },
+                    "& .MuiDataGrid-virtualScroller": {
+                      backgroundColor: "#fff",
+                    },
+                    "& .MuiDataGrid-footerContainer": {
+                      backgroundColor: "#FFFFFF",
+                    },
+                    "& .MuiCheckbox-root svg": {
+                      width: 23,
+                      height: 23,
+                      backgroundColor: "#F1F1F2",
+                      border: `0px solid #E1E3EA`,
+                      borderRadius: 1,
+                    },
+                    "& .MuiCheckbox-root svg path": {
+                      display: "none",
+                    },
+                    "& .MuiCheckbox-root.Mui-checked:not(.MuiCheckbox-indeterminate) svg":
+                      {
+                        backgroundColor: "#1890ff",
+                        borderColor: "#1890ff",
+                      },
+                    ".MuiDataGrid-cell:focus": {
+                      outline: "none !important",
+                    },
+                    ".MuiDataGrid-columnHeader:focus-within": {
+                      outline: "none !important",
+                    },
+                    ".MuiDataGrid-cell:focus-within": {
+                      outline: "none !important",
+                    },
+                    ".MuiDataGrid-toolbarContainer": {
+                      padding: "15px",
+                      flexDirection: "row-reverse",
+                    },
+                  }}
+                >
+                  <DataGrid
+                    className="dataGrid"
+                    autoHeight={true}
+                    rows={data ?? []}
+                    // rows={filterData ?? []}
+                    columns={columns}
+                    initialState={{
+                      pagination: {
+                        paginationModel: {
+                          pageSize: 10,
                         },
-                      }}
-                      slots={{ toolbar: GridToolbar }}
-                      slotProps={{
-                        toolbar: {
-                          showQuickFilter: true,
-                          quickFilterProps: { debounceMs: 500 },
-                        },
-                      }}
-                      pageSizeOptions={[5, 10, 25]}
-                      checkboxSelection
-                      disableRowSelectionOnClick
-                      disableColumnFilter
-                      disableColumnMenu
-                      disableDensitySelector
-                      disableColumnSelector
-                    />
-                  </>
-                )
-              )}
-              <DeleteModel
-                deleteModel={deleteModel}
-                setDeleteModel={setDeleteModel}
-                handleCancle={handleCancle}
-                handleDelete={handleDelete}
-              />
-            </Card>
-          </Box>
-        </Box>
+                      },
+                    }}
+                    slots={{ toolbar: GridToolbar }}
+                    slotProps={{
+                      toolbar: {
+                        showQuickFilter: true,
+                        quickFilterProps: { debounceMs: 500 },
+                      },
+                    }}
+                    pageSizeOptions={[5, 10, 25]}
+                    checkboxSelection
+                    disableRowSelectionOnClick
+                    disableColumnFilter
+                    disableColumnMenu
+                    disableDensitySelector
+                    disableColumnSelector
+                  />
+                </Box>
+              </>
+            )
+          )}
+          <DeleteModel
+            deleteModel={deleteModel}
+            setDeleteModel={setDeleteModel}
+            handleCancle={handleCancle}
+            handleDelete={handleDelete}
+          />
+        </Card>
       </Layout>
     </>
   );
@@ -397,7 +382,6 @@ export const StatusTabs = ({
   data: any;
   setFilterData: any;
 }) => {
-  // console.log(data, "jhjhjhj");
   const { Tabs } = useTabs();
   const statusCount: { [key: string]: any } = {};
 
@@ -405,17 +389,17 @@ export const StatusTabs = ({
     if (tab === "all") {
       setFilterData(data);
     } else {
-      let tabid = jobstatus.find((status) => status.name === tab).id;
+      let tabid = jobstatus.find((status) => status?.name === tab).id;
       if (tabid)
-        setFilterData(data.filter((job: any) => job.job_status === tabid));
+        setFilterData(data?.filter((job: any) => job?.job_status.id === tabid));
     }
   };
   if (data) {
     // Iterate through the job list and count the status
     data.forEach((job: any) => {
       const statusName = jobstatus.find(
-        (status: any) => status.id === job.job_status
-      ).name;
+        (status: any) => status.id === job.job_status.id
+      )?.name;
       statusCount[statusName] = (statusCount[statusName] || 0) + 1;
       statusCount["all"] = data.length;
     });

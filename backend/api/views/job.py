@@ -9,7 +9,7 @@ from ninja_crud.views import (
 
 from api.models import Job, JobStatus, JobType
 from api.schemas import JobIn, JobOut, JobStatusOut, JobTypeOut
-from api.utils.crud_hooks import post_save_hook, pre_save_hook
+from api.utils.crud_hooks import PostSaveActions, post_save_hook, pre_save_hook
 from api.utils.crud_views import SoftDeleteModelView
 
 job_type_router = Router()
@@ -41,6 +41,16 @@ JobStatusViewSet.register_routes(job_status_router)
 job_router = Router()
 
 
+def set_order_from_field(instance, field_name) -> None:
+    order_value = getattr(instance, field_name, None)
+    if order_value is not None:
+        instance.to(order_value)
+
+
+actions_obj = PostSaveActions()
+actions_obj.register("order", set_order_from_field)
+
+
 class JobViewSet(ModelViewSet):
     model_class = Job
 
@@ -53,6 +63,8 @@ class JobViewSet(ModelViewSet):
         post_save=post_save_hook(
             ("m2m", "dependencies", "dependency_ids"),
             ("reverse_fk", "tasks", "task_ids"),
+            ("order", "order"),
+            actions_obj=actions_obj,
         ),
     )
     retrieve = RetrieveModelView(output_schema=JobOut)
@@ -60,6 +72,10 @@ class JobViewSet(ModelViewSet):
         input_schema=JobIn,
         output_schema=JobOut,
         pre_save=pre_save_hook(),
+        post_save=post_save_hook(
+            ("order", "order"),
+            actions_obj=actions_obj,
+        ),
     )
     delete = SoftDeleteModelView()
 

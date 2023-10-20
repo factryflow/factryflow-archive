@@ -1,14 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { GetAllJobType } from "../types/jobs.types";
-import config from "@/config/default";
+import customFetchBase from "./customeFetchBase";
+
 export const taskApi = createApi({
   reducerPath: "taskApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: config.API_ENDPOINT,
-    prepareHeaders: (header) => {
-      header.set("Authorization", `Bearer ${localStorage.getItem("token")}`);
-    },
-  }),
+  baseQuery: customFetchBase,
   tagTypes: ["getAllTasks"],
   endpoints: (builder) => ({
     // getAllTask Api
@@ -16,10 +11,11 @@ export const taskApi = createApi({
       query: () => {
         return `api/tasks/`;
       },
-      transformResponse: (res: { data: any[] }) => {
-        const data = res.data;
-        const result = data.filter((item: any) => item.is_deleted === false);
-        return result;
+      transformResponse: (res: { items: any[] }) => {
+        const result = res.items?.filter(
+          (item: any) => item.is_deleted === false
+        );
+        return result ?? [];
       },
       providesTags: ["getAllTasks"],
     }),
@@ -44,13 +40,12 @@ export const taskApi = createApi({
           body,
         };
       },
-      invalidatesTags: ["getAllTasks"],
     }),
     // delete Job Api
     deleteTasks: builder.mutation({
       query: (id: number) => {
         return {
-          url: `api/tasks/${id}/`,
+          url: `api/tasks/${id}`,
           method: "delete",
         };
       },
@@ -60,7 +55,7 @@ export const taskApi = createApi({
     updateTasks: builder.mutation({
       query: ({ id, data }) => {
         return {
-          url: `api/tasks/${id}/`,
+          url: `api/tasks/${id}`,
           method: "put",
           body: data,
         };
