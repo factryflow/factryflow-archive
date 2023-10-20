@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "api",
     "simple_history",
+    "ordered_model",
 ]
 
 MIDDLEWARE = [
