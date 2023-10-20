@@ -1,0 +1,44 @@
+name: Backend CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.11
+
+    - name: Set up environment
+      run: cp env.sample .env
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+      working-directory: backend
+
+    - name: Run migrations (check for migration issues)
+      run: python manage.py migrate --check
+      working-directory: backend
+
+    - name: Start the backend (checks if the server starts)
+      run: |
+        python manage.py runserver &
+        sleep 10
+      working-directory: backend
+
+    - name: Run tests
+      run: pytest
+      working-directory: backend
