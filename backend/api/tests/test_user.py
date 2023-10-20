@@ -1,13 +1,7 @@
 import json
-
 import pytest
-
 from api.tests.factories import UserFactory,UserCreateFactory
-
 from django.urls import reverse
-
-
-
 
 
 @pytest.mark.django_db

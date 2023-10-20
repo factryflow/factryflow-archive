@@ -1,9 +1,9 @@
 from polyfactory.factories.pydantic_factory import ModelFactory
 
-from api.schemas import JobIn,UserIn,RoleIn
+from api.schemas import JobIn,UserIn,RoleIn, ResourceIn
 
 import factory
-from api.models import User,Role
+from api.models import User,Role,Resource
 
 
 class JobFactory(ModelFactory[JobIn]):
@@ -17,6 +17,7 @@ class UserFactory(ModelFactory[UserIn]):
 class RoleFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Role 
+        
 class UserCreateFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = User  # Set the model to your User model class
@@ -27,4 +28,12 @@ class UserCreateFactory(factory.django.DjangoModelFactory):
     role = factory.SubFactory(RoleFactory)
 
 
+    
 
+class ResourceFactory(ModelFactory[ResourceIn]):
+    __model__ = ResourceIn
+    
+
+class ResourceCreateFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Resource 

@@ -23,13 +23,13 @@ class RoleViewSet(ModelViewSet):
     create = CreateModelView(
         input_schema=RoleIn,
         output_schema=RoleOut,
-        pre_save=pre_save_hook,
+        pre_save=pre_save_hook(),
     )
     retrieve = RetrieveModelView(output_schema=RoleOut)
     update = UpdateModelView(
         input_schema=RoleIn,
         output_schema=RoleOut,
-        pre_save=pre_save_hook,
+        pre_save=pre_save_hook(),
     )
     delete = SoftDeleteModelView()
 
