@@ -1,6 +1,7 @@
 from ninja import Router
 from ninja_crud.views import (
     CreateModelView,
+    DeleteModelView,
     ListModelView,
     ModelViewSet,
     RetrieveModelView,
@@ -21,7 +22,6 @@ from api.schemas import (
     AssignmentRuleResourceGroupOut,
 )
 from api.utils.crud_hooks import pre_save_hook
-from api.utils.crud_views import SoftDeleteModelView
 
 assignment_rule_router = Router()
 
@@ -42,7 +42,7 @@ class AssignmentRuleViewSet(ModelViewSet):
         output_schema=AssignmentRuleOut,
         pre_save=pre_save_hook(),
     )
-    delete = SoftDeleteModelView()
+    delete = DeleteModelView()
 
 
 # The register_routes method must be called to register the routes with the router
@@ -68,7 +68,7 @@ class AssignmentRuleCriteriaViewSet(ModelViewSet):
         output_schema=AssignmentRuleCriteriaOut,
         pre_save=pre_save_hook(),
     )
-    delete = SoftDeleteModelView()
+    delete = DeleteModelView()
 
 
 # The register_routes method must be called to register the routes with the router
@@ -94,7 +94,7 @@ class AssignmentRuleResourceGroupViewSet(ModelViewSet):
         output_schema=AssignmentRuleResourceGroupOut,
         pre_save=pre_save_hook(),
     )
-    delete = SoftDeleteModelView()
+    delete = DeleteModelView()
 
 
 # The register_routes method must be called to register the routes with the router
