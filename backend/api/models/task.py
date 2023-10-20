@@ -63,6 +63,10 @@ class Task(models.Model):
         return list(self.predecessors.values_list("id", flat=True))
 
     @property
+    def successor_id_list(self):
+        return list(self.successors.values_list("id", flat=True))
+
+    @property
     def dependency_id_list(self):
         return list(self.dependencies.values_list("id", flat=True))
 
