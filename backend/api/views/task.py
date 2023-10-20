@@ -1,6 +1,7 @@
 from ninja import Router
 from ninja_crud.views import (
     CreateModelView,
+    DeleteModelView,
     ListModelView,
     ModelViewSet,
     RetrieveModelView,
@@ -10,7 +11,6 @@ from ninja_crud.views import (
 from api.models import Task, TaskStatus, TaskType
 from api.schemas import TaskBaseOut, TaskIn, TaskOut, TaskStatusOut, TaskTypeOut
 from api.utils.crud_hooks import post_save_hook, pre_save_hook
-from api.utils.crud_views import SoftDeleteModelView
 
 task_type_router = Router()
 
@@ -62,7 +62,7 @@ class TaskViewSet(ModelViewSet):
         output_schema=TaskOut,
         pre_save=pre_save_hook(),
     )
-    delete = SoftDeleteModelView()
+    delete = DeleteModelView()
 
 
 # The register_routes method must be called to register the routes with the router

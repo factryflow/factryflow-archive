@@ -1,6 +1,7 @@
 from ninja import Router
 from ninja_crud.views import (
     CreateModelView,
+    DeleteModelView,
     ListModelView,
     ModelViewSet,
     RetrieveModelView,
@@ -13,7 +14,6 @@ from api.schemas import (
     WeeklyShiftTemplateOut,
 )
 from api.utils.crud_hooks import pre_save_hook
-from api.utils.crud_views import SoftDeleteModelView
 
 weeklyshift_template_router = Router()
 
@@ -34,7 +34,7 @@ class WeeklyShiftTemplateViewSet(ModelViewSet):
         output_schema=WeeklyShiftTemplateOut,
         pre_save=pre_save_hook(),
     )
-    delete = SoftDeleteModelView()
+    delete = DeleteModelView()
 
 
 # The register_routes method must be called to register the routes with the router

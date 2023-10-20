@@ -1,9 +1,9 @@
 # schemas.py
-from datetime import datetime
 from typing import Optional
+
+from ninja import ModelSchema, Schema
+
 from api.models import Item
-from .user import UserOut
-from ninja import Schema, ModelSchema
 
 
 class ItemIn(Schema):
@@ -14,13 +14,4 @@ class ItemIn(Schema):
 class ItemOut(ModelSchema):
     class Config:
         model = Item
-        model_fields = [
-            "id",
-            "name",
-            "description",
-            "created_at",
-            "created_by",
-            "updated_at",
-            "updated_by",
-            "is_active",
-        ]
+        model_fields = "__all__"

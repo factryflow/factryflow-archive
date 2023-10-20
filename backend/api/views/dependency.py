@@ -1,6 +1,7 @@
 from ninja import Router
 from ninja_crud.views import (
     CreateModelView,
+    DeleteModelView,
     ListModelView,
     ModelViewSet,
     RetrieveModelView,
@@ -10,7 +11,6 @@ from ninja_crud.views import (
 from api.models import Dependency
 from api.schemas import DependencyIn, DependencyOut
 from api.utils.crud_hooks import post_save_hook, pre_save_hook
-from api.utils.crud_views import SoftDeleteModelView
 
 # dependency_type_router = Router()
 
@@ -31,7 +31,7 @@ from api.utils.crud_views import SoftDeleteModelView
 #         output_schema=DependencyTypeOut,
 #         pre_save=pre_save_hook(),
 #     )
-#     delete = SoftDeleteModelView()
+#     delete = DeleteModelView()
 
 
 # DependencyTypeViewSet.register_routes(dependency_type_router)
@@ -56,7 +56,7 @@ from api.utils.crud_views import SoftDeleteModelView
 #         output_schema=DependencyStatusOut,
 #         pre_save=pre_save_hook(),
 #     )
-#     delete = SoftDeleteModelView()
+#     delete = DeleteModelView()
 
 
 # DependencyStatusViewSet.register_routes(dependency_status_router)
@@ -85,7 +85,7 @@ class DependencyViewSet(ModelViewSet):
         output_schema=DependencyOut,
         pre_save=pre_save_hook(),
     )
-    delete = SoftDeleteModelView()
+    delete = DeleteModelView()
 
 
 # The register_routes method must be called to register the routes with the router

@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from simple_history.models import HistoricalRecords
+
 from api.utils.model_manager import ActiveManager
 
 
@@ -26,9 +27,7 @@ class TaskType(models.Model):
         null=True,
         blank=True,
     )
-    deleted_at = models.DateTimeField(blank=True, null=True)
-    is_active = models.BooleanField(default=True)
-    is_deleted = models.BooleanField(default=False)
+
     history = HistoricalRecords(table_name="task_type_history")
 
     objects = ActiveManager()
