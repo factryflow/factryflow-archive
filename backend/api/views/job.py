@@ -1,6 +1,7 @@
 from ninja import Router
 from ninja_crud.views import (
     CreateModelView,
+    DeleteModelView,
     ListModelView,
     ModelViewSet,
     RetrieveModelView,
@@ -10,7 +11,6 @@ from ninja_crud.views import (
 from api.models import Job, JobStatus, JobType
 from api.schemas import JobIn, JobOut, JobStatusOut, JobTypeOut
 from api.utils.crud_hooks import PostSaveActions, post_save_hook, pre_save_hook
-from api.utils.crud_views import SoftDeleteModelView
 
 job_type_router = Router()
 
@@ -77,7 +77,7 @@ class JobViewSet(ModelViewSet):
             actions_obj=actions_obj,
         ),
     )
-    delete = SoftDeleteModelView()
+    delete = DeleteModelView()
 
 
 # The register_routes method must be called to register the routes with the router

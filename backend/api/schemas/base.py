@@ -94,11 +94,18 @@ class TaskStatusOut(ModelSchema):
         model_fields = ["id", "name"]
 
 
+class TaskJobOut(ModelSchema):
+    class Config:
+        model = Job
+        model_fields = ["id", "name", "priority"]
+
+
 class TaskBaseOut(ModelSchema):
     task_status: TaskStatusOut
     task_type: TaskTypeOut
-    job_id: int = None
+    job: TaskJobOut = None
     predecessor_ids: List[int] = Field([], alias="predecessor_id_list")
+    successor_ids: List[int] = Field([], alias="successor_id_list")
     dependency_ids: List[int] = Field([], alias="dependency_id_list")
 
     class Config:

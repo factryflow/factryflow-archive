@@ -4,10 +4,7 @@
 	"fields": {
 		"name": "Production",
 		"created_at": "2023-08-19T21:46:44.097Z",
-		"updated_at": "2023-08-19T21:46:44.097Z",
-		"deleted_at": null,
-		"is_active": true,
-		"is_deleted": false
+		"updated_at": "2023-08-19T21:46:44.097Z"
 	}
 }, {
 	"model": "api.TaskType",
@@ -15,10 +12,7 @@
 	"fields": {
 		"name": "Maintenance",
 		"created_at": "2023-08-19T21:46:51.501Z",
-		"updated_at": "2023-08-19T21:46:51.501Z",
-		"deleted_at": null,
-		"is_active": true,
-		"is_deleted": false
+		"updated_at": "2023-08-19T21:46:51.501Z"
 	}
 },{
 	"model": "api.TaskType",
@@ -26,10 +20,7 @@
 	"fields": {
 		"name": "Quality Check",
 		"created_at": "2023-08-19T21:46:51.501Z",
-		"updated_at": "2023-08-19T21:46:51.501Z",
-		"deleted_at": null,
-		"is_active": true,
-		"is_deleted": false
+		"updated_at": "2023-08-19T21:46:51.501Z"
 	}
 },{
 	"model": "api.TaskType",
@@ -37,10 +28,7 @@
 	"fields": {
 		"name": "Packaging",
 		"created_at": "2023-08-19T21:46:51.501Z",
-		"updated_at": "2023-08-19T21:46:51.501Z",
-		"deleted_at": null,
-		"is_active": true,
-		"is_deleted": false
+		"updated_at": "2023-08-19T21:46:51.501Z"
 	}
 },{
 	"model": "api.TaskType",
@@ -48,9 +36,6 @@
 	"fields": {
 		"name": "Setup",
 		"created_at": "2023-08-19T21:46:51.501Z",
-		"updated_at": "2023-08-19T21:46:51.501Z",
-		"deleted_at": null,
-		"is_active": true,
-		"is_deleted": false
+		"updated_at": "2023-08-19T21:46:51.501Z"
 	}
 }]

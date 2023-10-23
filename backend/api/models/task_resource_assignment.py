@@ -43,9 +43,7 @@ class TasksResourceAssignment(models.Model):
         null=True,
         blank=True,
     )
-    deleted_at = models.DateTimeField(blank=True, null=True)
-    is_active = models.BooleanField(default=True)
-    is_deleted = models.BooleanField(default=False)
+
     history = HistoricalRecords(table_name="tasks_resource_assignment_history")
 
     objects = ActiveManager()
