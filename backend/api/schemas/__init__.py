@@ -17,8 +17,13 @@ from .base import (
     TaskStatusOut,
     TaskTypeOut,
 )
-from .dependency import DependencyIn, DependencyOut
-from .dependency_type import DependencyTypeIn, DependencyTypeOut
+from .dependency import (
+    DependencyIn,
+    DependencyOut,
+    DependencyStatusOut,
+    DependencyTypeIn,
+    DependencyTypeOut,
+)
 from .item import ItemIn, ItemOut
 from .job import JobIn, JobOut
 from .operational_exception import (
