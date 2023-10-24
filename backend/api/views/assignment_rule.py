@@ -11,19 +11,17 @@ from ninja_crud.views import (
 from api.models import (
     AssignmentRule,
     AssignmentRuleCriteria,
-    AssignmentRuleResourceGroup,
 )
 from api.schemas import (
     AssignmentRuleCriteriaIn,
     AssignmentRuleCriteriaOut,
     AssignmentRuleIn,
     AssignmentRuleOut,
-    AssignmentRuleResourceGroupIn,
-    AssignmentRuleResourceGroupOut,
 )
 from api.utils.crud_hooks import pre_save_hook
 
 assignment_rule_router = Router()
+assignment_rule_criteria_router = Router()
 
 
 class AssignmentRuleViewSet(ModelViewSet):
@@ -45,11 +43,7 @@ class AssignmentRuleViewSet(ModelViewSet):
     delete = DeleteModelView()
 
 
-# The register_routes method must be called to register the routes with the router
-AssignmentRuleViewSet.register_routes(assignment_rule_router)
-
 # Assignment Rule Criteria
-assignment_rule_criteria_router = Router()
 
 
 class AssignmentRuleCriteriaViewSet(ModelViewSet):
@@ -71,33 +65,28 @@ class AssignmentRuleCriteriaViewSet(ModelViewSet):
     delete = DeleteModelView()
 
 
-# The register_routes method must be called to register the routes with the router
-AssignmentRuleCriteriaViewSet.register_routes(assignment_rule_criteria_router)
-
 # AssignmentRuleResourceGroup
-assignment_rule_resource_group_router = Router()
 
 
-class AssignmentRuleResourceGroupViewSet(ModelViewSet):
-    model_class = AssignmentRuleResourceGroup
+# class AssignmentRuleResourceGroupViewSet(ModelViewSet):
+#     model_class = AssignmentRuleResourceGroup
 
-    # AbstractModelView subclasses can be used as-is
-    list = ListModelView(output_schema=AssignmentRuleResourceGroupOut)
-    create = CreateModelView(
-        input_schema=AssignmentRuleResourceGroupIn,
-        output_schema=AssignmentRuleResourceGroupOut,
-        pre_save=pre_save_hook(),
-    )
-    retrieve = RetrieveModelView(output_schema=AssignmentRuleResourceGroupOut)
-    update = UpdateModelView(
-        input_schema=AssignmentRuleResourceGroupIn,
-        output_schema=AssignmentRuleResourceGroupOut,
-        pre_save=pre_save_hook(),
-    )
-    delete = DeleteModelView()
+#     # AbstractModelView subclasses can be used as-is
+#     list = ListModelView(output_schema=AssignmentRuleResourceGroupOut)
+#     create = CreateModelView(
+#         input_schema=AssignmentRuleResourceGroupIn,
+#         output_schema=AssignmentRuleResourceGroupOut,
+#         pre_save=pre_save_hook(),
+#     )
+#     retrieve = RetrieveModelView(output_schema=AssignmentRuleResourceGroupOut)
+#     update = UpdateModelView(
+#         input_schema=AssignmentRuleResourceGroupIn,
+#         output_schema=AssignmentRuleResourceGroupOut,
+#         pre_save=pre_save_hook(),
+#     )
+#     delete = DeleteModelView()
 
 
 # The register_routes method must be called to register the routes with the router
-AssignmentRuleResourceGroupViewSet.register_routes(
-    assignment_rule_resource_group_router
-)
+AssignmentRuleViewSet.register_routes(assignment_rule_router)
+AssignmentRuleCriteriaViewSet.register_routes(assignment_rule_criteria_router)

@@ -4,7 +4,7 @@ from ninja import ModelSchema
 from pydantic import Field
 
 from api.models import Resource
-from api.schemas import (
+from api.schemas.base import (
     ResourceBaseOut,
     ResourceGroupBaseOut,
     WeeklyShiftTemplateBaseOut,
