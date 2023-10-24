@@ -16,9 +16,7 @@ export const dependencyApi = createApi({
         return `api/dependencies/`;
       },
       transformResponse: (res: GenericResponse<DependencyResponse[]>) => {
-        const result = res.items?.filter(
-          (item: any) => item.is_deleted === false
-        );
+        const result = res.items;
         return result ?? [];
       },
       providesTags: ["getAllDependencys"],

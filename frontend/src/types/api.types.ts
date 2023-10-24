@@ -54,23 +54,23 @@ export type JobError = {
 export type JobResponse = {
   id: number;
   name: string;
-  priority: Nullable<number>;
-  due_date: Nullable<string>;
-  customer: Nullable<string>;
-  description: Nullable<string>;
-  note: Nullable<string>;
-  planned_start_datetime: Nullable<string>;
-  planned_end_datetime: Nullable<string>;
+  priority: number;
+  due_date: string;
+  customer: string;
+  description: string;
+  note: string;
+  planned_start_datetime: string;
+  planned_end_datetime: string;
   is_active: boolean;
   is_deleted: boolean;
-  external_id: Nullable<string>;
-  job_status: Nullable<any>;
-  job_type: Nullable<any>;
-  created_at: Nullable<string>;
+  external_id: string;
+  job_status: any;
+  job_type: any;
+  created_at: string;
   created_by: number;
-  updated_at: Nullable<string>;
+  updated_at: string;
   updated_by: number;
-  deleted_at: Nullable<string>;
+  deleted_at: string;
 };
 
 // id": 0,

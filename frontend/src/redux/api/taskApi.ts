@@ -12,24 +12,40 @@ export const taskApi = createApi({
         return `api/tasks/`;
       },
       transformResponse: (res: { items: any[] }) => {
-        const result = res.items?.filter(
-          (item: any) => item.is_deleted === false
-        );
+        const result = res.items;
         return result ?? [];
       },
       providesTags: ["getAllTasks"],
     }),
 
-    //   getJobbyId Api
-    //   getJobById:builder.mutation({
-    //     query:(id:number)=>{
-    //         return{
-    //             url:`api/jobs/get-job-details/${id}/`,
+    getTaskStatus: builder.query<any[], void>({
+      query: () => {
+        return `api/task-status/`;
+      },
+      transformResponse: (res: { items: any[] }) => {
+        const result = res.items;
+        return result ?? [];
+      },
+    }),
+    getTaskType: builder.query<any[], void>({
+      query: () => {
+        return `api/task-types/`;
+      },
+      transformResponse: (res: { items: any[] }) => {
+        const result = res.items;
+        return result ?? [];
+      },
+    }),
 
-    //         }
-    //     },
-    //     transformResponse: (res: any) => res.data
-    // }),
+    // gettaskbyId Api
+    getTaskById: builder.mutation({
+      query: (id: number) => {
+        return {
+          url: `api/tasks/${id}`,
+          method: "get",
+        };
+      },
+    }),
 
     // create Task api
     createTasks: builder.mutation({
@@ -40,6 +56,7 @@ export const taskApi = createApi({
           body,
         };
       },
+      invalidatesTags: ["getAllTasks"],
     }),
     // delete Job Api
     deleteTasks: builder.mutation({
@@ -67,12 +84,12 @@ export const taskApi = createApi({
 
 export const {
   useGetAllTasksQuery,
+  useGetTaskStatusQuery,
+  useGetTaskTypeQuery,
   useCreateTasksMutation,
   useDeleteTasksMutation,
   useUpdateTasksMutation,
-  // useDeleteJobsMutation,
-  // useGetJobByIdMutation,
-  // useUpdateJobsMutation
+  useGetTaskByIdMutation,
 } = taskApi;
 
 export default taskApi;
