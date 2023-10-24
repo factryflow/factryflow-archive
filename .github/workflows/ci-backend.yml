@@ -58,7 +58,5 @@ jobs:
           sleep 10
 
       - name: Run tests
-        run: |
-          source venv/bin/activate 
-          pytest
+        run: pytest
         working-directory: backend
