@@ -13,4 +13,5 @@ pytest==7.4.2
 pytest-django==4.5.2
 polyfactory==2.9.0
 django-ordered-model==3.7.4
-psycopg2
+psycopg2==2.9.9
+factory-boy==3.3.0
