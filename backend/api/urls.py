@@ -35,6 +35,7 @@ api.add_router(
     "/dependencies", dependency_router, auth=JWTAuth(), tags=["dependencies"]
 )
 api.add_router("/dependency-types", dependency_type_router, tags=["dependencies"])
+api.add_router("/dependency-status", dependency_status_router, tags=["dependencies"])
 
 api.add_router("/items", item_router, auth=JWTAuth(), tags=["items"])
 

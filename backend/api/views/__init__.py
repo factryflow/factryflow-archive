@@ -1,5 +1,9 @@
 from .assignment_rule import assignment_rule_criteria_router, assignment_rule_router
-from .dependency import dependency_router, dependency_type_router
+from .dependency import (
+    dependency_router,
+    dependency_status_router,
+    dependency_type_router,
+)
 from .item import item_router
 from .job import job_router, job_status_router, job_type_router
 from .operational_exception import (

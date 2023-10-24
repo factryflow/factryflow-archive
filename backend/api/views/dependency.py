@@ -8,10 +8,11 @@ from ninja_crud.views import (
     UpdateModelView,
 )
 
-from api.models import Dependency, DependencyTypes
+from api.models import Dependency, DependencyStatus, DependencyTypes
 from api.schemas import (
     DependencyIn,
     DependencyOut,
+    DependencyStatusOut,
     DependencyTypeIn,
     DependencyTypeOut,
 )
@@ -19,6 +20,7 @@ from api.utils.crud_hooks import post_save_hook, pre_save_hook
 
 dependency_router = Router()
 dependency_type_router = Router()
+dependency_status_router = Router()
 
 
 class DependencyViewSet(ModelViewSet):
@@ -63,6 +65,13 @@ class DependencyTypeViewSet(ModelViewSet):
     delete = DeleteModelView()
 
 
+class DependencyStatusViewSet(ModelViewSet):
+    model_class = DependencyStatus
+
+    list = ListModelView(output_schema=DependencyStatusOut)
+
+
 # The register_routes method must be called to register the routes with the router
 DependencyViewSet.register_routes(dependency_router)
 DependencyTypeViewSet.register_routes(dependency_type_router)
+DependencyStatusViewSet.register_routes(dependency_status_router)
