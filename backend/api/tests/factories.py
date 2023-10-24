@@ -23,13 +23,6 @@ class CreateJobFactory(factory.django.DjangoModelFactory):
         model = Job
         
     name = factory.Faker('name')
-    description = factory.Faker('description')
-    customer = factory.Faker('customer')
-    due_date = factory.Faker('due_date')
-    planned_start_datetime = factory.Faker('planned_start_datetime')
-    planned_end_datetime = factory.Faker('planned_end_datetime')
-    external_id = factory.Faker('external_id')
-    note = factory.Faker('note')
     job_status = factory.SubFactory(CreateJobStatusFactory)
     job_type = factory.SubFactory(CreateJobTypeFacory)
     

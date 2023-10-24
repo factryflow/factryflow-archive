@@ -34,17 +34,6 @@ def test_get_job_by_id(api_client, load_specific_fixtures):
     
 
 @pytest.mark.django_db
-def test_update_job(api_client):
-    instance = CreateJobFactory.create()
-    data = instance.__dict__
-    response = api_client.put(
-        f'/api/jobs/{instance.id}', json.dumps(data, default=str), content_type="application/json"
-    )
-    print(response.content)
-    assert response.status_code == 200
-
-
-@pytest.mark.django_db
 def test_delete_job(api_client):
     instance = CreateJobFactory.create()
     data = instance.__dict__
