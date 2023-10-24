@@ -6,6 +6,7 @@ import {
   FormControl,
   MenuItem,
   Select,
+  Autocomplete,
 } from "@mui/material";
 import { FormInputProps } from "./FormInputProps";
 
@@ -22,7 +23,7 @@ export const FormInputText = ({
 }: FormInputProps) => {
   return (
     <>
-      <InputLabel sx={{ color: "black" }}>{label}</InputLabel>
+      <InputLabel sx={{ color: "#181C32" }}>{label}</InputLabel>
       <Controller
         name={name}
         control={control}
@@ -51,6 +52,19 @@ export const FormInputText = ({
         )}
       />
     </>
+  );
+};
+
+export const Autocomplete2 = ({ options, onChange }: any) => {
+  return (
+    <Autocomplete
+      options={options}
+      getOptionLabel={(option: any) => option.name}
+      renderInput={(params) => (
+        <TextField {...params} label="Category" variant="outlined" />
+      )}
+      onChange={onChange}
+    />
   );
 };
 

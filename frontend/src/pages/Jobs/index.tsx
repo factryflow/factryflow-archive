@@ -23,6 +23,11 @@ import {
   useGetJobStatusQuery,
 } from "@/redux/api/jobApi";
 
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Typography from "@mui/material/Typography";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import HomeIcon from "../../assets/images/home.svg";
+
 type BadgeType = {
   [key in string]: string;
 };
@@ -42,15 +47,10 @@ const Jobs = () => {
   const dispatch = useAppDispatch();
   const jobsSelector = useAppSelector((state: any) => state.job.jobies);
   const jobstatusSelector = useAppSelector((state: any) => state.job.jobstatus);
-  const [data, setData] = useState<
-    Array<Omit<WithJobResponse, excluded_fields>> | []
-  >();
+  const [data, setData] = useState<Array<WithJobResponse> | []>();
 
   //call api joblist
-  const { data: getjobData, isLoading: jobLoading } = useGetAllJobsQuery(
-    undefined,
-    {}
-  );
+  const { data: getjobData, isLoading: jobLoading } = useGetAllJobsQuery();
 
   // call api jobstatus
   const { data: jobstatus, isLoading: jsIsLoading } = useGetJobStatusQuery(
@@ -157,7 +157,7 @@ const Jobs = () => {
         return (
           <Badge
             variant="light"
-            color={badgeColor[`${row.row.job_status?.name as string}`]}
+            // color={badgeColor[`${row.row.job_status?.name as string}`]}
             sx={{
               textTransform: "unset",
               borderRadius: "5px",
@@ -220,17 +220,18 @@ const Jobs = () => {
     if (deleteId) {
       deleteJobs(deleteId);
       setDeleteModel(false);
-      const newJobiesData = jobsSelector.filter(
-        (item: any) => item.id !== deleteId
-      );
-      dispatch(setJobies(newJobiesData));
+      // const newJobiesData = jobsSelector.filter(
+      //   (item: any) => item.id !== deleteId
+      // );
+      // dispatch(setJobies(newJobiesData));
     }
     return;
   };
 
   useEffect(() => {
     if (!jobLoading && getjobData) {
-      dispatch(setJobies(getjobData));
+      setData(getjobData);
+      // dispatch(setJobies(getjobData));
     }
     // [TODO]: letter set status in state => tabs
   }, [jobLoading, getjobData]);
@@ -241,129 +242,167 @@ const Jobs = () => {
     }
   }, [jsIsLoading, jobstatus]);
 
-  useEffect(() => {
-    setData(jobsSelector);
-  }, [jobsSelector]);
+  // useEffect(() => {
+  // }, [jobsSelector]);
 
   return (
     <>
       <Layout>
-        <Header
-          title="Job Management"
-          buttonname="Create New job"
-          onClick={handleClick}
-        />
-        <Card withBorder sx={{ padding: "0px !important", marginTop: 12 }}>
-          <StatusTabs
+        <Box sx={{ padding: "20px 40px" }}>
+          <Breadcrumbs
+            separator={<NavigateNextIcon fontSize="small" />}
+            aria-label="breadcrumb"
+            sx={{ marginBottom: "10px" }}
+          >
+            <Link color="inherit" to="/">
+              <img
+                src={HomeIcon}
+                alt="view_Icon"
+                height={14}
+                width={14}
+                style={{ marginTop: "4px" }}
+              />
+            </Link>
+            <Link
+              style={{ textDecoration: "none", color: "#5E6278" }}
+              to="/jobs"
+            >
+              Job
+            </Link>
+            <Typography color="#A1A5B7">Overview</Typography>
+          </Breadcrumbs>
+
+          <Header
+            title="Job Management"
+            buttonname="Create New job"
+            onClick={handleClick}
+          />
+          <Card withBorder sx={{ padding: "0px !important", marginTop: 10 }}>
+            {/* <StatusTabs
             statusTabs={[
               "all",
               ...jobstatusSelector?.map((status: any) => status?.name),
             ]}
-            data={jobsSelector ?? []}
+            data={data ?? []}
             jobstatus={jobstatusSelector}
             setFilterData={setData}
-          />
-          {jobLoading ? (
-            <>
-              <Loading />
-            </>
-          ) : (
-            jobsSelector && (
+          /> */}
+            {jobLoading ? (
               <>
-                <Box
-                  m="10px 0px 0px 0px"
-                  height="auto"
-                  sx={{
-                    "& .MuiDataGrid-root": {},
-
-                    "& .name-column--cell": {
-                      color: "bold !important",
-                    },
-                    "& .MuiDataGrid-row": {
-                      cursor: "pointer",
-                    },
-                    "& .MuiDataGrid-columnHeaders": {
-                      backgroundColor: "#FAFAFA",
-                      color: "	#000000",
-                      fontSize: "14px",
-                      fontWeight: "bold !important",
-                      borderTop: "1px solid #F0F0F0",
-                    },
-                    "& .MuiDataGrid-virtualScroller": {
-                      backgroundColor: "#fff",
-                    },
-                    "& .MuiDataGrid-footerContainer": {
-                      backgroundColor: "#FFFFFF",
-                    },
-                    "& .MuiCheckbox-root svg": {
-                      width: 23,
-                      height: 23,
-                      backgroundColor: "#F1F1F2",
-                      border: `0px solid #E1E3EA`,
-                      borderRadius: 1,
-                    },
-                    "& .MuiCheckbox-root svg path": {
-                      display: "none",
-                    },
-                    "& .MuiCheckbox-root.Mui-checked:not(.MuiCheckbox-indeterminate) svg":
-                      {
-                        backgroundColor: "#1890ff",
-                        borderColor: "#1890ff",
+                <Loading />
+              </>
+            ) : (
+              getjobData && (
+                <>
+                  <Box
+                    m="10px 0px 0px 0px"
+                    height="auto"
+                    sx={{
+                      "& .MuiDataGrid-root": {
+                        borderTop: "none",
+                        marginTop: "10px",
                       },
-                    ".MuiDataGrid-cell:focus": {
-                      outline: "none !important",
-                    },
-                    ".MuiDataGrid-columnHeader:focus-within": {
-                      outline: "none !important",
-                    },
-                    ".MuiDataGrid-cell:focus-within": {
-                      outline: "none !important",
-                    },
-                    ".MuiDataGrid-toolbarContainer": {
-                      padding: "15px",
-                      flexDirection: "row-reverse",
-                    },
-                  }}
-                >
-                  <DataGrid
-                    className="dataGrid"
-                    autoHeight={true}
-                    rows={data ?? []}
-                    // rows={filterData ?? []}
-                    columns={columns}
-                    initialState={{
-                      pagination: {
-                        paginationModel: {
-                          pageSize: 10,
+
+                      "& .name-column--cell": {
+                        color: "bold !important",
+                      },
+                      "& .MuiDataGrid-row": {
+                        cursor: "pointer",
+                      },
+                      "& .MuiDataGrid-columnHeaders": {
+                        backgroundColor: "#FAFAFA",
+                        color: "	#000000",
+                        fontSize: "14px",
+                        fontWeight: "bold !important",
+                        borderTop: "1px solid #F0F0F0",
+                      },
+                      "& .MuiDataGrid-virtualScroller": {
+                        backgroundColor: "#fff",
+                      },
+                      "& .MuiDataGrid-footerContainer": {
+                        backgroundColor: "#FFFFFF",
+                      },
+                      "& .MuiCheckbox-root svg": {
+                        width: "30px",
+                        height: "30px",
+                        backgroundColor: "#F1F1F2",
+                        borderRadius: "7px",
+                        padding: "6px 7px",
+                      },
+                      "& .MuiCheckbox-root svg path": {
+                        display: "none",
+                      },
+                      "& .MuiCheckbox-root.Mui-checked:not(.MuiCheckbox-indeterminate) svg":
+                        {
+                          backgroundColor: "#1890ff",
+                          borderColor: "#1890ff",
+                        },
+                      ".MuiDataGrid-cell:focus": {
+                        outline: "none !important",
+                      },
+                      ".MuiDataGrid-columnHeader:focus-within": {
+                        outline: "none !important",
+                      },
+                      ".MuiDataGrid-cell:focus-within": {
+                        outline: "none !important",
+                      },
+                      ".MuiDataGrid-toolbarContainer": {
+                        padding: "15px",
+                        flexDirection: "row-reverse",
+                        marginBottom: "10px",
+                      },
+                      ".MuiFormControl-root": {
+                        border: "1px solid #E1E3EA",
+                        borderRadius: "6px",
+                        width: "450px",
+                        ".MuiInput-underline": {
+                          "&:before": {
+                            borderBottom: "none",
+                          },
                         },
                       },
                     }}
-                    slots={{ toolbar: GridToolbar }}
-                    slotProps={{
-                      toolbar: {
-                        showQuickFilter: true,
-                        quickFilterProps: { debounceMs: 500 },
-                      },
-                    }}
-                    pageSizeOptions={[5, 10, 25]}
-                    checkboxSelection
-                    disableRowSelectionOnClick
-                    disableColumnFilter
-                    disableColumnMenu
-                    disableDensitySelector
-                    disableColumnSelector
-                  />
-                </Box>
-              </>
-            )
-          )}
-          <DeleteModel
-            deleteModel={deleteModel}
-            setDeleteModel={setDeleteModel}
-            handleCancle={handleCancle}
-            handleDelete={handleDelete}
-          />
-        </Card>
+                  >
+                    <DataGrid
+                      className="dataGrid"
+                      autoHeight={true}
+                      rows={data ?? []}
+                      // rows={filterData ?? []}
+                      columns={columns}
+                      initialState={{
+                        pagination: {
+                          paginationModel: {
+                            pageSize: 10,
+                          },
+                        },
+                      }}
+                      slots={{ toolbar: GridToolbar }}
+                      slotProps={{
+                        toolbar: {
+                          showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
+                        },
+                      }}
+                      pageSizeOptions={[5, 10, 25]}
+                      checkboxSelection
+                      disableRowSelectionOnClick
+                      disableColumnFilter
+                      disableColumnMenu
+                      disableDensitySelector
+                      disableColumnSelector
+                    />
+                  </Box>
+                </>
+              )
+            )}
+            <DeleteModel
+              deleteModel={deleteModel}
+              setDeleteModel={setDeleteModel}
+              handleCancle={handleCancle}
+              handleDelete={handleDelete}
+            />
+          </Card>
+        </Box>
       </Layout>
     </>
   );

@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Stack, useTheme } from "@mui/material";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
-import { Link, useNavigate } from "react-router-dom";
-import AddBoxIcon from "@mui/icons-material/AddBox";
+import { useNavigate } from "react-router-dom";
+import { Badge, Card } from "@mantine/core";
 import { toast } from "react-toastify";
 import Loading from "@/components/loading/loading";
 
@@ -16,6 +16,12 @@ import {
   useGetAllTasksQuery,
   useDeleteTasksMutation,
 } from "@/redux/api/taskApi";
+
+import deleteicon from "@/assets/images/delete.svg";
+import editicon from "@/assets/images/border_color.svg";
+import viewicon from "@/assets/images/visibility.svg";
+import { getString } from "@/helpers";
+import DeleteModel from "@/components/table/Model/delete-model";
 
 const Tasks = () => {
   const theme = useTheme();
@@ -29,6 +35,8 @@ const Tasks = () => {
 
   const [deleteTasks] = useDeleteTasksMutation();
   const dispatch = useAppDispatch();
+  const [deleteModel, setDeleteModel] = useState<boolean>(false);
+  const [deleteId, setDeleteId] = useState<any>("");
   const taskiesSelector = useAppSelector((state: any) => state.task.taskies);
 
   const handleClick = () => {
@@ -52,7 +60,24 @@ const Tasks = () => {
       headerName: "Task Status",
       width: 100,
       renderCell: (params: any) => {
-        return <span>{params?.row?.task_status?.name}</span>;
+        return <p>{params?.row?.task_status?.name}</p>;
+      },
+    },
+    {
+      field: "task_type",
+      headerName: "Task Type",
+      width: 100,
+      renderCell: (params: any) => {
+        return <p>{params?.row?.task_type?.name}</p>;
+      },
+    },
+
+    {
+      field: "job",
+      headerName: "Job",
+      width: 100,
+      renderCell: (params: any) => {
+        return <p>{params?.row?.job?.name}</p>;
       },
     },
     {
@@ -88,39 +113,35 @@ const Tasks = () => {
     {
       field: "action",
       headerName: "Action",
-      width: 180,
+      width: 100,
       sortable: false,
       // disableClickEventBubbling: true,
       renderCell: (params: any) => {
-        const handleDeleteAction = (e: React.SyntheticEvent<any>) => {
-          const currentRow = params.row;
-
-          if (window.confirm("Are you sure you want to remove this Task?")) {
-            // return alert(JSON.stringify(currentRow, null, 4));
-            deleteTasks(currentRow?.id);
-            const newTaskiesData = taskiesSelector.filter(
-              (item: any) => item.id !== currentRow?.id
-            );
-            dispatch(setTaskies(newTaskiesData));
-            toast.success("Task Delete Successfully");
-          }
-          return;
+        const handleDeleteAction = () => {
+          const currentRowId = params.row.id;
+          setDeleteModel(true);
+          setDeleteId(currentRowId);
         };
-
-        const handleEditAction = (e: React.SyntheticEvent<any>) => {
+        const handleEditAction = () => {
           const currentRow = params.row;
           navigate(`/tasks/form/${currentRow?.id}`);
         };
 
         return (
           <Stack direction="row" spacing={2}>
-            <ModeEditOutlinedIcon
-              sx={{ color: "blue", cursor: "pointer" }}
+            <img src={viewicon} alt="view_Icon" height={17} width={17} />
+            <img
+              src={editicon}
+              alt="edit_Icon"
+              height={17}
+              width={17}
               onClick={handleEditAction}
             />
-
-            <DeleteOutlinedIcon
-              sx={{ color: "red", cursor: "pointer" }}
+            <img
+              src={deleteicon}
+              alt="delete_Icon"
+              height={17}
+              width={17}
               onClick={handleDeleteAction}
             />
           </Stack>
@@ -129,11 +150,23 @@ const Tasks = () => {
     },
   ];
 
-  useEffect(() => {
-    if (!taskIsLoading && getTaskData) {
-      dispatch(setTaskies(getTaskData));
+  //handle cancle function  in custom delete modal
+  const handleCancle = () => {
+    setDeleteModel(false);
+    if (deleteId) {
+      setDeleteId("");
     }
-  }, [taskIsLoading, getTaskData]);
+    return;
+  };
+  //handle delete function  in custom delete modal
+  const handleDelete = () => {
+    if (deleteId) {
+      deleteTasks(deleteId);
+      setDeleteModel(false);
+    }
+    return;
+  };
+
   return (
     <>
       <Layout>
@@ -148,9 +181,7 @@ const Tasks = () => {
               m="30px 0 0 0"
               height="auto"
               sx={{
-                "& .MuiDataGrid-root": {
-                  mt: 4,
-                },
+                "& .MuiDataGrid-root": { border: 0 },
 
                 "& .name-column--cell": {
                   color: "bold !important",
@@ -163,7 +194,6 @@ const Tasks = () => {
                   color: "	#000000",
                   fontSize: "14px",
                   fontWeight: "bold !important",
-
                   borderTop: "1px solid #F0F0F0",
                 },
                 "& .MuiDataGrid-virtualScroller": {
@@ -172,9 +202,21 @@ const Tasks = () => {
                 "& .MuiDataGrid-footerContainer": {
                   backgroundColor: "#FFFFFF",
                 },
-                "& .MuiCheckbox-root": {
-                  color: `1677FF !important`,
+                "& .MuiCheckbox-root svg": {
+                  width: 23,
+                  height: 23,
+                  backgroundColor: "#F1F1F2",
+                  border: `0px solid #E1E3EA`,
+                  borderRadius: 1,
                 },
+                "& .MuiCheckbox-root svg path": {
+                  display: "none",
+                },
+                "& .MuiCheckbox-root.Mui-checked:not(.MuiCheckbox-indeterminate) svg":
+                  {
+                    backgroundColor: "#1890ff",
+                    borderColor: "#1890ff",
+                  },
                 ".MuiDataGrid-cell:focus": {
                   outline: "none !important",
                 },
@@ -187,49 +229,58 @@ const Tasks = () => {
                 ".MuiDataGrid-toolbarContainer": {
                   padding: "15px",
                   flexDirection: "row-reverse",
+                  background: "#fff",
                 },
               }}
             >
-              {taskIsLoading ? (
+              <Card withBorder sx={{ padding: "0px !important" }}>
                 <>
-                  <Loading />
+                  {taskIsLoading ? (
+                    <Loading />
+                  ) : (
+                    getTaskData && (
+                      <>
+                        <DataGrid
+                          className="dataGrid"
+                          autoHeight={true}
+                          rows={getTaskData ?? []}
+                          columns={columns}
+                          initialState={{
+                            pagination: {
+                              paginationModel: {
+                                pageSize: 10,
+                              },
+                            },
+                          }}
+                          slots={{ toolbar: GridToolbar }}
+                          slotProps={{
+                            toolbar: {
+                              showQuickFilter: true,
+                              quickFilterProps: { debounceMs: 500 },
+                            },
+                          }}
+                          pageSizeOptions={[5, 10, 25]}
+                          checkboxSelection
+                          disableRowSelectionOnClick
+                          disableColumnFilter
+                          disableColumnMenu
+                          disableDensitySelector
+                          disableColumnSelector
+                          // checkboxSelection
+                          // rows={jobData}
+                          // columns={columns}
+                        />
+                      </>
+                    )
+                  )}
                 </>
-              ) : (
-                taskiesSelector && (
-                  <>
-                    <DataGrid
-                      className="dataGrid"
-                      autoHeight={true}
-                      rows={taskiesSelector ?? []}
-                      columns={columns}
-                      initialState={{
-                        pagination: {
-                          paginationModel: {
-                            pageSize: 10,
-                          },
-                        },
-                      }}
-                      slots={{ toolbar: GridToolbar }}
-                      slotProps={{
-                        toolbar: {
-                          showQuickFilter: true,
-                          quickFilterProps: { debounceMs: 500 },
-                        },
-                      }}
-                      pageSizeOptions={[5, 10, 25]}
-                      checkboxSelection
-                      disableRowSelectionOnClick
-                      disableColumnFilter
-                      disableColumnMenu
-                      disableDensitySelector
-                      disableColumnSelector
-                      // checkboxSelection
-                      // rows={jobData}
-                      // columns={columns}
-                    />
-                  </>
-                )
-              )}
+              </Card>
+              <DeleteModel
+                deleteModel={deleteModel}
+                setDeleteModel={setDeleteModel}
+                handleCancle={handleCancle}
+                handleDelete={handleDelete}
+              />
             </Box>
           </Box>
         </Box>

@@ -60,6 +60,9 @@ const DependencyForm = () => {
     (state) => state.dependencytype.dependenciestype
   );
 
+  const jobstatusSelector = useAppSelector((state: any) => state.job.jobstatus);
+  const jobtypeSelector = useAppSelector((state: any) => state.job.jobtype);
+
   const [
     createDependency,
     {
@@ -216,7 +219,7 @@ const DependencyForm = () => {
                       name={"external_id"}
                       control={control}
                       label={"External Id"}
-                      placeholder={"Enter Job Name"}
+                      placeholder={"Enter dependency Name"}
                       type={"text"}
                     />
                   </Grid>
@@ -245,7 +248,7 @@ const DependencyForm = () => {
                     <FormInputText
                       name={"expected_close_datetime"}
                       control={control}
-                      label={"Due Date"}
+                      label={"Expected Date"}
                       placeholder={"expected_close_datetime"}
                       type={"datetime-local"}
                     />
@@ -254,7 +257,7 @@ const DependencyForm = () => {
                     <FormInputText
                       name={"actual_close_datetime"}
                       control={control}
-                      label={"Due Date"}
+                      label={"Actual Date"}
                       placeholder={""}
                       type={"datetime-local"}
                     />
@@ -264,7 +267,7 @@ const DependencyForm = () => {
                       name={"dependency_status_id"}
                       control={control}
                       label={"Status"}
-                      options={dependenciesStatusSelector ?? []}
+                      options={jobstatusSelector ?? []}
                     />
                   </Grid>
 
@@ -273,7 +276,7 @@ const DependencyForm = () => {
                       name={"dependency_type_id"}
                       control={control}
                       label={"Type"}
-                      options={dependencytypeselector ?? []}
+                      options={jobtypeSelector ?? []}
                     />
                   </Grid>
 

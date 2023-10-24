@@ -216,6 +216,7 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
 const TaskDetails = ({
   paramsId,
+  data,
   handleCreateTask,
   handleEditTask,
   handleDeleteTask,
@@ -325,10 +326,10 @@ const TaskDetails = ({
         },
       },
     ],
-    [taskstatus, handleTaskStatus, handleTaskTypeChange]
+    [taskstatus, tasktype, handleTaskStatus, handleTaskTypeChange]
   );
   //CREATE action
-  const handleCreateUser: MRT_TableOptions<any>["onCreatingRowSave"] = async ({
+  const handleCreate: MRT_TableOptions<any>["onCreatingRowSave"] = async ({
     values,
     exitCreatingMode,
   }) => {
@@ -356,7 +357,7 @@ const TaskDetails = ({
   };
 
   //UPDATE action
-  const handleSaveUser: MRT_TableOptions<any>["onEditingRowSave"] = async ({
+  const handleSave: MRT_TableOptions<any>["onEditingRowSave"] = async ({
     values,
     table,
   }) => {
@@ -404,10 +405,14 @@ const TaskDetails = ({
 
   const table = useMantineReactTable({
     columns,
-    data: taskDetail ?? [],
+    data: data ?? [],
     createDisplayMode: "row", // ('modal', and 'custom' are also available)
     editDisplayMode: "row", // ('modal', 'cell', 'table', and 'custom' are also available)
     enableEditing: true,
+    enableColumnActions: false,
+    enableHiding: false,
+    enableDensityToggle: false,
+    enableFullScreenToggle: false,
     enableSorting: true,
     initialState: {
       sorting: [{ id: "id", desc: false }],
@@ -420,9 +425,9 @@ const TaskDetails = ({
       },
     },
     onCreatingRowCancel: () => {},
-    onCreatingRowSave: handleCreateUser,
+    onCreatingRowSave: handleCreate,
     onEditingRowCancel: () => {},
-    onEditingRowSave: handleSaveUser,
+    onEditingRowSave: handleSave,
     renderRowActions: ({ row, table }) => (
       <Flex gap="md">
         <Tooltip label="Edit">
@@ -460,13 +465,6 @@ const TaskDetails = ({
       // showProgressBars: templateDetailsIsFetching,
     },
   });
-
-  useEffect(() => {
-    if (jobIddataSelector) {
-      const { tasks } = jobIddataSelector;
-      setTaskDetails(tasks);
-    }
-  }, [jobIddataSelector]);
 
   return (
     <ModalsProvider>

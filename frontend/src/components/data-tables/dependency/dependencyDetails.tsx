@@ -205,23 +205,43 @@ import { ActionIcon, Button, Flex, Text, Tooltip } from "@mantine/core";
 import { ModalsProvider, modals } from "@mantine/modals";
 import { IconEdit, IconTrash } from "@tabler/icons-react";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import dayjs from "dayjs";
 
-const DependencyDetails = ({ paramsId, handleCreateDependency }: any) => {
+const DependencyDetails = ({
+  paramsId,
+  data,
+  handleCreateDependency,
+  handleEditDependency,
+  handleDeleteDependency,
+}: any) => {
   const jobIddataSelector = useAppSelector((state: any) => state.job.job);
   const jobtypeSelector = useAppSelector((state: any) => state.job.jobtype);
+
   const jobstatusSelector = useAppSelector((state: any) => state.job.jobstatus);
   const [dependency, setDependency] = useState<any[]>();
 
-  const [taskid, settaskid] = useState<any>();
-  const [taskstatus, setTaskStatus] = useState<any>();
-  const [tasktype, setTaskType] = useState<any>();
+  const [dependencyid, setDependencyId] = useState<any>();
+  const [dependencystatus, setdependencyStatus] = useState<any>();
+  const [dependencyType, setDependencyType] = useState<any>();
+  const [expectdate, setexpectedDate] = useState<any>("");
+  const [actualdate, setActualDate] = useState<any>("");
 
-  const handleTaskTypeChange = (newValue: any) => {
-    setTaskType(newValue);
+  const handleDependencyTypeChange = (newValue: any) => {
+    setDependencyType(newValue);
   };
 
-  const handleTaskStatus = (newValue: any) => {
-    setTaskStatus(newValue);
+  const handleDependencyStatus = (newValue: any) => {
+    setdependencyStatus(newValue);
+  };
+
+  const handleExpectDate = (e: any) => {
+    e.preventDefault();
+    setexpectedDate(e.target.value);
+  };
+
+  const handleActualDate = (e: any) => {
+    e.preventDefault();
+    setActualDate(e.target.value);
   };
 
   const columns = useMemo<MRT_ColumnDef<any>[]>(
@@ -247,13 +267,16 @@ const DependencyDetails = ({ paramsId, handleCreateDependency }: any) => {
       {
         accessorKey: "expected_close_datetime",
         header: "Expected Close",
+
         mantineEditTextInputProps: {
           type: "datetime-local",
+          value: expectdate.slice(0, 16) ?? "",
+          onChange: (e) => handleExpectDate(e),
         },
         Cell: ({ row }) => {
           return (
             <span>
-              {row ? row.original.expected_close_datetime.slice(0, 10) : ""}
+              {row ? row.original.expected_close_datetime?.slice(0, 10) : ""}
             </span>
           );
         },
@@ -263,11 +286,14 @@ const DependencyDetails = ({ paramsId, handleCreateDependency }: any) => {
         header: "Actual Close",
         mantineEditTextInputProps: {
           type: "datetime-local",
+          value: actualdate?.slice(0, 16) ?? "",
+          onChange: (e) => handleActualDate(e),
         },
+
         Cell: ({ row }) => {
           return (
             <span>
-              {row ? row.original.actual_close_datetime.slice(0, 10) : ""}
+              {row ? row.original.actual_close_datetime?.slice(0, 10) : ""}
             </span>
           );
         },
@@ -282,12 +308,12 @@ const DependencyDetails = ({ paramsId, handleCreateDependency }: any) => {
         header: "Dependency Type",
         editVariant: "select",
         mantineEditSelectProps: {
-          data: jobtypeSelector?.map((item: any) => ({
+          data: jobstatusSelector?.map((item: any) => ({
             value: item.id,
             label: item.name,
           })),
-          // value: tasktype as any,
-          // onChange: handleTaskTypeChange,
+          value: dependencyType as any,
+          onChange: handleDependencyTypeChange,
         },
         Cell: ({ row }) => {
           return <span>{row ? row.original.dependency_type.name : ""}</span>;
@@ -302,8 +328,8 @@ const DependencyDetails = ({ paramsId, handleCreateDependency }: any) => {
             value: item.id,
             label: item.name,
           })),
-          // value: taskstatus as any,
-          // onChange: handleTaskStatus,
+          value: dependencystatus as any,
+          onChange: handleDependencyStatus,
         },
 
         Cell: ({ row }) => {
@@ -311,36 +337,37 @@ const DependencyDetails = ({ paramsId, handleCreateDependency }: any) => {
         },
       },
     ],
-    []
+    [
+      dependencyType,
+      dependencystatus,
+      expectdate,
+      actualdate,
+      handleDependencyTypeChange,
+      handleDependencyStatus,
+      handleExpectDate,
+      handleActualDate,
+    ]
   );
   //CREATE action
-  const handleCreateUser: MRT_TableOptions<any>["onCreatingRowSave"] = async ({
+  const handleCreate: MRT_TableOptions<any>["onCreatingRowSave"] = async ({
     values,
     exitCreatingMode,
   }) => {
-    console.log(values, "valuesfffff");
     if (values) {
-      const requestObj = {
-        name: values.name,
-        external_id: values.external_id,
-        expected_close_datetime: values.expected_close_datetime,
-        actual_close_datetime: values.actual_close_datetime,
-        notes: values.notes,
-        dependency_status_id: values.dependency_status,
-        dependency_type_id: values.dependency_type,
-        job_ids: [Number(paramsId)],
-        task_ids: [],
-      };
-      handleCreateDependency(requestObj);
+      handleCreateDependency(values);
+      // console.log(requestObj, "requestObj");
     }
     exitCreatingMode();
   };
 
   //UPDATE action
-  const handleSaveUser: MRT_TableOptions<any>["onEditingRowSave"] = async ({
+  const handleSave: MRT_TableOptions<any>["onEditingRowSave"] = async ({
     values,
     table,
   }) => {
+    if (values) {
+      handleEditDependency({ id: values?.id, values });
+    }
     table.setEditingRow(null); //exit editing mode
   };
 
@@ -350,21 +377,31 @@ const DependencyDetails = ({ paramsId, handleCreateDependency }: any) => {
       title: "Are you sure you want to delete this Task ?",
       labels: { confirm: "Delete", cancel: "Cancel" },
       confirmProps: { color: "red" },
-      onConfirm: () => {},
+      onConfirm: () => {
+        handleDeleteDependency(row);
+      },
     });
 
   //when click edit button
   const handleEditRow = (row: any) => {
+    setdependencyStatus(row.original.dependency_status.id);
+    setDependencyType(row.original.dependency_type.id);
+    setexpectedDate(row.original.expected_close_datetime);
+    setActualDate(row.original.actual_close_datetime);
     table.setEditingRow(row);
   };
 
   const table = useMantineReactTable({
     columns,
-    data: dependency ?? [],
+    data: data ?? [],
     createDisplayMode: "row", // ('modal', and 'custom' are also available)
     editDisplayMode: "row", // ('modal', 'cell', 'table', and 'custom' are also available)
     enableEditing: true,
     enableSorting: true,
+    enableColumnActions: false,
+    enableHiding: false,
+    enableDensityToggle: false,
+    enableFullScreenToggle: false,
     initialState: {
       sorting: [{ id: "id", desc: false }],
     },
@@ -376,9 +413,9 @@ const DependencyDetails = ({ paramsId, handleCreateDependency }: any) => {
       },
     },
     onCreatingRowCancel: () => {},
-    onCreatingRowSave: handleCreateUser,
+    onCreatingRowSave: handleCreate,
     onEditingRowCancel: () => {},
-    onEditingRowSave: handleSaveUser,
+    onEditingRowSave: handleSave,
     renderRowActions: ({ row, table }) => (
       <Flex gap="md">
         <Tooltip label="Edit">
@@ -396,6 +433,10 @@ const DependencyDetails = ({ paramsId, handleCreateDependency }: any) => {
     renderTopToolbarCustomActions: ({ table }) => (
       <Button
         onClick={() => {
+          setdependencyStatus("");
+          setDependencyType("");
+          setexpectedDate("");
+          setActualDate("");
           table.setCreatingRow(true);
         }}
       >
@@ -415,12 +456,6 @@ const DependencyDetails = ({ paramsId, handleCreateDependency }: any) => {
     },
   });
 
-  useEffect(() => {
-    if (jobIddataSelector) {
-      const { dependencies } = jobIddataSelector;
-      setDependency(dependencies);
-    }
-  }, [jobIddataSelector]);
   return (
     <ModalsProvider>
       <MantineReactTable table={table} />

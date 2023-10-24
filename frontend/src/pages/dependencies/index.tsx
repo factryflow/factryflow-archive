@@ -51,8 +51,8 @@ const Dependencys = () => {
   } = useGetAllDependencyQuery(undefined);
 
   // call api jobstatus
-  const { data: dependencystatus, isLoading: dsIsLoading } =
-    useGetAllDependecyStatusQuery(undefined, {});
+  // const { data: dependencystatus, isLoading: dsIsLoading } =
+  //   useGetAllDependecyStatusQuery(undefined, {});
 
   const [data, setData] = useState<Array<DependencyResponse> | []>();
 
@@ -109,10 +109,6 @@ const Dependencys = () => {
       headerAlign: "center",
       align: "center",
       renderCell: (row) => {
-        const filterjobstatus = dependenciesStatusSelector.filter(
-          (dependency: any) => dependency.id === row.row.dependency_status
-        );
-
         const badgeColor: BadgeType = {
           completed: "green",
           "not-planned": "red",
@@ -123,7 +119,7 @@ const Dependencys = () => {
         return (
           <Badge
             variant="light"
-            color={badgeColor[filterjobstatus[0]?.name]}
+            color={badgeColor[row.row.dependency_status.name]}
             sx={{
               textTransform: "unset",
               borderRadius: "5px",
@@ -132,7 +128,7 @@ const Dependencys = () => {
               height: "35px",
             }}
           >
-            {getString(filterjobstatus[0]?.name)}
+            {getString(row.row.dependency_status?.name)}
           </Badge>
         );
       },
@@ -194,27 +190,23 @@ const Dependencys = () => {
     if (deleteId) {
       deleteDependency(deleteId);
       setDeleteModel(false);
-      const newDependencyData = dependenciesSelector.filter(
-        (item: any) => item.id !== deleteId
-      );
-      dispatch(setDependencies(newDependencyData));
+      // const newDependencyData = dependenciesSelector.filter(
+      //   (item: any) => item.id !== deleteId
+      // );
+      // dispatch(setDependencies(newDependencyData));
     }
     return;
   };
 
-  useEffect(() => {
-    setData(dependenciesSelector);
-  }, [dependenciesSelector]);
-
-  useEffect(() => {
-    if (!dsIsLoading && dependencystatus) {
-      dispatch(setDependenciesStatus(dependencystatus));
-    }
-  }, [dsIsLoading, dependencystatus]);
+  // useEffect(() => {
+  //   if (!dsIsLoading && dependencystatus) {
+  //     dispatch(setDependenciesStatus(dependencystatus));
+  //   }
+  // }, [dsIsLoading, dependencystatus]);
 
   useEffect(() => {
     if (!dependencyIsLoading && getDependencyData) {
-      dispatch(setDependencies(getDependencyData));
+      setData(getDependencyData);
     }
   }, [dependencyIsLoading, getDependencyData]);
   return (
@@ -226,22 +218,12 @@ const Dependencys = () => {
             buttonname="Create New Dependency"
             onClick={handleClick}
           />
-          <Box
-            sx={{
-              width: "auto",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <Link to="/dependency/dependencytype">
-              <Button variant="contained">Manage Dependency type</Button>
-            </Link>
-          </Box>
+
           <Box
             m="30px 0 0 0"
             height="auto"
             sx={{
-              "& .MuiDataGrid-root": {},
+              "& .MuiDataGrid-root": { border: 0 },
 
               "& .name-column--cell": {
                 color: "bold !important",
@@ -280,13 +262,13 @@ const Dependencys = () => {
               ".MuiDataGrid-cell:focus": {
                 outline: "none !important",
               },
-              ".MuiDataGrid-columnHeader:focus-within": {
+              "& .MuiDataGrid-columnHeader:focus-within": {
                 outline: "none !important",
               },
-              ".MuiDataGrid-cell:focus-within": {
+              "& .MuiDataGrid-cell:focus-within": {
                 outline: "none !important",
               },
-              ".MuiDataGrid-toolbarContainer": {
+              "& .MuiDataGrid-toolbarContainer": {
                 padding: "15px",
                 flexDirection: "row-reverse",
               },
@@ -309,7 +291,7 @@ const Dependencys = () => {
                   <Loading />
                 </>
               ) : (
-                dependenciesSelector && (
+                getDependencyData && (
                   <>
                     <DataGrid
                       className="dataGrid"
@@ -377,11 +359,11 @@ export const StatusTabs = ({
     if (tab === "all") {
       setFilterData(data);
     } else {
-      let tabid = statusdata.find((status: any) => status.name === tab).id;
+      let tabid = statusdata.find((status: any) => status?.name === tab).id;
       if (tabid)
         setFilterData(
           data.filter(
-            (dependancy: any) => dependancy.dependency_status === tabid
+            (dependancy: any) => dependancy?.dependency_status === tabid
           )
         );
     }
@@ -391,7 +373,7 @@ export const StatusTabs = ({
     data.forEach((dependancy: any) => {
       const statusName = statusdata.find(
         (status: any) => status.id === dependancy.dependency_status
-      ).name;
+      )?.name;
       statusCount[statusName] = (statusCount[statusName] || 0) + 1;
       statusCount["all"] = data.length;
     });

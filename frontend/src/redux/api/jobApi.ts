@@ -19,9 +19,7 @@ export const jobApi = createApi({
         return `api/jobs/`;
       },
       transformResponse: (res: GenericResponse<JobResponse[]>) => {
-        const result = res.items?.filter(
-          (item: any) => item.is_deleted === false
-        );
+        const result = res.items;
         return result ?? [];
       },
       providesTags: ["getAllJobs"],
