@@ -54,7 +54,7 @@ jobs:
       - name: Start the backend (checks if the server starts)
         run: |
           source venv/bin/activate 
-          python backend/manage.py runserver 
+          python backend/manage.py runserver &
           sleep 10
 
       - name: Run tests
