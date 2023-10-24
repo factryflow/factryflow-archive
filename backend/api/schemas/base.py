@@ -18,6 +18,7 @@ from api.models import (
     TaskStatus,
     TaskType,
     WeeklyShiftTemplate,
+    WorkCenter,
 )
 
 # ====================================
@@ -82,6 +83,12 @@ class JobBaseOut(ModelSchema):
 # ====================================
 
 
+class TaskWorkCenterOut(ModelSchema):
+    class Config:
+        model = WorkCenter
+        model_fields = ["id", "name"]
+
+
 class TaskTypeOut(ModelSchema):
     class Config:
         model = TaskType
@@ -103,6 +110,7 @@ class TaskJobOut(ModelSchema):
 class TaskBaseOut(ModelSchema):
     task_status: TaskStatusOut
     task_type: TaskTypeOut
+    work_center: TaskWorkCenterOut
     job: TaskJobOut = None
     predecessor_ids: List[int] = Field([], alias="predecessor_id_list")
     successor_ids: List[int] = Field([], alias="successor_id_list")
@@ -110,7 +118,7 @@ class TaskBaseOut(ModelSchema):
 
     class Config:
         model = Task
-        model_exclude = ["dependencies", "predecessors", "job"]
+        model_exclude = ["dependencies", "predecessors", "job", "work_center"]
 
 
 # ====================================
