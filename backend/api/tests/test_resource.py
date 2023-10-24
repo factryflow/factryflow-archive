@@ -19,7 +19,6 @@ def test_create_resource(api_client, load_specific_fixtures):
 @pytest.mark.django_db
 def test_get_resource_by_id(api_client, load_specific_fixtures):
     instance = ResourceCreateFactory.create()
-    print(vars(instance))
     response = api_client.get(
         f'/api/resources/{instance.id}'
     )
@@ -30,7 +29,6 @@ def test_get_resource_by_id(api_client, load_specific_fixtures):
 @pytest.mark.django_db
 def test_update_resource(api_client):
     instance = ResourceCreateFactory.create()
-    print(vars(instance))
     data = instance.__dict__
     response = api_client.put(
         f'/api/resources/{instance.id}', json.dumps(data, default=str), content_type="application/json"
@@ -42,7 +40,6 @@ def test_update_resource(api_client):
 @pytest.mark.django_db
 def test_delete_resource(api_client):
     instance = ResourceCreateFactory.create()
-    print(vars(instance))
     data = instance.__dict__
     response = api_client.delete(
         f'/api/resources/{instance.id}'

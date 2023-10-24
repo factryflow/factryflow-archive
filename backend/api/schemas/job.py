@@ -17,7 +17,7 @@ class JobIn(ModelSchema):
 
     class Config:
         model = Job
-        model_fields = ["name", "customer", "due_date", "external_id"]
+        model_fields = ["name", "customer", "priority", "due_date", "external_id"]
 
 
 class JobOut(JobBaseOut):
