@@ -12,6 +12,7 @@ class TaskIn(ModelSchema):
     task_status_id: int
     task_type_id: int
     job_id: int = None
+    work_center_id: int = Field(None, example=1)
     item_id: int = None
     predecessor_ids: List[int] = Field(default=[])
     successor_ids: List[int] = Field(default=[])

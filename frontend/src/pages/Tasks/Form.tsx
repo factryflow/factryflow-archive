@@ -7,6 +7,7 @@ import {
   Grid,
   CardContent,
   Button,
+  Autocomplete,
 } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Layout from "../Layout";
@@ -27,10 +28,26 @@ import {
 import Box from "@mui/material/Box";
 import {
   useCreateTasksMutation,
+  useGetTaskStatusQuery,
+  useGetTaskTypeQuery,
+  useGetTaskByIdMutation,
   useUpdateTasksMutation,
 } from "@/redux/api/taskApi";
 import { setJobies } from "@/redux/features/jobSlice";
 import { useGetAllJobsQuery } from "@/redux/api/jobApi";
+import {
+  FormInputDropdown,
+  FormInputMultipleDropdown,
+  FormInputText,
+} from "@/components/form-components/FormInputText";
+import { Tabs } from "@mantine/core";
+import DependencyDetails from "@/components/data-tables/dependency/dependencyDetails";
+import { Autocomplete2 } from "@/components/form-components/FormInputText";
+import {
+  useCreateDependencyMutation,
+  useDeleteDependencyMutation,
+  useUpdateDependencyMutation,
+} from "@/redux/api/dependencyApi";
 // "id": 4,
 // "external_id": "565",
 // "name": "test task2",
@@ -49,96 +66,97 @@ import { useGetAllJobsQuery } from "@/redux/api/jobApi";
 const validationSchema = yup.object().shape({
   external_id: yup.string().required("External Id is required"),
   name: yup.string().required("Name is required").nullable(),
-  task_status: yup.number().required("Task Status is required").nullable(),
+  task_status_id: yup.string().required("Task Status is required").nullable(),
+  task_type_id: yup.string().required("Task Type is required").nullable(),
   setup_time: yup.string().required("Setup Time is required").nullable(),
   run_time_per_unit: yup.string().required("Run Time Per Unit is required"),
   teardown_time: yup.string().required("teardown Time is required"),
   quantity: yup.string().required("Quantity is required"),
-  predecessors: yup.array(),
-  item: yup.string().required("Item is required"),
-  jobs: yup.number().required("jobs is required"),
+  predecessor_ids: yup.array(),
+  item_id: yup.string().required("Item is required"),
+  job_id: yup.string(),
 });
-
-const taskStatus = [
-  { id: 1, name: "open" },
-  { id: 2, name: "close" },
-];
 
 const TaskForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const params = useParams();
   const isEdit = !!params.id;
+  const TabsList = Tabs.List;
+  const TabsPannel = Tabs.Panel;
+  const [activeTab] = useState<string | null>("dependency");
 
-  const taskSelector = useAppSelector((state: any) => state.task.taskies);
-  const jobiesSelector = useAppSelector((state) => state.job.jobies);
-  //   console.log(jobiesSelector, "jobselector");
+  const boxStyle = {
+    boxShadow: "0.3px 0.3px 1px rgba(0, 0, 0, 0.16)", // Adjust values as needed
+    padding: "20px",
+    backgroundColor: "white",
+    width: "100%",
+  };
 
-  const {
-    data: getjobData,
-    isLoading: jobisLoading,
-    // refetch,
-  } = useGetAllJobsQuery(undefined, {});
+  const { data: getjobData, isLoading: jobisLoading } =
+    useGetAllJobsQuery<any>();
 
-  const [
-    createTasks,
-    { data: taskData, isLoading: taskIsLoading, error: taskError },
-  ] = useCreateTasksMutation();
+  //task-status
+  const { data: taskStatus } = useGetTaskStatusQuery();
 
-  const [
-    updateTasks,
-    {
-      data: updateTaskData,
-      isLoading: updateTaskIsLoading,
-      error: updateTaskError,
-    },
-  ] = useUpdateTasksMutation();
+  //task-type
+  const { data: tasktype } = useGetTaskTypeQuery<any>();
+  const [createTasks, { isLoading: taskisloding, isSuccess: taskissuccess }] =
+    useCreateTasksMutation();
+  const [getTaskById, { data: taskgetiddata, isLoading: taskidisloading }] =
+    useGetTaskByIdMutation();
+  const [updateTasks] = useUpdateTasksMutation();
+  const [jobdata, setJobData] = useState<any>([]);
+  const [dependencyData, setDependencyData] = useState<any | undefined>();
 
+  const [createDependency] = useCreateDependencyMutation();
+  const [updateDependency] = useUpdateDependencyMutation();
+  const [deleteDependency] = useDeleteDependencyMutation();
+  const paramsId = params && params.id;
   const form = useForm({
+    defaultValues: {
+      external_id: "",
+      name: "",
+      task_status_id: "",
+      task_type_id: "",
+      setup_time: "",
+      run_time_per_unit: "",
+      teardown_time: "",
+      quantity: "",
+      predecessor_ids: [],
+      item_id: "",
+      job_id: "",
+    },
     resolver: yupResolver(validationSchema),
   });
 
-  const [isEditData, setIsEditData] = useState({});
-  const [selectedIds, setSelectedIds] = useState([]);
-  const [selectedJobIds, setSelectedJobIds] = useState(null);
-  const [selectedTaskStatusId, setSelectedTaskStatusId] = useState(null);
   // console.log(selectedIds, "selectedId");
   const {
     control,
     handleSubmit,
     watch,
     formState: { errors },
+    setValue,
   } = form;
-  const handleSelectChange = (event: any) => {
-    setSelectedIds(event.target.value);
-  };
 
-  const handleSelectJob = (event: any) => {
-    form.setValue("jobs", event.target.value);
-    setSelectedJobIds(event.target.value);
-  };
-
-  const handleSelectTask = (event: any) => {
-    form.setValue("task_status", event.target.value);
-    setSelectedTaskStatusId(event.target.value);
-  };
-
-  const onSubmit = (data: any) => {
-    console.log(`>>>>>`);
+  const onSubmit = (values: any) => {
+    // console.log(`>>>>>`, values);
 
     // Inside the onSubmit function
     const requestData = {
-      external_id: data.external_id,
-      name: data.name,
-      task_status: data.task_status,
-      task_type: 1,
-      setup_time: data.setup_time,
-      run_time_per_unit: data.run_time_per_unit,
-      teardown_time: data.teardown_time,
-      quantity: data.quantity,
-      jobs: selectedJobIds,
-      predecessors: selectedIds,
-      item: data.item,
+      name: values.name,
+      external_id: values.external_id,
+      setup_time: values.setup_time,
+      run_time_per_unit: values.run_time_per_unit,
+      teardown_time: values.teardown_time,
+      quantity: values.quantity,
+      task_status_id: values.task_status_id,
+      task_type_id: values.task_type_id,
+      job_id: values.job_id,
+      item_id: values.item_id,
+      predecessor_ids: values.predecessor_ids,
+      successor_ids: [],
+      dependency_ids: [],
     };
     console.log(requestData, "requestData");
     if (isEdit) {
@@ -148,54 +166,102 @@ const TaskForm = () => {
     }
   };
 
-  useEffect(() => {
-    if (!taskIsLoading && taskData) {
-      taskData.code >= 400
-        ? toast.error(taskData.message)
-        : toast.success(taskData.message) && navigate("/tasks");
-    }
-  }, [taskIsLoading, taskError, taskData]);
-
-  useEffect(() => {
-    if (!updateTaskIsLoading && updateTaskData) {
-      updateTaskData.code >= 400
-        ? toast.error(updateTaskData.message)
-        : toast.success(updateTaskData.message) && navigate("/tasks");
-    }
-  }, [updateTaskData, updateTaskError, updateTaskIsLoading]);
-
-  useEffect(() => {
-    if (isEdit) {
-      if (taskSelector) {
-        const getTask = taskSelector.filter(
-          (item: any) => item.id === Number(params.id)
-        );
-        setIsEditData(getTask[0]);
+  const handleCreateDependency = async (values: any) => {
+    if (values) {
+      const requestObj = {
+        name: values.name,
+        external_id: values.external_id,
+        expected_close_datetime: values.expected_close_datetime,
+        actual_close_datetime: values.actual_close_datetime,
+        notes: values.notes,
+        dependency_status_id: values.dependency_status,
+        dependency_type_id: values.dependency_type,
+        job_ids: [],
+        task_ids: [Number(paramsId)],
+      };
+      console.log(requestObj, "requestObject");
+      const response = await createDependency(requestObj);
+      if (response) {
+        gettaskid();
       }
     }
-  }, [isEdit, params.id]);
+  };
+
+  const handleEditDependency = async ({ id, values }: any) => {
+    if (id && values) {
+      const requestObj = {
+        name: values.name,
+        external_id: values.external_id,
+        expected_close_datetime: values.expected_close_datetime,
+        actual_close_datetime: values.actual_close_datetime,
+        notes: values.notes,
+        dependency_status_id: values.dependency_status.id,
+        dependency_type_id: values.dependency_type.id,
+        job_ids: [],
+        task_ids: [Number(paramsId)],
+      };
+      const response = await updateDependency({ id, data: requestObj });
+      if (response) {
+        gettaskid();
+      }
+    }
+  };
+
+  const handleDeleteDependency = async (row: any) => {
+    if (row) {
+      const response = await deleteDependency(row.original.id);
+      if (response) {
+        gettaskid();
+      }
+    }
+  };
+
+  const gettaskid = () => {
+    getTaskById(Number(paramsId));
+  };
 
   useEffect(() => {
-    const excluded_fields = ["predecessors"];
-
-    if (isEditData) {
-      Object.entries(isEditData ?? []).forEach(([name, value]: any) => {
-        console.log(name, "value", value);
-        // console.log(name,">>>>",value,"<<<<<<");
-        if (excluded_fields.includes(name)) {
-          setSelectedIds(value);
-          return;
+    const task_status = ["task_status"];
+    const task_type = ["task_type"];
+    const job = ["job"];
+    if (!taskidisloading && taskgetiddata && isEdit) {
+      Object.entries(taskgetiddata ?? []).forEach(([name, value]: any) => {
+        if (task_status.includes(name)) {
+          form.setValue("task_status_id", value?.id);
+        }
+        if (task_type.includes(name)) {
+          form.setValue("task_type_id", value?.id);
+        }
+        if (job.includes(name)) {
+          form.setValue("job_id", value.id);
         }
         form.setValue(name, value);
       });
+      setDependencyData(taskgetiddata?.dependencies);
     }
-  }, [isEditData]);
+  }, [!taskidisloading, taskgetiddata]);
+
+  useEffect(() => {
+    if (paramsId) {
+      gettaskid();
+    }
+  }, [paramsId]);
 
   useEffect(() => {
     if (!jobisLoading && getjobData) {
-      dispatch(setJobies(getjobData));
+      const transformedJob = getjobData.map((jobdata: any) => ({
+        label: jobdata.name,
+        value: jobdata.id,
+      }));
+      setJobData(transformedJob);
     }
   }, [jobisLoading, getjobData]);
+
+  useEffect(() => {
+    if (!taskisloding && taskissuccess) {
+      toast.success("Task Create Successfully") && navigate("/tasks");
+    }
+  }, [taskisloding, taskissuccess]);
 
   return (
     <>
@@ -203,7 +269,8 @@ const TaskForm = () => {
       <Layout>
         <Grid>
           <Card
-            style={{ width: "100%", padding: "20px 5px", margin: "30px auto" }}
+            style={boxStyle}
+            sx={{ padding: 2, height: "auto", borderRadius: "12px" }}
           >
             <CardContent>
               <Typography gutterBottom variant="h5">
@@ -216,252 +283,199 @@ const TaskForm = () => {
                   columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                 >
                   <Grid item xs={6}>
-                    <Controller
-                      name="external_id"
+                    <FormInputText
+                      name={"external_id"}
                       control={control}
-                      defaultValue=""
-                      render={({ field }) => (
-                        <TextField
-                          label="External Id"
-                          variant="outlined"
-                          type="number"
-                          error={!!errors.external_id}
-                          margin="normal"
-                          helperText={errors.external_id?.message}
+                      label={"External Id"}
+                      placeholder={"Enter External Id"}
+                      type={"text"}
+                    />
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <FormInputText
+                      name={"name"}
+                      control={control}
+                      label={"Name"}
+                      placeholder={"Enter task Name"}
+                      type={"text"}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FormInputDropdown
+                      name={"task_status_id"}
+                      control={control}
+                      label={"Status"}
+                      options={taskStatus ?? []}
+                    />
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <InputLabel sx={{ color: "#181C32" }}>Jobs</InputLabel>
+                    <Controller
+                      name="job_id"
+                      control={control}
+                      render={({
+                        field: { onChange, value },
+                        fieldState: { error },
+                        formState,
+                      }) => (
+                        <Autocomplete
+                          options={jobdata}
+                          size="small"
+                          getOptionLabel={(option: any) => option.label}
+                          value={
+                            jobdata.find(
+                              (option: any) => option.value === Number(value)
+                            ) || null
+                          }
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              // error={!!errors.category}
+                              // helperText={errors.category?.message}
+                            />
+                          )}
+                          renderOption={(props, option: any) => (
+                            <MenuItem {...props} value={Number(option.value)}>
+                              {option.label}
+                            </MenuItem>
+                          )}
                           fullWidth
-                          {...field}
+                          onChange={onChange}
                         />
                       )}
                     />
                   </Grid>
 
                   <Grid item xs={6}>
-                    <Controller
-                      name="name"
+                    <FormInputDropdown
+                      name={"task_type_id"}
                       control={control}
-                      defaultValue=""
-                      render={({ field }) => (
-                        <TextField
-                          label="Name"
-                          variant="outlined"
-                          type="text"
-                          margin="normal"
-                          error={!!errors.name}
-                          helperText={errors.name?.message}
-                          fullWidth
-                          {...field}
-                        />
-                      )}
+                      label={"Type"}
+                      options={tasktype ?? []}
                     />
                   </Grid>
                   <Grid item xs={6}>
-                    <FormControl fullWidth variant="outlined">
-                      <InputLabel>Task Status</InputLabel>
-                      <Controller
-                        name="task_status"
-                        control={control}
-                        render={({ field }) => (
-                          <>
-                            <Select
-                              {...field}
-                              value={selectedTaskStatusId}
-                              error={!!errors.task_status}
-                              onChange={handleSelectTask}
-                              label="Task Status"
-                            >
-                              {taskStatus.map((item: any) => (
-                                <MenuItem key={item.id} value={item.id}>
-                                  {item.name}
-                                </MenuItem>
-                              ))}
-                            </Select>
-                            <FormHelperText sx={{ color: "red" }}>
-                              {errors.task_status?.message}
-                            </FormHelperText>
-                          </>
-                        )}
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Controller
-                      name="setup_time"
-                      defaultValue=""
+                    <FormInputText
+                      name={"setup_time"}
                       control={control}
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          label="Setup Time"
-                          type="number"
-                          variant="outlined"
-                          margin="normal"
-                          error={!!errors.setup_time}
-                          helperText={errors.setup_time?.message}
-                          fullWidth
-                        />
-                      )}
+                      label={"Setup Time"}
+                      placeholder={""}
+                      type={"number"}
                     />
                   </Grid>
 
                   <Grid item xs={6}>
-                    <Controller
-                      name="run_time_per_unit"
+                    <FormInputText
+                      name={"run_time_per_unit"}
                       control={control}
-                      defaultValue=""
-                      render={({ field }) => (
-                        <TextField
-                          label="Run Time Per Unit"
-                          variant="outlined"
-                          margin="normal"
-                          type="number"
-                          error={!!errors.run_time_per_unit}
-                          helperText={errors.run_time_per_unit?.message}
-                          {...field}
-                          fullWidth
-                        />
-                      )}
+                      label={"Run Time"}
+                      placeholder={""}
+                      type={"number"}
                     />
                   </Grid>
 
                   <Grid item xs={6}>
-                    <Controller
-                      name="teardown_time"
+                    <FormInputText
+                      name={"teardown_time"}
                       control={control}
-                      defaultValue=""
-                      render={({ field }) => (
-                        <TextField
-                          label="Teardown Time"
-                          type="number"
-                          variant="outlined"
-                          margin="normal"
-                          error={!!errors.teardown_time}
-                          helperText={errors.teardown_time?.message}
-                          fullWidth
-                          {...field}
-                        />
-                      )}
+                      label={"Teardown Time"}
+                      placeholder={""}
+                      type={"number"}
                     />
                   </Grid>
 
                   <Grid item xs={6}>
-                    <Controller
-                      name="quantity"
+                    <FormInputText
+                      name={"quantity"}
                       control={control}
-                      defaultValue=""
-                      render={({ field }) => (
-                        <TextField
-                          label="Quantity"
-                          variant="outlined"
-                          type="number"
-                          margin="normal"
-                          error={!!errors.quantity}
-                          helperText={errors.quantity?.message}
-                          fullWidth
-                          {...field}
-                        />
-                      )}
+                      label={"Quantity"}
+                      placeholder={""}
+                      type={"number"}
                     />
                   </Grid>
                   <Grid item xs={6}>
-                    <FormControl fullWidth variant="outlined">
-                      <InputLabel>Predecessors</InputLabel>
-                      <Controller
-                        name="predecessors"
-                        control={control}
-                        render={({ field }) => (
-                          <Select
-                            {...field}
-                            multiple
-                            value={selectedIds}
-                            onChange={handleSelectChange}
-                            label="Predecessors"
-                          >
-                            {taskSelector.map((item: any) => (
-                              <MenuItem key={item.id} value={item.id}>
-                                {item.name}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        )}
-                      />
-                    </FormControl>
+                    <FormInputMultipleDropdown
+                      name={"predecessor_ids"}
+                      control={control}
+                      label={"Predecessors"}
+                      options={[]}
+                    />
                   </Grid>
 
                   <Grid item xs={6}>
-                    <Controller
-                      name="item"
+                    <FormInputText
+                      name={"item_id"}
                       control={control}
-                      defaultValue=""
-                      render={({ field }) => (
-                        <TextField
-                          label="Item"
-                          variant="outlined"
-                          type="text"
-                          margin="normal"
-                          error={!!errors.item}
-                          helperText={errors.item?.message}
-                          fullWidth
-                          {...field}
-                        />
-                      )}
+                      label={"Item"}
+                      placeholder={""}
+                      type={"number"}
                     />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <FormControl fullWidth variant="outlined">
-                      <InputLabel>Jobs</InputLabel>
-                      <Controller
-                        name="jobs"
-                        control={control}
-                        render={({ field }) => (
-                          <>
-                            <Select
-                              {...field}
-                              value={selectedJobIds}
-                              error={!!errors.jobs}
-                              onChange={handleSelectJob}
-                              label="jobs"
-                            >
-                              {jobiesSelector.map((item: any) => (
-                                <MenuItem key={item.id} value={item.id}>
-                                  {item.name}
-                                </MenuItem>
-                              ))}
-                            </Select>
-                            <FormHelperText sx={{ color: "red" }}>
-                              {errors.jobs?.message}
-                            </FormHelperText>
-                          </>
-                        )}
-                      />
-                    </FormControl>
                   </Grid>
 
                   <Grid item xs={12}>
-                    {/* <Button
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                      fullWidth
+                    <Box
+                      sx={{
+                        display: "flex",
+                        gap: "15px",
+                      }}
                     >
-                      hjhj
-                    </Button> */}
-
-                    <LoadingButton
-                      size="small"
-                      type="submit"
-                      loading={taskIsLoading || updateTaskIsLoading}
-                      color="primary"
-                      variant="contained"
-                      sx={{ marginBottom: 5 }}
-                    >
-                      {isEdit ? "Save Changes" : "Submit"}
-                    </LoadingButton>
+                      <Button
+                        variant="contained"
+                        size="large"
+                        className="btn-cancel"
+                        onClick={() => navigate("/tasks")}
+                      >
+                        {isEdit ? "Back" : "Cancel"}
+                      </Button>
+                      <LoadingButton
+                        size="large"
+                        type="submit"
+                        loading={taskisloding}
+                        color="primary"
+                        variant="contained"
+                      >
+                        {isEdit ? "Edit" : "Create"}
+                      </LoadingButton>
+                    </Box>
                   </Grid>
                 </Grid>
               </form>
             </CardContent>
           </Card>
         </Grid>
+        {isEdit && (
+          <Box
+            sx={{
+              width: "100%",
+              height: "auto",
+              p: 1,
+              m: 1,
+            }}
+          >
+            <Card style={boxStyle} sx={{ padding: 2, height: "auto" }}>
+              <Tabs value={activeTab}>
+                <TabsList>
+                  <Tabs.Tab value="dependency">Dependencies</Tabs.Tab>
+                </TabsList>
+                <TabsPannel value="dependency">
+                  {activeTab === "dependency" && (
+                    <div style={{ height: "auto", width: "100%" }}>
+                      <DependencyDetails
+                        data={dependencyData ?? []}
+                        paramsId={paramsId}
+                        handleCreateDependency={handleCreateDependency}
+                        handleEditDependency={handleEditDependency}
+                        handleDeleteDependency={handleDeleteDependency}
+                      />
+                    </div>
+                  )}
+                </TabsPannel>
+              </Tabs>
+            </Card>
+          </Box>
+        )}
       </Layout>
     </>
   );

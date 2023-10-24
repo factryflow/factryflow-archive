@@ -4,41 +4,61 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - "backend/**"
   workflow_dispatch:
-
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.11
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
 
-    - name: Set up environment
-      run: cp env.sample .env
+      - name: Set up environment
+        run: cp .env.sample .env
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-      working-directory: backend
+      - name: Create virtual environment
+        run: |
+          python -m venv venv
+          . venv/bin/activate
 
-    - name: Run migrations (check for migration issues)
-      run: python manage.py migrate --check
-      working-directory: backend
+      - name: Install dependencies
+        run: |
+          source venv/bin/activate
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
 
-    - name: Start the backend (checks if the server starts)
-      run: |
-        python manage.py runserver &
-        sleep 10
-      working-directory: backend
+      - name: Run migrations (check for migration issues)
+        run: |
+          source venv/bin/activate
+          python backend/manage.py migrate
 
-    - name: Run tests
-      run: pytest
-      working-directory: backend
+      - name: Start the backend (checks if the server starts)
+        run: |
+          source venv/bin/activate 
+          python backend/manage.py runserver &
+          sleep 10
+
+      - name: Run tests
+        run: |
+          source ../venv/bin/activate
+          pytest
+        working-directory: backend

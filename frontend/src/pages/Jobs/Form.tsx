@@ -34,7 +34,9 @@ import {
 import { setJob, setJobStatus, setJobType } from "@/redux/features/jobSlice";
 import {
   useCreateDependencyMutation,
+  useDeleteDependencyMutation,
   useGetAllDependencyQuery,
+  useUpdateDependencyMutation,
 } from "@/redux/api/dependencyApi";
 import { setDependencies } from "@/redux/features/dependencySlice";
 import { setTaskies } from "@/redux/features/taskSlice";
@@ -69,7 +71,8 @@ const MyForm = () => {
   const [activeTab, setActiveTab] = useState<string | null>("tasks");
   const jobstatusSelector = useAppSelector((state: any) => state.job.jobstatus);
   const jobtypeSelector = useAppSelector((state: any) => state.job.jobtype);
-
+  const [dependencyData, setDependencyData] = useState<any | undefined>();
+  const [tasksdata, setTasksData] = useState<any | undefined>();
   const paramsId = params && params.id;
 
   const Defaultvalues = {
@@ -155,6 +158,8 @@ const MyForm = () => {
   const [deleteTasks] = useDeleteTasksMutation();
 
   const [createDependency] = useCreateDependencyMutation();
+  const [updateDependency] = useUpdateDependencyMutation();
+  const [deleteDependency] = useDeleteDependencyMutation();
 
   const handleCreateTask = async (requestObj: { requestObj: any }) => {
     if (requestObj) {
@@ -189,8 +194,20 @@ const MyForm = () => {
     }
   };
 
-  const handleCreateDependency = async (requestObj: { requestObj: any }) => {
-    if (requestObj) {
+  const handleCreateDependency = async (values: any) => {
+    if (values) {
+      const requestObj = {
+        name: values.name,
+        external_id: values.external_id,
+        expected_close_datetime: values.expected_close_datetime,
+        actual_close_datetime: values.actual_close_datetime,
+        notes: values.notes,
+        dependency_status_id: values.dependency_status,
+        dependency_type_id: values.dependency_type,
+        job_ids: [Number(paramsId)],
+        task_ids: [],
+      };
+      console.log(requestObj, "requestObject");
       const response = await createDependency(requestObj);
       if (response) {
         getjobid();
@@ -198,8 +215,37 @@ const MyForm = () => {
     }
   };
 
+  const handleEditDependency = async ({ id, values }: any) => {
+    if (id && values) {
+      const requestObj = {
+        name: values.name,
+        external_id: values.external_id,
+        expected_close_datetime: values.expected_close_datetime,
+        actual_close_datetime: values.actual_close_datetime,
+        notes: values.notes,
+        dependency_status_id: values.dependency_status.id,
+        dependency_type_id: values.dependency_type.id,
+        job_ids: [Number(paramsId)],
+        task_ids: [],
+      };
+      const response = await updateDependency({ id, data: requestObj });
+      if (response) {
+        getjobid();
+      }
+    }
+  };
+
+  const handleDeleteDependency = async (row: any) => {
+    if (row) {
+      const response = await deleteDependency(row.original.id);
+      if (response) {
+        getjobid();
+      }
+    }
+  };
+
   const getjobid = () => {
-    getJobIdData(Number(paramsId));
+    getJobIdData(Number(paramsId!));
   };
 
   // const { data: getDependencyData, isLoading: dependencyIsLoading } =
@@ -250,9 +296,9 @@ const MyForm = () => {
     const job_type = ["job_type"];
     if (isEdit && paramsId) {
       if (!jobiddataIsLoading && JobByIdData) {
-        // console.log(getJob[0], "GetJob", params.id);
+        setDependencyData(JobByIdData.dependencies);
+        setTasksData(JobByIdData.tasks);
         dispatch(setJob(JobByIdData));
-
         Object.entries(JobByIdData ?? []).forEach(([name, value]: any) => {
           // if (planned_start_datetime.includes(name)) {
           //   form.setValue("planned_start_datetime", value?.slice(0, 16));
@@ -548,6 +594,7 @@ const MyForm = () => {
                     <div style={{ height: "auto", width: "100%" }}>
                       <TaskDetails
                         paramsId={paramsId}
+                        data={tasksdata ?? []}
                         handleCreateTask={handleCreateTask}
                         handleEditTask={handleEditTask}
                         handleDeleteTask={handleDeleteTask}
@@ -560,7 +607,10 @@ const MyForm = () => {
                     <div style={{ height: "auto", width: "100%" }}>
                       <DependencyDetails
                         paramsId={paramsId}
+                        data={dependencyData ?? []}
                         handleCreateDependency={handleCreateDependency}
+                        handleEditDependency={handleEditDependency}
+                        handleDeleteDependency={handleDeleteDependency}
                       />
                     </div>
                   )}

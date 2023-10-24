@@ -18,6 +18,7 @@ from api.schemas import (
 from api.utils.crud_hooks import pre_save_hook
 
 operational_exception_router = Router()
+operational_exception_type_router = Router()
 
 
 class OperationalExceptionViewSet(ModelViewSet):
@@ -37,13 +38,6 @@ class OperationalExceptionViewSet(ModelViewSet):
         pre_save=pre_save_hook(),
     )
     delete = DeleteModelView()
-
-
-# The register_routes method must be called to register the routes with the router
-OperationalExceptionViewSet.register_routes(operational_exception_router)
-
-
-operational_exception_type_router = Router()
 
 
 class OperationalExceptionTypeViewSet(ModelViewSet):
@@ -66,4 +60,5 @@ class OperationalExceptionTypeViewSet(ModelViewSet):
 
 
 # The register_routes method must be called to register the routes with the router
+OperationalExceptionViewSet.register_routes(operational_exception_router)
 OperationalExceptionTypeViewSet.register_routes(operational_exception_type_router)

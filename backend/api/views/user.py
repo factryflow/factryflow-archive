@@ -20,9 +20,12 @@ from api.schemas.user import (
 from api.utils.send_mail import send_mail
 from api.utils.verify_otp import verify_otp
 
+# Define two main routers
 user_no_auth_router = Router()
+user_auth_router = Router()
 
 
+# Routes that do not require authentication
 @user_no_auth_router.post("/", response={201: UserOut})
 def register_user(request, user_in: UserIn):
     user = get_user_model().objects.create_user(
@@ -32,39 +35,6 @@ def register_user(request, user_in: UserIn):
         role_id=user_in.role_id,
     )
     return user
-
-
-user_auth_router = Router()
-
-
-class UserViewSet(ModelViewSet):
-    model_class = User
-
-    # AbstractModelView subclasses can be used as-is
-    list = ListModelView(output_schema=UserOut)
-    retrieve = RetrieveModelView(output_schema=UserOut)
-    update = UpdateModelView(input_schema=UserIn, output_schema=UserOut)
-    delete = DeleteModelView()
-
-
-# The register_routes method must be called to register the routes with the router
-UserViewSet.register_routes(user_auth_router)
-
-
-auth_me_router = Router()
-
-
-@auth_me_router.get("/", response=UserOut)
-def get_current_user(request):
-    """
-    Get the current authenticated user.
-    """
-    user = request.user
-
-    if user.is_authenticated:
-        return user
-    else:
-        return {"detail": "Authentication credentials were not provided."}
 
 
 @user_no_auth_router.post("/forgot-password")
@@ -90,10 +60,21 @@ def update_password(request, update_password: UpdatePasswordIn):
         return {"error": "User not forund!"}
 
 
-change_password_router = Router()
+# Routes that require authentication
+@user_auth_router.get("/me/", response=UserOut)
+def get_current_user(request):
+    """
+    Get the current authenticated user.
+    """
+    user = request.user
+
+    if user.is_authenticated:
+        return user
+    else:
+        return {"detail": "Authentication credentials were not provided."}
 
 
-@change_password_router.put("/")
+@user_auth_router.put("/change-password/")
 def change_password(request, change_password: ChangePasswordIn):
     user = request.user
     if user.check_password(change_password.current_password):
@@ -102,3 +83,17 @@ def change_password(request, change_password: ChangePasswordIn):
         return {"message": "Password changed successfully"}
     else:
         return {"message": "Current password is incorrect"}
+
+
+class UserViewSet(ModelViewSet):
+    model_class = User
+
+    # AbstractModelView subclasses can be used as-is
+    list = ListModelView(output_schema=UserOut)
+    retrieve = RetrieveModelView(output_schema=UserOut)
+    update = UpdateModelView(input_schema=UserIn, output_schema=UserOut)
+    delete = DeleteModelView()
+
+
+# The register_routes method must be called to register the routes with the router
+UserViewSet.register_routes(user_auth_router)

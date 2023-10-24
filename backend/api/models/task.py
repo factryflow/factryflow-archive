@@ -6,6 +6,7 @@ from simple_history.models import HistoricalRecords
 from api.models.job import Job
 from api.models.task_status import TaskStatus
 from api.models.task_type import TaskType
+from api.models.work_center import WorkCenter
 from api.utils.model_manager import ActiveManager
 
 
@@ -25,6 +26,9 @@ class Task(models.Model):
     quantity = models.IntegerField(default=1)
     job = models.ForeignKey(
         Job, on_delete=models.CASCADE, related_name="tasks", blank=True, null=True
+    )
+    work_center = models.ForeignKey(
+        WorkCenter, on_delete=models.DO_NOTHING, related_name="tasks", default=1
     )
     predecessors = models.ManyToManyField(
         "self", symmetrical=False, related_name="successors", blank=True

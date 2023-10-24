@@ -1,0 +1,11 @@
+[
+  {
+    "model": "api.workcenter",
+    "pk": 1,
+    "fields": {
+      "name": "default",
+      "created_at": "2023-09-22T14:08:46.853Z",
+      "updated_at": "2023-09-22T14:08:46.853Z"
+    }
+  }
+]

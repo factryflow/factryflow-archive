@@ -12,20 +12,8 @@ from api.models import ScheduleRun, ScheduleRunStatus
 from api.schemas import ScheduleRunIn, ScheduleRunOut, ScheduleRunStatusOut
 from api.utils.crud_hooks import pre_save_hook
 
-schedule_run_status_router = Router()
-
-
-class ScheduleRunStatusViewSet(ModelViewSet):
-    model_class = ScheduleRunStatus
-
-    # AbstractModelView subclasses can be used as-is
-    list = ListModelView(output_schema=ScheduleRunStatusOut)
-
-
-ScheduleRunStatusViewSet.register_routes(schedule_run_status_router)
-
-
 schedule_run_router = Router()
+schedule_run_status_router = Router()
 
 
 class ScheduleRunViewSet(ModelViewSet):
@@ -47,5 +35,13 @@ class ScheduleRunViewSet(ModelViewSet):
     delete = DeleteModelView()
 
 
+class ScheduleRunStatusViewSet(ModelViewSet):
+    model_class = ScheduleRunStatus
+
+    # AbstractModelView subclasses can be used as-is
+    list = ListModelView(output_schema=ScheduleRunStatusOut)
+
+
 # The register_routes method must be called to register the routes with the router
 ScheduleRunViewSet.register_routes(schedule_run_router)
+ScheduleRunStatusViewSet.register_routes(schedule_run_status_router)
