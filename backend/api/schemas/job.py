@@ -13,7 +13,7 @@ class JobIn(ModelSchema):
     job_type_id: int
     dependency_ids: List[int] = Field(default=[])
     task_ids: List[int] = Field(default=[])
-    order: int = Field(..., alias="priority")
+    order: int = Field(None, alias="priority")
 
     class Config:
         model = Job

@@ -12,7 +12,6 @@ def test_create_job(api_client, load_specific_fixtures):
     response = api_client.post(
         "/api/jobs/", json.dumps(data, default=str), content_type="application/json"
     )
-    print(response.content)
     assert response.status_code == 201
 
 
@@ -29,7 +28,6 @@ def test_get_job_by_id(api_client, load_specific_fixtures):
     response = api_client.get(
         f'/api/jobs/{instance.id}'
     )
-    print(response.content)
     assert response.status_code == 200
     
 
@@ -40,5 +38,4 @@ def test_delete_job(api_client):
     response = api_client.delete(
         f'/api/jobs/{instance.id}'
     )
-    print(response.content)
     assert response.status_code == 204

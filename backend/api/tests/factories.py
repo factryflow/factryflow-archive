@@ -1,6 +1,7 @@
+import factory
 from polyfactory.factories.pydantic_factory import ModelFactory
 
-from api.schemas import JobIn,UserIn,RoleIn, ResourceIn,ResourceGroupIn
+from api.schemas import JobIn,UserIn,RoleIn, ResourceIn,ResourceGroupIn, ItemIn
 
 import factory
 from api.models import *
@@ -9,6 +10,8 @@ from api.models import *
 class JobFactory(ModelFactory[JobIn]):
     __model__ = JobIn
     
+class ItemsFactory(ModelFactory[ItemIn]):
+    __model__ = ItemIn
 
 class CreateJobStatusFactory(factory.django.DjangoModelFactory):
     class Meta:
@@ -25,11 +28,22 @@ class CreateJobFactory(factory.django.DjangoModelFactory):
     name = factory.Faker('name')
     job_status = factory.SubFactory(CreateJobStatusFactory)
     job_type = factory.SubFactory(CreateJobTypeFacory)
-    
+    # job_status_id = 1
+    # job_type_id = 1
+    # priority = 1
+    # dependency_ids = []
+    # task_ids = []
 
 
 class UserFactory(ModelFactory[UserIn]):
     __model__ = UserIn
+
+class ItemCreateFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Item  # Set the model to your User model class
+
+    name = factory.Faker('name')
+    description = "description"
     
 
 class UserRoleFactory(factory.django.DjangoModelFactory):
@@ -76,3 +90,4 @@ class ResourceGroupCreateFactory(factory.django.DjangoModelFactory):
     name = factory.Faker('name')
 
       
+
