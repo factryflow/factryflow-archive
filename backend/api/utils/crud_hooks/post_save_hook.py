@@ -55,7 +55,8 @@ def post_save_hook(
     *action_configs: Tuple[str, ...],
     actions_obj: PostSaveActions = PostSaveActions(),  # Default to using PostSaveActions
 ):
-    def post_save(request, instance) -> None:
+    def post_save(request, create_instance, update_instance=None) -> None:
+        instance = create_instance or update_instance
         for config in action_configs:
             action_type, *action_args = config
             action = actions_obj.get(action_type)
