@@ -37,10 +37,8 @@ class CustomField(models.Model):
     )
 
     history = HistoricalRecords(table_name="custom_field_history")
-    can_delete = models.BooleanField(default=True)
-
     def __str__(self):
-        return self.name
+        return self.field_name
 
     class Meta:
         db_table = "custom_fields"

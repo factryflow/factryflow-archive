@@ -11,9 +11,6 @@ class CustomFieldValue(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete = models.CASCADE)
     value = models.TextField
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         unique_together = ('custom_field', 'content_type', 'object_id')
         db_table = "custom_field_values"
