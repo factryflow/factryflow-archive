@@ -5,7 +5,7 @@ from ninja import ModelSchema
 from pydantic import Field
 
 from api.models import Task
-from api.schemas.base import DependencyBaseOut, TaskBaseOut
+from api.schemas.base import AssignmentRuleBaseOut, DependencyBaseOut, TaskBaseOut
 
 
 class TaskIn(ModelSchema):
@@ -34,6 +34,7 @@ class TaskOut(TaskBaseOut):
     predecessors: List[TaskBaseOut]
     successors: List[TaskBaseOut]
     dependencies: List[DependencyBaseOut]
+    assignment_rules: List[AssignmentRuleBaseOut]
 
     class Config:
         model = Task

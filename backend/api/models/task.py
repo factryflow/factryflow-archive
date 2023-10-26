@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 from simple_history.models import HistoricalRecords
 
+from api.models.assignment_rule import AssignmentRule
 from api.models.job import Job
 from api.models.task_status import TaskStatus
 from api.models.task_type import TaskType
@@ -32,6 +33,9 @@ class Task(models.Model):
     )
     predecessors = models.ManyToManyField(
         "self", symmetrical=False, related_name="successors", blank=True
+    )
+    assignment_rules = models.ManyToManyField(
+        AssignmentRule, related_name="tasks", blank=True
     )
     item = models.CharField(max_length=250, blank=True, null=True)
     planned_start_datetime = models.DateTimeField(blank=True, null=True)
@@ -71,6 +75,10 @@ class Task(models.Model):
     @property
     def dependency_id_list(self):
         return list(self.dependencies.values_list("id", flat=True))
+
+    @property
+    def assignment_rule_id_list(self):
+        return list(self.assignment_rules.values_list("id", flat=True))
 
     def __str__(self):
         return self.name
