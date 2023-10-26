@@ -299,7 +299,7 @@ const Jobs = () => {
                     height="auto"
                     sx={{
                       "& .MuiDataGrid-root": {
-                        borderTop: "none",
+                        border: "unset",
                         marginTop: "10px",
                       },
 
@@ -321,6 +321,25 @@ const Jobs = () => {
                       },
                       "& .MuiDataGrid-footerContainer": {
                         backgroundColor: "#FFFFFF",
+                        width: "100%",
+                      },
+                      "& .MuiTablePagination-root": {
+                        background: "#FAFAFB",
+                        width: "100%",
+                      },
+                      "& .MuiTablePagination-spacer": {
+                        display: "none",
+                      },
+                      "& .MuiTablePagination-selectLabel": {
+                        flex: "0 0 6%",
+                      },
+                      "& .MuiTablePagination-displayedRows": {
+                        flex: "0 0 80%",
+                        textAlign: "right",
+                      },
+                      "& .css-1hgjne-MuiButtonBase-root-MuiIconButton-root": {
+                        background: "#FFFFFF !important",
+                        border: "1px solid #E1E3EA80",
                       },
                       "& .MuiCheckbox-root svg": {
                         width: "30px",
@@ -355,11 +374,51 @@ const Jobs = () => {
                         border: "1px solid #E1E3EA",
                         borderRadius: "6px",
                         width: "450px",
+                        paddingBottom: "0",
+                        padding: "0 10px",
                         ".MuiInput-underline": {
                           "&:before": {
                             borderBottom: "none",
                           },
+                          "&:hover:not(.Mui-disabled):before": {
+                            borderBottom: "none",
+                          },
                         },
+                      },
+                      ".MuiSvgIcon-root": {
+                        width: "24px",
+                        height: "24px",
+                        color: "#A1A5B7",
+                      },
+                      ".MuiDataGrid-iconSeparator": {
+                        display: "none",
+                      },
+                      ".css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root:hover":
+                        {
+                          backgroundColor: "transparent",
+                        },
+                      ".css-9vna8i-MuiButtonBase-root-MuiIconButton-root:hover":
+                        {
+                          backgroundColor: "transparent",
+                        },
+                      ".MuiTablePagination-select": {
+                        paddingRight: "34px",
+                        paddingTop: "10px",
+                      },
+                      ".MuiDataGrid-columnHeaderTitle": {
+                        fontSize: "14px",
+                        color: "#181C32",
+                        fontWeight: 600,
+                      },
+                      ".MuiDataGrid-sortIcon": {
+                        color: "#7E8299",
+                        opacity: "inherit !important",
+                      },
+                      ".MuiDataGrid-iconButtonContainer": {
+                        visibility: "visible",
+                      },
+                      ".MuiDataGrid-cellContent": {
+                        fontSize: "14px",
                       },
                     }}
                   >
@@ -395,15 +454,15 @@ const Jobs = () => {
                 </>
               )
             )}
-            <DeleteModel
-              deleteModel={deleteModel}
-              setDeleteModel={setDeleteModel}
-              handleCancle={handleCancle}
-              handleDelete={handleDelete}
-            />
           </Card>
         </Box>
       </Layout>
+      <DeleteModel
+        deleteModel={deleteModel}
+        setDeleteModel={setDeleteModel}
+        handleCancle={handleCancle}
+        handleDelete={handleDelete}
+      />
     </>
   );
 };

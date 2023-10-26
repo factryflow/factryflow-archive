@@ -17,36 +17,43 @@ body,
 
 } */
 
-.btn-cancel{
-  padding: 16px 30px 16px 24px !important;
-  background-color:#F1F1F2 !important;
+.btn-cancel {
+  padding: 10px 24px 10px 24px !important;
+  background-color: #F1F1F2 !important;
+  color: #181C32 !important;
+  box-shadow: none !important;
+  border-radius: 6px !important;
+  text-transform: capitalize !important;
+}
+
+.btn-cancel:hover {
+  background-color: #F1F1F2 !important;
   color: #7E8299 !important;
   box-shadow: none !important;
 }
 
-.btn-cancel:hover{
-  background-color:#F1F1F2 !important;
-  color: #7E8299 !important;
-  box-shadow: none !important;
+.btn-success{
+  padding: 10px 24px 10px 24px !important;
+  border-radius: 6px !important;
+  text-transform: capitalize !important;
 }
 
 
-
-.main-header{
-  position: sticky!important;
-  top: 0px!important;
-  width: 100%!important;
+.main-header {
+  position: sticky !important;
+  top: 0px !important;
+  width: 100% !important;
 }
 
 .main-content{
   padding: 20px;
-  border-radius: 18px !important;
+  border-radius: 12px !important;
   background: #FAFAFB !important;
 }
-.main{
+.main {
   flex-grow: 1;
-  margin-top: 0px!important;
-  padding: 0px!important;
+  margin-top: 0px !important;
+  padding: 0px !important;
   height: 100vh !important;
   width: calc(800px - -98px);
 }
@@ -69,4 +76,27 @@ body,
 }
 .css-12i7wg6-MuiPaper-root-MuiDrawer-paper{
   border-right: 0px!important;
+}
+
+.MuiBox-root {
+  border-right: unset !important;
+}
+
+.MuiPaper-root {
+  border-right: 0px !important;
+  border-bottom: unset !important;
+}
+
+.MuiToolbar-root {
+  padding-left: 12px !important;
+}
+
+.mantine-1lwx4nh {
+  border-radius: 12px;
+  border: 1px solid rgba(225, 227, 234, 0.50) !important;
+}
+
+.MuiDataGrid-columnHeaders {
+  border-top-right-radius: unset !important;
+  border-top-left-radius: unset !important;
 }

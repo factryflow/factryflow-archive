@@ -133,10 +133,7 @@ export type DependencyStatusResponse = {
   id: number;
   name: string;
   created_at: Nullable<string>;
-  created_by: number;
+  created_by: any;
   updated_at: Nullable<string>;
-  updated_by: number;
-  deleted_at: Nullable<string>;
-  is_active: boolean;
-  is_deleted: boolean;
+  updated_by: any;
 };

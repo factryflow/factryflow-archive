@@ -209,25 +209,38 @@ import {
   type MRT_TableOptions,
   useMantineReactTable,
 } from "mantine-react-table";
-import { ActionIcon, Button, Flex, Text, Tooltip } from "@mantine/core";
+import { ActionIcon, Button, Flex, Tooltip } from "@mantine/core";
 import { ModalsProvider, modals } from "@mantine/modals";
 import { IconEdit, IconTrash } from "@tabler/icons-react";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import {
+  useGetTaskStatusQuery,
+  useGetTaskTypeQuery,
+} from "@/redux/api/taskApi";
+import { useGetAllJobsQuery } from "@/redux/api/jobApi";
 
 const TaskDetails = ({
-  paramsId,
   data,
   handleCreateTask,
   handleEditTask,
   handleDeleteTask,
+  jobisenable,
+  isEdit,
 }: any) => {
   const [taskDetail, setTaskDetails] = useState<any[] | undefined>();
   const jobIddataSelector = useAppSelector((state: any) => state.job.job);
-  const jobtypeSelector = useAppSelector((state: any) => state.job.jobtype);
-  const jobstatusSelector = useAppSelector((state: any) => state.job.jobstatus);
-  const [taskid, settaskid] = useState<any>();
+  //task-status
+  const { data: taskStatusdata } = useGetTaskStatusQuery();
+  //task-type
+  const { data: tasktypedata } = useGetTaskTypeQuery();
+  const { data: getjobData } = useGetAllJobsQuery();
   const [taskstatus, setTaskStatus] = useState<any>();
   const [tasktype, setTaskType] = useState<any>();
+  const [job, setJob] = useState<any>();
+
+  const handlejobChange = (newValue: any) => {
+    setJob(newValue);
+  };
 
   const handleTaskTypeChange = (newValue: any) => {
     setTaskType(newValue);
@@ -290,13 +303,30 @@ const TaskDetails = ({
           type: "number",
         },
       },
+      {
+        accessorKey: "job",
+        header: "Job",
+        enableEditing: jobisenable ? true : false,
+        editVariant: "select",
+        mantineEditSelectProps: {
+          data: getjobData?.map((item: any) => ({
+            value: item.id,
+            label: item.name,
+          })),
+          value: job as any,
+          onChange: handlejobChange,
+        },
 
+        Cell: ({ row }) => {
+          return <span>{row ? row.original.job.name : ""}</span>;
+        },
+      },
       {
         accessorKey: "task_type",
         header: "Task Type",
         editVariant: "select",
         mantineEditSelectProps: {
-          data: jobtypeSelector?.map((item: any) => ({
+          data: tasktypedata?.map((item: any) => ({
             value: item.id,
             label: item.name,
           })),
@@ -313,7 +343,7 @@ const TaskDetails = ({
         header: "Task Status",
         editVariant: "select",
         mantineEditSelectProps: {
-          data: jobstatusSelector?.map((item: any) => ({
+          data: taskStatusdata?.map((item: any) => ({
             value: item.id,
             label: item.name,
           })),
@@ -334,24 +364,7 @@ const TaskDetails = ({
     exitCreatingMode,
   }) => {
     if (values) {
-      const requestObj = {
-        id: "",
-        name: values.name,
-        external_id: values.external_id,
-        setup_time: values.setup_time,
-        run_time_per_unit: values.run_time_per_unit,
-        teardown_time: values.teardown_time,
-        quantity: values.quantity,
-        task_status_id: values.task_status,
-        task_type_id: values.task_type,
-        job_id: paramsId,
-        item_id: values.item,
-        predecessor_ids: [],
-        dependency_ids: [],
-      };
-      if (requestObj) {
-        handleCreateTask(requestObj);
-      }
+      handleCreateTask(values);
     }
     exitCreatingMode();
   };
@@ -362,25 +375,8 @@ const TaskDetails = ({
     table,
   }) => {
     if (values) {
-      const requestObj = {
-        name: values.name,
-        external_id: values.external_id,
-        setup_time: values.setup_time,
-        run_time_per_unit: values.run_time_per_unit,
-        teardown_time: values.teardown_time,
-        quantity: values.quantity,
-        task_status_id: taskstatus,
-        task_type_id: tasktype,
-        job_id: paramsId,
-        item_id: values.item,
-        predecessor_ids: [],
-        dependency_ids: [],
-      };
-      if (requestObj) {
-        handleEditTask({ taskid, requestObj });
-      }
+      handleEditTask({ id: values.id, values, taskstatus, tasktype, job });
     }
-    settaskid("");
     table.setEditingRow(null); //exit editing mode
   };
 
@@ -397,9 +393,9 @@ const TaskDetails = ({
 
   //when click edit button
   const handleEditRow = (row: any) => {
-    settaskid(row.id);
     setTaskStatus(row.original.task_status.id);
     setTaskType(row.original.task_type.id);
+    setJob(row.original.job.id);
     table.setEditingRow(row);
   };
 
@@ -428,31 +424,34 @@ const TaskDetails = ({
     onCreatingRowSave: handleCreate,
     onEditingRowCancel: () => {},
     onEditingRowSave: handleSave,
-    renderRowActions: ({ row, table }) => (
-      <Flex gap="md">
-        <Tooltip label="Edit">
-          <ActionIcon onClick={() => handleEditRow(row)}>
-            <IconEdit />
-          </ActionIcon>
-        </Tooltip>
-        <Tooltip label="Delete">
-          <ActionIcon color="red" onClick={() => openDeleteConfirmModal(row)}>
-            <IconTrash />
-          </ActionIcon>
-        </Tooltip>
-      </Flex>
-    ),
-    renderTopToolbarCustomActions: ({ table }) => (
-      <Button
-        onClick={() => {
-          setTaskStatus("");
-          setTaskType("");
-          table.setCreatingRow(true); //simplest way to open the create row modal with no default values
-        }}
-      >
-        Create task
-      </Button>
-    ),
+    renderRowActions: ({ row, table }) =>
+      isEdit && (
+        <Flex gap="md">
+          <Tooltip label="Edit">
+            <ActionIcon onClick={() => handleEditRow(row)}>
+              <IconEdit />
+            </ActionIcon>
+          </Tooltip>
+          <Tooltip label="Delete">
+            <ActionIcon color="red" onClick={() => openDeleteConfirmModal(row)}>
+              <IconTrash />
+            </ActionIcon>
+          </Tooltip>
+        </Flex>
+      ),
+    renderTopToolbarCustomActions: ({ table }) =>
+      isEdit && (
+        <Button
+          onClick={() => {
+            setTaskStatus("");
+            setTaskType("");
+            setJob("");
+            table.setCreatingRow(true); //simplest way to open the create row modal with no default values
+          }}
+        >
+          Create task
+        </Button>
+      ),
     state: {
       //   isLoading: isLoadingUsers,
       //   isSaving: isCreatingUser || isUpdatingUser || isDeletingUser,

@@ -2,7 +2,7 @@ import { Box, Container, CircularProgress } from "@mui/material";
 
 const Loading = () => {
   return (
-    <Container sx={{ height: "95vh" }}>
+    <Container>
       <Box
         display="flex"
         alignItems="center"

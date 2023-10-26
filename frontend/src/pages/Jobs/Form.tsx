@@ -15,7 +15,7 @@ import {
 } from "@/redux/api/jobApi";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useUpdateJobsMutation } from "@/redux/api/jobApi";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import Skeleton from "@mui/material/Skeleton";
@@ -47,6 +47,11 @@ import {
   useDeleteTasksMutation,
 } from "@/redux/api/taskApi";
 
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import HomeIcon from "../../assets/images/home.svg";
+
 const validationSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
   priority: yup.string().required("priority is required").nullable(),
@@ -69,8 +74,7 @@ const MyForm = () => {
   const TabsList = Tabs.List;
   const TabsPannel = Tabs.Panel;
   const [activeTab, setActiveTab] = useState<string | null>("tasks");
-  const jobstatusSelector = useAppSelector((state: any) => state.job.jobstatus);
-  const jobtypeSelector = useAppSelector((state: any) => state.job.jobtype);
+
   const [dependencyData, setDependencyData] = useState<any | undefined>();
   const [tasksdata, setTasksData] = useState<any | undefined>();
   const paramsId = params && params.id;
@@ -161,8 +165,23 @@ const MyForm = () => {
   const [updateDependency] = useUpdateDependencyMutation();
   const [deleteDependency] = useDeleteDependencyMutation();
 
-  const handleCreateTask = async (requestObj: { requestObj: any }) => {
-    if (requestObj) {
+  const handleCreateTask = async (values: any) => {
+    if (values) {
+      const requestObj = {
+        id: "",
+        name: values.name,
+        external_id: values.external_id,
+        setup_time: values.setup_time,
+        run_time_per_unit: values.run_time_per_unit,
+        teardown_time: values.teardown_time,
+        quantity: values.quantity,
+        task_status_id: values.task_status,
+        task_type_id: values.task_type,
+        job_id: paramsId,
+        item_id: values.item,
+        predecessor_ids: [],
+        dependency_ids: [],
+      };
       const response = await createTasks(requestObj);
       if (response) {
         getjobid();
@@ -170,15 +189,23 @@ const MyForm = () => {
     }
   };
 
-  const handleEditTask = async ({
-    taskid,
-    requestObj,
-  }: {
-    taskid: any;
-    requestObj: any;
-  }) => {
-    if (requestObj) {
-      const response = await updateTasks({ id: taskid, data: requestObj });
+  const handleEditTask = async ({ id, values, taskstatus, tasktype }: any) => {
+    if (id && values) {
+      const requestObj = {
+        name: values.name,
+        external_id: values.external_id,
+        setup_time: values.setup_time,
+        run_time_per_unit: values.run_time_per_unit,
+        teardown_time: values.teardown_time,
+        quantity: values.quantity,
+        task_status_id: taskstatus,
+        task_type_id: tasktype,
+        job_id: paramsId,
+        item_id: values.item,
+        predecessor_ids: [],
+        dependency_ids: [],
+      };
+      const response = await updateTasks({ id, data: requestObj });
       if (response) {
         getjobid();
       }
@@ -267,13 +294,13 @@ const MyForm = () => {
 
   useEffect(() => {
     if (!AddJobIsLoading && AddJob && addjobissuccess) {
-      navigate("/jobs");
+      toast.success("Job Add Successfully") && navigate("/jobs");
     }
   }, [AddJobIsLoading, AddJob, addjobissuccess]);
 
   useEffect(() => {
     if (!updateIsLoading && updateJobData) {
-      toast.success("Update job Successfully") && navigate("/jobs");
+      toast.success("Job Update Successfully") && navigate("/jobs");
     }
   }, [updateJobData, updateIsLoading]);
 
@@ -320,24 +347,6 @@ const MyForm = () => {
     }
   }, [isEdit, params.id, jobiddataIsLoading, JobByIdData]);
 
-  useEffect(() => {
-    if (!jsIsLoading && jobstatus) {
-      dispatch(setJobStatus(jobstatus));
-    }
-  }, [jsIsLoading, jobstatus]);
-
-  useEffect(() => {
-    if (!jtIsLoading && jobtype) {
-      dispatch(setJobType(jobtype));
-    }
-  }, [jtIsLoading, jobtype]);
-
-  // useEffect(() => {
-  //   if (!taskIsLoading && getTaskData) {
-  //     dispatch(setTaskies(getTaskData));
-  //   }
-  // }, [taskIsLoading, getTaskData]);
-
   return (
     <>
       <Layout>
@@ -349,11 +358,50 @@ const MyForm = () => {
             m: 1,
           }}
         >
+          <Breadcrumbs
+            separator={<NavigateNextIcon fontSize="small" />}
+            aria-label="breadcrumb"
+            sx={{ marginBottom: "10px" }}
+          >
+            <Link color="inherit" to="/">
+              <img
+                src={HomeIcon}
+                alt="view_Icon"
+                height={14}
+                width={14}
+                style={{ marginTop: "4px" }}
+              />
+            </Link>
+            <Link
+              style={{ textDecoration: "none", color: "#5E6278" }}
+              to="/jobs"
+            >
+              Job
+            </Link>
+            <Link style={{ textDecoration: "none", color: "#5E6278" }} to="">
+              Loreum Ipsum Job
+            </Link>
+            <Typography color="#A1A5B7">Job Details</Typography>
+          </Breadcrumbs>
+          <Typography
+            sx={{ color: "#181C32", fontWeight: 600, fontSize: "22px" }}
+          >
+            New Job
+          </Typography>
           <Card
             style={boxStyle}
-            sx={{ padding: 2, height: "auto", borderRadius: "12px" }}
+            sx={{
+              padding: 2,
+              height: "auto",
+              borderRadius: "12px",
+              marginTop: "20px",
+            }}
           >
-            <Typography gutterBottom variant="h5" sx={{ mb: 3 }}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              sx={{ mb: 3, color: "#5E6278" }}
+            >
               {jobiddataIsLoading && jobiddataIsLoading ? (
                 <Skeleton
                   animation="wave"
@@ -501,7 +549,20 @@ const MyForm = () => {
                   )}
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid
+                  item
+                  xs={6}
+                  sx={{
+                    "& .MuiFormLabel-root": {
+                      color: "#181C32!important",
+                      fontWeight: "600 !important",
+                      fontSize: "14px !important",
+                    },
+                    "& .MuiSelect-select": {
+                      padding: "13px 12px",
+                    },
+                  }}
+                >
                   {jobiddataIsLoading && jobiddataIsLoading ? (
                     <Skeleton
                       animation="wave"
@@ -513,12 +574,25 @@ const MyForm = () => {
                       name={"job_status_id"}
                       control={control}
                       label={"Status"}
-                      options={jobstatusSelector ? jobstatusSelector : []}
+                      options={jobstatus ? jobstatus : []}
                     />
                   )}
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid
+                  item
+                  xs={6}
+                  sx={{
+                    "& .MuiFormLabel-root": {
+                      color: "#181C32!important",
+                      fontWeight: "600 !important",
+                      fontSize: "14px !important",
+                    },
+                    "& .MuiSelect-select": {
+                      padding: "13px 12px",
+                    },
+                  }}
+                >
                   {jobiddataIsLoading && jobiddataIsLoading ? (
                     <Skeleton
                       animation="wave"
@@ -530,7 +604,7 @@ const MyForm = () => {
                       name={"job_type_id"}
                       control={control}
                       label={"Job Type"}
-                      options={jobtypeSelector ? jobtypeSelector : []}
+                      options={jobtype ? jobtype : []}
                     />
                   )}
                 </Grid>
@@ -560,6 +634,7 @@ const MyForm = () => {
                       <LoadingButton
                         size="large"
                         type="submit"
+                        className="btn-success"
                         loading={AddJobIsLoading || updateIsLoading}
                         color="primary"
                         variant="contained"
@@ -573,52 +648,51 @@ const MyForm = () => {
             </form>
           </Card>
         </Box>
-        {isEdit && (
-          <Box
-            sx={{
-              width: "100%",
-              height: "auto",
-              p: 1,
-              m: 1,
-            }}
-          >
-            <Card style={boxStyle} sx={{ padding: 2, height: "auto" }}>
-              <Tabs value={activeTab} onTabChange={handleTabChange}>
-                <TabsList>
-                  <Tabs.Tab value="tasks">Tasks</Tabs.Tab>
-                  <Tabs.Tab value="Dependencies">Dependencies</Tabs.Tab>
-                </TabsList>
 
-                <TabsPannel value="tasks" style={{ width: "100%" }}>
-                  {activeTab === "tasks" && (
-                    <div style={{ height: "auto", width: "100%" }}>
-                      <TaskDetails
-                        paramsId={paramsId}
-                        data={tasksdata ?? []}
-                        handleCreateTask={handleCreateTask}
-                        handleEditTask={handleEditTask}
-                        handleDeleteTask={handleDeleteTask}
-                      />
-                    </div>
-                  )}
-                </TabsPannel>
-                <TabsPannel value="Dependencies">
-                  {activeTab === "Dependencies" && (
-                    <div style={{ height: "auto", width: "100%" }}>
-                      <DependencyDetails
-                        paramsId={paramsId}
-                        data={dependencyData ?? []}
-                        handleCreateDependency={handleCreateDependency}
-                        handleEditDependency={handleEditDependency}
-                        handleDeleteDependency={handleDeleteDependency}
-                      />
-                    </div>
-                  )}
-                </TabsPannel>
-              </Tabs>
-            </Card>
-          </Box>
-        )}
+        <Box
+          sx={{
+            width: "100%",
+            height: "auto",
+            p: 1,
+            m: 1,
+          }}
+        >
+          <Card style={boxStyle} sx={{ padding: 2, height: "auto" }}>
+            <Tabs value={activeTab} onTabChange={handleTabChange}>
+              <TabsList>
+                <Tabs.Tab value="tasks">Tasks</Tabs.Tab>
+                <Tabs.Tab value="Dependencies">Dependencies</Tabs.Tab>
+              </TabsList>
+
+              <TabsPannel value="tasks" style={{ width: "100%" }}>
+                {activeTab === "tasks" && (
+                  <div style={{ height: "auto", width: "100%" }}>
+                    <TaskDetails
+                      data={tasksdata ?? []}
+                      handleCreateTask={handleCreateTask}
+                      handleEditTask={handleEditTask}
+                      handleDeleteTask={handleDeleteTask}
+                      isEdit={isEdit}
+                    />
+                  </div>
+                )}
+              </TabsPannel>
+              <TabsPannel value="Dependencies">
+                {activeTab === "Dependencies" && (
+                  <div style={{ height: "auto", width: "100%" }}>
+                    <DependencyDetails
+                      data={dependencyData ?? []}
+                      handleCreateDependency={handleCreateDependency}
+                      handleEditDependency={handleEditDependency}
+                      handleDeleteDependency={handleDeleteDependency}
+                      isEdit={isEdit}
+                    />
+                  </div>
+                )}
+              </TabsPannel>
+            </Tabs>
+          </Card>
+        </Box>
       </Layout>
     </>
   );

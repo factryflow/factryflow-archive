@@ -1,18 +1,20 @@
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 
-import { Typography, Card, Grid, CardContent } from "@mui/material";
+import { Typography, Card, Grid, Box, Button } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Layout from "../Layout";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
-
+import JobDetails from "@/components/data-tables/jobs/jobsDetails";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 import {
   useCreateDependencyMutation,
+  useGetAllDependecyStatusQuery,
+  useGetDependencyByIdMutation,
   useUpdateDependencyMutation,
 } from "@/redux/api/dependencyApi";
 
@@ -22,6 +24,18 @@ import {
 } from "@/components/form-components/FormInputText";
 import { useGetAllDependencyTypeQuery } from "@/redux/api/dependencytypeApi";
 import { setDependenciestype } from "@/redux/features/dependencytypeSlice";
+import { Tabs } from "@mantine/core";
+import {
+  useCreateJobsMutation,
+  useDeleteJobsMutation,
+  useUpdateJobsMutation,
+} from "@/redux/api/jobApi";
+import TaskDetails from "@/components/data-tables/tasks/TaskDetails";
+import {
+  useCreateTasksMutation,
+  useDeleteTasksMutation,
+  useUpdateTasksMutation,
+} from "@/redux/api/taskApi";
 
 const validationSchema = yup.object().shape({
   name: yup.string().required("Name is required").nullable(),
@@ -50,18 +64,23 @@ const DependencyForm = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
   const isEdit = !!params.id;
-  const dependencySelector = useAppSelector(
-    (state: any) => state.dependency.dependencies
-  );
-  const dependenciesStatusSelector = useAppSelector(
-    (state) => state.dependency.dependencyStatus
-  );
-  const dependencytypeselector = useAppSelector(
-    (state) => state.dependencytype.dependenciestype
-  );
+  const paramsId = params && params.id;
+  const TabsList = Tabs.List;
+  const TabsPannel = Tabs.Panel;
+  const [activeTab, setActiveTab] = useState<string | null>("jobs");
+  const [jobData, setJobData] = useState<any>();
+  const [tasksdata, setTasksData] = useState<any | undefined>();
 
-  const jobstatusSelector = useAppSelector((state: any) => state.job.jobstatus);
-  const jobtypeSelector = useAppSelector((state: any) => state.job.jobtype);
+  const boxStyle = {
+    boxShadow: "0.3px 0.3px 1px rgba(0, 0, 0, 0.16)", // Adjust values as needed
+    padding: "20px",
+    backgroundColor: "white",
+    width: "100%",
+  };
+
+  const { data: dependencytypedata } = useGetAllDependencyTypeQuery();
+  const { data: dependencystatusdata } =
+    useGetAllDependecyStatusQuery(undefined);
 
   const [
     createDependency,
@@ -72,39 +91,16 @@ const DependencyForm = () => {
     },
   ] = useCreateDependencyMutation();
 
-  //call api dependency type
+  const [getDependencyById, { data: getdependencyiddata }] =
+    useGetDependencyByIdMutation();
 
+  //call api dependency type
   const {
     data: dtData,
     isLoading: dtisloading,
     error: dterror,
   } = useGetAllDependencyTypeQuery();
 
-  // const {
-  //   data: getjobData,
-  //   isLoading: jobisLoading,
-  //   // refetch,
-  // } = useGetAllJobsQuery(undefined, {});
-
-  // const {
-  //   data: getTaskData,
-  //   isLoading: taskIsLoading,
-  //   error,
-  // } = useGetAllTasksQuery(undefined);
-
-  // const [
-  //   createTasks,
-  //   { data: taskData, isLoading: taskIsLoading, error: taskError },
-  // ] = useCreateTasksMutation();
-
-  // const [
-  //   updateTasks,
-  //   {
-  //     data: updateTaskData,
-  //     isLoading: updateTaskIsLoading,
-  //     error: updateTaskError,
-  //   },
-  // ] = useUpdateTasksMutation();
   const [
     updateDependency,
     { data: updateDataDependency, isLoading: UddIsLoading, error: UddError },
@@ -142,53 +138,187 @@ const DependencyForm = () => {
     }
   };
 
-  useEffect(() => {
-    if (!dependencyIsLoading && dependencyData) {
-      toast.success("/Dependency Create Successfully");
-      navigate("/dependency");
+  const [createJobs] = useCreateJobsMutation();
+  const [updateJobs] = useUpdateJobsMutation();
+  const [deleteJobs] = useDeleteJobsMutation();
+
+  const [createTasks] = useCreateTasksMutation();
+  const [updateTasks] = useUpdateTasksMutation();
+  const [deleteTasks] = useDeleteTasksMutation();
+
+  const handleCreateTask = async (values: any) => {
+    if (values) {
+      console.log(values, "values");
+      const requestObj = {
+        id: "",
+        name: values.name,
+        external_id: values.external_id,
+        setup_time: values.setup_time,
+        run_time_per_unit: values.run_time_per_unit,
+        teardown_time: values.teardown_time,
+        quantity: values.quantity,
+        task_status_id: values.task_status,
+        task_type_id: values.task_type,
+        job_id: values.job,
+        item_id: values.item,
+        predecessor_ids: [],
+        dependency_ids: [Number(paramsId)],
+      };
+      const response = await createTasks(requestObj);
+      if (response) {
+        getdependencyid();
+      }
     }
-  }, [dependencyIsLoading, dependencyData]);
+  };
+
+  const handleEditTask = async ({
+    id,
+    values,
+    taskstatus,
+    tasktype,
+    job,
+  }: any) => {
+    console.log(id);
+    if (id && values) {
+      const requestObj = {
+        name: values.name,
+        external_id: values.external_id,
+        setup_time: values.setup_time,
+        run_time_per_unit: values.run_time_per_unit,
+        teardown_time: values.teardown_time,
+        quantity: values.quantity,
+        task_status_id: taskstatus,
+        task_type_id: tasktype,
+        job_id: job,
+        item_id: values.item,
+        predecessor_ids: [],
+        dependency_ids: [Number(paramsId)],
+      };
+      const response = await updateTasks({ id, data: requestObj });
+      if (response) {
+        getdependencyid();
+      }
+    }
+  };
+
+  const handleDeleteTask = async (row: any) => {
+    if (row) {
+      const response = await deleteTasks(row.original.id);
+      if (response) {
+        getdependencyid();
+      }
+    }
+  };
+
+  const handleCreateJob = async (values: any) => {
+    if (values) {
+      const requestObj = {
+        name: values.name,
+        customer: values.customer,
+        due_date: values.due_date,
+        external_id: values.external_id,
+        job_status_id: values.job_status,
+        job_type_id: values.job_type,
+        dependency_ids: [Number(paramsId)],
+        task_ids: [],
+        priority: values.priority,
+      };
+      const response = await createJobs(requestObj);
+      if (response) {
+        getdependencyid();
+      }
+    }
+  };
+
+  const handleEditJob = async ({ id, values, jobstatus, jobtype }: any) => {
+    if (id && values) {
+      const requestObj = {
+        name: values.name,
+        customer: values.customer,
+        due_date: values.due_date,
+        external_id: values.external_id,
+        job_status_id: jobstatus,
+        job_type_id: jobtype,
+        dependency_ids: [Number(paramsId)],
+        task_ids: [],
+        priority: values.priority,
+      };
+      const response = await updateJobs({ id, data: requestObj });
+      if (response) {
+        getdependencyid();
+      }
+    }
+  };
+
+  const handleDeleteJob = async (row: any) => {
+    if (row) {
+      const response = await deleteJobs(row.original.id);
+      if (response) {
+        getdependencyid();
+      }
+    }
+  };
+
+  const getdependencyid = () => {
+    getDependencyById(Number(paramsId!));
+  };
+
+  const handleTabChange = (newTabValue: any) => {
+    setActiveTab(newTabValue);
+    // Force a window resize event
+    window.dispatchEvent(new Event("resize"));
+  };
 
   useEffect(() => {
-    if (!UddIsLoading && updateDataDependency) {
-      toast.success("Update dependency Successfully");
-      navigate("/dependency");
+    if (!dependencyIsLoading && dependencyData) {
+      toast.success("Dependency Create Successfully") &&
+        navigate("/dependency");
     }
-  }, [UddIsLoading, updateDataDependency]);
+    if (!UddIsLoading && updateDataDependency) {
+      toast.success("Update dependency Successfully") &&
+        navigate("/dependency");
+    }
+  }, [dependencyIsLoading, dependencyData, UddIsLoading, updateDataDependency]);
 
   useEffect(() => {
     const excluded_fields_dependency_type = ["dependency_type"];
     const excluded_fields_dependency_status = ["dependency_status"];
     const excludede_field_expected_close_datetime = ["expected_close_datetime"];
     const excludede_actual_close_datetime = ["actual_close_datetime"];
-    if (isEdit) {
-      if (dependencySelector) {
-        const getDependency = dependencySelector.filter(
-          (item: any) => item.id === Number(params.id)
+    if (isEdit && getdependencyiddata) {
+      if (getdependencyiddata) {
+        setJobData(getdependencyiddata.jobs);
+        setTasksData(getdependencyiddata.tasks);
+        Object.entries(getdependencyiddata ?? []).forEach(
+          ([name, value]: any) => {
+            if (excludede_field_expected_close_datetime.includes(name)) {
+              form.setValue(name, value?.slice(0, 16));
+              return;
+            }
+            if (excludede_actual_close_datetime.includes(name)) {
+              form.setValue(name, value?.slice(0, 16));
+              return;
+            }
+            if (excluded_fields_dependency_type.includes(name)) {
+              form.setValue("dependency_type_id", value.id);
+              return;
+            }
+            if (excluded_fields_dependency_status.includes(name)) {
+              form.setValue("dependency_status_id", value.id);
+              return;
+            }
+            form.setValue(name, value);
+          }
         );
-        console.log(getDependency[0], "getDependency");
-        Object.entries(getDependency[0] ?? []).forEach(([name, value]: any) => {
-          if (excludede_field_expected_close_datetime.includes(name)) {
-            form.setValue(name, value?.slice(0, 16));
-            return;
-          }
-          if (excludede_actual_close_datetime.includes(name)) {
-            form.setValue(name, value?.slice(0, 16));
-            return;
-          }
-          if (excluded_fields_dependency_type.includes(name)) {
-            form.setValue("dependency_type_id", value);
-            return;
-          }
-          if (excluded_fields_dependency_status.includes(name)) {
-            form.setValue("dependency_status_id", value);
-            return;
-          }
-          form.setValue(name, value);
-        });
       }
     }
-  }, [isEdit, params.id]);
+  }, [getdependencyiddata]);
+
+  useEffect(() => {
+    if (paramsId) {
+      getdependencyid();
+    }
+  }, [paramsId]);
 
   useEffect(() => {
     if (!dtisloading && dtData) {
@@ -202,100 +332,164 @@ const DependencyForm = () => {
       <Layout>
         <Grid>
           <Card
-            style={{ width: "100%", padding: "20px 5px", margin: "30px auto" }}
+            style={{
+              boxShadow: "0.3px 0.3px 1px rgba(0, 0, 0, 0.16)", // Adjust values as needed
+              padding: "20px",
+              backgroundColor: "white",
+              width: "100%",
+            }}
+            sx={{ padding: 2, height: "auto", borderRadius: "12px" }}
           >
-            <CardContent>
-              <Typography gutterBottom variant="h5">
-                Dependency Details
-              </Typography>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <Grid
-                  container
-                  rowSpacing={1}
-                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                >
-                  <Grid item xs={6}>
-                    <FormInputText
-                      name={"external_id"}
-                      control={control}
-                      label={"External Id"}
-                      placeholder={"Enter dependency Name"}
-                      type={"text"}
-                    />
-                  </Grid>
+            <Typography gutterBottom variant="h5">
+              Dependency Details
+            </Typography>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Grid
+                container
+                rowSpacing={1}
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              >
+                <Grid item xs={6}>
+                  <FormInputText
+                    name={"external_id"}
+                    control={control}
+                    label={"External Id"}
+                    placeholder={"Enter dependency Name"}
+                    type={"text"}
+                  />
+                </Grid>
 
-                  <Grid item xs={6}>
-                    <FormInputText
-                      name={"name"}
-                      control={control}
-                      label={"Name"}
-                      placeholder={"Enter  Name"}
-                      type={"text"}
-                    />
-                  </Grid>
+                <Grid item xs={6}>
+                  <FormInputText
+                    name={"name"}
+                    control={control}
+                    label={"Name"}
+                    placeholder={"Enter  Name"}
+                    type={"text"}
+                  />
+                </Grid>
 
-                  <Grid item xs={6}>
-                    <FormInputText
-                      name={"notes"}
-                      control={control}
-                      label={"Notes"}
-                      placeholder={"write notes"}
-                      type={"text"}
-                    />
-                  </Grid>
+                <Grid item xs={6}>
+                  <FormInputText
+                    name={"notes"}
+                    control={control}
+                    label={"Notes"}
+                    placeholder={"write notes"}
+                    type={"text"}
+                  />
+                </Grid>
 
-                  <Grid item xs={6}>
-                    <FormInputText
-                      name={"expected_close_datetime"}
-                      control={control}
-                      label={"Expected Date"}
-                      placeholder={"expected_close_datetime"}
-                      type={"datetime-local"}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <FormInputText
-                      name={"actual_close_datetime"}
-                      control={control}
-                      label={"Actual Date"}
-                      placeholder={""}
-                      type={"datetime-local"}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <FormInputDropdown
-                      name={"dependency_status_id"}
-                      control={control}
-                      label={"Status"}
-                      options={jobstatusSelector ?? []}
-                    />
-                  </Grid>
+                <Grid item xs={6}>
+                  <FormInputText
+                    name={"expected_close_datetime"}
+                    control={control}
+                    label={"Expected Date"}
+                    placeholder={"expected_close_datetime"}
+                    type={"datetime-local"}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <FormInputText
+                    name={"actual_close_datetime"}
+                    control={control}
+                    label={"Actual Date"}
+                    placeholder={""}
+                    type={"datetime-local"}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <FormInputDropdown
+                    name={"dependency_status_id"}
+                    control={control}
+                    label={"Status"}
+                    options={dependencystatusdata ?? []}
+                  />
+                </Grid>
 
-                  <Grid item xs={6}>
-                    <FormInputDropdown
-                      name={"dependency_type_id"}
-                      control={control}
-                      label={"Type"}
-                      options={jobtypeSelector ?? []}
-                    />
-                  </Grid>
+                <Grid item xs={6}>
+                  <FormInputDropdown
+                    name={"dependency_type_id"}
+                    control={control}
+                    label={"Type"}
+                    options={dependencytypedata ?? []}
+                  />
+                </Grid>
 
-                  <Grid item xs={12}>
+                <Grid item xs={12}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      gap: "15px",
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      size="large"
+                      className="btn-cancel"
+                      onClick={() => navigate("/dependency")}
+                    >
+                      {isEdit ? "Back" : "Cancel"}
+                    </Button>
                     <LoadingButton
-                      size="small"
+                      size="large"
                       type="submit"
-                      // loading={dependencyIsLoading || UddIsLoading}
+                      // loading={taskisloding || updatetaskisloading}
                       color="primary"
                       variant="contained"
-                      sx={{ marginBottom: 5 }}
                     >
-                      {isEdit ? "Save Changes" : "Submit"}
+                      {isEdit ? "Edit" : "Create"}
                     </LoadingButton>
-                  </Grid>
+                  </Box>
                 </Grid>
-              </form>
-            </CardContent>
+              </Grid>
+            </form>
           </Card>
+
+          <Box
+            sx={{
+              width: "100%",
+              height: "auto",
+              p: 1,
+              m: 1,
+            }}
+          >
+            <Card style={boxStyle} sx={{ padding: 2, height: "auto" }}>
+              <Tabs value={activeTab} onTabChange={handleTabChange}>
+                <TabsList>
+                  <Tabs.Tab value="jobs">jobs</Tabs.Tab>
+                  <Tabs.Tab value="tasks">Tasks</Tabs.Tab>
+                </TabsList>
+
+                <TabsPannel value="jobs" style={{ width: "100%" }}>
+                  {activeTab === "jobs" && (
+                    <div style={{ height: "auto", width: "100%" }}>
+                      <JobDetails
+                        data={jobData ?? []}
+                        handleCreateJob={handleCreateJob}
+                        handleEditJob={handleEditJob}
+                        handleDeleteJob={handleDeleteJob}
+                        isEdit={isEdit}
+                      />
+                    </div>
+                  )}
+                </TabsPannel>
+                <TabsPannel value="tasks">
+                  {activeTab === "tasks" && (
+                    <div style={{ height: "auto", width: "100%" }}>
+                      <TaskDetails
+                        data={tasksdata ?? []}
+                        jobisenable={true}
+                        handleCreateTask={handleCreateTask}
+                        handleEditTask={handleEditTask}
+                        handleDeleteTask={handleDeleteTask}
+                        isEdit={isEdit}
+                      />
+                    </div>
+                  )}
+                </TabsPannel>
+              </Tabs>
+            </Card>
+          </Box>
         </Grid>
       </Layout>
     </>
