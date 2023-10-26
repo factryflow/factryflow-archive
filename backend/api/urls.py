@@ -84,6 +84,10 @@ api.add_router(
     "/schedule-run-status", schedule_run_status_router, tags=["schedule-runs"]
 )
 
+api.add_router(
+    "/custom-fields", custom_field_router, auth= JWTAuth(), tags=["custom-fields"]
+)
+
 
 @api.exception_handler(ObjectDoesNotExist)
 def handle_object_does_not_exist(request, exc):
