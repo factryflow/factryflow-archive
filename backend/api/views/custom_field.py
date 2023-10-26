@@ -23,7 +23,15 @@ class CustomFieldViewSet(ModelViewSet):
     list = ListModelView(output_schema= CustomFieldOut)
     create = CreateModelView(
         input_schema= CustomFieldIn, 
-        output_schema= CustomFieldOut
+        output_schema= CustomFieldOut, 
+        pre_save= pre_save_hook()
     )
+    retrieve = RetrieveModelView(output_schema= CustomFieldOut)
+    update = UpdateModelView(
+        input_schema= CustomFieldIn, 
+        output_schema= CustomFieldOut, 
+        pre_save= pre_save_hook()
+    )
+    delete = DeleteModelView()
 
 CustomFieldViewSet.register_routes(custom_field_router)
