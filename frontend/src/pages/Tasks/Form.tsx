@@ -42,7 +42,7 @@ import {
 } from "@/components/form-components/FormInputText";
 import { Tabs } from "@mantine/core";
 import DependencyDetails from "@/components/data-tables/dependency/dependencyDetails";
-import { Autocomplete2 } from "@/components/form-components/FormInputText";
+
 import {
   useCreateDependencyMutation,
   useDeleteDependencyMutation,
@@ -105,7 +105,14 @@ const TaskForm = () => {
     useCreateTasksMutation();
   const [getTaskById, { data: taskgetiddata, isLoading: taskidisloading }] =
     useGetTaskByIdMutation();
-  const [updateTasks] = useUpdateTasksMutation();
+  const [
+    updateTasks,
+    {
+      data: updatetask,
+      isLoading: updatetaskisloading,
+      isSuccess: updatetaskissuccess,
+    },
+  ] = useUpdateTasksMutation();
   const [jobdata, setJobData] = useState<any>([]);
   const [dependencyData, setDependencyData] = useState<any | undefined>();
 
@@ -261,7 +268,10 @@ const TaskForm = () => {
     if (!taskisloding && taskissuccess) {
       toast.success("Task Create Successfully") && navigate("/tasks");
     }
-  }, [taskisloding, taskissuccess]);
+    if (!updatetaskisloading && updatetaskissuccess) {
+      toast.success("Task Update Successfully") && navigate("/tasks");
+    }
+  }, [taskisloding, taskissuccess, updatetaskisloading, updatetaskissuccess]);
 
   return (
     <>
@@ -432,7 +442,7 @@ const TaskForm = () => {
                       <LoadingButton
                         size="large"
                         type="submit"
-                        loading={taskisloding}
+                        loading={taskisloding || updatetaskisloading}
                         color="primary"
                         variant="contained"
                       >
@@ -445,37 +455,37 @@ const TaskForm = () => {
             </CardContent>
           </Card>
         </Grid>
-        {isEdit && (
-          <Box
-            sx={{
-              width: "100%",
-              height: "auto",
-              p: 1,
-              m: 1,
-            }}
-          >
-            <Card style={boxStyle} sx={{ padding: 2, height: "auto" }}>
-              <Tabs value={activeTab}>
-                <TabsList>
-                  <Tabs.Tab value="dependency">Dependencies</Tabs.Tab>
-                </TabsList>
-                <TabsPannel value="dependency">
-                  {activeTab === "dependency" && (
-                    <div style={{ height: "auto", width: "100%" }}>
-                      <DependencyDetails
-                        data={dependencyData ?? []}
-                        paramsId={paramsId}
-                        handleCreateDependency={handleCreateDependency}
-                        handleEditDependency={handleEditDependency}
-                        handleDeleteDependency={handleDeleteDependency}
-                      />
-                    </div>
-                  )}
-                </TabsPannel>
-              </Tabs>
-            </Card>
-          </Box>
-        )}
+
+        <Box
+          sx={{
+            width: "100%",
+            height: "auto",
+            p: 1,
+            m: 1,
+          }}
+        >
+          <Card style={boxStyle} sx={{ padding: 2, height: "auto" }}>
+            <Tabs value={activeTab}>
+              <TabsList>
+                <Tabs.Tab value="dependency">Dependencies</Tabs.Tab>
+              </TabsList>
+              <TabsPannel value="dependency">
+                {activeTab === "dependency" && (
+                  <div style={{ height: "auto", width: "100%" }}>
+                    <DependencyDetails
+                      data={dependencyData ?? []}
+                      paramsId={paramsId}
+                      handleCreateDependency={handleCreateDependency}
+                      handleEditDependency={handleEditDependency}
+                      handleDeleteDependency={handleDeleteDependency}
+                      isEdit={isEdit}
+                    />
+                  </div>
+                )}
+              </TabsPannel>
+            </Tabs>
+          </Card>
+        </Box>
       </Layout>
     </>
   );

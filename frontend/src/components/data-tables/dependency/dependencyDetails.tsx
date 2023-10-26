@@ -206,25 +206,24 @@ import { ModalsProvider, modals } from "@mantine/modals";
 import { IconEdit, IconTrash } from "@tabler/icons-react";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import dayjs from "dayjs";
+import { useGetAllDependencyTypeQuery } from "@/redux/api/dependencytypeApi";
+import { useGetAllDependecyStatusQuery } from "@/redux/api/dependencyApi";
 
 const DependencyDetails = ({
-  paramsId,
   data,
   handleCreateDependency,
   handleEditDependency,
   handleDeleteDependency,
+  isEdit,
 }: any) => {
-  const jobIddataSelector = useAppSelector((state: any) => state.job.job);
-  const jobtypeSelector = useAppSelector((state: any) => state.job.jobtype);
-
-  const jobstatusSelector = useAppSelector((state: any) => state.job.jobstatus);
-  const [dependency, setDependency] = useState<any[]>();
-
-  const [dependencyid, setDependencyId] = useState<any>();
   const [dependencystatus, setdependencyStatus] = useState<any>();
   const [dependencyType, setDependencyType] = useState<any>();
   const [expectdate, setexpectedDate] = useState<any>("");
   const [actualdate, setActualDate] = useState<any>("");
+
+  const { data: dependencytypedata } = useGetAllDependencyTypeQuery();
+  const { data: dependencystatusdata } =
+    useGetAllDependecyStatusQuery(undefined);
 
   const handleDependencyTypeChange = (newValue: any) => {
     setDependencyType(newValue);
@@ -308,7 +307,7 @@ const DependencyDetails = ({
         header: "Dependency Type",
         editVariant: "select",
         mantineEditSelectProps: {
-          data: jobstatusSelector?.map((item: any) => ({
+          data: dependencytypedata?.map((item: any) => ({
             value: item.id,
             label: item.name,
           })),
@@ -324,7 +323,7 @@ const DependencyDetails = ({
         header: "Dependency Status",
         editVariant: "select",
         mantineEditSelectProps: {
-          data: jobstatusSelector?.map((item: any) => ({
+          data: dependencystatusdata?.map((item: any) => ({
             value: item.id,
             label: item.name,
           })),
@@ -416,33 +415,35 @@ const DependencyDetails = ({
     onCreatingRowSave: handleCreate,
     onEditingRowCancel: () => {},
     onEditingRowSave: handleSave,
-    renderRowActions: ({ row, table }) => (
-      <Flex gap="md">
-        <Tooltip label="Edit">
-          <ActionIcon onClick={() => handleEditRow(row)}>
-            <IconEdit />
-          </ActionIcon>
-        </Tooltip>
-        <Tooltip label="Delete">
-          <ActionIcon color="red" onClick={() => openDeleteConfirmModal(row)}>
-            <IconTrash />
-          </ActionIcon>
-        </Tooltip>
-      </Flex>
-    ),
-    renderTopToolbarCustomActions: ({ table }) => (
-      <Button
-        onClick={() => {
-          setdependencyStatus("");
-          setDependencyType("");
-          setexpectedDate("");
-          setActualDate("");
-          table.setCreatingRow(true);
-        }}
-      >
-        Create Dependency
-      </Button>
-    ),
+    renderRowActions: ({ row, table }) =>
+      isEdit && (
+        <Flex gap="md">
+          <Tooltip label="Edit">
+            <ActionIcon onClick={() => handleEditRow(row)}>
+              <IconEdit />
+            </ActionIcon>
+          </Tooltip>
+          <Tooltip label="Delete">
+            <ActionIcon color="red" onClick={() => openDeleteConfirmModal(row)}>
+              <IconTrash />
+            </ActionIcon>
+          </Tooltip>
+        </Flex>
+      ),
+    renderTopToolbarCustomActions: ({ table }) =>
+      isEdit && (
+        <Button
+          onClick={() => {
+            setdependencyStatus("");
+            setDependencyType("");
+            setexpectedDate("");
+            setActualDate("");
+            table.setCreatingRow(true);
+          }}
+        >
+          Create Dependency
+        </Button>
+      ),
     state: {
       //   isLoading: isLoadingUsers,
       //   isSaving: isCreatingUser || isUpdatingUser || isDeletingUser,

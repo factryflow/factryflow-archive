@@ -275,7 +275,7 @@ const Dependencys = () => {
             }}
           >
             <Card withBorder sx={{ padding: "0px !important" }}>
-              <StatusTabs
+              {/* <StatusTabs
                 statusTabs={[
                   "all",
                   ...dependenciesStatusSelector?.map(
@@ -285,18 +285,16 @@ const Dependencys = () => {
                 data={dependenciesSelector ?? []}
                 statusdata={dependenciesStatusSelector ?? []}
                 setFilterData={setData}
-              />
+              /> */}
               {dependencyIsLoading ? (
-                <>
-                  <Loading />
-                </>
+                <Loading />
               ) : (
                 getDependencyData && (
                   <>
                     <DataGrid
                       className="dataGrid"
                       autoHeight={true}
-                      rows={data ?? []}
+                      rows={getDependencyData ?? []}
                       // rows={filterData ?? []}
                       columns={columns}
                       initialState={{

@@ -22,6 +22,14 @@ export const dependencyApi = createApi({
       providesTags: ["getAllDependencys"],
     }),
 
+    getDependencyById: builder.mutation<any | undefined, number>({
+      query: (id: number) => {
+        return {
+          url: `api/dependencies/${id}`,
+        };
+      },
+    }),
+
     // create Dependency Api
     createDependency: builder.mutation({
       query: (body: any) => {
@@ -61,9 +69,7 @@ export const dependencyApi = createApi({
         return `api/dependency-status/`;
       },
       transformResponse: (res: GenericResponse<DependencyStatusResponse[]>) => {
-        const result = res.items?.filter(
-          (item: any) => item.is_deleted === false
-        );
+        const result = res.items;
         return result ?? [];
       },
     }),
@@ -72,6 +78,7 @@ export const dependencyApi = createApi({
 
 export const {
   useGetAllDependencyQuery,
+  useGetDependencyByIdMutation,
   useCreateDependencyMutation,
   useDeleteDependencyMutation,
   useUpdateDependencyMutation,

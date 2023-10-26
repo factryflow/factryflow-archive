@@ -13,9 +13,7 @@ export const dependencytypeApi = createApi({
         return `api/dependency-types/`;
       },
       transformResponse: (res: GenericResponse<any[]>) => {
-        const result = res.items?.filter(
-          (item: any) => item.is_deleted === false
-        );
+        const result = res.items;
         return result ?? [];
       },
       providesTags: ["getAllDependencyType"],
