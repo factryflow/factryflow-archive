@@ -6,6 +6,7 @@ from ninja import ModelSchema
 from pydantic.fields import Field
 
 from api.models import (
+    AssignmentRule,
     Dependency,
     DependencyStatus,
     DependencyTypes,
@@ -115,10 +116,17 @@ class TaskBaseOut(ModelSchema):
     predecessor_ids: List[int] = Field([], alias="predecessor_id_list")
     successor_ids: List[int] = Field([], alias="successor_id_list")
     dependency_ids: List[int] = Field([], alias="dependency_id_list")
+    assignment_rule_ids: List[int] = Field([], alias="assignment_rule_id_list")
 
     class Config:
         model = Task
-        model_exclude = ["dependencies", "predecessors", "job", "work_center"]
+        model_exclude = [
+            "dependencies",
+            "predecessors",
+            "job",
+            "work_center",
+            "assigment_rules",
+        ]
 
 
 # ====================================
@@ -127,8 +135,8 @@ class TaskBaseOut(ModelSchema):
 
 
 class ResourceBaseOut(ModelSchema):
-    resource_group_ids: List[int] = Field([], alias="resource_group_id_list")
     weekly_shift_template_id: int = None
+    resource_group_ids: List[int] = Field([], alias="resource_group_id_list")
 
     class Config:
         model = Resource
@@ -159,3 +167,18 @@ class WeeklyShiftTemplateBaseOut(ModelSchema):
     class Config:
         model = WeeklyShiftTemplate
         model_fields = "__all__"
+
+
+# ====================================
+# =============== AssigmentRule ===============
+# ====================================
+
+
+class AssignmentRuleBaseOut(ModelSchema):
+    resource_group_id: int = None
+    task_ids: List[int] = Field([], alias="task_id_list")
+    criteria_ids: List[int] = Field([], alias="criteria_id_list")
+
+    class Config:
+        model = AssignmentRule
+        model_exclude = ["resource_group"]

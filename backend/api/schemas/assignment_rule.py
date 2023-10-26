@@ -1,34 +1,20 @@
 # schemas.py
-from datetime import datetime
-from typing import Optional
+from ninja import ModelSchema
+from pydantic import Field
+
 from api.models import (
     AssignmentRule,
     AssignmentRuleCriteria,
-    AssignmentRuleResourceGroup,
 )
-from ninja import Schema, ModelSchema
+from api.schemas.base import AssignmentRuleBaseOut, ResourceBaseOut, TaskBaseOut
 
 
-class AssignmentRuleIn(Schema):
-    name: str
-    description: Optional[str] = None
-    priority: int
-    resource_count: int
-    use_all_resources: bool
+class AssignmentRuleCriteriaIn(ModelSchema):
+    assigment_rule_id: int
 
-
-class AssignmentRuleOut(ModelSchema):
     class Config:
-        model = AssignmentRule
-        model_fields = "__all__"
-
-
-class AssignmentRuleCriteriaIn(Schema):
-    field: str
-    operator: int
-    value: int
-    parent_id: Optional[int] = None
-    assignment_rule_id: int
+        model = AssignmentRuleCriteria
+        model_fields = ["field", "operator", "value"]
 
 
 class AssignmentRuleCriteriaOut(ModelSchema):
@@ -37,12 +23,26 @@ class AssignmentRuleCriteriaOut(ModelSchema):
         model_fields = "__all__"
 
 
-class AssignmentRuleResourceGroupIn(Schema):
-    assignment_id: int
-    resource_id: int
+class AssignmentRuleIn(ModelSchema):
+    work_center_id: int = Field(..., default=1, example=1)
+    resource_group_id: int = Field(..., example=1)
 
-
-class AssignmentRuleResourceGroupOut(ModelSchema):
     class Config:
-        model = AssignmentRuleResourceGroup
+        model = AssignmentRule
+        model_fields = [
+            "name",
+            "description",
+            "priority",
+            "resource_count",
+            "use_all_resources",
+        ]
+
+
+class AssignmentRuleOut(AssignmentRuleBaseOut):
+    criteria: list[AssignmentRuleCriteriaOut]
+    tasks: list[TaskBaseOut]
+    resource_group: list[ResourceBaseOut]
+
+    class Config:
+        model = AssignmentRule
         model_fields = "__all__"

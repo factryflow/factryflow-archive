@@ -8,19 +8,31 @@ from api.utils.model_manager import ActiveManager
 from .assignment_rule import AssignmentRule
 
 
+class Operator(models.TextChoices):
+    EQUALS = "equals", "Equals"
+    CONTAINS = "contains", "Contains"
+    STARTS_WITH = "starts_with", "Starts With"
+    ENDS_WITH = "ends_with", "Ends With"
+    GREATER_THAN = "gt", "Greater Than"
+    LESS_THAN = "lt", "Less Than"
+
+
 class AssignmentRuleCriteria(models.Model):
     id = models.AutoField(primary_key=True)
-    field = models.CharField(max_length=150)
-    operator = models.IntegerField(
-        blank=True,
-        null=True,
-        default=1,
-        help_text="1. Equals, 2. Add, 3. Subtract, 4. Divide, 5. Multiple",
+    models.CharField(max_length=100)
+    operator = models.CharField(
+        max_length=20, choices=Operator.choices, default=Operator.EQUALS
     )
     value = models.CharField(max_length=254, blank=True, null=True)
-    parent = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, null=True)
+
+    # parent = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, null=True) # for nested rules
+
     assignment_rule = models.ForeignKey(
-        AssignmentRule, on_delete=models.CASCADE, blank=True, null=True
+        AssignmentRule,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="criteria",
     )
 
     # Metadata
