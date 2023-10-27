@@ -23,4 +23,4 @@ from .user import User
 from .weekly_shift_template import WeeklyShiftTemplate
 from .work_center import WorkCenter
 from .custom_field import CustomField
-from .custom_field_value import CustomFieldValue
+from .custom_field_value import CustomFieldValue, CustomFieldMixin

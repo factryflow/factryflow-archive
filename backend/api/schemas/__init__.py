@@ -41,3 +41,4 @@ from .user import UserIn, UserOut
 from .weekly_shift_template import WeeklyShiftTemplateIn, WeeklyShiftTemplateOut
 from .work_center import WorkCenterIn, WorkCenterOut
 from .custom_field import CustomFieldIn, CustomFieldOut
+from .custom_field_value import CustomFieldValueIn, CustomFieldValueOut
