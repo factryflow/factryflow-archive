@@ -19,3 +19,4 @@ from .user import user_auth_router, user_no_auth_router
 from .weekly_shift_template import weeklyshift_template_router
 from .work_center import work_center_router
 from .custom_field import custom_field_router
+from .custom_field_value import custom_field_value_router
