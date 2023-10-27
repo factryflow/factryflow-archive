@@ -18,6 +18,7 @@ from api.schemas import (
     AssignmentRuleIn,
     AssignmentRuleOut,
 )
+from api.services.assignment_rule import get_task_fields
 from api.utils.crud_hooks import pre_save_hook
 
 assignment_rule_router = Router()
@@ -65,28 +66,11 @@ class AssignmentRuleCriteriaViewSet(ModelViewSet):
     delete = DeleteModelView()
 
 
-# AssignmentRuleResourceGroup
-
-
-# class AssignmentRuleResourceGroupViewSet(ModelViewSet):
-#     model_class = AssignmentRuleResourceGroup
-
-#     # AbstractModelView subclasses can be used as-is
-#     list = ListModelView(output_schema=AssignmentRuleResourceGroupOut)
-#     create = CreateModelView(
-#         input_schema=AssignmentRuleResourceGroupIn,
-#         output_schema=AssignmentRuleResourceGroupOut,
-#         pre_save=pre_save_hook(),
-#     )
-#     retrieve = RetrieveModelView(output_schema=AssignmentRuleResourceGroupOut)
-#     update = UpdateModelView(
-#         input_schema=AssignmentRuleResourceGroupIn,
-#         output_schema=AssignmentRuleResourceGroupOut,
-#         pre_save=pre_save_hook(),
-#     )
-#     delete = DeleteModelView()
-
-
 # The register_routes method must be called to register the routes with the router
 AssignmentRuleViewSet.register_routes(assignment_rule_router)
 AssignmentRuleCriteriaViewSet.register_routes(assignment_rule_criteria_router)
+
+
+@assignment_rule_router.get("/field-options/")
+def get_field_options(request):
+    return get_task_fields()
