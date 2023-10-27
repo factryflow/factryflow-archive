@@ -1,6 +1,7 @@
-from api.models.task import Task
 from django.core.exceptions import FieldDoesNotExist
 from django.db import models
+
+from api.models.task import Task
 
 
 def get_all_field_names_with_types(
@@ -61,6 +62,3 @@ def get_task_fields():
         model, related_fields=related_fields
     )
     return all_fields_with_categories
-
-
-get_task_fields()
