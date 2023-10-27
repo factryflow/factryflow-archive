@@ -85,11 +85,11 @@ api.add_router(
 )
 
 api.add_router(
-    "/custom-fields", custom_field_router, tags=["custom-fields"]
+    "/custom-fields", custom_field_router, auth=JWTAuth(), tags=["custom-fields"]
 )
 
 api.add_router(
-    "/custom-field-values", custom_field_value_router, tags=["custom-fields"]
+    "/custom-field-values", custom_field_value_router, auth=JWTAuth(), tags=["custom-fields"]
 )
 
 

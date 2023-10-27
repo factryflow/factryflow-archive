@@ -19,7 +19,8 @@ from api.models import (
     TaskType,
     WeeklyShiftTemplate,
     WorkCenter,
-    CustomField
+    CustomField, 
+    CustomFieldValue
 )
 
 # ====================================
@@ -167,6 +168,8 @@ class WeeklyShiftTemplateBaseOut(ModelSchema):
 # ====================================
 
 class CustomFieldBaseOut(ModelSchema):
+    custom_values_ids: List[int] = Field([], alias= "value_id_list")
+    custom_field_values: List[dict] = Field([], alias= "custom_field_values")
     class Config:
         model = CustomField
         model_fields = "__all__"

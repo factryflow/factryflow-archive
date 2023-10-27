@@ -16,6 +16,7 @@ from .base import (
     TaskBaseOut,
     TaskStatusOut,
     TaskTypeOut,
+    CustomFieldBaseOut, 
 )
 from .dependency import (
     DependencyIn,
@@ -40,5 +41,4 @@ from .task import TaskIn, TaskOut
 from .user import UserIn, UserOut
 from .weekly_shift_template import WeeklyShiftTemplateIn, WeeklyShiftTemplateOut
 from .work_center import WorkCenterIn, WorkCenterOut
-from .custom_field import CustomFieldIn, CustomFieldOut
-from .custom_field_value import CustomFieldValueIn, CustomFieldValueOut
+from .custom_field import CustomFieldIn, CustomFieldOut, CustomFieldValueIn, CustomFieldValueOut
