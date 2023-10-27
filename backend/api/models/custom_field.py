@@ -39,6 +39,20 @@ class CustomField(models.Model):
     history = HistoricalRecords(table_name="custom_field_history")
     def __str__(self):
         return self.field_name
+    
+    @property
+    def value_id_list(self):
+        return list(self.values.values_list("id", flat=True))
+    
+    @property
+    def custom_field_values(self):
+        return [
+            {
+                "id": value.id, 
+                "value": value.value, 
+                "object_id" : value.object_id
+            } for value in self.values.all()
+        ]
 
     class Meta:
         db_table = "custom_fields"

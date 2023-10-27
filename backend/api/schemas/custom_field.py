@@ -1,9 +1,11 @@
 from ninja import ModelSchema
 from pydantic import Field
 from enum import Enum
-from typing import Optional
+from typing import Optional, List
 
-from api.models import CustomField
+from api.models import CustomField, CustomFieldValue
+from api.schemas import CustomFieldBaseOut
+from pydantic import BaseModel, conint
 
 class FieldType(str, Enum): 
     TEXT = "text"
@@ -22,7 +24,16 @@ class CustomFieldIn(ModelSchema):
             "related_model"
         ]
 
-class CustomFieldOut(ModelSchema):
+class CustomFieldValueIn(BaseModel):
+    custom_field_id: conint(ge=1)
+    object_id: conint(ge=1)
+    value: str 
+
+class CustomFieldValueOut(ModelSchema):
     class Config:
-        model = CustomField
+        model= CustomFieldValue
         model_fields = "__all__"
+
+class CustomFieldOut(CustomFieldBaseOut):
+    # custom_field_values: List[CustomFieldValueOut]
+    custom_field_values: List[dict]
