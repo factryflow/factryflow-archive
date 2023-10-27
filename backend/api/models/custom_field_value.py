@@ -7,7 +7,7 @@ from api.models.custom_field import CustomField
 from django.contrib.contenttypes.fields import GenericRelation
 
 class CustomFieldValue(models.Model):
-    custom_field = models.ForeignKey(CustomField, on_delete = models.CASCADE)
+    custom_field = models.ForeignKey(CustomField, on_delete = models.DO_NOTHING, related_name= "values")
     object_id = models.PositiveIntegerField()
     value = models.TextField()
 
