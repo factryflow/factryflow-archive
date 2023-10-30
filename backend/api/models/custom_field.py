@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from simple_history.models import HistoricalRecords
+from collections import defaultdict
         
 class CustomField(models.Model):
     FIELD_TYPES = [
@@ -45,13 +46,25 @@ class CustomField(models.Model):
     
     @property
     def custom_field_values(self):
-        return [
-            {
-                "id": value.id, 
-                "value": value.value, 
-                "object_id" : value.object_id
-            } for value in self.values.all()
-        ]
+        grouped_values = defaultdict(list)
+
+        # Loop through each value and group by related_model
+        for value in self.values.all():
+            grouped_values[value.related_model].append({
+                "id": value.id,
+                "value": value.value,
+                "object_id": value.object_id
+            })
+
+        # Convert the defaultdict to a list of dictionaries
+        result = []
+        for related_model, values in grouped_values.items():
+            result.append({
+                "related_model": related_model,
+                "values": values
+            })
+
+        return result
 
     class Meta:
         db_table = "custom_fields"
