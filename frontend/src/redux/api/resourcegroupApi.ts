@@ -1,26 +1,29 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import config from "@/config/default";
+import customFetchBase from "./customeFetchBase";
 export const resourcesGroupApi = createApi({
   reducerPath: "resourcesGroupApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: config.API_ENDPOINT,
-    prepareHeaders: (header) => {
-      header.set("Authorization", `Bearer ${localStorage.getItem("token")}`);
-    },
-  }),
-  tagTypes: ["getAllResourcesGroup"],
+  baseQuery: customFetchBase,
+  tagTypes: ["getAllResourcesGroup", "getResourcegroupbyid"],
   endpoints: (builder) => ({
     // getAllResource Group Api
     getAllResourcesGroup: builder.query<any[], void>({
       query: () => {
         return `api/resource-groups/`;
       },
-      transformResponse: (res: { data: any[] }) => {
-        const data = res.data;
-        const result = data.filter((item: any) => item.is_deleted === false);
-        return result;
+      transformResponse: (res: { items: any[] }) => {
+        const result = res.items;
+        return result ?? [];
       },
       providesTags: ["getAllResourcesGroup"],
+    }),
+
+    //getresourcegroup by id
+    getresourceGroupById: builder.query<any, number>({
+      query: (id) => {
+        return `api/resource-groups/${id}`;
+      },
+      providesTags: ["getResourcegroupbyid"],
     }),
 
     // create Resource Group Api
@@ -38,7 +41,7 @@ export const resourcesGroupApi = createApi({
     deleteResourcesGroup: builder.mutation({
       query: (id: number) => {
         return {
-          url: `api/resource-groups/${id}/`,
+          url: `api/resource-groups/${id}`,
           method: "delete",
         };
       },
@@ -48,7 +51,7 @@ export const resourcesGroupApi = createApi({
     updateResourcesGroup: builder.mutation({
       query: ({ id, data }) => {
         return {
-          url: `api/resource-groups/${id}/`,
+          url: `api/resource-groups/${id}`,
           method: "put",
           body: data,
         };
@@ -60,6 +63,7 @@ export const resourcesGroupApi = createApi({
 
 export const {
   useGetAllResourcesGroupQuery,
+  useGetresourceGroupByIdQuery,
   useCreateresourcesGroupMutation,
   useDeleteResourcesGroupMutation,
   useUpdateResourcesGroupMutation,

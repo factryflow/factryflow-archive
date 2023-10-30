@@ -444,52 +444,53 @@ const DependencyForm = () => {
               </Grid>
             </form>
           </Card>
+          {isEdit && (
+            <Box
+              sx={{
+                width: "100%",
+                height: "auto",
+                p: 1,
+                m: 1,
+              }}
+            >
+              <Card style={boxStyle} sx={{ padding: 2, height: "auto" }}>
+                <Tabs value={activeTab} onTabChange={handleTabChange}>
+                  <TabsList>
+                    <Tabs.Tab value="jobs">jobs</Tabs.Tab>
+                    <Tabs.Tab value="tasks">Tasks</Tabs.Tab>
+                  </TabsList>
 
-          <Box
-            sx={{
-              width: "100%",
-              height: "auto",
-              p: 1,
-              m: 1,
-            }}
-          >
-            <Card style={boxStyle} sx={{ padding: 2, height: "auto" }}>
-              <Tabs value={activeTab} onTabChange={handleTabChange}>
-                <TabsList>
-                  <Tabs.Tab value="jobs">jobs</Tabs.Tab>
-                  <Tabs.Tab value="tasks">Tasks</Tabs.Tab>
-                </TabsList>
-
-                <TabsPannel value="jobs" style={{ width: "100%" }}>
-                  {activeTab === "jobs" && (
-                    <div style={{ height: "auto", width: "100%" }}>
-                      <JobDetails
-                        data={jobData ?? []}
-                        handleCreateJob={handleCreateJob}
-                        handleEditJob={handleEditJob}
-                        handleDeleteJob={handleDeleteJob}
-                        isEdit={isEdit}
-                      />
-                    </div>
-                  )}
-                </TabsPannel>
-                <TabsPannel value="tasks">
-                  {activeTab === "tasks" && (
-                    <div style={{ height: "auto", width: "100%" }}>
-                      <TaskDetails
-                        data={tasksdata ?? []}
-                        jobisenable={true}
-                        handleCreateTask={handleCreateTask}
-                        handleEditTask={handleEditTask}
-                        handleDeleteTask={handleDeleteTask}
-                        isEdit={isEdit}
-                      />
-                    </div>
-                  )}
-                </TabsPannel>
-              </Tabs>
-            </Card>
-          </Box>
+                  <TabsPannel value="jobs" style={{ width: "100%" }}>
+                    {activeTab === "jobs" && (
+                      <div style={{ height: "auto", width: "100%" }}>
+                        <JobDetails
+                          data={jobData ?? []}
+                          handleCreateJob={handleCreateJob}
+                          handleEditJob={handleEditJob}
+                          handleDeleteJob={handleDeleteJob}
+                          isEdit={isEdit}
+                        />
+                      </div>
+                    )}
+                  </TabsPannel>
+                  <TabsPannel value="tasks">
+                    {activeTab === "tasks" && (
+                      <div style={{ height: "auto", width: "100%" }}>
+                        <TaskDetails
+                          data={tasksdata ?? []}
+                          jobisenable={true}
+                          handleCreateTask={handleCreateTask}
+                          handleEditTask={handleEditTask}
+                          handleDeleteTask={handleDeleteTask}
+                          isEdit={isEdit}
+                        />
+                      </div>
+                    )}
+                  </TabsPannel>
+                </Tabs>
+              </Card>
+            </Box>
+          )}
         </Grid>
       </Layout>
     </>

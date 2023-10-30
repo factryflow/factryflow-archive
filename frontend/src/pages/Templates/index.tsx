@@ -13,6 +13,10 @@ import { setTemplates } from "@/redux/features/templateSlice";
 import { useDeleteTemplateMutation } from "@/redux/api/templateApi";
 import Loading from "@/components/loading/loading";
 import { toast } from "react-toastify";
+import { Card } from "@mantine/core";
+import deleteicon from "@/assets/images/delete.svg";
+import editicon from "@/assets/images/border_color.svg";
+import viewicon from "@/assets/images/visibility.svg";
 
 const Template = () => {
   const dispatch = useAppDispatch();
@@ -37,40 +41,35 @@ const Template = () => {
     {
       field: "action",
       headerName: "Action",
-      flex: 1,
+      width: 100,
       sortable: false,
       // disableClickEventBubbling: true,
       renderCell: (params: any) => {
-        const handleDeleteAction = (e: React.SyntheticEvent<any>) => {
-          const currentRow = params.row;
-          if (
-            window.confirm("Are you sure you want to remove this Template?")
-          ) {
-            // return alert(JSON.stringify(currentRow, null, 4));
-            deleteTemplate(currentRow?.id);
-            const newTemplateData = templateSelector.filter(
-              (item: any) => item.id !== currentRow?.id
-            );
-            dispatch(setTemplates(newTemplateData));
-            toast.success("Weekly Template Delete Successfully");
-          }
-          return;
+        const handleDeleteAction = () => {
+          const currentRowId = params.row.id;
+          // setDeleteModel(true);
+          // setDeleteId(currentRowId);
         };
-
-        const handleEditAction = (e: React.SyntheticEvent<any>) => {
+        const handleEditAction = () => {
           const currentRow = params.row;
-          navigate(`/template/form/${currentRow?.id}`);
+          navigate(`/tasks/form/${currentRow?.id}`);
         };
 
         return (
           <Stack direction="row" spacing={2}>
-            <ModeEditOutlinedIcon
-              sx={{ color: "blue", cursor: "pointer" }}
+            <img src={viewicon} alt="view_Icon" height={17} width={17} />
+            <img
+              src={editicon}
+              alt="edit_Icon"
+              height={17}
+              width={17}
               onClick={handleEditAction}
             />
-
-            <DeleteOutlinedIcon
-              sx={{ color: "red", cursor: "pointer" }}
+            <img
+              src={deleteicon}
+              alt="delete_Icon"
+              height={17}
+              width={17}
               onClick={handleDeleteAction}
             />
           </Stack>
@@ -78,6 +77,8 @@ const Template = () => {
       },
     },
   ];
+
+  const handleClick = () => {};
 
   useEffect(() => {
     if (!templateIsLoading && templateData) {
@@ -88,23 +89,28 @@ const Template = () => {
   return (
     <Layout>
       <Box m="20px">
-        <Header title="Template" subtitle="List of Template " />
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Header
+          title="Template Management"
+          buttonname="Create New Tasks"
+          onClick={handleClick}
+        />
+        {/* <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Link to="/template/form">
             <Button variant="contained" startIcon={<AddBoxIcon />}>
               Template
             </Button>
           </Link>
-        </Box>
+        </Box> */}
 
         <Box
           m="30px 0 0 0"
-          height="75vh"
+          height="auto"
           sx={{
-            "& .MuiDataGrid-root": {},
-            "& .MuiDataGrid-cell": {
-              // borderBottom: "none",
+            "& .MuiDataGrid-root": {
+              border: "unset",
+              marginTop: "10px",
             },
+
             "& .name-column--cell": {
               color: "bold !important",
             },
@@ -114,9 +120,8 @@ const Template = () => {
             "& .MuiDataGrid-columnHeaders": {
               backgroundColor: "#FAFAFA",
               color: "	#000000",
-              fontSize: "10px",
+              fontSize: "14px",
               fontWeight: "bold !important",
-              textTransform: "uppercase",
               borderTop: "1px solid #F0F0F0",
             },
             "& .MuiDataGrid-virtualScroller": {
@@ -124,10 +129,41 @@ const Template = () => {
             },
             "& .MuiDataGrid-footerContainer": {
               backgroundColor: "#FFFFFF",
+              width: "100%",
             },
-            "& .MuiCheckbox-root": {
-              color: `1677FF !important`,
+            "& .MuiTablePagination-root": {
+              background: "#FAFAFB",
+              width: "100%",
             },
+            "& .MuiTablePagination-spacer": {
+              display: "none",
+            },
+            "& .MuiTablePagination-selectLabel": {
+              flex: "0 0 6%",
+            },
+            "& .MuiTablePagination-displayedRows": {
+              flex: "0 0 70%",
+              textAlign: "right",
+            },
+            "& .css-1hgjne-MuiButtonBase-root-MuiIconButton-root": {
+              background: "#FFFFFF !important",
+              border: "1px solid #E1E3EA80",
+            },
+            "& .MuiCheckbox-root svg": {
+              width: "30px",
+              height: "30px",
+              backgroundColor: "#F1F1F2",
+              borderRadius: "7px",
+              padding: "6px 7px",
+            },
+            "& .MuiCheckbox-root svg path": {
+              display: "none",
+            },
+            "& .MuiCheckbox-root.Mui-checked:not(.MuiCheckbox-indeterminate) svg":
+              {
+                backgroundColor: "#1890ff",
+                borderColor: "#1890ff",
+              },
             ".MuiDataGrid-cell:focus": {
               outline: "none !important",
             },
@@ -140,46 +176,97 @@ const Template = () => {
             ".MuiDataGrid-toolbarContainer": {
               padding: "15px",
               flexDirection: "row-reverse",
+              marginBottom: "10px",
+            },
+            ".MuiFormControl-root": {
+              border: "1px solid #E1E3EA",
+              borderRadius: "6px",
+              width: "450px",
+              paddingBottom: "0",
+              padding: "0 10px",
+              ".MuiInput-underline": {
+                "&:before": {
+                  borderBottom: "none",
+                },
+                "&:hover:not(.Mui-disabled):before": {
+                  borderBottom: "none",
+                },
+              },
+            },
+            ".MuiSvgIcon-root": {
+              width: "24px",
+              height: "24px",
+              color: "#A1A5B7",
+            },
+            ".MuiDataGrid-iconSeparator": {
+              display: "none",
+            },
+            ".css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root:hover": {
+              backgroundColor: "transparent",
+            },
+            ".css-9vna8i-MuiButtonBase-root-MuiIconButton-root:hover": {
+              backgroundColor: "transparent",
+            },
+            ".MuiTablePagination-select": {
+              paddingRight: "34px",
+              paddingTop: "10px",
+            },
+            ".MuiDataGrid-columnHeaderTitle": {
+              fontSize: "14px",
+              color: "#181C32",
+              fontWeight: 600,
+            },
+            ".MuiDataGrid-sortIcon": {
+              color: "#7E8299",
+              opacity: "inherit !important",
+            },
+            ".MuiDataGrid-iconButtonContainer": {
+              visibility: "visible",
+            },
+            ".MuiDataGrid-cellContent": {
+              fontSize: "14px",
             },
           }}
         >
-          {templateIsLoading ? (
-            <Loading />
-          ) : (
-            templateSelector && (
-              <>
-                <DataGrid
-                  className="dataGrid"
-                  rows={templateSelector ?? []}
-                  columns={columns}
-                  initialState={{
-                    pagination: {
-                      paginationModel: {
-                        pageSize: 10,
+          <Card withBorder sx={{ padding: "0px !important", marginTop: 10 }}>
+            {templateIsLoading ? (
+              <Loading />
+            ) : (
+              templateSelector && (
+                <>
+                  <DataGrid
+                    className="dataGrid"
+                    rows={templateSelector ?? []}
+                    columns={columns}
+                    initialState={{
+                      pagination: {
+                        paginationModel: {
+                          pageSize: 10,
+                        },
                       },
-                    },
-                  }}
-                  slots={{ toolbar: GridToolbar }}
-                  slotProps={{
-                    toolbar: {
-                      showQuickFilter: true,
-                      quickFilterProps: { debounceMs: 500 },
-                    },
-                  }}
-                  pageSizeOptions={[5, 10, 25]}
-                  checkboxSelection
-                  disableRowSelectionOnClick
-                  disableColumnFilter
-                  disableColumnMenu
-                  disableDensitySelector
-                  disableColumnSelector
-                  // checkboxSelection
-                  // rows={jobData}
-                  // columns={columns}
-                />
-              </>
-            )
-          )}
+                    }}
+                    slots={{ toolbar: GridToolbar }}
+                    slotProps={{
+                      toolbar: {
+                        showQuickFilter: true,
+                        quickFilterProps: { debounceMs: 500 },
+                      },
+                    }}
+                    pageSizeOptions={[5, 10, 25]}
+                    checkboxSelection
+                    disableRowSelectionOnClick
+                    disableColumnFilter
+                    disableColumnMenu
+                    disableDensitySelector
+                    disableColumnSelector
+                    // checkboxSelection
+                    // rows={jobData}
+                    // columns={columns}
+                  />
+                </>
+              )
+            )}
+          </Card>
         </Box>
       </Box>
     </Layout>
