@@ -1,24 +1,19 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import config from "@/config/default";
+import customFetchBase from "./customeFetchBase";
 export const templateApi = createApi({
   reducerPath: "templateApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: config.API_ENDPOINT,
-    prepareHeaders: (header) => {
-      header.set("Authorization", `Bearer ${localStorage.getItem("token")}`);
-    },
-  }),
+  baseQuery: customFetchBase,
   tagTypes: ["getAllTemplate"],
   endpoints: (builder) => ({
     // getAllTemplate Api
     getAllTemplate: builder.query<any[] | undefined, void>({
       query: () => {
-        return `api/weekly-shift-template/`;
+        return `api/weekly-shift-templates/`;
       },
-      transformResponse: (res: { data: any[] }) => {
-        const data = res.data;
-        const result = data.filter((item: any) => item.is_deleted === false);
-        return result;
+      transformResponse: (res: { items: any[] }) => {
+        const result = res.items;
+        return result ?? [];
       },
       providesTags: ["getAllTemplate"],
     }),
@@ -27,7 +22,7 @@ export const templateApi = createApi({
     createTemplate: builder.mutation({
       query: (body: any) => {
         return {
-          url: "api/weekly-shift-template/",
+          url: "api/weekly-shift-templates/",
           method: "post",
           body,
         };
@@ -38,7 +33,7 @@ export const templateApi = createApi({
     deleteTemplate: builder.mutation({
       query: (id: number) => {
         return {
-          url: `api/weekly-shift-template/${id}/`,
+          url: `api/weekly-shift-templates/${id}/`,
           method: "delete",
         };
       },
@@ -48,7 +43,7 @@ export const templateApi = createApi({
     updateTemplate: builder.mutation({
       query: ({ id, data }) => {
         return {
-          url: `api/weekly-shift-template/${id}/`,
+          url: `api/weekly-shift-templates/${id}/`,
           method: "put",
           body: data,
         };

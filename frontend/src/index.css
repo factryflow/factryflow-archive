@@ -49,6 +49,8 @@ body,
   padding: 20px;
   border-radius: 12px !important;
   background: #FAFAFB !important;
+  height: 100%;
+  overflow: auto;
 }
 .main {
   flex-grow: 1;

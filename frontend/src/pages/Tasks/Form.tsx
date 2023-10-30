@@ -48,21 +48,7 @@ import {
   useDeleteDependencyMutation,
   useUpdateDependencyMutation,
 } from "@/redux/api/dependencyApi";
-// "id": 4,
-// "external_id": "565",
-// "name": "test task2",
-// "task_status": 1,
-// "setup_time": 1,
-// "run_time_per_unit": 2,
-// "teardown_time": 1,
-// "quantity": 10,
-// "jobs": 1,
-// "predecessors": [
-//     3
-// ],
-// "item": "test item",
-// "is_active": true,
-// "is_deleted": false
+
 const validationSchema = yup.object().shape({
   external_id: yup.string().required("External Id is required"),
   name: yup.string().required("Name is required").nullable(),
@@ -113,7 +99,7 @@ const TaskForm = () => {
       isSuccess: updatetaskissuccess,
     },
   ] = useUpdateTasksMutation();
-  const [jobdata, setJobData] = useState<any>([]);
+  const [jobdataa, setJobData] = useState<any>([]);
   const [dependencyData, setDependencyData] = useState<any | undefined>();
 
   const [createDependency] = useCreateDependencyMutation();
@@ -321,7 +307,7 @@ const TaskForm = () => {
                   </Grid>
 
                   <Grid item xs={6}>
-                    <InputLabel sx={{ color: "#181C32" }}>Jobs</InputLabel>
+                    <InputLabel sx={{ color: "#181C32" }}>Job</InputLabel>
                     <Controller
                       name="job_id"
                       control={control}
@@ -331,11 +317,11 @@ const TaskForm = () => {
                         formState,
                       }) => (
                         <Autocomplete
-                          options={jobdata}
+                          options={jobdataa ?? []}
                           size="small"
                           getOptionLabel={(option: any) => option.label}
                           value={
-                            jobdata.find(
+                            jobdataa?.find(
                               (option: any) => option.value === Number(value)
                             ) || null
                           }
@@ -455,37 +441,38 @@ const TaskForm = () => {
             </CardContent>
           </Card>
         </Grid>
-
-        <Box
-          sx={{
-            width: "100%",
-            height: "auto",
-            p: 1,
-            m: 1,
-          }}
-        >
-          <Card style={boxStyle} sx={{ padding: 2, height: "auto" }}>
-            <Tabs value={activeTab}>
-              <TabsList>
-                <Tabs.Tab value="dependency">Dependencies</Tabs.Tab>
-              </TabsList>
-              <TabsPannel value="dependency">
-                {activeTab === "dependency" && (
-                  <div style={{ height: "auto", width: "100%" }}>
-                    <DependencyDetails
-                      data={dependencyData ?? []}
-                      paramsId={paramsId}
-                      handleCreateDependency={handleCreateDependency}
-                      handleEditDependency={handleEditDependency}
-                      handleDeleteDependency={handleDeleteDependency}
-                      isEdit={isEdit}
-                    />
-                  </div>
-                )}
-              </TabsPannel>
-            </Tabs>
-          </Card>
-        </Box>
+        {isEdit && (
+          <Box
+            sx={{
+              width: "100%",
+              height: "auto",
+              p: 1,
+              m: 1,
+            }}
+          >
+            <Card style={boxStyle} sx={{ padding: 2, height: "auto" }}>
+              <Tabs value={activeTab}>
+                <TabsList>
+                  <Tabs.Tab value="dependency">Dependencies</Tabs.Tab>
+                </TabsList>
+                <TabsPannel value="dependency">
+                  {activeTab === "dependency" && (
+                    <div style={{ height: "auto", width: "100%" }}>
+                      <DependencyDetails
+                        data={dependencyData ?? []}
+                        paramsId={paramsId}
+                        handleCreateDependency={handleCreateDependency}
+                        handleEditDependency={handleEditDependency}
+                        handleDeleteDependency={handleDeleteDependency}
+                        isEdit={isEdit}
+                      />
+                    </div>
+                  )}
+                </TabsPannel>
+              </Tabs>
+            </Card>
+          </Box>
+        )}
       </Layout>
     </>
   );

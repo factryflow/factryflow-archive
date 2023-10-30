@@ -1,26 +1,30 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import config from "@/config/default";
+import customFetchBase from "./customeFetchBase";
 export const resourcesApi = createApi({
   reducerPath: "resourcesApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: config.API_ENDPOINT,
-    prepareHeaders: (header) => {
-      header.set("Authorization", `Bearer ${localStorage.getItem("token")}`);
-    },
-  }),
-  tagTypes: ["getAllResources"],
+  baseQuery: customFetchBase,
+
+  tagTypes: ["getAllResources", "getResources"],
   endpoints: (builder) => ({
     // getAllResource Api
     getAllResources: builder.query<any[], void>({
       query: () => {
         return `api/resources/`;
       },
-      transformResponse: (res: { data: any[] }) => {
-        const data = res.data;
-        const result = data.filter((item: any) => item.is_deleted === false);
+
+      transformResponse: (res: { items: any[] }) => {
+        const result = res.items;
         return result;
       },
       providesTags: ["getAllResources"],
+    }),
+    //getresourceByid api
+    getResourcesById: builder.query<any, number>({
+      query: (id) => {
+        return `api/resources/${id}`;
+      },
+      providesTags: ["getResources"],
     }),
 
     // create Resource Api
@@ -38,7 +42,7 @@ export const resourcesApi = createApi({
     deleteResources: builder.mutation({
       query: (id: number) => {
         return {
-          url: `api/resources/${id}/`,
+          url: `api/resources/${id}`,
           method: "delete",
         };
       },
@@ -48,7 +52,7 @@ export const resourcesApi = createApi({
     updateResources: builder.mutation({
       query: ({ id, data }) => {
         return {
-          url: `api/resources/${id}/`,
+          url: `api/resources/${id}`,
           method: "put",
           body: data,
         };
@@ -60,6 +64,7 @@ export const resourcesApi = createApi({
 
 export const {
   useGetAllResourcesQuery,
+  useGetResourcesByIdQuery,
   useCreateresourcesMutation,
   useDeleteResourcesMutation,
   useUpdateResourcesMutation,

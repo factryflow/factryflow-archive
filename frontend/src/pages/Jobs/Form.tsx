@@ -161,7 +161,8 @@ const MyForm = () => {
   const [updateTasks] = useUpdateTasksMutation();
   const [deleteTasks] = useDeleteTasksMutation();
 
-  const [createDependency] = useCreateDependencyMutation();
+  const [createDependency, { isSuccess: dependencyIsSuccess }] =
+    useCreateDependencyMutation();
   const [updateDependency] = useUpdateDependencyMutation();
   const [deleteDependency] = useDeleteDependencyMutation();
 
@@ -236,7 +237,7 @@ const MyForm = () => {
       };
       console.log(requestObj, "requestObject");
       const response = await createDependency(requestObj);
-      if (response) {
+      if (response && dependencyIsSuccess) {
         getjobid();
       }
     }
@@ -549,20 +550,7 @@ const MyForm = () => {
                   )}
                 </Grid>
 
-                <Grid
-                  item
-                  xs={6}
-                  sx={{
-                    "& .MuiFormLabel-root": {
-                      color: "#181C32!important",
-                      fontWeight: "600 !important",
-                      fontSize: "14px !important",
-                    },
-                    "& .MuiSelect-select": {
-                      padding: "13px 12px",
-                    },
-                  }}
-                >
+                <Grid item xs={6}>
                   {jobiddataIsLoading && jobiddataIsLoading ? (
                     <Skeleton
                       animation="wave"
@@ -579,20 +567,7 @@ const MyForm = () => {
                   )}
                 </Grid>
 
-                <Grid
-                  item
-                  xs={6}
-                  sx={{
-                    "& .MuiFormLabel-root": {
-                      color: "#181C32!important",
-                      fontWeight: "600 !important",
-                      fontSize: "14px !important",
-                    },
-                    "& .MuiSelect-select": {
-                      padding: "13px 12px",
-                    },
-                  }}
-                >
+                <Grid item xs={6}>
                   {jobiddataIsLoading && jobiddataIsLoading ? (
                     <Skeleton
                       animation="wave"
@@ -648,51 +623,52 @@ const MyForm = () => {
             </form>
           </Card>
         </Box>
+        {isEdit && (
+          <Box
+            sx={{
+              width: "100%",
+              height: "auto",
+              p: 1,
+              m: 1,
+            }}
+          >
+            <Card style={boxStyle} sx={{ padding: 2, height: "auto" }}>
+              <Tabs value={activeTab} onTabChange={handleTabChange}>
+                <TabsList>
+                  <Tabs.Tab value="tasks">Tasks</Tabs.Tab>
+                  <Tabs.Tab value="Dependencies">Dependencies</Tabs.Tab>
+                </TabsList>
 
-        <Box
-          sx={{
-            width: "100%",
-            height: "auto",
-            p: 1,
-            m: 1,
-          }}
-        >
-          <Card style={boxStyle} sx={{ padding: 2, height: "auto" }}>
-            <Tabs value={activeTab} onTabChange={handleTabChange}>
-              <TabsList>
-                <Tabs.Tab value="tasks">Tasks</Tabs.Tab>
-                <Tabs.Tab value="Dependencies">Dependencies</Tabs.Tab>
-              </TabsList>
-
-              <TabsPannel value="tasks" style={{ width: "100%" }}>
-                {activeTab === "tasks" && (
-                  <div style={{ height: "auto", width: "100%" }}>
-                    <TaskDetails
-                      data={tasksdata ?? []}
-                      handleCreateTask={handleCreateTask}
-                      handleEditTask={handleEditTask}
-                      handleDeleteTask={handleDeleteTask}
-                      isEdit={isEdit}
-                    />
-                  </div>
-                )}
-              </TabsPannel>
-              <TabsPannel value="Dependencies">
-                {activeTab === "Dependencies" && (
-                  <div style={{ height: "auto", width: "100%" }}>
-                    <DependencyDetails
-                      data={dependencyData ?? []}
-                      handleCreateDependency={handleCreateDependency}
-                      handleEditDependency={handleEditDependency}
-                      handleDeleteDependency={handleDeleteDependency}
-                      isEdit={isEdit}
-                    />
-                  </div>
-                )}
-              </TabsPannel>
-            </Tabs>
-          </Card>
-        </Box>
+                <TabsPannel value="tasks" style={{ width: "100%" }}>
+                  {activeTab === "tasks" && (
+                    <div style={{ height: "auto", width: "100%" }}>
+                      <TaskDetails
+                        data={tasksdata ?? []}
+                        handleCreateTask={handleCreateTask}
+                        handleEditTask={handleEditTask}
+                        handleDeleteTask={handleDeleteTask}
+                        isEdit={isEdit}
+                      />
+                    </div>
+                  )}
+                </TabsPannel>
+                <TabsPannel value="Dependencies">
+                  {activeTab === "Dependencies" && (
+                    <div style={{ height: "auto", width: "100%" }}>
+                      <DependencyDetails
+                        data={dependencyData ?? []}
+                        handleCreateDependency={handleCreateDependency}
+                        handleEditDependency={handleEditDependency}
+                        handleDeleteDependency={handleDeleteDependency}
+                        isEdit={isEdit}
+                      />
+                    </div>
+                  )}
+                </TabsPannel>
+              </Tabs>
+            </Card>
+          </Box>
+        )}
       </Layout>
     </>
   );
