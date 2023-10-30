@@ -6,6 +6,7 @@ from ninja import ModelSchema
 from pydantic.fields import Field
 
 from api.models import (
+    CustomField,
     Dependency,
     DependencyStatus,
     DependencyTypes,
@@ -19,7 +20,6 @@ from api.models import (
     TaskType,
     WeeklyShiftTemplate,
     WorkCenter,
-    CustomField
 )
 
 # ====================================
@@ -127,13 +127,19 @@ class TaskBaseOut(ModelSchema):
 # ====================================
 
 
+class ResourceWeeklyShiftTemplateOut(ModelSchema):
+    class Config:
+        model = WeeklyShiftTemplate
+        model_fields = ["id", "name", "details"]
+
+
 class ResourceBaseOut(ModelSchema):
     resource_group_ids: List[int] = Field([], alias="resource_group_id_list")
-    weekly_shift_template_id: int = None
+    weekly_shift_template: ResourceWeeklyShiftTemplateOut = None
 
     class Config:
         model = Resource
-        model_exclude = ["resource_groups", "weekly_shift_template"]
+        model_exclude = ["resource_groups"]
 
 
 # ====================================
@@ -165,6 +171,7 @@ class WeeklyShiftTemplateBaseOut(ModelSchema):
 # ====================================
 # =============== CustomField ===============
 # ====================================
+
 
 class CustomFieldBaseOut(ModelSchema):
     class Config:
