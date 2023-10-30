@@ -6,9 +6,10 @@ from simple_history.models import HistoricalRecords
 
 from api.models.job_status import JobStatus
 from api.models.job_type import JobType
+from api.models.custom_field_value import CustomFieldMixin
 
 
-class Job(OrderedModelBase):
+class Job(CustomFieldMixin, OrderedModelBase):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)

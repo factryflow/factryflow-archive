@@ -4,10 +4,7 @@ from typing import Optional, List
 from ninja import ModelSchema, Schema
 
 from api.models import Item
-
-class CustomFieldValueSchema(Schema):
-    field_name: str
-    value: str
+from api.schemas.custom_field import CustomValuesListedOut
 
 class ItemIn(Schema):
     name: str
@@ -15,7 +12,7 @@ class ItemIn(Schema):
 
 
 class ItemOut(ModelSchema):
-    custom_values: Optional[List[CustomFieldValueSchema]]
+    custom_values: Optional[List[CustomValuesListedOut]]
     class Config:
         model = Item
         model_fields = "__all__"

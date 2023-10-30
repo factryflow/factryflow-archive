@@ -1,5 +1,5 @@
 # schemas.py
-from typing import List
+from typing import List, Optional
 
 from ninja import ModelSchema
 from pydantic import Field
@@ -38,3 +38,4 @@ class TaskOut(TaskBaseOut):
     class Config:
         model = Task
         model_fields = "__all__"
+        

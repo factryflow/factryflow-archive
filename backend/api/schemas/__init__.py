@@ -16,7 +16,6 @@ from .base import (
     TaskBaseOut,
     TaskStatusOut,
     TaskTypeOut,
-    CustomFieldBaseOut, 
 )
 from .dependency import (
     DependencyIn,

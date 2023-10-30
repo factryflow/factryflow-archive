@@ -1,12 +1,12 @@
 # schemas.py
-from typing import List
+from typing import List, Optional
 
-from ninja import ModelSchema
+from ninja import ModelSchema, Schema
 from pydantic import Field
 
 from api.models import Job
 from api.schemas.base import DependencyBaseOut, JobBaseOut, TaskBaseOut
-
+from api.schemas.custom_field import CustomValuesListedOut
 
 class JobIn(ModelSchema):
     job_status_id: int
@@ -23,3 +23,4 @@ class JobIn(ModelSchema):
 class JobOut(JobBaseOut):
     tasks: List[TaskBaseOut]
     dependencies: List[DependencyBaseOut]
+    custom_values: Optional[List[CustomValuesListedOut]]

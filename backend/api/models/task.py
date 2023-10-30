@@ -8,9 +8,10 @@ from api.models.task_status import TaskStatus
 from api.models.task_type import TaskType
 from api.models.work_center import WorkCenter
 from api.utils.model_manager import ActiveManager
+from api.models.custom_field_value import CustomFieldMixin
 
 
-class Task(models.Model):
+class Task(CustomFieldMixin, models.Model):
     id = models.AutoField(primary_key=True)
     external_id = models.CharField(max_length=150, blank=True)
     name = models.CharField(max_length=150)

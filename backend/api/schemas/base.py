@@ -1,6 +1,6 @@
 # schemas.py
 
-from typing import List
+from typing import List, Optional
 
 from ninja import ModelSchema
 from pydantic.fields import Field
@@ -22,6 +22,8 @@ from api.models import (
     CustomField, 
     CustomFieldValue
 )
+
+from api.schemas.custom_field import CustomValuesListedOut
 
 # ====================================
 # ============ DEPENDENCY ============
@@ -117,6 +119,7 @@ class TaskBaseOut(ModelSchema):
     predecessor_ids: List[int] = Field([], alias="predecessor_id_list")
     successor_ids: List[int] = Field([], alias="successor_id_list")
     dependency_ids: List[int] = Field([], alias="dependency_id_list")
+    custom_values: Optional[List[CustomValuesListedOut]]
 
     class Config:
         model = Task
@@ -160,16 +163,4 @@ class WeeklyShiftTemplateBaseOut(ModelSchema):
 
     class Config:
         model = WeeklyShiftTemplate
-        model_fields = "__all__"
-
-
-# ====================================
-# =============== CustomField ===============
-# ====================================
-
-class CustomFieldBaseOut(ModelSchema):
-    custom_values_ids: List[int] = Field([], alias= "value_id_list")
-    custom_field_values: List[dict] = Field([], alias= "custom_field_values")
-    class Config:
-        model = CustomField
         model_fields = "__all__"
