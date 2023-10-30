@@ -1,16 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from django.apps import apps
-from django.core.exceptions import ValidationError
 from simple_history.models import HistoricalRecords
-
-# This is added to validate if the related_model field value is an existing model
-def validate_related_model(value):
-    try:
-        apps.get_model('api', value)
-    except LookupError:
-        raise ValidationError(f"'{value}' is not a valid model in the app.") 
         
 class CustomField(models.Model):
     FIELD_TYPES = [
@@ -22,7 +13,6 @@ class CustomField(models.Model):
 
     field_name = models.CharField(max_length=255)
     field_type = models.CharField(max_length=50, choices=FIELD_TYPES)
-    related_model = models.CharField(max_length=255, validators=[validate_related_model])
     label = models.CharField(max_length=255, null=True, blank=True)
     validation = models.JSONField(null=True, blank=True)
     style = models.JSONField(null=True, blank=True)

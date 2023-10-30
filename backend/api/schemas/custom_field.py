@@ -20,8 +20,7 @@ class CustomFieldIn(ModelSchema):
     class Config:
         model = CustomField
         model_fields = [
-            "field_name", 
-            "related_model"
+            "field_name"
         ]
 
 class CustomFieldValueIn(BaseModel):
