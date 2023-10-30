@@ -7,7 +7,6 @@ from api.models import Resource
 from api.schemas.base import (
     ResourceBaseOut,
     ResourceGroupBaseOut,
-    WeeklyShiftTemplateBaseOut,
 )
 
 
@@ -23,5 +22,4 @@ class ResourceIn(ModelSchema):
 
 
 class ResourceOut(ResourceBaseOut):
-    weekly_shift_template: WeeklyShiftTemplateBaseOut = None
     resource_groups: List[ResourceGroupBaseOut]
