@@ -33,3 +33,28 @@ class CustomFieldMixin:
             object_id=self.id,
         )
         return custom_field_value.value
+
+    @property
+    def custom_values(self):
+        model_name = self.__class__.__name__
+        object_id = self.pk
+
+        # Fetch the custom fields for the related model
+        custom_fields = CustomField.objects.filter(related_model=model_name)
+        
+        # Fetch the custom field values based on custom fields and object_id
+        custom_field_values = CustomFieldValue.objects.filter(
+            custom_field__in=custom_fields, 
+            object_id=object_id
+        )
+        
+        # Organize values by field name
+        custom_values_list = [
+            {
+                "field_name": value.custom_field.field_name, 
+                "value": value.value
+            } for value in custom_field_values
+        ]
+            
+        return custom_values_list
+

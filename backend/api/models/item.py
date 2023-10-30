@@ -4,9 +4,10 @@ from django.utils import timezone
 from simple_history.models import HistoricalRecords
 
 from api.utils.model_manager import ActiveManager
+from api.models.custom_field_value import CustomFieldMixin
 
 
-class Item(models.Model):
+class Item(CustomFieldMixin, models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
 
