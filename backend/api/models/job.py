@@ -23,6 +23,7 @@ class Job(OrderedModelBase):
     job_status = models.ForeignKey(JobStatus, on_delete=models.DO_NOTHING)
     job_type = models.ForeignKey(JobType, on_delete=models.DO_NOTHING)
     dependencies = models.ManyToManyField("Dependency", related_name="jobs")
+    custom_fields = models.JSONField(blank=True, null=True)
 
     # Metadata
     created_at = models.DateTimeField(default=timezone.now)

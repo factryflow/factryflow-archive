@@ -37,6 +37,7 @@ class Task(models.Model):
     planned_start_datetime = models.DateTimeField(blank=True, null=True)
     planned_end_datetime = models.DateTimeField(blank=True, null=True)
     dependencies = models.ManyToManyField("Dependency", related_name="tasks")
+    custom_fields = models.JSONField(blank=True, null=True)
 
     # Metadata
     created_at = models.DateTimeField(default=timezone.now)
