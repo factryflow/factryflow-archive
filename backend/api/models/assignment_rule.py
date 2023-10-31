@@ -4,7 +4,6 @@ from django.utils import timezone
 from ordered_model.models import OrderedModelBase
 from simple_history.models import HistoricalRecords
 
-from api.models.resource_group import ResourceGroup
 from api.models.work_center import WorkCenter
 from api.utils.model_manager import ActiveManager
 
@@ -17,11 +16,6 @@ class AssignmentRule(OrderedModelBase):
     order_field_name = "priority"
     order_with_respect_to = "work_center"
     work_center = models.ForeignKey(WorkCenter, on_delete=models.DO_NOTHING, default=1)
-    resource_group = models.ForeignKey(
-        ResourceGroup, on_delete=models.DO_NOTHING, related_name="assignment_rules"
-    )
-    resource_count = models.IntegerField(blank=True, null=True)
-    use_all_resources = models.BooleanField(default=False)
     created_at = models.DateTimeField(default=timezone.now)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
