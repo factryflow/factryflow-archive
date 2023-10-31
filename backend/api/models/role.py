@@ -28,7 +28,7 @@ class Role(models.Model):
         blank=True,
     )
 
-    history = HistoricalRecords(table_name="roles_history")
+    history = HistoricalRecords(table_name="role_history")
     can_delete = models.BooleanField(default=True)
 
     objects = ActiveManager()
@@ -37,5 +37,5 @@ class Role(models.Model):
         return self.name
 
     class Meta:
-        db_table = "roles"
+        db_table = "role"
         indexes = [models.Index(fields=["id", "name"])]

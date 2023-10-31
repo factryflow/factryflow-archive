@@ -52,7 +52,7 @@ class TasksResourceAssignment(models.Model):
         blank=True,
     )
 
-    history = HistoricalRecords(table_name="tasks_resource_assignment_history")
+    history = HistoricalRecords(table_name="task_resource_assignment_history")
 
     objects = ActiveManager()
 
@@ -60,5 +60,5 @@ class TasksResourceAssignment(models.Model):
         return str(self.id)
 
     class Meta:
-        db_table = "tasks_resource_assignment"
+        db_table = "task_resource_assignment"
         indexes = [models.Index(fields=["id"])]
