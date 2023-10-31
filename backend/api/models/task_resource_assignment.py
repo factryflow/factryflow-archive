@@ -6,6 +6,7 @@ from simple_history.models import HistoricalRecords
 from api.utils.model_manager import ActiveManager
 
 from .resource import Resource
+from .resource_group import ResourceGroup
 from .task import Task
 
 
@@ -14,17 +15,24 @@ class TasksResourceAssignment(models.Model):
     task = models.ForeignKey(
         Task,
         on_delete=models.CASCADE,
-        related_name="task_assignment",
+        related_name="resource_assignments",
         blank=True,
         null=True,
     )
-    resource = models.ForeignKey(
-        Resource,
+
+    resource_group = models.ForeignKey(
+        ResourceGroup,
         on_delete=models.CASCADE,
-        related_name="resource_assignment",
+        related_name="task_assignments",
         blank=True,
         null=True,
     )
+    resources = models.ManyToManyField(
+        Resource, related_name="task_assignments", blank=True
+    )
+    use_all_resources = models.BooleanField(default=False)
+    resource_count = models.IntegerField(blank=True, null=True)
+    is_manual = models.BooleanField(default=False)
 
     # Metadata
     created_at = models.DateTimeField(default=timezone.now)
