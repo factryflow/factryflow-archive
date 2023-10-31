@@ -1,0 +1,11 @@
+[
+  {
+    "model": "api.ResourceGroup",
+    "pk": 1,
+    "fields": {
+      "name": "All",
+      "created_at": "2023-09-22T14:08:46.853Z",
+      "updated_at": "2023-09-22T14:08:46.853Z"
+    }
+  }
+]
