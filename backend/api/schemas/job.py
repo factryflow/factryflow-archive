@@ -15,7 +15,7 @@ class JobIn(ModelSchema):
     dependency_ids: List[int] = Field(default=[])
     task_ids: List[int] = Field(default=[])
     order: int = Field(None, alias="priority")
-    custom_fields: Optional[generate_custom_field_schema(model_name= 'Job')]
+    custom_fields: Optional[generate_custom_field_schema(model_name= 'Job', class_suffix= 'Job')]
 
     class Config:
         model = Job

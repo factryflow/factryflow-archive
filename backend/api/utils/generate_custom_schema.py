@@ -5,7 +5,7 @@ from api.models import CustomField
 from datetime import date, time, datetime
 from pydantic import BaseModel, create_model
 
-def generate_custom_field_schema(model_name: str) -> type(BaseModel):
+def generate_custom_field_schema(model_name: str, class_suffix: str) -> type(BaseModel):
     # Getting all custom fields for the given model name
     custom_fields = CustomField.objects.filter(related_model=model_name)
     
@@ -29,7 +29,7 @@ def generate_custom_field_schema(model_name: str) -> type(BaseModel):
             attributes[field.field_name] = (datetime, *field_args)
             
     # Dynamically create a Pydantic model with these attributes
-    CustomFieldSchema = create_model('CustomFieldSchema', **attributes)
+    CustomFieldSchema = create_model(f'CustomFieldSchema_{class_suffix}', **attributes)
     
     return CustomFieldSchema
     

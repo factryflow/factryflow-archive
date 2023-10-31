@@ -18,7 +18,7 @@ class TaskIn(ModelSchema):
     predecessor_ids: List[int] = Field(default=[])
     successor_ids: List[int] = Field(default=[])
     dependency_ids: List[int] = Field(default=[])
-    custom_fields: Optional[generate_custom_field_schema(model_name= 'Task')]
+    custom_fields: Optional[generate_custom_field_schema(model_name= 'Task', class_suffix= 'Task')]
 
     class Config:
         model = Task
