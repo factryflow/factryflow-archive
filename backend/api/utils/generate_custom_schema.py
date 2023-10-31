@@ -4,8 +4,22 @@ from ninja.orm import create_schema
 from api.models import CustomField
 from datetime import date, time, datetime
 from pydantic import BaseModel, create_model
+from django.db.migrations.executor import MigrationExecutor
+from django.db import connections, DEFAULT_DB_ALIAS
+
+class DefaultCustomFieldSchema(BaseModel):
+    pass  # An empty default schema 
+
+def is_migrating():
+    connection = connections[DEFAULT_DB_ALIAS]
+    executor = MigrationExecutor(connection)
+    targets = executor.loader.graph.leaf_nodes()
+    return executor.migration_plan(targets)
 
 def generate_custom_field_schema(model_name: str, class_suffix: str) -> type(BaseModel):
+    if is_migrating():
+        # Return some default schema or value during migration
+        return DefaultCustomFieldSchema
     # Getting all custom fields for the given model name
     custom_fields = CustomField.objects.filter(related_model=model_name)
     
