@@ -9,6 +9,7 @@ from api.utils.model_manager import ActiveManager
 class Item(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
+    custom_fields = models.JSONField(blank=True, null=True)
 
     # Metadata
     created_at = models.DateTimeField(default=timezone.now)

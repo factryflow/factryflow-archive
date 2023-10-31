@@ -9,14 +9,13 @@ class CustomField(models.Model):
         ("number", "Number"),
         ("date", "Date"),
         ("boolean", "Boolean"),
+        ("datetime", "DateTime"),
+        ("time", "Time"),
     ]
 
     field_name = models.CharField(max_length=255)
     field_type = models.CharField(max_length=50, choices=FIELD_TYPES)
     related_model = models.CharField(max_length=255)
-    label = models.CharField(max_length=255, null=True, blank=True)
-    validation = models.JSONField(null=True, blank=True)
-    style = models.JSONField(null=True, blank=True)
 
      # Metadata
     created_at = models.DateTimeField(default=timezone.now)
@@ -42,4 +41,4 @@ class CustomField(models.Model):
 
     class Meta:
         db_table = "custom_fields"
-        indexes = [models.Index(fields=["id", "field_name"])]
+        indexes = [models.Index(fields=["id", "field_name", "related_model"])]
