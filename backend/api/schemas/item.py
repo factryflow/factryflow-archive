@@ -10,11 +10,11 @@ from api.utils.generate_custom_schema  import generate_custom_field_schema
 class ItemIn(Schema):
     name: str
     description: Optional[str] = None
-    custom_fields: Optional[generate_custom_field_schema(model_name= 'Item')]
+    custom_fields: Optional[generate_custom_field_schema(model_name= 'Item', class_suffix= 'Item')]
 
 
 class ItemOut(ModelSchema):
-    custom_fields: Optional[generate_custom_field_schema(model_name= 'Item')]
+    custom_fields: Optional[generate_custom_field_schema(model_name= 'Item', class_suffix= 'Item')]
     class Config:
         model = Item
         model_fields = "__all__"
