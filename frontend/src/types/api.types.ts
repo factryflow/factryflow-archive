@@ -1,7 +1,5 @@
 //#region common types
 export type GenericResponse<T> = {
-  code: number;
-  message: string;
   items?: T;
 };
 
@@ -54,16 +52,14 @@ export type JobError = {
 export type JobResponse = {
   id: number;
   name: string;
-  priority: number;
-  due_date: string;
-  customer: string;
   description: string;
-  note: string;
+  customer: string;
+  due_date: string;
+  priority: number;
   planned_start_datetime: string;
   planned_end_datetime: string;
-  is_active: boolean;
-  is_deleted: boolean;
   external_id: string;
+  note: string;
   job_status: any;
   job_type: any;
   created_at: string;
@@ -71,6 +67,8 @@ export type JobResponse = {
   updated_at: string;
   updated_by: number;
   deleted_at: string;
+  task_ids: any;
+  dependencies: any;
 };
 
 // id": 0,

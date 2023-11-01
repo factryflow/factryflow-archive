@@ -18,6 +18,7 @@ import ResourcesGroup from "./pages/resources/resorcesgroup";
 import ResourceForm from "./pages/resources/Form";
 import ResourceGroupForm from "./pages/resources/resorcesgroup/Form";
 import Exception from "./pages/Exception";
+import ExceptionForm from "./pages/Exception/Form";
 import ExceptionType from "./pages/Exception/ExceptionType";
 import Template from "./pages/Templates";
 import TemplateForm from "./pages/Templates/Form";
@@ -25,6 +26,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 
 import theme from "./theme";
 import RequireUser from "./components/requireUser";
+import NotFound from "./pages/NotFound";
 function App() {
   return (
     <>
@@ -35,6 +37,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/change-password" element={<ChangePass />} />
+          <Route path="*" element={<NotFound />} />
 
           <Route element={<RequireUser />}>
             <Route path="/jobs" element={<Outlet />}>
@@ -75,11 +78,16 @@ function App() {
 
           <Route path="/exception" element={<Outlet />}>
             <Route path="/exception" index element={<Exception />} />
+            <Route path="form" element={<ExceptionForm />} />
+            <Route path="form/:id" element={<ExceptionForm />} />
             <Route path="exception-type" element={<ExceptionType />} />
           </Route>
-          <Route path="/template" element={<Template />} />
-          <Route path="/template/form" element={<TemplateForm />} />
-          <Route path="/template/form/:id" element={<TemplateForm />} />
+
+          <Route path="/template" element={<Outlet />}>
+            <Route index element={<Template />} />
+            <Route path="form" element={<TemplateForm />} />
+            <Route path="form/:id" element={<TemplateForm />} />
+          </Route>
         </Routes>
       </ThemeProvider>
     </>

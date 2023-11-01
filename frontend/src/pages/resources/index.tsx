@@ -113,10 +113,7 @@ const Resources = () => {
           buttonname="Create New Resourse"
           onClick={handleClick}
         />
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          {/* <Link to="/resources/form">
-            <Button variant="contained" startIcon={<AddBoxIcon />}></Button>
-          </Link> */}
+        <Box>
           <Link to="/resources/resourcegroup">
             <Button variant="contained">Manage Resorce Group</Button>
           </Link>

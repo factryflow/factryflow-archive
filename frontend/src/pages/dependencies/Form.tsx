@@ -130,7 +130,6 @@ const DependencyForm = () => {
   } = form;
 
   const onSubmit = (data: any) => {
-    console.log(data, "Data");
     if (isEdit) {
       updateDependency({ id: params.id, data: data });
     } else {

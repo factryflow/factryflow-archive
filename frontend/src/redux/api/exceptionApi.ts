@@ -1,26 +1,28 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import config from "@/config/default";
+import customFetchBase from "./customeFetchBase";
 export const exceptionApi = createApi({
   reducerPath: "exceptionApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: config.API_ENDPOINT,
-    prepareHeaders: (header) => {
-      header.set("Authorization", `Bearer ${localStorage.getItem("token")}`);
-    },
-  }),
-  tagTypes: ["getAllException"],
+  baseQuery: customFetchBase,
+  tagTypes: ["getAllException", "getExceptionById"],
   endpoints: (builder) => ({
     // getAllException Api
     getAllException: builder.query<any[], void>({
       query: () => {
         return `api/operational-exceptions/`;
       },
-      transformResponse: (res: { data: any[] }) => {
-        const data = res.data;
-        const result = data.filter((item: any) => item.is_deleted === false);
-        return result;
+      transformResponse: (res: { items: any[] }) => {
+        const result = res.items;
+        return result ?? [];
       },
       providesTags: ["getAllException"],
+    }),
+
+    getExceptionById: builder.query<any[], number>({
+      query: (id) => {
+        return `api/operational-exceptions/${id}`;
+      },
+      providesTags: ["getExceptionById"],
     }),
 
     // create Exception Api
@@ -38,7 +40,7 @@ export const exceptionApi = createApi({
     deleteException: builder.mutation({
       query: (id: number) => {
         return {
-          url: `api/operational-exceptions/${id}/`,
+          url: `api/operational-exceptions/${id}`,
           method: "delete",
         };
       },
@@ -48,7 +50,7 @@ export const exceptionApi = createApi({
     updateException: builder.mutation({
       query: ({ id, data }) => {
         return {
-          url: `api/operational-exceptions/${id}/`,
+          url: `api/operational-exceptions/${id}`,
           method: "put",
           body: data,
         };
@@ -60,6 +62,7 @@ export const exceptionApi = createApi({
 
 export const {
   useGetAllExceptionQuery,
+  useGetExceptionByIdQuery,
   useCreateExceptionMutation,
   useDeleteExceptionMutation,
   useUpdateExceptionMutation,

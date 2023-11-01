@@ -20,7 +20,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 // import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "@/app/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
 import DashboardIcon from "@/assets/sidebar/dashboard.svg";
 import ProductionIcon from "@/assets/sidebar/production.svg";
@@ -31,6 +31,9 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import Dote from "@/assets/images/Dote.svg";
 import FactoryFlowIcon from "@/assets/images/FactryFlow.svg";
 import FFLogo from "@/assets/images/FFlogo.svg";
+
+import { setMenuItem } from "@/redux/features/menuSlice";
+
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -80,21 +83,88 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function Sidenav() {
+const Sidenav = () => {
+  const dispatch = useAppDispatch();
+
+  const menuItems = [
+    {
+      label: "Dashboard",
+      icon: DashboardIcon,
+      route: "/dashboard",
+    },
+    {
+      label: "Production",
+      icon: ProductionIcon,
+      childrenOpen: false,
+      route: "/production",
+      children: [
+        {
+          label: "Jobs",
+          icon: Dote,
+          route: "/jobs",
+        },
+        {
+          label: "Tasks",
+          icon: Dote,
+          route: "/tasks",
+        },
+        {
+          label: "Dependency",
+          icon: Dote,
+          route: "/dependency",
+        },
+      ],
+    },
+    {
+      label: "Resource",
+      icon: ResourceIcon,
+      childrenOpen: false,
+      route: "/resource",
+      children: [
+        {
+          label: "Template",
+          icon: Dote,
+          route: "/template",
+        },
+        {
+          label: "Resources",
+          icon: Dote,
+          route: "/resources",
+        },
+        {
+          label: "Exception",
+          icon: Dote,
+          route: "/exception",
+        },
+      ],
+    },
+    {
+      label: "Settings",
+      icon: SettingIcon,
+      route: "/settings",
+    },
+    {
+      label: "Help & Support",
+      icon: SupportIcon,
+      route: "/help",
+    },
+  ];
+
+  const [menuItemsState, setMenuItemsState] = useState(menuItems);
+
+  const handleMenuItemClick = (menuItem: any) => {
+    if (menuItem.children) {
+      menuItem.childrenOpen = !menuItem.childrenOpen;
+      setMenuItemsState([...menuItemsState]);
+    } else {
+      navigate(menuItem.route);
+    }
+  };
   const theme = useTheme();
   // const [open, setOpen] = React.useState(true);
   const navigate = useNavigate();
   const open = useAppSelector((state) => state.menu.menu);
   // const open = useAppStore((state) => state.dopen);
-  const [isCollapse, setIsCollapse] = useState(false);
-  const [resourceCollapse, setResourceCollapse] = useState(false);
-  const handleCollapse = () => {
-    setIsCollapse(!isCollapse);
-  };
-
-  const handleresourceCollapse = () => {
-    setResourceCollapse(!resourceCollapse);
-  };
 
   return (
     <Box sx={{ display: "flex", borderRight: "1px solid #F1F1F2 " }}>
@@ -113,346 +183,99 @@ export default function Sidenav() {
             <img src={FFLogo} alt="FFlogo" height={30} width={30} />
           )}
         </DrawerHeader>
-        {/* <Divider /> */}
+
         <List>
-          <ListItem disablePadding sx={{ display: "block" }} onClick={() => {}}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
+          {menuItemsState.map((menuItem: any, index: any) => (
+            <div key={index}>
+              <ListItem
+                disablePadding
+                sx={{ display: "block" }}
+                onClick={() => handleMenuItemClick(menuItem)}
               >
-                <img
-                  src={DashboardIcon}
-                  alt="Dash_Icon"
-                  height={30}
-                  width={24}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primary="Dashboard"
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton>
-          </ListItem>
-        </List>
-
-        {/* <Divider /> */}
-        <List>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={handleCollapse}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <img
-                  src={ProductionIcon}
-                  alt="Production_Icon"
-                  height={30}
-                  width={24}
-                />
-              </ListItemIcon>{" "}
-              <ListItemText
-                primary="Production"
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-              {isCollapse ? <ExpandMoreIcon /> : <KeyboardArrowRight />}
-            </ListItemButton>
-          </ListItem>
-          <Collapse in={isCollapse} timeout="auto" unmountOnExit>
-            <ListItem
-              disablePadding
-              sx={{ display: "block" }}
-              onClick={() => {
-                navigate("/jobs");
-              }}
-            >
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
+                <ListItemButton
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
                   }}
                 >
-                  <img src={Dote} alt="Dote_Icon" height={30} width={24} />
-                </ListItemIcon>
-                <ListItemText primary="Jobs" sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-
-            <ListItem
-              disablePadding
-              sx={{ display: "block" }}
-              onClick={() => {
-                navigate("/tasks");
-              }}
-            >
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <img
+                      src={menuItem.icon}
+                      alt={menuItem.label}
+                      height={30}
+                      width={24}
+                    />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={menuItem.label}
+                    sx={{ opacity: open ? 1 : 0 }}
+                  />
+                  {menuItem.children &&
+                    (menuItem.childrenOpen ? (
+                      <ExpandMoreIcon />
+                    ) : (
+                      <KeyboardArrowRight />
+                    ))}
+                </ListItemButton>
+              </ListItem>
+              {menuItem.children && (
+                <Collapse
+                  in={menuItem.childrenOpen}
+                  timeout="auto"
+                  unmountOnExit
                 >
-                  <img src={Dote} alt="Dote_Icon" height={30} width={24} />
-                </ListItemIcon>
-                <ListItemText primary="Tasks" sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-
-            <ListItem
-              disablePadding
-              sx={{ display: "block" }}
-              onClick={() => {
-                navigate("/dependency");
-              }}
-            >
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <img src={Dote} alt="Dote_Icon" height={30} width={24} />
-                </ListItemIcon>
-                <ListItemText
-                  primary="Dependency"
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
-          </Collapse>
-        </List>
-
-        {/* <Divider /> */}
-        <List>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={handleresourceCollapse}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <img
-                  src={ResourceIcon}
-                  alt="resource_Icon"
-                  height={30}
-                  width={24}
-                />
-              </ListItemIcon>{" "}
-              <ListItemText primary="Resource" sx={{ opacity: open ? 1 : 0 }} />
-              {resourceCollapse ? <ExpandMoreIcon /> : <KeyboardArrowRight />}
-            </ListItemButton>
-          </ListItem>
-          <Collapse in={resourceCollapse} timeout="auto" unmountOnExit>
-            <ListItem
-              disablePadding
-              sx={{ display: "block" }}
-              onClick={() => {
-                navigate("/template");
-              }}
-            >
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <img src={Dote} alt="Dote_Icon" height={30} width={24} />
-                </ListItemIcon>
-                <ListItemText
-                  primary="Template"
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
-
-            <ListItem
-              disablePadding
-              sx={{ display: "block" }}
-              onClick={() => {
-                navigate("/resources");
-              }}
-            >
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <img src={Dote} alt="Dote_Icon" height={30} width={24} />
-                </ListItemIcon>
-                <ListItemText
-                  primary="Resources"
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
-
-            <ListItem
-              disablePadding
-              sx={{ display: "block" }}
-              onClick={() => {
-                navigate("/exception");
-              }}
-            >
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <img src={Dote} alt="Dote_Icon" height={30} width={24} />
-                </ListItemIcon>
-                <ListItemText
-                  primary="Exception"
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
-          </Collapse>
-        </List>
-
-        {/* <Divider /> */}
-        <List>
-          <ListItem disablePadding sx={{ display: "block" }} onClick={() => {}}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <img
-                  src={SettingIcon}
-                  alt="Setting_Icon"
-                  height={30}
-                  width={24}
-                />
-              </ListItemIcon>
-              <ListItemText primary="Settings" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-        </List>
-
-        {/* <Divider /> */}
-        <List>
-          <ListItem disablePadding sx={{ display: "block" }} onClick={() => {}}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <img
-                  src={SupportIcon}
-                  alt="Setting_Icon"
-                  height={30}
-                  width={24}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primary="Help & Support"
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton>
-          </ListItem>
+                  <List>
+                    {menuItem.children.map((child: any, childIndex: any) => (
+                      <ListItem
+                        key={childIndex}
+                        disablePadding
+                        sx={{ display: "block", pl: 4 }}
+                        onClick={() => handleMenuItemClick(child)}
+                      >
+                        <ListItemButton
+                          sx={{
+                            minHeight: 48,
+                            justifyContent: open ? "initial" : "center",
+                            px: 2.5,
+                          }}
+                        >
+                          <ListItemIcon
+                            sx={{
+                              minWidth: 0,
+                              mr: open ? 3 : "auto",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <img
+                              src={child.icon}
+                              alt={child.label}
+                              height={30}
+                              width={24}
+                            />
+                          </ListItemIcon>
+                          <ListItemText
+                            primary={child.label}
+                            sx={{ opacity: open ? 1 : 0 }}
+                          />
+                        </ListItemButton>
+                      </ListItem>
+                    ))}
+                  </List>
+                </Collapse>
+              )}
+            </div>
+          ))}
         </List>
       </Drawer>
     </Box>
   );
-}
+};
+
+export default Sidenav;

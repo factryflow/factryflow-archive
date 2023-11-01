@@ -70,6 +70,7 @@ const TaskForm = () => {
   const isEdit = !!params.id;
   const TabsList = Tabs.List;
   const TabsPannel = Tabs.Panel;
+  const paramsId = params && params.id;
   const [activeTab] = useState<string | null>("dependency");
 
   const boxStyle = {
@@ -105,7 +106,6 @@ const TaskForm = () => {
   const [createDependency] = useCreateDependencyMutation();
   const [updateDependency] = useUpdateDependencyMutation();
   const [deleteDependency] = useDeleteDependencyMutation();
-  const paramsId = params && params.id;
   const form = useForm({
     defaultValues: {
       external_id: "",

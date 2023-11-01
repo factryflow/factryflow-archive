@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../Layout";
 import Header from "@/components/table/Header";
 import { Box, Button, Stack } from "@mui/material";
@@ -17,6 +17,7 @@ import { Card } from "@mantine/core";
 import deleteicon from "@/assets/images/delete.svg";
 import editicon from "@/assets/images/border_color.svg";
 import viewicon from "@/assets/images/visibility.svg";
+import DeleteModel from "@/components/table/Model/delete-model";
 
 const Template = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +29,8 @@ const Template = () => {
   } = useGetAllTemplateQuery();
 
   const [deleteTemplate] = useDeleteTemplateMutation();
-
+  const [deleteModel, setDeleteModel] = useState<boolean>(false);
+  const [deleteId, setDeleteId] = useState<any>("");
   const templateSelector = useAppSelector((state) => state.template.templates);
 
   const columns: GridColDef<any>[] = [
@@ -47,12 +49,12 @@ const Template = () => {
       renderCell: (params: any) => {
         const handleDeleteAction = () => {
           const currentRowId = params.row.id;
-          // setDeleteModel(true);
-          // setDeleteId(currentRowId);
+          setDeleteModel(true);
+          setDeleteId(currentRowId);
         };
         const handleEditAction = () => {
           const currentRow = params.row;
-          navigate(`/tasks/form/${currentRow?.id}`);
+          navigate(`/template/form/${currentRow?.id}`);
         };
 
         return (
@@ -77,8 +79,26 @@ const Template = () => {
       },
     },
   ];
+  //handle cancle function  in custom delete modal
+  const handleCancle = () => {
+    setDeleteModel(false);
+    if (deleteId) {
+      setDeleteId("");
+    }
+    return;
+  };
+  //handle delete function  in custom delete modal
+  const handleDelete = () => {
+    if (deleteId) {
+      deleteTemplate(deleteId);
+      setDeleteModel(false);
+    }
+    return;
+  };
 
-  const handleClick = () => {};
+  const handleClick = () => {
+    navigate("/template/form");
+  };
 
   useEffect(() => {
     if (!templateIsLoading && templateData) {
@@ -91,7 +111,7 @@ const Template = () => {
       <Box m="20px">
         <Header
           title="Template Management"
-          buttonname="Create New Tasks"
+          buttonname="Create New Template"
           onClick={handleClick}
         />
         {/* <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -269,6 +289,12 @@ const Template = () => {
           </Card>
         </Box>
       </Box>
+      <DeleteModel
+        deleteModel={deleteModel}
+        setDeleteModel={setDeleteModel}
+        handleCancle={handleCancle}
+        handleDelete={handleDelete}
+      />
     </Layout>
   );
 };

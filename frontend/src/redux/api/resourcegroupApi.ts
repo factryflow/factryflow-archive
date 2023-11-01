@@ -3,6 +3,7 @@ import config from "@/config/default";
 import customFetchBase from "./customeFetchBase";
 export const resourcesGroupApi = createApi({
   reducerPath: "resourcesGroupApi",
+
   baseQuery: customFetchBase,
   tagTypes: ["getAllResourcesGroup", "getResourcegroupbyid"],
   endpoints: (builder) => ({
@@ -11,6 +12,7 @@ export const resourcesGroupApi = createApi({
       query: () => {
         return `api/resource-groups/`;
       },
+
       transformResponse: (res: { items: any[] }) => {
         const result = res.items;
         return result ?? [];
