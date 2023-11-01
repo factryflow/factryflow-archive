@@ -17,13 +17,20 @@ import { useGetAllTemplateQuery } from "@/redux/api/templateApi";
 
 const ResourceDetails = ({
   data,
-  handleCreateResourceGroup,
-  handleEditResourceGroup,
-  handleDeleteResourceGroup,
+  handleCreateResource,
+  handleEditResource,
+  handleDeleteResource,
   isEdit,
 }: any) => {
-  // const { data: getTemplateData, isLoading: templateIsLoading } =
-  // useGetAllTemplateQuery();
+  const { data: getTemplateData, isLoading: templateIsLoading } =
+    useGetAllTemplateQuery();
+
+  const [templatelist, setTemplateList] = useState<any>();
+
+  const handleTemplate = (newValue: any) => {
+    setTemplateList(newValue);
+  };
+
   const columns = useMemo<MRT_ColumnDef<any>[]>(
     () => [
       {
@@ -37,25 +44,26 @@ const ResourceDetails = ({
         header: "Name",
         editVariant: "text",
       },
-      //   {
-      //     accessorKey: "job_type",
-      //     header: "Job Type",
-      //     editVariant: "select",
-      //     mantineEditSelectProps: {
-      //       data: jobtypedata?.map((item: any) => ({
-      //         value: item.id,
-      //         label: item.name,
-      //       })),
-      //       value: jobtype as any,
-      //       onChange: handleJobType,
-      //     },
-
-      //     Cell: ({ row }) => {
-      //       return <span>{row ? row.original.job_type.name : ""}</span>;
-      //     },
-      //   },
+      {
+        accessorKey: "weekly_shift_template",
+        header: "Template",
+        editVariant: "select",
+        mantineEditSelectProps: {
+          data: getTemplateData?.map((item: any) => ({
+            value: item.id,
+            label: item.name,
+          })),
+          value: templatelist as any,
+          onChange: handleTemplate,
+        },
+        Cell: ({ row }) => {
+          return (
+            <span>{row ? row.original.weekly_shift_template?.name : ""}</span>
+          );
+        },
+      },
     ],
-    []
+    [templatelist, handleTemplate]
   );
   //CREATE action
   const handleCreate: MRT_TableOptions<any>["onCreatingRowSave"] = async ({
@@ -63,12 +71,12 @@ const ResourceDetails = ({
     exitCreatingMode,
   }) => {
     if (values) {
-      const responce = await handleCreateResourceGroup(values);
+      const responce = await handleCreateResource(values);
       if (!responce.error) exitCreatingMode(); //exit editing mode
       {
         responce.error
           ? toast.error(responce.error.data.message)
-          : toast.success("Successfully Resourse group Add");
+          : toast.success("Successfully Resourse  Add");
       }
     }
   };
@@ -79,12 +87,12 @@ const ResourceDetails = ({
     table,
   }) => {
     if (values) {
-      const responce = await handleEditResourceGroup(values);
+      const responce = await handleEditResource(values);
       if (!responce.error) table.setEditingRow(null); //exit editing mode
       {
         responce.error
           ? toast.error(responce.error.data.message)
-          : toast.success("Successfully Resourse group Update");
+          : toast.success("Successfully Resourse  Update");
       }
     }
   };
@@ -96,12 +104,13 @@ const ResourceDetails = ({
       labels: { confirm: "Delete", cancel: "Cancel" },
       confirmProps: { color: "red" },
       onConfirm: () => {
-        handleDeleteResourceGroup(row);
+        handleDeleteResource(row);
       },
     });
 
   //when click edit button
   const handleEditRow = (row: any) => {
+    setTemplateList(row.original.weekly_shift_template.id);
     table.setEditingRow(row);
   };
 
@@ -149,6 +158,7 @@ const ResourceDetails = ({
       isEdit && (
         <Button
           onClick={() => {
+            setTemplateList("");
             table.setCreatingRow(true);
           }}
         >

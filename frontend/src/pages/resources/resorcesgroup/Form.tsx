@@ -31,7 +31,12 @@ import {
   useUpdateResourcesGroupMutation,
 } from "@/redux/api/resourcegroupApi";
 import { FormInputText } from "@/components/form-components/FormInputText";
-import { useGetAllResourcesQuery } from "@/redux/api/resourceApi";
+import {
+  useCreateresourcesMutation,
+  useDeleteResourcesMutation,
+  useGetAllResourcesQuery,
+  useUpdateResourcesMutation,
+} from "@/redux/api/resourceApi";
 import ResourceDetails from "@/components/data-tables/resource/resourceDetails";
 
 const validationSchema = yup.object().shape({
@@ -52,12 +57,19 @@ const ResourceGroupForm = () => {
   // const { data: resourceData, isLoading: resourceIsLoading } =
   //   useGetAllResourcesQuery();
 
-  const { data: rgdata, isLoading: rgisLoading } = useGetresourceGroupByIdQuery(
-    Number(paramsId),
-    {
-      skip: !paramsId,
-    }
-  );
+  const [updateResources] = useUpdateResourcesMutation();
+
+  const [createresources] = useCreateresourcesMutation();
+  const [deleteResources, { isSuccess: deleteResourceissuccess }] =
+    useDeleteResourcesMutation();
+
+  const {
+    data: rgdata,
+    isLoading: rgisLoading,
+    refetch: refetchResourcesGroupById,
+  } = useGetresourceGroupByIdQuery(Number(paramsId), {
+    skip: !paramsId,
+  });
 
   const [updateResourcesGroup, { data: urgData, isLoading: urgisLoading }] =
     useUpdateResourcesGroupMutation();
@@ -100,6 +112,44 @@ const ResourceGroupForm = () => {
       updateResourcesGroup({ id: params.id, data: requestObj });
     } else {
       createresourcesGroup(requestObj);
+    }
+  };
+
+  const handleCreateResource = async (values: any) => {
+    if (values) {
+      const requestObj = {
+        name: values.name,
+        weekly_shift_template_id: values.weekly_shift_template,
+        resource_group_ids: [Number(paramsId)],
+      };
+      const response = await createresources(requestObj);
+      if (response) refetchResourcesGroupById();
+      return response;
+    }
+  };
+
+  const handleEditResource = async (values: any) => {
+    if (values) {
+      const requestObj = {
+        name: values.name,
+        weekly_shift_template_id: values.weekly_shift_template,
+        resource_group_ids: [Number(paramsId)],
+      };
+
+      const response = await updateResources({
+        id: values.id,
+        data: requestObj,
+      });
+      if (response) refetchResourcesGroupById();
+      return response;
+    }
+  };
+
+  const handleDeleteResource = async (row: any) => {
+    if (row) {
+      const response = await deleteResources(row.id);
+      if (response) refetchResourcesGroupById();
+      return response;
     }
   };
 
@@ -212,9 +262,9 @@ const ResourceGroupForm = () => {
                       <div style={{ height: "auto", width: "100%" }}>
                         <ResourceDetails
                           data={resourseData ?? []}
-                          // handleCreateResourceGroup={handleCreateResourceGroup}
-                          // handleEditResourceGroup={handleEditResourceGroup}
-                          // handleDeleteResourceGroup={handleDeleteResourceGroup}
+                          handleCreateResource={handleCreateResource}
+                          handleEditResource={handleEditResource}
+                          handleDeleteResource={handleDeleteResource}
                           isEdit={isEdit}
                         />
                       </div>

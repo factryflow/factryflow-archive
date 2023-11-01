@@ -63,7 +63,7 @@ const Jobs = () => {
   const [deleteModel, setDeleteModel] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<any>("");
 
-  const columns: GridColDef<Omit<WithJobResponse, excluded_fields>>[] = [
+  const columns: GridColDef<WithJobResponse>[] = [
     { field: "id", headerName: "ID" },
     {
       field: "name",
@@ -220,10 +220,6 @@ const Jobs = () => {
     if (deleteId) {
       deleteJobs(deleteId);
       setDeleteModel(false);
-      // const newJobiesData = jobsSelector.filter(
-      //   (item: any) => item.id !== deleteId
-      // );
-      // dispatch(setJobies(newJobiesData));
     }
     return;
   };

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../Layout";
 import {
+  Box,
+  Button,
   Card,
   CardContent,
   FormControl,
@@ -8,13 +10,14 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import {
   useCreateTemplateMutation,
+  useGetTemplateByIdQuery,
   useUpdateTemplateMutation,
 } from "@/redux/api/templateApi";
 import { toast } from "react-toastify";
@@ -22,9 +25,18 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import TempleDetails from "@/components/data-tables/template/TemplateDetails";
 import { useGetAllTemplateDetailsQuery } from "@/redux/api/templateDetailsApi";
 import { setTemplateDetails } from "@/redux/features/templateDetailsSlice";
+import { FormInputText } from "@/components/form-components/FormInputText";
+import { Flex } from "@mantine/core";
 
 const validationSchema = yup.object().shape({
   name: yup.string().required("Name is required").nullable(),
+  details: yup.array().of(
+    yup.object().shape({
+      day_of_week: yup.string().required(),
+      start_time: yup.string().required(),
+      end_time: yup.string().required(),
+    })
+  ),
 });
 
 const TemplateForm = () => {
@@ -32,38 +44,39 @@ const TemplateForm = () => {
   const dispatch = useAppDispatch();
   const params = useParams();
   const isEdit = !!params.id;
+  const paramsId = params && params.id;
+
   //all template data store reducer
-  const templateSelector = useAppSelector((state) => state.template.templates);
+  // const templateSelector = useAppSelector((state) => state.template.templates);
   const [templateId, setTemplateId] = useState<number>(0);
+
+  const boxStyle = {
+    boxShadow: "0.3px 0.3px 1px rgba(0, 0, 0, 0.16)", // Adjust values as needed
+    padding: "20px",
+    backgroundColor: "white",
+    width: "100%",
+  };
   //api call craete template
   const [
     createTemplate,
-    {
-      data: createTemplateData,
-      isLoading: templateIsLoading,
-      error: templateError,
-    },
+    { isSuccess: ctIsSuccess, error: ctError, isLoading: ctIsLoading },
   ] = useCreateTemplateMutation();
 
   //api call update template
   const [
     updateTemplate,
-    {
-      data: upTemplateData,
-      isLoading: upTemplateIsLoading,
-      error: upTemplateError,
-    },
+    { isSuccess: utIsSuccess, error: utError, isLoading: utIsLoading },
   ] = useUpdateTemplateMutation();
 
   //api call templateDetails
 
-  const {
-    data: templateDetailsData,
-    isLoading: templateDetailisLoading,
-    error: tempDetailsError,
-    isFetching: templateDetailsIsFetching,
-    isError: templateDetailsisError,
-  } = useGetAllTemplateDetailsQuery();
+  // const {
+  //   data: templateDetailsData,
+  //   isLoading: templateDetailisLoading,
+  //   error: tempDetailsError,
+  //   isFetching: templateDetailsIsFetching,
+  //   isError: templateDetailsisError,
+  // } = useGetAllTemplateDetailsQuery();
 
   const form = useForm({
     resolver: yupResolver(validationSchema),
@@ -77,8 +90,22 @@ const TemplateForm = () => {
     formState: { errors },
   } = form;
 
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "details",
+  });
+
+  const {
+    data: getTemplateIdData,
+    refetch: refetchTemplateById,
+    isLoading: gtIsLoading,
+  } = useGetTemplateByIdQuery(Number(paramsId), {
+    skip: !paramsId,
+    refetchOnMountOrArgChange: true,
+  });
+
   const onSubmit = (data: any) => {
-    // console.log(data, "Data");
+    console.log(data, "Data");
     if (isEdit) {
       updateTemplate({ id: params.id, data });
     } else {
@@ -87,102 +114,135 @@ const TemplateForm = () => {
   };
 
   useEffect(() => {
-    if (!templateDetailisLoading && templateDetailsData) {
-      dispatch(setTemplateDetails(templateDetailsData));
+    if (isEdit && getTemplateIdData) {
+      Object.entries(getTemplateIdData ?? []).forEach(([name, value]: any) => {
+        form.setValue(name, value);
+      });
     }
-  }, [templateDetailisLoading, templateDetailsData, tempDetailsError]);
+  }, [isEdit, getTemplateIdData]);
 
   useEffect(() => {
-    if (!templateIsLoading && createTemplateData) {
-      let tempId = createTemplateData.data.id;
-      setTemplateId(tempId);
-      createTemplateData.code >= 400
-        ? toast.error(createTemplateData.message)
-        : toast.success(createTemplateData.message);
+    if (ctIsSuccess || utIsSuccess) {
+      toast.success(`Template ${isEdit ? "Edit" : "Create"} successfully`) &&
+        navigate("/template");
     }
-  }, [templateIsLoading, templateError, createTemplateData]);
-
-  useEffect(() => {
-    if (!upTemplateIsLoading && upTemplateData) {
-      upTemplateData.code >= 400
-        ? toast.error(upTemplateData.message)
-        : toast.success(upTemplateData.message) && navigate("/template");
+    if (ctError || utError) {
+      toast.error(
+        (ctError || (utError as unknown as any)).data.message as string
+      );
     }
-  }, [upTemplateIsLoading, upTemplateError, upTemplateData]);
-
-  useEffect(() => {
-    if (isEdit) {
-      if (templateSelector) {
-        const getTemplateEdit = templateSelector.filter(
-          (item: any) => item.id === Number(params.id)
-        );
-
-        Object.entries(getTemplateEdit[0] ?? []).forEach(
-          ([name, value]: any) => {
-            form.setValue(name, value);
-          }
-        );
-      }
-    }
-  }, [isEdit]);
+  }, [ctIsSuccess, ctError, utIsSuccess, utError]);
 
   return (
     <Layout>
-      <Grid>
+      <Box>
         <Card
-          style={{ maxWidth: 450, padding: "20px 5px", margin: "20px auto" }}
+          style={boxStyle}
+          sx={{ padding: 2, height: "auto", borderRadius: "12px" }}
         >
           <CardContent>
             <Typography gutterBottom variant="h5">
-              {isEdit ? "Edit Template" : "Create Template"}
+              {isEdit ? "Edit Template" : "Create Template "}
             </Typography>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Grid container spacing={1}>
+              <Grid
+                container
+                rowSpacing={1}
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              >
                 <Grid item xs={12}>
-                  <Controller
-                    name="name"
+                  <FormInputText
+                    name={"name"}
                     control={control}
-                    defaultValue=""
-                    render={({ field }) => (
-                      <TextField
-                        label="Name"
-                        variant="outlined"
-                        margin="normal"
-                        error={!!errors.name}
-                        helperText={errors.name?.message}
-                        fullWidth
-                        {...field}
-                      />
-                    )}
+                    label={"Name"}
+                    placeholder={"Enter Name"}
+                    type={"text"}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <LoadingButton
-                    size="small"
-                    type="submit"
-                    color="primary"
-                    loading={templateIsLoading || upTemplateIsLoading}
-                    variant="contained"
-                    sx={{ marginBottom: 5 }}
-                    fullWidth
+                  <Typography sx={{ mb: 3 }}>Details</Typography>
+                  {fields.map((item, index) => (
+                    <Box
+                      component={"div"}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        mb: 2,
+                      }}
+                    >
+                      <Grid item xs={3}>
+                        <FormInputText
+                          name={`details[${index}].day_of_week`}
+                          control={control}
+                          label={"Day Of Week"}
+                          placeholder={"Enter Name"}
+                          type={"number"}
+                        />
+                      </Grid>
+                      <Grid item xs={3}>
+                        <FormInputText
+                          name={`details[${index}].start_time`}
+                          control={control}
+                          label={"Start time "}
+                          placeholder={"Start Time"}
+                          type={"time"}
+                        />
+                      </Grid>
+                      <Grid item xs={3}>
+                        <FormInputText
+                          name={`details[${index}].end_time`}
+                          control={control}
+                          label={"End Time"}
+                          placeholder={"end_time "}
+                          type={"time"}
+                        />
+                      </Grid>
+                      <Button type="button" onClick={() => remove(index)}>
+                        Remove
+                      </Button>
+                    </Box>
+                  ))}
+                  <Button
+                    type="button"
+                    onClick={() =>
+                      append({ day_of_week: "", start_time: "", end_time: "" })
+                    }
                   >
-                    {isEdit ? "Save Changes" : "Submit"}
-                  </LoadingButton>
+                    Add Details
+                  </Button>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      gap: "15px",
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      size="large"
+                      className="btn-cancel"
+                      onClick={() => navigate("/template")}
+                    >
+                      {isEdit ? "Back" : "Cancel"}
+                    </Button>
+                    <LoadingButton
+                      size="large"
+                      type="submit"
+                      loading={ctIsLoading || utIsLoading}
+                      color="primary"
+                      variant="contained"
+                    >
+                      {isEdit ? "Edit" : "Create"}
+                    </LoadingButton>
+                  </Box>
                 </Grid>
               </Grid>
             </form>
           </CardContent>
         </Card>
-      </Grid>
-
-      <Grid>
-        <TempleDetails
-          templateDetailsIsFetching={templateDetailsIsFetching}
-          templateDetailsisErrors={templateDetailsisError}
-          templateDetailisLoading={templateDetailisLoading}
-          templateId={templateId}
-        />
-      </Grid>
+      </Box>
     </Layout>
   );
 };

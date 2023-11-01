@@ -1,13 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import config from "@/config/default";
+import customFetchBase from "./customeFetchBase";
 export const exceptionTypeApi = createApi({
   reducerPath: "exceptionTypeApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: config.API_ENDPOINT,
-    prepareHeaders: (header) => {
-      header.set("Authorization", `Bearer ${localStorage.getItem("token")}`);
-    },
-  }),
+  baseQuery: customFetchBase,
   tagTypes: ["getAllExceptionType"],
   endpoints: (builder) => ({
     // getAllExceptionType Api
@@ -15,10 +11,9 @@ export const exceptionTypeApi = createApi({
       query: () => {
         return `api/operational-exception-types/`;
       },
-      transformResponse: (res: { data: any[] }) => {
-        const data = res.data;
-        const result = data.filter((item: any) => item.is_deleted === false);
-        return result;
+      transformResponse: (res: { items: any[] }) => {
+        const result = res.items;
+        return result ?? [];
       },
       providesTags: ["getAllExceptionType"],
     }),

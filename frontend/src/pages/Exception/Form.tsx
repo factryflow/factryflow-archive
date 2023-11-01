@@ -23,31 +23,36 @@ import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import { Tabs } from "@mantine/core";
+
 import {
-  useCreateresourcesMutation,
-  useGetResourcesByIdQuery,
-  useUpdateResourcesMutation,
-} from "@/redux/api/resourceApi";
-import { FormInputText } from "@/components/form-components/FormInputText";
+  FormInputDropdown,
+  FormInputText,
+} from "@/components/form-components/FormInputText";
 import { useGetAllTemplateQuery } from "@/redux/api/templateApi";
-import ResourceGroupDetails from "@/components/data-tables/resourceGroup/resourcegroupDetail";
-import {
-  useCreateresourcesGroupMutation,
-  useDeleteResourcesGroupMutation,
-  useUpdateResourcesGroupMutation,
-} from "@/redux/api/resourcegroupApi";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { setResource } from "@/redux/features/resourceSlice";
+import { useGetAllExceptionTypeQuery } from "@/redux/api/exceptionTypeApi";
+import {
+  useCreateExceptionMutation,
+  useGetExceptionByIdQuery,
+  useUpdateExceptionMutation,
+} from "@/redux/api/exceptionApi";
 
 const validationSchema = yup.object().shape({
-  name: yup.string().required("Name is required").nullable(),
+  external_id: yup.string().required("external id is required").nullable(),
+  start_datetime: yup.string().required("start time is required").nullable(),
+  end_datetime: yup.string().required("end time is required").nullable(),
+  notes: yup.string().required("notes is required").nullable(),
   weekly_shift_template_id: yup
     .string()
     .required("weekly shift is required")
     .nullable(),
+  operational_exception_type_id: yup
+    .string()
+    .required("Operational Exception Type  is required")
+    .nullable(),
 });
 
-const ResourceForm = () => {
+const ExceptionForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const params = useParams();
@@ -57,50 +62,49 @@ const ResourceForm = () => {
   const [activeTab] = useState<string | null>("resourcegroup");
   const [resourseGroupData, setResourceGroupData] = useState<any>();
   const paramsId = params && params.id;
-  const resourceSelector = useAppSelector((state) => state.resource.resource);
 
   const [templateData, setTemplateData] = useState<any>();
 
-  const defaultValues = {
-    name: "",
-    weekly_shift_template_id: "",
-  };
-
-  const { data: getResourceIdData, refetch: refetchResourcesById } =
-    useGetResourcesByIdQuery(Number(paramsId), {
+  const { data: getExceptionIdData } = useGetExceptionByIdQuery(
+    Number(paramsId),
+    {
       skip: !paramsId,
       refetchOnMountOrArgChange: true,
-    });
+    }
+  );
 
-  const [createresourcesGroup, { isSuccess: createRgIsSuccess }] =
-    useCreateresourcesGroupMutation<any>();
-
-  const [deleteResourcesGroup] = useDeleteResourcesGroupMutation();
-  const [updateResourcesGroup] = useUpdateResourcesGroupMutation();
+  const { data: exceptiontypeData } = useGetAllExceptionTypeQuery();
 
   const [
-    updateResources,
+    updateException,
     {
-      data: updateResource,
-      isLoading: updateResourceIsLoading,
-      error: updateResourceError,
+      isSuccess: updateExceptionIsSuccess,
+      isLoading: updateExceptionIsLoading,
+      error: updateExceptionError,
     },
-  ] = useUpdateResourcesMutation();
+  ] = useUpdateExceptionMutation();
 
   const [
-    createresources,
+    createException,
     {
-      data: createResourceData,
-      isLoading: resourceIsLoading,
-      error: resourceError,
+      isSuccess: createExceptionIsSuccess,
+      isLoading: createExceptionIsLoading,
+      error: createExceptionError,
     },
-  ] = useCreateresourcesMutation();
+  ] = useCreateExceptionMutation();
 
   const { data: getTemplateData, isLoading: templateIsLoading } =
     useGetAllTemplateQuery();
 
   const form = useForm({
-    defaultValues: defaultValues,
+    defaultValues: {
+      external_id: "",
+      start_datetime: "",
+      end_datetime: "",
+      notes: "",
+      weekly_shift_template_id: "",
+      operational_exception_type_id: "",
+    },
     resolver: yupResolver(validationSchema),
   });
 
@@ -110,6 +114,7 @@ const ResourceForm = () => {
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors },
   } = form;
 
@@ -121,93 +126,74 @@ const ResourceForm = () => {
   };
 
   const onSubmit = (data: any) => {
-    const requestObj = {
-      name: data.name,
-      weekly_shift_template_id: data.weekly_shift_template_id,
-    };
     if (isEdit) {
-      updateResources({ id: params.id, data: requestObj });
+      updateException({ id: params.id, data });
     } else {
-      createresources(requestObj);
-    }
-  };
-  const handleCreateResourceGroup = async (values: any) => {
-    if (values) {
-      const requestObj = {
-        name: values.name,
-        resource_ids: [Number(paramsId)],
-      };
-      const response = await createresourcesGroup(requestObj);
-      if (response) refetchResourcesById();
-      return response;
-    }
-  };
-
-  const handleEditResourceGroup = async (values: any) => {
-    if (values) {
-      const responce = await updateResourcesGroup({
-        id: values.id,
-        data: values,
-      });
-      return responce;
-    }
-  };
-
-  const handleDeleteResourceGroup = async (row: any) => {
-    if (row) {
-      const response = await deleteResourcesGroup(row.id);
-      if (response) refetchResourcesById();
-      return response;
+      createException(data);
     }
   };
 
   useEffect(() => {
-    if (!resourceIsLoading && createResourceData) {
-      toast.success(`Resource Add Sucessfully`) && navigate("/resources");
+    if (createExceptionIsSuccess || updateExceptionIsSuccess) {
+      toast.success(`Exception ${isEdit ? "Edit" : "Create"} successfully`) &&
+        navigate("/exception");
     }
-    if (!updateResourceIsLoading && updateResource) {
-      toast.success(`Resource Update  Sucessfully`) && navigate("/resources");
+    if (createExceptionError || updateExceptionError) {
+      toast.error(
+        (createExceptionError || (updateExceptionError as unknown as any)).data
+          .message as string
+      );
     }
   }, [
-    resourceIsLoading,
-    resourceError,
-    createResourceData,
-    updateResourceIsLoading,
-    updateResourceError,
-    updateResource,
+    createExceptionIsSuccess,
+    createExceptionError,
+    updateExceptionIsSuccess,
+    updateExceptionError,
   ]);
 
   useEffect(() => {
     if (!templateIsLoading && getTemplateData) {
-      const transformedJob = getTemplateData.map((jobdata: any) => ({
-        label: jobdata.name,
-        value: jobdata.id,
+      const transformedJob = getTemplateData.map((template: any) => ({
+        label: template.name,
+        value: template.id,
       }));
       setTemplateData(transformedJob);
     }
   }, [templateIsLoading, getTemplateData]);
 
   useEffect(() => {
-    const excluded_fields = ["weekly_shift_template"];
-    if (isEdit) {
-      if (resourceSelector) {
-        setResourceGroupData(resourceSelector.resource_groups);
-        Object.entries(resourceSelector ?? []).forEach(([name, value]: any) => {
-          if (excluded_fields.includes(name)) {
-            setValue("weekly_shift_template_id", value.id);
-            return;
-          }
-          form.setValue(name, value);
-        });
-      }
+    const operational_exception_type = ["operational_exception_type"];
+    const weekly_shift_template = ["weekly_shift_template"];
+    const start_datetime = ["start_datetime"];
+    const end_datetime = ["end_datetime"];
+    if (isEdit && getExceptionIdData) {
+      Object.entries(getExceptionIdData ?? []).forEach(([name, value]: any) => {
+        if (operational_exception_type.includes(name)) {
+          form.setValue("operational_exception_type_id", value);
+          return;
+        }
+        if (weekly_shift_template.includes(name)) {
+          form.setValue("weekly_shift_template_id", value);
+          return;
+        }
+        if (start_datetime.includes(name)) {
+          form.setValue("start_datetime", value?.slice(0, 16));
+          return;
+        }
+        if (end_datetime.includes(name)) {
+          form.setValue("end_datetime", value?.slice(0, 16));
+          return;
+        }
+        form.setValue(name, value);
+      });
     }
-  }, [resourceSelector]);
+  }, [getExceptionIdData]);
 
-  useEffect(() => {
-    if (getResourceIdData && isEdit) {
-      dispatch(setResource(getResourceIdData));
-    }
-  }, [getResourceIdData]);
+  // useEffect(() => {
+  //   if (getResourceIdData && isEdit) {
+  //     dispatch(setResource(getResourceIdData));
+  //   }
+  // }, [getResourceIdData]);
 
   return (
     <>
@@ -220,7 +206,7 @@ const ResourceForm = () => {
           >
             <CardContent>
               <Typography gutterBottom variant="h5">
-                {isEdit ? "Edit Resource" : "Create Resource"}
+                {isEdit ? "Edit Exception" : "Create Exception"}
               </Typography>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Grid
@@ -230,10 +216,38 @@ const ResourceForm = () => {
                 >
                   <Grid item xs={6}>
                     <FormInputText
-                      name={"name"}
+                      name={"external_id"}
                       control={control}
-                      label={"Name"}
-                      placeholder={"Enter task Name"}
+                      label={"External Id"}
+                      placeholder={"Enter external Id"}
+                      type={"text"}
+                    />
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <FormInputText
+                      name={"start_datetime"}
+                      control={control}
+                      label={"Start DateTime"}
+                      type={"datetime-local"}
+                    />
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <FormInputText
+                      name={"end_datetime"}
+                      control={control}
+                      label={"End DateTime"}
+                      type={"datetime-local"}
+                    />
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <FormInputText
+                      name={"notes"}
+                      control={control}
+                      label={"Notes"}
+                      placeholder={"Enter notes "}
                       type={"text"}
                     />
                   </Grid>
@@ -280,6 +294,15 @@ const ResourceForm = () => {
                     />
                   </Grid>
 
+                  <Grid item xs={6}>
+                    <FormInputDropdown
+                      name={"operational_exception_type_id"}
+                      control={control}
+                      label={"Type"}
+                      options={exceptiontypeData ? exceptiontypeData : []}
+                    />
+                  </Grid>
+
                   <Grid item xs={12}>
                     <Box
                       sx={{
@@ -291,14 +314,16 @@ const ResourceForm = () => {
                         variant="contained"
                         size="large"
                         className="btn-cancel"
-                        onClick={() => navigate("/resources")}
+                        onClick={() => navigate("/exception")}
                       >
                         {isEdit ? "Back" : "Cancel"}
                       </Button>
                       <LoadingButton
                         size="large"
                         type="submit"
-                        loading={resourceIsLoading || updateResourceIsLoading}
+                        loading={
+                          createExceptionIsLoading || updateExceptionIsLoading
+                        }
                         color="primary"
                         variant="contained"
                       >
@@ -311,7 +336,7 @@ const ResourceForm = () => {
             </CardContent>
           </Card>
         </Grid>
-        {isEdit && (
+        {/* {isEdit && (
           <Box
             sx={{
               width: "100%",
@@ -343,10 +368,10 @@ const ResourceForm = () => {
               </Card>
             )}
           </Box>
-        )}
+        )} */}
       </Layout>
     </>
   );
 };
 
-export default ResourceForm;
+export default ExceptionForm;
