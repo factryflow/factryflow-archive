@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -19,20 +19,17 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 // import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
-import DashboardIcon from "@/assets/sidebar/dashboard.svg";
-import ProductionIcon from "@/assets/sidebar/production.svg";
-import SettingIcon from "@/assets/sidebar/settings.svg";
-import SupportIcon from "@/assets/sidebar/support_agent.svg";
-import ResourceIcon from "@/assets/sidebar/resource.svg";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import Dote from "@/assets/images/Dote.svg";
 import FactoryFlowIcon from "@/assets/images/FactryFlow.svg";
 import FFLogo from "@/assets/images/FFlogo.svg";
-
-import { setMenuItem } from "@/redux/features/menuSlice";
+import {
+  setActiveMenuItem,
+  setMenuItems,
+  toggleChildrenOpen,
+} from "@/redux/features/menuSlice";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
 const drawerWidth = 240;
 
@@ -85,79 +82,82 @@ const Drawer = styled(MuiDrawer, {
 
 const Sidenav = () => {
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const menuItems = useAppSelector((state) => state.menu.menuItems);
+  const activeitem = useAppSelector((state) => state.menu.activeMenuItem);
+  console.log(activeitem, "activeitem");
 
-  const menuItems = [
-    {
-      label: "Dashboard",
-      icon: DashboardIcon,
-      route: "/dashboard",
-    },
-    {
-      label: "Production",
-      icon: ProductionIcon,
-      childrenOpen: false,
-      route: "/production",
-      children: [
-        {
-          label: "Jobs",
-          icon: Dote,
-          route: "/jobs",
-        },
-        {
-          label: "Tasks",
-          icon: Dote,
-          route: "/tasks",
-        },
-        {
-          label: "Dependency",
-          icon: Dote,
-          route: "/dependency",
-        },
-      ],
-    },
-    {
-      label: "Resource",
-      icon: ResourceIcon,
-      childrenOpen: false,
-      route: "/resource",
-      children: [
-        {
-          label: "Template",
-          icon: Dote,
-          route: "/template",
-        },
-        {
-          label: "Resources",
-          icon: Dote,
-          route: "/resources",
-        },
-        {
-          label: "Exception",
-          icon: Dote,
-          route: "/exception",
-        },
-      ],
-    },
-    {
-      label: "Settings",
-      icon: SettingIcon,
-      route: "/settings",
-    },
-    {
-      label: "Help & Support",
-      icon: SupportIcon,
-      route: "/help",
-    },
-  ];
-
-  const [menuItemsState, setMenuItemsState] = useState(menuItems);
+  // const newMenuItems = [
+  //   {
+  //     label: "Dashboard",
+  //     icon: DashboardIcon,
+  //     route: "/dashboard",
+  //   },
+  //   {
+  //     label: "Production",
+  //     icon: ProductionIcon,
+  //     childrenOpen: false,
+  //     route: "/production",
+  //     children: [
+  //       {
+  //         label: "Jobs",
+  //         icon: Dote,
+  //         route: "/jobs",
+  //       },
+  //       {
+  //         label: "Tasks",
+  //         icon: Dote,
+  //         route: "/tasks",
+  //       },
+  //       {
+  //         label: "Dependency",
+  //         icon: Dote,
+  //         route: "/dependency",
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     label: "Resource",
+  //     icon: ResourceIcon,
+  //     childrenOpen: false,
+  //     route: "/resource",
+  //     children: [
+  //       {
+  //         label: "Template",
+  //         icon: Dote,
+  //         route: "/template",
+  //       },
+  //       {
+  //         label: "Resources",
+  //         icon: Dote,
+  //         route: "/resources",
+  //       },
+  //       {
+  //         label: "Exception",
+  //         icon: Dote,
+  //         route: "/exception",
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     label: "Settings",
+  //     icon: SettingIcon,
+  //     route: "/settings",
+  //   },
+  //   {
+  //     label: "Help & Support",
+  //     icon: SupportIcon,
+  //     route: "/help",
+  //   },
+  // ];
 
   const handleMenuItemClick = (menuItem: any) => {
+    console.log(menuItem, "menuItems");
     if (menuItem.children) {
-      menuItem.childrenOpen = !menuItem.childrenOpen;
-      setMenuItemsState([...menuItemsState]);
+      dispatch(toggleChildrenOpen(menuItems.indexOf(menuItem)));
     } else {
       navigate(menuItem.route);
+      dispatch(setActiveMenuItem(menuItem));
     }
   };
   const theme = useTheme();
@@ -185,11 +185,13 @@ const Sidenav = () => {
         </DrawerHeader>
 
         <List>
-          {menuItemsState.map((menuItem: any, index: any) => (
+          {menuItems.map((menuItem: any, index: any) => (
             <div key={index}>
               <ListItem
                 disablePadding
-                sx={{ display: "block" }}
+                sx={{
+                  display: "block",
+                }}
                 onClick={() => handleMenuItemClick(menuItem)}
               >
                 <ListItemButton

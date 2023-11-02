@@ -22,6 +22,7 @@ const LogIn = () => {
   }
   const [loginUser, { data, error, isLoading, isSuccess }] =
     useLoginUserMutation();
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -67,7 +68,8 @@ const LogIn = () => {
       toast.success("You successfully logged in");
       navigate(from);
     }
-  }, [isLoading, data]);
+    if (error) toast.error((error as unknown as any).data.detail as string);
+  }, [isLoading, data, isSuccess, error]);
 
   const [isChecked, setIsChecked] = useState(false);
 
