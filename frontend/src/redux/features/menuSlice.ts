@@ -2,14 +2,24 @@ import { AnyAction, PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 // import { GetAlldependencyType } from '../types/dependencys.types';
 
-type menuSliceTypes = {
-  menu: any;
-  menuItem: any;
-};
+interface MenuItem {
+  label: string;
+  icon: string; // Assuming it's a string path to an icon
+  route: string;
+  childrenOpen?: boolean;
+  children?: MenuItem[];
+}
 
-const initialState: menuSliceTypes = {
+interface MenuState {
+  menu: boolean;
+  menuItems: MenuItem[];
+  activeMenuItem: null;
+}
+
+const initialState: MenuState = {
   menu: false,
-  menuItem: [],
+  menuItems: [], // Initial state can be empty or pre-populated with some menu items
+  activeMenuItem: null,
 };
 
 const menuSlice = createSlice({
@@ -19,11 +29,21 @@ const menuSlice = createSlice({
     setMenu: (state, action) => {
       state.menu = action.payload;
     },
-    setMenuItem: (state, action) => {
-      state.menuItem = action.payload;
+    setMenuItems: (state, action: PayloadAction<MenuItem[]>) => {
+      state.menuItems = action.payload;
+    },
+    toggleChildrenOpen: (state, action) => {
+      const index = action.payload;
+
+      state.menuItems[index].childrenOpen =
+        !state.menuItems[index].childrenOpen;
+    },
+    setActiveMenuItem: (state, action) => {
+      state.activeMenuItem = action.payload;
     },
   },
 });
 
-export const { setMenu, setMenuItem } = menuSlice.actions;
+export const { setMenu, setMenuItems, toggleChildrenOpen, setActiveMenuItem } =
+  menuSlice.actions;
 export default menuSlice.reducer;
