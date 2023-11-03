@@ -24,11 +24,7 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
 import FactoryFlowIcon from "@/assets/images/FactryFlow.svg";
 import FFLogo from "@/assets/images/FFlogo.svg";
-import {
-  setActiveMenuItem,
-  setMenuItems,
-  toggleChildrenOpen,
-} from "@/redux/features/menuSlice";
+import { toggleChildrenOpen } from "@/redux/features/menuSlice";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
 const drawerWidth = 240;
@@ -83,9 +79,11 @@ const Drawer = styled(MuiDrawer, {
 const Sidenav = () => {
   const dispatch = useAppDispatch();
   const location = useLocation();
+
+  const pathParts = location.pathname.split("/");
+  const pathresult = `/${pathParts[1]}`;
+
   const menuItems = useAppSelector((state) => state.menu.menuItems);
-  const activeitem = useAppSelector((state) => state.menu.activeMenuItem);
-  console.log(activeitem, "activeitem");
 
   // const newMenuItems = [
   //   {
@@ -152,12 +150,10 @@ const Sidenav = () => {
   // ];
 
   const handleMenuItemClick = (menuItem: any) => {
-    console.log(menuItem, "menuItems");
     if (menuItem.children) {
       dispatch(toggleChildrenOpen(menuItems.indexOf(menuItem)));
     } else {
       navigate(menuItem.route);
-      dispatch(setActiveMenuItem(menuItem));
     }
   };
   const theme = useTheme();
@@ -191,6 +187,8 @@ const Sidenav = () => {
                 disablePadding
                 sx={{
                   display: "block",
+                  color:
+                    location.pathname === menuItem.route ? "#007BFF" : "black",
                 }}
                 onClick={() => handleMenuItemClick(menuItem)}
               >
@@ -238,7 +236,10 @@ const Sidenav = () => {
                       <ListItem
                         key={childIndex}
                         disablePadding
-                        sx={{ display: "block", pl: 4 }}
+                        sx={{
+                          display: "block",
+                          pl: 4,
+                        }}
                         onClick={() => handleMenuItemClick(child)}
                       >
                         <ListItemButton
@@ -246,6 +247,8 @@ const Sidenav = () => {
                             minHeight: 48,
                             justifyContent: open ? "initial" : "center",
                             px: 2.5,
+                            color:
+                              pathresult === child.route ? "#007BFF" : "black",
                           }}
                         >
                           <ListItemIcon

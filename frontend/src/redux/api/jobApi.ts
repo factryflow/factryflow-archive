@@ -1,8 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 import {
-  JobResponse,
-  JobError,
+  JobApiResponse,
   CreateJob,
   UpdateJob,
   GenericResponse,
@@ -14,11 +13,11 @@ export const jobApi = createApi({
   tagTypes: ["getAllJobs"],
   endpoints: (builder) => ({
     // getAllJobs Api
-    getAllJobs: builder.query<JobResponse[], void>({
+    getAllJobs: builder.query<JobApiResponse[], void>({
       query: () => {
         return `api/jobs/`;
       },
-      transformResponse: (res: GenericResponse<JobResponse[]>) => {
+      transformResponse: (res: { items: JobApiResponse[] }) => {
         const result = res.items;
         return result ?? [];
       },
@@ -35,7 +34,7 @@ export const jobApi = createApi({
     }),
     // create job api
     createJobs: builder.mutation<
-      GenericResponse<JobResponse | JobError>,
+      GenericResponse<JobApiResponse>,
       Partial<CreateJob>
     >({
       query: (body: any) => {
@@ -58,10 +57,7 @@ export const jobApi = createApi({
       invalidatesTags: ["getAllJobs"],
     }),
     //update job Api
-    updateJobs: builder.mutation<
-      GenericResponse<JobResponse | JobError>,
-      UpdateJob
-    >({
+    updateJobs: builder.mutation<GenericResponse<JobApiResponse>, UpdateJob>({
       query: ({ id, data }) => {
         return {
           url: `api/jobs/${id}`,

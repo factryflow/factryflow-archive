@@ -105,7 +105,6 @@ const TemplateForm = () => {
   });
 
   const onSubmit = (data: any) => {
-    console.log(data, "Data");
     if (isEdit) {
       updateTemplate({ id: params.id, data });
     } else {
