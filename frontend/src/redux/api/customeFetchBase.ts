@@ -90,6 +90,7 @@ const customFetchBase: BaseQueryFn<
   }
   if ((result.error?.data as any)?.detail === "User not found") {
     api.dispatch(logout());
+
     window.location.href = "/";
   }
 
