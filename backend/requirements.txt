@@ -9,7 +9,7 @@ djangorestframework==3.14.0
 drf-yasg==1.21.7
 python-decouple==3.8
 six==1.16.0
-pytest==7.4.2
+pytest==7.4.3
 pytest-django==4.5.2
 polyfactory==2.9.0
 django-ordered-model==3.7.4
