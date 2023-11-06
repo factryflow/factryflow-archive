@@ -2,12 +2,12 @@ import json
 
 import pytest
 
-from api.tests.factories import UserFactory,UserCreateFactory
+from api.tests.factories import UserFactory, UserCreateFactory
 
 from django.urls import reverse
-
-
-
+from ninja import Schema
+from typing import Optional
+from api.utils.generate_custom_schema import generate_custom_field_schema
 
 
 @pytest.mark.django_db
@@ -39,7 +39,6 @@ def test_get_user(api_client):
     assert response.status_code == 200
 
 
-
 @pytest.mark.django_db
 def test_update_user(api_client):
     instance = UserCreateFactory.create()
@@ -65,7 +64,7 @@ def test_delete_user(api_client):
 
 
 @pytest.mark.django_db
-def test_change_user_password(api_client,test_change_password_data):
+def test_change_user_password(api_client, test_change_password_data):
     response = api_client.put(
         '/api/users/change-password/', json.dumps(test_change_password_data, default=str), content_type="application/json"
     )
@@ -75,11 +74,11 @@ def test_change_user_password(api_client,test_change_password_data):
 
 
 @pytest.mark.django_db
-def test_update_user_password(api_client,test_update_password_data):
+def test_update_user_password(api_client, test_update_password_data):
     response = api_client.post(
         '/api/users/update-password', json.dumps(test_update_password_data, default=str), content_type="application/json"
     )
-  
+
     assert response.status_code == 200
 
 
@@ -88,6 +87,17 @@ def test_get_current_user(api_client):
     response = api_client.get(
         '/api/users/me/'
     )
-  
+
     assert response.status_code == 200
 
+
+@pytest.fixture
+def custom_item_in_schema():
+    # Create a local version of ItemIn that has a different custom_fields definition
+    class CustomItemIn(Schema):
+        name: str
+        description: Optional[str] = None
+        custom_fields: Optional[generate_custom_field_schema(
+            model_name='Item', class_suffix='Item')]
+
+    return CustomItemIn
