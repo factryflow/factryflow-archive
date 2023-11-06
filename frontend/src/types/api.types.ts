@@ -114,9 +114,8 @@ interface Dependency {
   task_ids: number[];
 }
 
-interface Job {
+export type Job = {
   id: number;
-
   description: string;
   customer: string;
   due_date: string;
@@ -141,11 +140,14 @@ interface Job {
   dependency_ids: number[];
   tasks: Task[];
   dependencies: Dependency[];
-}
-
-export type JobApiResponse = {
-  items: Job[];
 };
+
+export type JobStatusResponse = {
+  id: number;
+  name: string;
+};
+
+export type JobTypeResonse = Partial<JobStatusResponse>;
 
 //#region job api types
 // export type JobError = {
@@ -196,19 +198,30 @@ export type JobApiResponse = {
 
 export type CreateJob = {
   name: string;
-  priority: Nullable<number>;
-  due_date: Nullable<string>;
-  customer: Nullable<string>;
-  description: string;
-  note: string;
-  planned_start: string;
-  planned_end: string;
+  customer: string;
+  due_date: string;
+  external_id: string;
+  job_status_id: number;
+  job_type_id: number;
+  dependency_ids: number[];
+  task_ids: number[];
+  priority: number;
 };
 
 export type UpdateJob = {
   // id: Pick<JobResponse, "id">;
   id: string;
-  data: Partial<CreateJob>;
+  data: {
+    name: string;
+    customer: string;
+    due_date: string;
+    external_id: string;
+    job_status_id: number;
+    job_type_id: number;
+    dependency_ids: number[];
+    task_ids: number[];
+    priority: number;
+  };
 };
 // //#endregion
 

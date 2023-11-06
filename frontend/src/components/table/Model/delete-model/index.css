@@ -1,21 +1,22 @@
-.main-model{
+.main-model {
     height: 300px;
-  
 }
 
-.h3{
+.h3 {
     font-size: 20px !important;
-    color: #3F4254;
+    color: #5E6278 !important;
 }
 
-.h6{
+.h6 {
     color: #7E8299 !important;
     line-height: 22px !important;
+    font-weight: 400 !important;
 }
-.frist_row{
+
+.frist_row {
     padding: 10px;
     gap: 15px;
-  
+
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -23,38 +24,41 @@
     justify-content: center;
 }
 
-h3{
+h3 {
     font-size: 16px;
 }
 
-
-.delete-icon{
-    background-color: #FFF5F8 !important;
+.delete-icon {
+    background-color: #FF4D4F1A !important;
     border-radius: 50% !important;
-    width: 60px !important;
-    height: 60px !important;
+    width: 100px !important;
+    height: 100px !important;
 }
 
-.btn-model-row{
+.btn-model-row {
     display: flex;
     justify-content: center;
     margin-top: 15px;
     gap: 25px;
 }
+
 .btn-cancel-model {
     height: 48px;
-    width: 110px;
-    font-size: 17px;
-     background-color:#F1F1F2 !important;
+    width: 150px;
+    font-size: 16px !important;
+    padding: 16px 24px !important;
+    background-color: #F9F9F9 !important;
     color: #7E8299 !important;
     box-shadow: none !important;
 }
-.btn-delete-model{
+
+.btn-delete-model {
     height: 48px;
-    width: 110px;
-    font-size: 19px;
+    width: 150px;
+    font-size: 16px !important;
+    padding: 16px 24px !important;
     text-transform: capitalize !important;
-    background-color:#F1416C !important;
-   color: #fff !important;
-   box-shadow: none !important;
+    background-color: #FF4D4F !important;
+    color: #FFF !important;
+    box-shadow: none !important;
 }

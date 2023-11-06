@@ -12,7 +12,7 @@ import { setJobies, setJobStatus } from "@/redux/features/jobSlice";
 import Loading from "@/components/loading/loading";
 import useTabs from "@/hooks/useTabs";
 import { getString } from "@/helpers";
-import { JobResponse } from "@/types/api.types";
+import { Job } from "@/types/api.types";
 import deleteicon from "@/assets/images/delete.svg";
 import editicon from "@/assets/images/border_color.svg";
 import viewicon from "@/assets/images/visibility.svg";
@@ -38,16 +38,11 @@ type excluded_fields =
   | "is_active"
   | "is_deleted";
 
-interface WithJobResponse extends JobResponse {
-  customer: string;
-  status?: string;
-}
-
 const Jobs = () => {
   const dispatch = useAppDispatch();
   const jobsSelector = useAppSelector((state: any) => state.job.jobies);
   const jobstatusSelector = useAppSelector((state: any) => state.job.jobstatus);
-  const [data, setData] = useState<Array<WithJobResponse> | []>();
+  const [data, setData] = useState<Array<Job> | undefined>();
 
   //call api joblist
   const { data: getjobData, isLoading: jobLoading } = useGetAllJobsQuery();
@@ -63,7 +58,7 @@ const Jobs = () => {
   const [deleteModel, setDeleteModel] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<any>("");
 
-  const columns: GridColDef<WithJobResponse>[] = [
+  const columns: GridColDef<Job>[] = [
     { field: "id", headerName: "ID" },
     {
       field: "name",
@@ -146,7 +141,7 @@ const Jobs = () => {
       flex: 1,
       headerAlign: "center",
       align: "center",
-      renderCell: (row) => {
+      renderCell: (row: any) => {
         const badgeColor: BadgeType = {
           completed: "green",
           "not-planned": "red",
@@ -410,43 +405,38 @@ const Jobs = () => {
             jobstatus={jobstatusSelector}
             setFilterData={setData}
           /> */}
-              {jobLoading ? (
+
+              {getjobData && (
                 <>
-                  <Loading />
+                  <DataGrid
+                    className="dataGrid"
+                    autoHeight={true}
+                    rows={data ?? []}
+                    // rows={filterData ?? []}
+                    columns={columns}
+                    initialState={{
+                      pagination: {
+                        paginationModel: {
+                          pageSize: 10,
+                        },
+                      },
+                    }}
+                    slots={{ toolbar: GridToolbar }}
+                    slotProps={{
+                      toolbar: {
+                        showQuickFilter: true,
+                        quickFilterProps: { debounceMs: 500 },
+                      },
+                    }}
+                    pageSizeOptions={[5, 10, 25]}
+                    checkboxSelection
+                    disableRowSelectionOnClick
+                    disableColumnFilter
+                    disableColumnMenu
+                    disableDensitySelector
+                    disableColumnSelector
+                  />
                 </>
-              ) : (
-                getjobData && (
-                  <>
-                    <DataGrid
-                      className="dataGrid"
-                      autoHeight={true}
-                      rows={data ?? []}
-                      // rows={filterData ?? []}
-                      columns={columns}
-                      initialState={{
-                        pagination: {
-                          paginationModel: {
-                            pageSize: 10,
-                          },
-                        },
-                      }}
-                      slots={{ toolbar: GridToolbar }}
-                      slotProps={{
-                        toolbar: {
-                          showQuickFilter: true,
-                          quickFilterProps: { debounceMs: 500 },
-                        },
-                      }}
-                      pageSizeOptions={[5, 10, 25]}
-                      checkboxSelection
-                      disableRowSelectionOnClick
-                      disableColumnFilter
-                      disableColumnMenu
-                      disableDensitySelector
-                      disableColumnSelector
-                    />
-                  </>
-                )
               )}
             </Card>
           </Box>

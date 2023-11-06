@@ -74,7 +74,7 @@ export default function Navbar() {
     React.useState<null | HTMLElement>(null);
 
   const dopen = useAppSelector((state) => state.menu.menu);
-
+  const user = useAppSelector((state) => state.auth.user);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -178,12 +178,13 @@ export default function Navbar() {
             onClick={() => dispatch(setMenu(!dopen))}
             sx={{
               backgroundColor: "#F1F1F2",
-              borderRadius: "10px",
-              width: "40px",
-              height: "40px",
+              borderRadius: "6px",
+              padding: "6px",
+              width: "48px",
+              height: "48px",
             }}
           >
-            <img src={menuIcon} alt="menuIcon" height={21} width={21} />
+            <img src={menuIcon} alt="menuIcon" height={32} width={32} />
           </IconButton>
           <Search
             sx={{
@@ -240,7 +241,7 @@ export default function Navbar() {
                 color: "skyblue",
               }}
             >
-              <span>J</span>
+              <p>{user ? `${user.username}`.charAt(0).toUpperCase() : ""}</p>
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>

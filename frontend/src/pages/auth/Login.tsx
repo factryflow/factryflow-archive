@@ -5,7 +5,7 @@ import { useLoginUserMutation } from "@/redux/api/authApi";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { toast } from "react-toastify";
-import { setUser } from "@/redux/features/authSlice";
+import { setToken } from "@/redux/features/authSlice";
 import { useNavigate, useLocation, Navigate, Link } from "react-router-dom";
 import * as yup from "yup";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
@@ -72,7 +72,7 @@ const LogIn = () => {
 
   useEffect(() => {
     if (!isLoading && data) {
-      dispatch(setUser(data));
+      dispatch(setToken(data));
     }
     if (isSuccess) {
       toast.success("You successfully logged in");
