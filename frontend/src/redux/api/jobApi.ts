@@ -1,11 +1,12 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 import {
-  JobResponse,
-  JobError,
   CreateJob,
   UpdateJob,
   GenericResponse,
+  JobStatusResponse,
+  JobTypeResonse,
+  Job,
 } from "@/types/api.types";
 import customFetchBase from "./customeFetchBase";
 export const jobApi = createApi({
@@ -14,19 +15,18 @@ export const jobApi = createApi({
   tagTypes: ["getAllJobs"],
   endpoints: (builder) => ({
     // getAllJobs Api
-    getAllJobs: builder.query<JobResponse[], void>({
+    getAllJobs: builder.query<Job[], void>({
       query: () => {
         return `api/jobs/`;
       },
-      transformResponse: (res: GenericResponse<JobResponse[]>) => {
-        const result = res.items;
-        return result ?? [];
+      transformResponse: (res: { items: Job[] }) => {
+        return res.items ?? [];
       },
       providesTags: ["getAllJobs"],
     }),
 
     //   getJobbyId Api
-    getJobById: builder.mutation<any | undefined, number>({
+    getJobById: builder.mutation<Job | undefined, number>({
       query: (id: number) => {
         return {
           url: `api/jobs/${id}`,
@@ -34,10 +34,7 @@ export const jobApi = createApi({
       },
     }),
     // create job api
-    createJobs: builder.mutation<
-      GenericResponse<JobResponse | JobError>,
-      Partial<CreateJob>
-    >({
+    createJobs: builder.mutation<Job, Partial<CreateJob>>({
       query: (body: any) => {
         return {
           url: "api/jobs/",
@@ -48,7 +45,7 @@ export const jobApi = createApi({
       invalidatesTags: ["getAllJobs"],
     }),
     // delete Job Api
-    deleteJobs: builder.mutation<GenericResponse<null>, number>({
+    deleteJobs: builder.mutation<null, number>({
       query: (id) => {
         return {
           url: `api/jobs/${id}`,
@@ -58,10 +55,7 @@ export const jobApi = createApi({
       invalidatesTags: ["getAllJobs"],
     }),
     //update job Api
-    updateJobs: builder.mutation<
-      GenericResponse<JobResponse | JobError>,
-      UpdateJob
-    >({
+    updateJobs: builder.mutation<Job, UpdateJob>({
       query: ({ id, data }) => {
         return {
           url: `api/jobs/${id}`,
@@ -73,24 +67,22 @@ export const jobApi = createApi({
     }),
 
     //getJobStatus
-    getJobStatus: builder.query<any, void>({
+    getJobStatus: builder.query<JobStatusResponse[], void>({
       query: () => {
         return `api/job-status/`;
       },
-      transformResponse: (res: any) => {
-        const { items } = res;
-        return items ?? [];
+      transformResponse: (res: { items: JobStatusResponse[] }) => {
+        return res.items ?? [];
       },
     }),
 
     //getJobType
-    getJobType: builder.query<any, void>({
+    getJobType: builder.query<JobTypeResonse[], void>({
       query: () => {
         return `api/job-types/`;
       },
-      transformResponse: (res: any) => {
-        const result = res.items;
-        return result ?? [];
+      transformResponse: (res: { items: JobTypeResonse[] }) => {
+        return res.items ?? [];
       },
     }),
   }),

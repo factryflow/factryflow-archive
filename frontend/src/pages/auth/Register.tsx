@@ -1,20 +1,25 @@
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 
 import Typography from "@mui/material/Typography";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
-import { Box, Card, InputLabel, TextField } from "@mui/material";
+import {
+  Box,
+  Card,
+  Checkbox,
+  FormControlLabel,
+  InputLabel,
+  TextField,
+} from "@mui/material";
 import * as yup from "yup";
 import { useRegisterUserMutation } from "@/redux/api/authApi";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, Link } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
-import { FormInputText } from "@/components/form-components/FormInputText";
 
 export default function Register() {
   if (localStorage.getItem("token")) {
@@ -25,6 +30,7 @@ export default function Register() {
     useRegisterUserMutation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [isChecked, setIsChecked] = useState(false);
 
   const validationSchema = yup.object().shape({
     username: yup.string().required("required username"),
@@ -49,6 +55,10 @@ export default function Register() {
   } = form;
 
   const onSubmit = async (data: any) => {
+    if (!isChecked) {
+      toast.error("You must accept the Terms & Conditions");
+      return;
+    }
     await registerUser(data);
   };
 
@@ -60,8 +70,6 @@ export default function Register() {
       }
     }
   }, [isSuccess]);
-
-  const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
@@ -110,8 +118,8 @@ export default function Register() {
             sx={{
               width: "800px",
               maxWidth: "100%",
-              height: "500px",
-              marginTop: 8,
+              height: "80%",
+              marginTop: 5,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -258,15 +266,19 @@ export default function Register() {
                   />
                 </Grid>
 
-                <Box sx={{ display: "flex", margin: "20px 12px 0" }}>
-                  <Typography>
-                    <input
-                      type="checkbox"
-                      checked={isChecked}
-                      onChange={handleCheckboxChange}
-                    />
-                    I Accept the Terms & Conditions
-                  </Typography>
+                <Box sx={{ display: "flex", margin: "20px 13px 0" }}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={isChecked}
+                        onChange={handleCheckboxChange}
+                        id="accept-terms"
+                      />
+                    }
+                    label="I Accept the Terms & Conditions"
+                    htmlFor="accept-terms"
+                    sx={{ color: "#181C32", fontWeight: 600, fontSize: "14px" }}
+                  />
                 </Box>
               </Grid>
               <LoadingButton
@@ -288,19 +300,23 @@ export default function Register() {
                 Sign Up
               </LoadingButton>
               <Grid container justifyContent="center">
-                <Grid item>
+                <Grid item sx={{ display: "flex", gap: "5px" }}>
                   Already have an Account?
                   <Link
-                    href="/"
-                    variant="body2"
-                    sx={{
-                      fontSize: "14px",
-                      fontWeight: 600,
-                      color: "#023E8A",
+                    to="/"
+                    style={{
                       textDecoration: "none",
                     }}
                   >
-                    {" Sign in"}
+                    <Typography
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: 600,
+                        color: "#023E8A",
+                      }}
+                    >
+                      Sign In
+                    </Typography>
                   </Link>
                 </Grid>
               </Grid>

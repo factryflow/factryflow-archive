@@ -1,4 +1,3 @@
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
@@ -6,15 +5,21 @@ import { useLoginUserMutation } from "@/redux/api/authApi";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { toast } from "react-toastify";
-import { setUser } from "@/redux/features/authSlice";
-import { useNavigate, useLocation, Navigate } from "react-router-dom";
+import { setToken } from "@/redux/features/authSlice";
+import { useNavigate, useLocation, Navigate, Link } from "react-router-dom";
 import * as yup from "yup";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Card, InputLabel, TextField } from "@mui/material";
+import {
+  Box,
+  Card,
+  Checkbox,
+  FormControlLabel,
+  InputLabel,
+  TextField,
+} from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import type { Login } from "@/types/api.types";
-import { FormInputText } from "@/components/form-components/FormInputText";
 
 const LogIn = () => {
   if (localStorage.getItem("token")) {
@@ -27,6 +32,7 @@ const LogIn = () => {
   const location = useLocation();
 
   const dispatch = useAppDispatch();
+  const [isChecked, setIsChecked] = useState(false);
 
   const validationSchema = yup.object().shape({
     username: yup.string().required("required username"),
@@ -55,6 +61,10 @@ const LogIn = () => {
   } = form;
 
   const onSubmit: SubmitHandler<Login> = async (data) => {
+    if (!isChecked) {
+      toast.error("You must accept the Terms & Conditions");
+      return;
+    }
     await loginUser(data);
   };
 
@@ -62,7 +72,7 @@ const LogIn = () => {
 
   useEffect(() => {
     if (!isLoading && data) {
-      dispatch(setUser(data));
+      dispatch(setToken(data));
     }
     if (isSuccess) {
       toast.success("You successfully logged in");
@@ -70,8 +80,6 @@ const LogIn = () => {
     }
     if (error) toast.error((error as unknown as any).data.detail as string);
   }, [isLoading, data, isSuccess, error]);
-
-  const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
@@ -228,15 +236,19 @@ const LogIn = () => {
                     )}
                   />
                 </Grid>
-                <Box sx={{ display: "flex", margin: "20px 12px 0" }}>
-                  <Typography>
-                    <input
-                      type="checkbox"
-                      checked={isChecked}
-                      onChange={handleCheckboxChange}
-                    />
-                    I Accept the Terms & Conditions
-                  </Typography>
+                <Box sx={{ display: "flex", margin: "20px 13px 0" }}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={isChecked}
+                        onChange={handleCheckboxChange}
+                        id="accept-terms"
+                      />
+                    }
+                    label="I Accept the Terms & Conditions"
+                    htmlFor="accept-terms"
+                    sx={{ color: "#181C32", fontWeight: 600, fontSize: "14px" }}
+                  />
                 </Box>
               </Grid>
               <LoadingButton
@@ -259,19 +271,23 @@ const LogIn = () => {
                 Sign In
               </LoadingButton>
               <Grid container justifyContent="center">
-                <Grid item>
+                <Grid item sx={{ display: "flex", gap: "5px" }}>
                   Already have an Account?
                   <Link
-                    href="/signup"
-                    variant="body2"
-                    sx={{
-                      fontSize: "14px",
-                      fontWeight: 600,
-                      color: "#023E8A",
+                    to="/signup"
+                    style={{
                       textDecoration: "none",
                     }}
                   >
-                    {" Sign Up"}
+                    <Typography
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: 600,
+                        color: "#023E8A",
+                      }}
+                    >
+                      Sign up
+                    </Typography>
                   </Link>
                 </Grid>
               </Grid>

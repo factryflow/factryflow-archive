@@ -1,6 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 import customFetchBase from "./customeFetchBase";
+import { setUser } from "../features/authSlice";
 
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -17,7 +18,7 @@ export const userApi = createApi({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          // dispatch(setUser(data));
+          dispatch(setUser(data));
         } catch (error) {}
       },
     }),

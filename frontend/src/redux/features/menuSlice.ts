@@ -13,13 +13,11 @@ interface MenuItem {
 interface MenuState {
   menu: boolean;
   menuItems: MenuItem[];
-  activeMenuItem: null;
 }
 
 const initialState: MenuState = {
   menu: false,
-  menuItems: [], // Initial state can be empty or pre-populated with some menu items
-  activeMenuItem: null,
+  menuItems: [],
 };
 
 const menuSlice = createSlice({
@@ -38,12 +36,8 @@ const menuSlice = createSlice({
       state.menuItems[index].childrenOpen =
         !state.menuItems[index].childrenOpen;
     },
-    setActiveMenuItem: (state, action) => {
-      state.activeMenuItem = action.payload;
-    },
   },
 });
 
-export const { setMenu, setMenuItems, toggleChildrenOpen, setActiveMenuItem } =
-  menuSlice.actions;
+export const { setMenu, setMenuItems, toggleChildrenOpen } = menuSlice.actions;
 export default menuSlice.reducer;

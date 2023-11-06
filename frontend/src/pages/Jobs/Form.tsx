@@ -237,7 +237,7 @@ const MyForm = () => {
       };
       console.log(requestObj, "requestObject");
       const response = await createDependency(requestObj);
-      if (response && dependencyIsSuccess) {
+      if (response) {
         getjobid();
       }
     }
