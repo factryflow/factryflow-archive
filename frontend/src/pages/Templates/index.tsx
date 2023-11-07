@@ -31,6 +31,8 @@ const Template = () => {
   const [deleteTemplate] = useDeleteTemplateMutation();
   const [deleteModel, setDeleteModel] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<any>("");
+  const [deleteRowName, setDeleteRowName] = useState<any>("");
+
   const templateSelector = useAppSelector((state) => state.template.templates);
 
   const columns: GridColDef<any>[] = [
@@ -49,12 +51,14 @@ const Template = () => {
       renderCell: (params: any) => {
         const handleDeleteAction = () => {
           const currentRowId = params.row.id;
+          const currentRowName = params.row.name;
           setDeleteModel(true);
           setDeleteId(currentRowId);
+          setDeleteRowName(currentRowName);
         };
         const handleEditAction = () => {
           const currentRow = params.row;
-          navigate(`/template/form/${currentRow?.id}`);
+          navigate(`/resource/template/form/${currentRow?.id}`);
         };
 
         return (
@@ -84,6 +88,7 @@ const Template = () => {
     setDeleteModel(false);
     if (deleteId) {
       setDeleteId("");
+      setDeleteRowName("");
     }
     return;
   };
@@ -97,7 +102,7 @@ const Template = () => {
   };
 
   const handleClick = () => {
-    navigate("/template/form");
+    navigate("/resource/template/form");
   };
 
   useEffect(() => {
@@ -294,6 +299,8 @@ const Template = () => {
         setDeleteModel={setDeleteModel}
         handleCancle={handleCancle}
         handleDelete={handleDelete}
+        deleterowName={deleteRowName}
+        deleteTitle={"Template"}
       />
     </Layout>
   );

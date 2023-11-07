@@ -31,7 +31,7 @@ import NotFound from "./pages/NotFound";
 import DashboardIcon from "@/assets/sidebar/dashboard.svg";
 import ProductionIcon from "@/assets/sidebar/production.svg";
 import SettingIcon from "@/assets/sidebar/settings.svg";
-import SupportIcon from "@/assets/sidebar/support_agent.svg";
+
 import ResourceIcon from "@/assets/sidebar/resource.svg";
 
 import Dote from "@/assets/images/Dote.svg";
@@ -98,11 +98,6 @@ function App() {
       icon: SettingIcon,
       route: "/settings",
     },
-    {
-      label: "Help & Support",
-      icon: SupportIcon,
-      route: "/help",
-    },
   ];
 
   useEffect(() => {
@@ -121,7 +116,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
 
           <Route element={<RequireUser />}>
-            <Route path="/jobs" element={<Outlet />}>
+            <Route path="/production/jobs" element={<Outlet />}>
               <Route index element={<Jobs />} />
               <Route path="form" element={<JobForm />} />
               <Route path="form/:id" element={<JobForm />} />
@@ -135,7 +130,7 @@ function App() {
           </Route>
 
           <Route element={<RequireUser />}>
-            <Route path="/tasks" element={<Outlet />}>
+            <Route path="/production/tasks" element={<Outlet />}>
               <Route index element={<Tasks />} />
               <Route path="form" element={<TaskForm />} />
               <Route path="form/:id" element={<TaskForm />} />
@@ -143,7 +138,7 @@ function App() {
           </Route>
 
           <Route element={<RequireUser />}>
-            <Route path="/dependency" element={<Outlet />}>
+            <Route path="/production/dependency" element={<Outlet />}>
               <Route index element={<Dependencys />} />
               <Route path="form" element={<DependencyForm />} />
               <Route path="form/:id" element={<DependencyForm />} />
@@ -156,13 +151,11 @@ function App() {
           </Route>
 
           <Route element={<RequireUser />}>
-            <Route path="/resources" element={<Outlet />}>
+            <Route path="/resource/resources" element={<Outlet />}>
               <Route index element={<Resources />} />
               <Route path="form" element={<ResourceForm />} />
               <Route path="form/:id" element={<ResourceForm />} />
-            </Route>
 
-            <Route element={<RequireUser />}>
               <Route path="resourcegroup" element={<Outlet />}>
                 <Route index element={<ResourcesGroup />} />
                 <Route path="form" element={<ResourceGroupForm />} />
@@ -170,9 +163,10 @@ function App() {
               </Route>
             </Route>
           </Route>
+
           <Route element={<RequireUser />}>
-            <Route path="/exception" element={<Outlet />}>
-              <Route path="/exception" index element={<Exception />} />
+            <Route path="/resource/exception" element={<Outlet />}>
+              <Route index element={<Exception />} />
               <Route path="form" element={<ExceptionForm />} />
               <Route path="form/:id" element={<ExceptionForm />} />
               <Route path="exception-type" element={<ExceptionType />} />
@@ -180,7 +174,7 @@ function App() {
           </Route>
 
           <Route element={<RequireUser />}>
-            <Route path="/template" element={<Outlet />}>
+            <Route path="/resource/template" element={<Outlet />}>
               <Route index element={<Template />} />
               <Route path="form" element={<TemplateForm />} />
               <Route path="form/:id" element={<TemplateForm />} />

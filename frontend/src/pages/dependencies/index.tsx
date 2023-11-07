@@ -20,7 +20,7 @@ import {
 } from "@/redux/features/dependencySlice";
 import useTabs from "@/hooks/useTabs";
 import DeleteModel from "@/components/table/Model/delete-model";
-import { DependencyResponse } from "@/types/api.types";
+// import { DependencyResponse } from "@/types/api.types";
 import deleteicon from "@/assets/images/delete.svg";
 import editicon from "@/assets/images/border_color.svg";
 import viewicon from "@/assets/images/visibility.svg";
@@ -35,6 +35,7 @@ const Dependencys = () => {
   const [deleteDependency] = useDeleteDependencyMutation();
   const [deleteModel, setDeleteModel] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<any>("");
+  const [deleteRowName, setDeleteRowName] = useState<any>("");
 
   const dependenciesSelector = useAppSelector(
     (state) => state.dependency.dependencies
@@ -54,7 +55,7 @@ const Dependencys = () => {
   // const { data: dependencystatus, isLoading: dsIsLoading } =
   //   useGetAllDependecyStatusQuery(undefined, {});
 
-  const [data, setData] = useState<Array<DependencyResponse> | []>();
+  const [data, setData] = useState<Array<any> | []>();
 
   const columns: GridColDef<any>[] = [
     { field: "id", headerName: "ID" }, // Adjust the width as needed
@@ -142,12 +143,14 @@ const Dependencys = () => {
       renderCell: (params: any) => {
         const handleDeleteAction = () => {
           const currentRowId = params.row.id;
+          const currentRowName = params.row.name;
           setDeleteModel(true);
           setDeleteId(currentRowId);
+          setDeleteRowName(currentRowName);
         };
         const handleEditAction = () => {
           const currentRow = params.row;
-          navigate(`/dependency/form/${currentRow?.id}`);
+          navigate(`/production/dependency/form/${currentRow?.id}`);
         };
 
         return (
@@ -174,7 +177,7 @@ const Dependencys = () => {
   ];
 
   const handleClick = () => {
-    navigate(`/dependency/form`);
+    navigate(`/production/dependency/form`);
   };
 
   //handle cancle function  in custom delete modal
@@ -182,6 +185,7 @@ const Dependencys = () => {
     setDeleteModel(false);
     if (deleteId) {
       setDeleteId("");
+      setDeleteRowName("");
     }
     return;
   };
@@ -398,6 +402,8 @@ const Dependencys = () => {
                 setDeleteModel={setDeleteModel}
                 handleCancle={handleCancle}
                 handleDelete={handleDelete}
+                deleterowName={deleteRowName}
+                deleteTitle={"Dependency"}
               />
             </Card>
           </Box>

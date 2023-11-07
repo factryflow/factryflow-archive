@@ -57,6 +57,7 @@ const Jobs = () => {
   const [deleteJobs] = useDeleteJobsMutation();
   const [deleteModel, setDeleteModel] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<any>("");
+  const [deleteRowName, setDeleteRowName] = useState<any>("");
 
   const columns: GridColDef<Job>[] = [
     { field: "id", headerName: "ID" },
@@ -173,15 +174,19 @@ const Jobs = () => {
       sortable: false,
       renderCell: (params: any) => {
         const currentRowId = params.row.id;
+        const currentRowName = params.row.name;
         const handleDeleteAction = (e: React.SyntheticEvent<any>) => {
           setDeleteModel(true);
           setDeleteId(currentRowId);
+          setDeleteRowName(currentRowName);
         };
 
         return (
           <Stack direction="row" spacing={2}>
-            <img src={viewicon} alt="view_Icon" height={17} width={17} />
-            <Link to={`/jobs/form/${currentRowId}`}>
+            <Link to={`/production/jobs/form/${currentRowId}`}>
+              <img src={viewicon} alt="view_Icon" height={17} width={17} />
+            </Link>
+            <Link to={`/production/jobs/form/${currentRowId}`}>
               <img src={editicon} alt="edit_Icon" height={17} width={17} />
             </Link>
 
@@ -199,7 +204,7 @@ const Jobs = () => {
   ];
 
   const handleClick = () => {
-    navigate("/jobs/form");
+    navigate("/production/jobs/form");
   };
 
   //handle cancle function  in custom delete modal
@@ -207,6 +212,7 @@ const Jobs = () => {
     setDeleteModel(false);
     if (deleteId) {
       setDeleteId("");
+      setDeleteRowName("");
     }
     return;
   };
@@ -446,6 +452,8 @@ const Jobs = () => {
           setDeleteModel={setDeleteModel}
           handleCancle={handleCancle}
           handleDelete={handleDelete}
+          deleterowName={deleteRowName}
+          deleteTitle={"Job"}
         />
       </Layout>
     </>

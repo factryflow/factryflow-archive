@@ -121,22 +121,12 @@ const MyForm = () => {
 
   const [
     createJobs,
-    {
-      data: AddJob,
-      isLoading: AddJobIsLoading,
-      error: AddJoberror,
-      isSuccess: addjobissuccess,
-    },
+    { isLoading: AddJobIsLoading, error: cjError, isSuccess: cjIsSuccess },
   ] = useCreateJobsMutation();
 
   const [
     updateJobs,
-    {
-      data: updateJobData,
-      isLoading: updateIsLoading,
-      isSuccess: updateIsSuccess,
-      error: updateError,
-    },
+    { isLoading: updateIsLoading, isSuccess: ujIsSuccess, error: ujError },
   ] = useUpdateJobsMutation();
 
   const [getJobIdData, { data: JobByIdData, isLoading: jobiddataIsLoading }] =
@@ -235,7 +225,7 @@ const MyForm = () => {
         job_ids: [Number(paramsId)],
         task_ids: [],
       };
-      console.log(requestObj, "requestObject");
+
       const response = await createDependency(requestObj);
       if (response) {
         getjobid();
@@ -294,22 +284,16 @@ const MyForm = () => {
   };
 
   useEffect(() => {
-    if (!AddJobIsLoading && AddJob && addjobissuccess) {
-      toast.success("Job Add Successfully") && navigate("/jobs");
+    if (cjIsSuccess || ujIsSuccess) {
+      toast.success(`Job ${isEdit ? "Edit" : "Create"} successfully`) &&
+        navigate("/production/jobs");
     }
-  }, [AddJobIsLoading, AddJob, addjobissuccess]);
-
-  useEffect(() => {
-    if (!updateIsLoading && updateJobData) {
-      toast.success("Job Update Successfully") && navigate("/jobs");
+    if (cjError || ujError) {
+      toast.error(
+        (cjError || (ujError as unknown as any))?.data.message as string
+      );
     }
-  }, [updateJobData, updateIsLoading]);
-
-  // useEffect(() => {
-  //   if (!dependencyIsLoading && getDependencyData) {
-  //     dispatch(setDependencies(getDependencyData));
-  //   }
-  // }, [dependencyIsLoading, getDependencyData]);
+  }, [cjIsSuccess, cjError, ujIsSuccess, ujError]);
 
   useEffect(() => {
     if (paramsId) {
@@ -375,7 +359,7 @@ const MyForm = () => {
             </Link>
             <Link
               style={{ textDecoration: "none", color: "#5E6278" }}
-              to="/jobs"
+              to="/production/jobs"
             >
               Job
             </Link>
@@ -602,7 +586,7 @@ const MyForm = () => {
                         variant="contained"
                         size="large"
                         className="btn-cancel"
-                        onClick={() => navigate("/jobs")}
+                        onClick={() => navigate("/production/jobs")}
                       >
                         {isEdit ? "Back" : "Cancel"}
                       </Button>

@@ -22,11 +22,8 @@ import {
 } from "@/redux/api/templateApi";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import TempleDetails from "@/components/data-tables/template/TemplateDetails";
-import { useGetAllTemplateDetailsQuery } from "@/redux/api/templateDetailsApi";
-import { setTemplateDetails } from "@/redux/features/templateDetailsSlice";
+
 import { FormInputText } from "@/components/form-components/FormInputText";
-import { Flex } from "@mantine/core";
 
 const validationSchema = yup.object().shape({
   name: yup.string().required("Name is required").nullable(),
@@ -123,11 +120,11 @@ const TemplateForm = () => {
   useEffect(() => {
     if (ctIsSuccess || utIsSuccess) {
       toast.success(`Template ${isEdit ? "Edit" : "Create"} successfully`) &&
-        navigate("/template");
+        navigate("/resource/template");
     }
     if (ctError || utError) {
       toast.error(
-        (ctError || (utError as unknown as any)).data.message as string
+        (ctError || (utError as unknown as any))?.data?.message as string
       );
     }
   }, [ctIsSuccess, ctError, utIsSuccess, utError]);
@@ -222,7 +219,7 @@ const TemplateForm = () => {
                       variant="contained"
                       size="large"
                       className="btn-cancel"
-                      onClick={() => navigate("/template")}
+                      onClick={() => navigate("/resource/template")}
                     >
                       {isEdit ? "Back" : "Cancel"}
                     </Button>

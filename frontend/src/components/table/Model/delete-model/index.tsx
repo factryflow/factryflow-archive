@@ -10,6 +10,8 @@ const DeleteModel = ({
   setDeleteModel,
   handleCancle,
   handleDelete,
+  deleterowName,
+  deleteTitle,
 }: any) => {
   return (
     <>
@@ -36,8 +38,11 @@ const DeleteModel = ({
               Are you sure you want to delete?
             </Typography>
             <Typography variant="h6" className="h6">
-              By deleting <b style={{ color: "#5E6278" }}>“Loreum Ipsum”</b>{" "}
-              Job, all task inside that column will also be deleted.
+              By deleting{" "}
+              <b style={{ color: "#5E6278" }}>
+                {deleterowName ? deleterowName : ""}
+              </b>{" "}
+              {deleteTitle}, all task inside that column will also be deleted.
             </Typography>
           </div>
           <Box component={"div"} className="btn-model-row">

@@ -23,10 +23,10 @@ export type LoginResponse = {
 
 //#region register api types
 export type Register = {
-  first_name: string;
-  last_name: string;
+  username: string;
   email: string;
   password: string;
+  role_id?: number;
 };
 
 export type RegisterResponse = {

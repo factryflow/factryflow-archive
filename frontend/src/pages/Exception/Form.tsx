@@ -136,7 +136,7 @@ const ExceptionForm = () => {
   useEffect(() => {
     if (createExceptionIsSuccess || updateExceptionIsSuccess) {
       toast.success(`Exception ${isEdit ? "Edit" : "Create"} successfully`) &&
-        navigate("/exception");
+        navigate("/resource/exception");
     }
     if (createExceptionError || updateExceptionError) {
       toast.error(
@@ -314,7 +314,7 @@ const ExceptionForm = () => {
                         variant="contained"
                         size="large"
                         className="btn-cancel"
-                        onClick={() => navigate("/exception")}
+                        onClick={() => navigate("/resource/exception")}
                       >
                         {isEdit ? "Back" : "Cancel"}
                       </Button>

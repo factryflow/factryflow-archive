@@ -88,8 +88,10 @@ const TaskForm = () => {
 
   //task-type
   const { data: tasktype } = useGetTaskTypeQuery<any>();
-  const [createTasks, { isLoading: taskisloding, isSuccess: taskissuccess }] =
-    useCreateTasksMutation();
+  const [
+    createTasks,
+    { isLoading: taskisloding, isSuccess: ctaskIsSuccess, error: ctaskError },
+  ] = useCreateTasksMutation();
   const [getTaskById, { data: taskgetiddata, isLoading: taskidisloading }] =
     useGetTaskByIdMutation();
   const [
@@ -97,7 +99,8 @@ const TaskForm = () => {
     {
       data: updatetask,
       isLoading: updatetaskisloading,
-      isSuccess: updatetaskissuccess,
+      isSuccess: utaskIsSuccess,
+      error: utaskError,
     },
   ] = useUpdateTasksMutation();
   const [jobdataa, setJobData] = useState<any>([]);
@@ -251,13 +254,16 @@ const TaskForm = () => {
   }, [jobisLoading, getjobData]);
 
   useEffect(() => {
-    if (!taskisloding && taskissuccess) {
-      toast.success("Task Create Successfully") && navigate("/tasks");
+    if (ctaskIsSuccess || utaskIsSuccess) {
+      toast.success(`Task ${isEdit ? "Edit" : "Create"} successfully`) &&
+        navigate("/production/tasks");
     }
-    if (!updatetaskisloading && updatetaskissuccess) {
-      toast.success("Task Update Successfully") && navigate("/tasks");
+    if (ctaskError || utaskError) {
+      toast.error(
+        (ctaskError || (utaskError as unknown as any))?.data.message as string
+      );
     }
-  }, [taskisloding, taskissuccess, updatetaskisloading, updatetaskissuccess]);
+  }, [ctaskIsSuccess, ctaskError, utaskIsSuccess, utaskError]);
 
   return (
     <>
@@ -421,7 +427,7 @@ const TaskForm = () => {
                         variant="contained"
                         size="large"
                         className="btn-cancel"
-                        onClick={() => navigate("/tasks")}
+                        onClick={() => navigate("/production/tasks")}
                       >
                         {isEdit ? "Back" : "Cancel"}
                       </Button>

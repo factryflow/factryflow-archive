@@ -30,12 +30,7 @@ export const authApi = createApi({
     }),
     registerUser: builder.mutation<GenericResponse<RegisterResponse>, Register>(
       {
-        query: (body: {
-          first_name: string;
-          last_name: string;
-          email: string;
-          password: string;
-        }) => {
+        query: (body) => {
           return {
             url: "api/users/",
             method: "post",
@@ -50,9 +45,6 @@ export const authApi = createApi({
           url: "api/users/change-password/",
           method: "put",
           body,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
         };
       },
     }),
@@ -61,9 +53,6 @@ export const authApi = createApi({
         return {
           url: `api/user-details/`,
           method: "get",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
         };
       },
     }),
