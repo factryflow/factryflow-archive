@@ -41,10 +41,11 @@ const Tasks = () => {
   const dispatch = useAppDispatch();
   const [deleteModel, setDeleteModel] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<any>("");
+  const [deleteRowName, setDeleteRowName] = useState<any>("");
   const taskiesSelector = useAppSelector((state: any) => state.task.taskies);
 
   const handleClick = () => {
-    navigate("/tasks/form");
+    navigate("/production/tasks/form");
   };
 
   const columns: GridColDef<any>[] = [
@@ -123,12 +124,14 @@ const Tasks = () => {
       renderCell: (params: any) => {
         const handleDeleteAction = () => {
           const currentRowId = params.row.id;
+          const currentRowName = params.row.name;
           setDeleteModel(true);
           setDeleteId(currentRowId);
+          setDeleteRowName(currentRowName);
         };
         const handleEditAction = () => {
           const currentRow = params.row;
-          navigate(`/tasks/form/${currentRow?.id}`);
+          navigate(`/production/tasks/form/${currentRow?.id}`);
         };
 
         return (
@@ -159,6 +162,7 @@ const Tasks = () => {
     setDeleteModel(false);
     if (deleteId) {
       setDeleteId("");
+      setDeleteRowName("");
     }
     return;
   };
@@ -191,7 +195,7 @@ const Tasks = () => {
             </Link>
             <Link
               style={{ textDecoration: "none", color: "#5E6278" }}
-              to="/tasks"
+              to="/production/tasks"
             >
               Task
             </Link>
@@ -374,6 +378,8 @@ const Tasks = () => {
             setDeleteModel={setDeleteModel}
             handleCancle={handleCancle}
             handleDelete={handleDelete}
+            deleterowName={deleteRowName}
+            deleteTitle={"Task"}
           />
         </Box>
       </Layout>

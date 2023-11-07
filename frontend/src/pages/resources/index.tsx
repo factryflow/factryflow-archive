@@ -23,6 +23,7 @@ const Resources = () => {
   const navigate = useNavigate();
   const [deleteModel, setDeleteModel] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<any>("");
+  const [deleteRowName, setDeleteRowName] = useState<any>("");
 
   const { data: resourceData, isLoading: resourceIsLoading } =
     useGetAllResourcesQuery();
@@ -54,12 +55,15 @@ const Resources = () => {
       renderCell: (params: any) => {
         const handleDeleteAction = () => {
           const currentRowId = params.row.id;
+          const currentRowName = params.row.name;
           setDeleteModel(true);
           setDeleteId(currentRowId);
+
+          setDeleteRowName(currentRowName);
         };
         const handleEditAction = () => {
           const currentRow = params.row;
-          navigate(`/resources/form/${currentRow?.id}`);
+          navigate(`/resource/resources/form/${currentRow?.id}`);
         };
 
         return (
@@ -86,13 +90,14 @@ const Resources = () => {
   ];
 
   const handleClick = () => {
-    navigate(`/resources/form`);
+    navigate(`/resource/resources/form`);
   };
   //handle cancle function  in custom delete modal
   const handleCancle = () => {
     setDeleteModel(false);
     if (deleteId) {
       setDeleteId("");
+      setDeleteRowName("");
     }
     return;
   };
@@ -114,7 +119,7 @@ const Resources = () => {
           onClick={handleClick}
         />
         <Box>
-          <Link to="/resources/resourcegroup">
+          <Link to="/resource/resources/resourcegroup">
             <Button variant="contained">Manage Resorce Group</Button>
           </Link>
         </Box>
@@ -292,6 +297,8 @@ const Resources = () => {
         setDeleteModel={setDeleteModel}
         handleCancle={handleCancle}
         handleDelete={handleDelete}
+        deleterowName={deleteRowName}
+        deleteTitle={"Resource"}
       />
     </Layout>
   );

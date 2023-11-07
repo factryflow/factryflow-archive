@@ -21,6 +21,7 @@ import FFLogo from "@/assets/images/FFlogo.svg";
 import { toggleChildrenOpen } from "@/redux/features/menuSlice";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import { FiberManualRecord as DotIcon } from "@mui/icons-material";
+import { useState } from "react";
 
 const drawerWidth = 240;
 
@@ -77,17 +78,16 @@ const Drawer = styled(MuiDrawer, {
 const Sidenav = () => {
   const dispatch = useAppDispatch();
   const location = useLocation();
-
   const pathParts = location.pathname.split("/");
   const pathresult = `/${pathParts[1]}`;
-
   const menuItems = useAppSelector((state) => state.menu.menuItems);
 
-  const handleMenuItemClick = (menuItem: any) => {
+  const handleMenuItemClick = (menuItem: any, parentRoute = "") => {
+    const fullRoute = `${parentRoute}${menuItem.route}`;
     if (menuItem.children) {
       dispatch(toggleChildrenOpen(menuItems.indexOf(menuItem)));
     } else {
-      navigate(menuItem.route);
+      navigate(fullRoute);
     }
   };
   const theme = useTheme();
@@ -120,19 +120,19 @@ const Sidenav = () => {
                 disablePadding
                 sx={{
                   display: "block",
-                  color:
-                    location.pathname === menuItem.route
-                      ? "#023E8A"
-                      : "#5E6278",
-                  background:
-                    location.pathname === menuItem.route ? "#023E8A0D" : "#FFF",
-                  borderLeft:
-                    location.pathname === menuItem.route
-                      ? "3px solid #023E8A"
-                      : "",
-                  borderRadius:
-                    location.pathname === menuItem.route ? "8px" : "",
-                  marginTop: "10px",
+                  color: menuItem.route.includes(pathresult)
+                    ? "#023E8A"
+                    : "#5E6278",
+                  background: menuItem.route.includes(pathresult)
+                    ? "#023E8A0D"
+                    : "#FFF",
+                  borderLeft: menuItem.route.includes(pathresult)
+                    ? "3px solid #023E8A"
+                    : "",
+                  borderRadius: menuItem.route.includes(pathresult)
+                    ? "8px"
+                    : "",
+                  margin: "10px 5px",
                 }}
                 onClick={() => handleMenuItemClick(menuItem)}
               >
@@ -156,10 +156,9 @@ const Sidenav = () => {
                       height={30}
                       width={24}
                       style={{
-                        filter:
-                          location.pathname === menuItem.route
-                            ? "invert(14%) sepia(69%) saturate(3330%) hue-rotate(205deg) brightness(92%) contrast(98%)"
-                            : "none",
+                        filter: menuItem.route.includes(pathresult)
+                          ? "invert(14%) sepia(69%) saturate(3330%) hue-rotate(205deg) brightness(92%) contrast(98%)"
+                          : "none",
                       }}
                     />
                   </ListItemIcon>
@@ -208,7 +207,9 @@ const Sidenav = () => {
                           padding: 0,
                           margin: 0,
                         }}
-                        onClick={() => handleMenuItemClick(child)}
+                        onClick={() =>
+                          handleMenuItemClick(child, menuItem.route)
+                        }
                       >
                         <ListItemButton
                           sx={{
@@ -216,7 +217,7 @@ const Sidenav = () => {
                             justifyContent: open ? "initial" : "center",
                             px: 2.5,
                             color:
-                              pathresult === child.route
+                              location.pathname === menuItem.route + child.route
                                 ? "#023E8A"
                                 : "#5E6278",
                           }}
@@ -230,9 +231,14 @@ const Sidenav = () => {
                           >
                             <DotIcon
                               sx={{
-                                fontSize: pathresult === child.route ? 15 : 8,
+                                fontSize:
+                                  location.pathname ===
+                                  menuItem.route + child.route
+                                    ? 15
+                                    : 8,
                                 color:
-                                  pathresult === child.route
+                                  location.pathname ===
+                                  menuItem.route + child.route
                                     ? "#023E8A"
                                     : "#5E6278",
                               }}

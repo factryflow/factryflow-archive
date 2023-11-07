@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
   Box,
   Card,
@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
+import { Register } from "@/types/api.types";
 
 export default function Register() {
   if (localStorage.getItem("token")) {
@@ -36,6 +37,7 @@ export default function Register() {
     username: yup.string().required("required username"),
     email: yup.string().email("invalid email").required("required Email"),
     password: yup.string().required("required password"),
+    role_id: yup.number(),
   });
 
   const boxStyle = {
@@ -44,6 +46,12 @@ export default function Register() {
   };
 
   const form = useForm({
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+      role_id: 1,
+    },
     resolver: yupResolver(validationSchema),
   });
 
@@ -54,12 +62,21 @@ export default function Register() {
     formState: { errors },
   } = form;
 
-  const onSubmit = async (data: any) => {
-    if (!isChecked) {
-      toast.error("You must accept the Terms & Conditions");
-      return;
+  const onSubmit: SubmitHandler<Register> = async (data) => {
+    if (data) {
+      const requestObj = {
+        username: data.username,
+        email: data.email,
+        password: data.password,
+        role_id: 1,
+      };
+
+      if (!isChecked) {
+        toast.error("You must accept the Terms & Conditions");
+        return;
+      }
+      await registerUser(requestObj);
     }
-    await registerUser(data);
   };
 
   useEffect(() => {

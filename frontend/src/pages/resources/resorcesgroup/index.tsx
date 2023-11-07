@@ -24,6 +24,8 @@ const ResourcesGroup = () => {
   const navigate = useNavigate();
   const [deleteModel, setDeleteModel] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<any>("");
+  const [deleteRowName, setDeleteRowName] = useState<any>("");
+
   const resourceGroupSelector = useAppSelector(
     (state) => state.resourceGroup.resourceGroups
   );
@@ -62,12 +64,14 @@ const ResourcesGroup = () => {
       renderCell: (params: any) => {
         const handleDeleteAction = () => {
           const currentRowId = params.row.id;
+          const currentRowName = params.row.name;
           setDeleteModel(true);
           setDeleteId(currentRowId);
+          setDeleteRowName(currentRowName);
         };
         const handleEditAction = () => {
           const currentRow = params.row;
-          navigate(`/resources/resourcegroup/form/${currentRow?.id}`);
+          navigate(`/resource/resources/resourcegroup/form/${currentRow?.id}`);
         };
 
         return (
@@ -98,6 +102,7 @@ const ResourcesGroup = () => {
     setDeleteModel(false);
     if (deleteId) {
       setDeleteId("");
+      setDeleteRowName("");
     }
     return;
   };
@@ -111,7 +116,7 @@ const ResourcesGroup = () => {
   };
 
   const handleClick = () => {
-    navigate("/resources/resourcegroup/form");
+    navigate("/resource/resources/resourcegroup/form");
   };
 
   useEffect(() => {
@@ -310,6 +315,8 @@ const ResourcesGroup = () => {
         setDeleteModel={setDeleteModel}
         handleCancle={handleCancle}
         handleDelete={handleDelete}
+        deleterowName={deleteRowName}
+        deleteTitle={"Resource Group"}
       />
     </Layout>
   );

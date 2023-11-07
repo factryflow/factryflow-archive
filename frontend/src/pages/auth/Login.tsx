@@ -23,7 +23,7 @@ import type { Login } from "@/types/api.types";
 
 const LogIn = () => {
   if (localStorage.getItem("token")) {
-    return <Navigate to="/jobs" />;
+    return <Navigate to="/dashboard" />;
   }
   const [loginUser, { data, error, isLoading, isSuccess }] =
     useLoginUserMutation();
@@ -68,7 +68,8 @@ const LogIn = () => {
     await loginUser(data);
   };
 
-  const from = ((location.state as any)?.from.pathname as string) || "/jobs";
+  const from =
+    ((location.state as any)?.from.pathname as string) || "/dashboard";
 
   useEffect(() => {
     if (!isLoading && data) {

@@ -84,11 +84,7 @@ const DependencyForm = () => {
 
   const [
     createDependency,
-    {
-      data: dependencyData,
-      isLoading: dependencyIsLoading,
-      error: dependencyError,
-    },
+    { isLoading: cdIsLoading, error: cdError, isSuccess: cdIsSuccess },
   ] = useCreateDependencyMutation();
 
   const [getDependencyById, { data: getdependencyiddata }] =
@@ -103,7 +99,7 @@ const DependencyForm = () => {
 
   const [
     updateDependency,
-    { data: updateDataDependency, isLoading: UddIsLoading, error: UddError },
+    { isLoading: udIsLoading, error: udError, isSuccess: udIsSuccess },
   ] = useUpdateDependencyMutation();
 
   const Defaultvalues = {
@@ -269,15 +265,16 @@ const DependencyForm = () => {
   };
 
   useEffect(() => {
-    if (!dependencyIsLoading && dependencyData) {
-      toast.success("Dependency Create Successfully") &&
-        navigate("/dependency");
+    if (cdIsSuccess || udIsSuccess) {
+      toast.success(`depedency ${isEdit ? "Edit" : "Create"} successfully`) &&
+        navigate("/production/dependency");
     }
-    if (!UddIsLoading && updateDataDependency) {
-      toast.success("Update dependency Successfully") &&
-        navigate("/dependency");
+    if (cdError || udError) {
+      toast.error(
+        (cdError || (udError as unknown as any))?.data.message as string
+      );
     }
-  }, [dependencyIsLoading, dependencyData, UddIsLoading, updateDataDependency]);
+  }, [cdIsSuccess, cdError, udIsSuccess, udError]);
 
   useEffect(() => {
     const excluded_fields_dependency_type = ["dependency_type"];
@@ -425,14 +422,14 @@ const DependencyForm = () => {
                       variant="contained"
                       size="large"
                       className="btn-cancel"
-                      onClick={() => navigate("/dependency")}
+                      onClick={() => navigate("/production/dependency")}
                     >
                       {isEdit ? "Back" : "Cancel"}
                     </Button>
                     <LoadingButton
                       size="large"
                       type="submit"
-                      // loading={taskisloding || updatetaskisloading}
+                      loading={cdIsLoading || udIsLoading}
                       color="primary"
                       variant="contained"
                     >

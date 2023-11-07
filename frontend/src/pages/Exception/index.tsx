@@ -33,6 +33,7 @@ const Exception = () => {
   const [deleteException] = useDeleteExceptionMutation();
   const [deleteModel, setDeleteModel] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<any>("");
+  const [deleteRowName, setDeleteRowName] = useState<any>("");
 
   const exceptionSelector = useAppSelector(
     (state) => state.exception.exceptions
@@ -94,12 +95,14 @@ const Exception = () => {
       renderCell: (params: any) => {
         const handleDeleteAction = () => {
           const currentRowId = params.row.id;
+          const currentRowName = params.row.name;
           setDeleteModel(true);
           setDeleteId(currentRowId);
+          setDeleteRowName(currentRowName);
         };
         const handleEditAction = () => {
           const currentRow = params.row;
-          navigate(`/exception/form/${currentRow?.id}`);
+          navigate(`/resource/exception/form/${currentRow?.id}`);
         };
 
         return (
@@ -130,6 +133,7 @@ const Exception = () => {
     setDeleteModel(false);
     if (deleteId) {
       setDeleteId("");
+      setDeleteRowName("");
     }
     return;
   };
@@ -143,7 +147,7 @@ const Exception = () => {
   };
 
   const handleClick = () => {
-    navigate("/exception/form");
+    navigate("/resource/exception/form");
   };
 
   useEffect(() => {
@@ -344,6 +348,8 @@ const Exception = () => {
           setDeleteModel={setDeleteModel}
           handleCancle={handleCancle}
           handleDelete={handleDelete}
+          deleterowName={deleteRowName}
+          deleteTitle={"Exception"}
         />
       </Layout>
     </>
