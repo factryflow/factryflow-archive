@@ -6,7 +6,7 @@ from api.models import (
     AssignmentRule,
     AssignmentRuleCriteria,
 )
-from api.schemas.base import AssignmentRuleBaseOut, ResourceBaseOut, TaskBaseOut
+from api.schemas.base import AssignmentRuleBaseOut
 
 
 class AssignmentRuleCriteriaIn(ModelSchema):
@@ -24,24 +24,16 @@ class AssignmentRuleCriteriaOut(ModelSchema):
 
 
 class AssignmentRuleIn(ModelSchema):
-    work_center_id: int = Field(..., default=1, example=1)
+    work_center_id: int = Field(..., example=1)
     resource_group_id: int = Field(..., example=1)
 
     class Config:
         model = AssignmentRule
-        model_fields = [
-            "name",
-            "description",
-            "priority",
-            "resource_count",
-            "use_all_resources",
-        ]
+        model_fields = ["name", "description", "priority"]
 
 
 class AssignmentRuleOut(AssignmentRuleBaseOut):
     criteria: list[AssignmentRuleCriteriaOut]
-    tasks: list[TaskBaseOut]
-    resource_group: list[ResourceBaseOut]
 
     class Config:
         model = AssignmentRule
