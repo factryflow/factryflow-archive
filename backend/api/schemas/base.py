@@ -116,7 +116,8 @@ class TaskBaseOut(ModelSchema):
     predecessor_ids: List[int] = Field([], alias="predecessor_id_list")
     successor_ids: List[int] = Field([], alias="successor_id_list")
     dependency_ids: List[int] = Field([], alias="dependency_id_list")
-    assignment_rule_ids: List[int] = Field([], alias="assignment_rule_id_list")
+    resource_assignment_ids: List[int] = Field([], alias="resource_assignment_id_list")
+    # assignment_rule_ids: List[int] = Field([], alias="assignment_rule_id_list")
 
     class Config:
         model = Task
@@ -125,7 +126,7 @@ class TaskBaseOut(ModelSchema):
             "predecessors",
             "job",
             "work_center",
-            "assigment_rules",
+            # "assigment_rules",
         ]
 
 
@@ -175,10 +176,11 @@ class WeeklyShiftTemplateBaseOut(ModelSchema):
 
 
 class AssignmentRuleBaseOut(ModelSchema):
-    resource_group_id: int = None
+    # resource_group_id: int = None
     task_ids: List[int] = Field([], alias="task_id_list")
     criteria_ids: List[int] = Field([], alias="criteria_id_list")
 
     class Config:
         model = AssignmentRule
-        model_exclude = ["resource_group"]
+        model_fields = "__all__"
+        # model_exclude = ["resource_group"]
