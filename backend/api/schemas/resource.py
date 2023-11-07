@@ -5,6 +5,7 @@ from pydantic import Field, root_validator
 
 from api.models import Resource
 from api.schemas.base import (
+    OperationalExceptionBaseOut,
     ResourceBaseOut,
     ResourceGroupBaseOut,
 )
@@ -32,3 +33,4 @@ class ResourceIn(ModelSchema):
 
 class ResourceOut(ResourceBaseOut):
     resource_groups: List[ResourceGroupBaseOut]
+    operational_exceptions: List[OperationalExceptionBaseOut] = Field(default=[])
