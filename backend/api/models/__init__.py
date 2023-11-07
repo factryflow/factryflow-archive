@@ -1,6 +1,5 @@
 from .assignment_rule import AssignmentRule
 from .assignment_rule_criteria import AssignmentRuleCriteria
-from .assignment_rule_resource_group import AssignmentRuleResourceGroup
 from .dependency import Dependency
 from .dependency_status import DependencyStatus
 from .dependency_types import DependencyTypes

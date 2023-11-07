@@ -3,8 +3,6 @@ from .assignment_rule import (
     AssignmentRuleCriteriaOut,
     AssignmentRuleIn,
     AssignmentRuleOut,
-    AssignmentRuleResourceGroupIn,
-    AssignmentRuleResourceGroupOut,
 )
 from .base import (
     DependencyBaseOut,
