@@ -19,7 +19,7 @@ class Operator(models.TextChoices):
 
 class AssignmentRuleCriteria(models.Model):
     id = models.AutoField(primary_key=True)
-    models.CharField(max_length=100)
+    field = models.CharField(max_length=100)
     operator = models.CharField(
         max_length=20, choices=Operator.choices, default=Operator.EQUALS
     )

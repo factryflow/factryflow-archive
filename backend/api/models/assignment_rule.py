@@ -5,7 +5,6 @@ from ordered_model.models import OrderedModelBase
 from simple_history.models import HistoricalRecords
 
 from api.models.work_center import WorkCenter
-from api.utils.model_manager import ActiveManager
 
 
 class AssignmentRule(OrderedModelBase):
@@ -35,7 +34,7 @@ class AssignmentRule(OrderedModelBase):
 
     history = HistoricalRecords(table_name="assignment_rule_history")
 
-    objects = ActiveManager()
+    # objects = ActiveManager()
 
     def __str__(self):
         return self.name
