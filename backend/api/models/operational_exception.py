@@ -3,23 +3,27 @@ from django.db import models
 from django.utils import timezone
 from simple_history.models import HistoricalRecords
 
+from api.models.operational_exception_type import OperationalExceptionType
+from api.models.resource import Resource
+from api.models.weekly_shift_template import WeeklyShiftTemplate
 from api.utils.model_manager import ActiveManager
-
-from .operational_exception_type import OperationalExceptionType
-from .weekly_shift_template import WeeklyShiftTemplate
 
 
 class OperationalException(models.Model):
     id = models.AutoField(primary_key=True)
     external_id = models.CharField(max_length=250, blank=True, null=True)
     operational_exception_type = models.ForeignKey(
-        OperationalExceptionType, on_delete=models.DO_NOTHING, blank=True, null=True
+        OperationalExceptionType,
+        on_delete=models.DO_NOTHING,
     )
-    start_datetime = models.DateTimeField(blank=True, null=True)
-    end_datetime = models.DateTimeField(blank=True, null=True)
+    start_datetime = models.DateTimeField()
+    end_datetime = models.DateTimeField()
     notes = models.TextField(blank=True, null=True)
     weekly_shift_template = models.ForeignKey(
         WeeklyShiftTemplate, on_delete=models.DO_NOTHING, blank=True, null=True
+    )
+    resource = models.ForeignKey(
+        Resource, on_delete=models.DO_NOTHING, related_name="operational_exceptions"
     )
 
     # Metadata

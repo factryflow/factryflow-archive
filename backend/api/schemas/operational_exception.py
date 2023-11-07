@@ -1,8 +1,12 @@
 # schemas.py
-from datetime import datetime, date
-from typing import Optional
-from api.models import OperationalExceptionType, OperationalException
-from ninja import Schema, ModelSchema
+from ninja import ModelSchema, Schema
+
+from api.models import OperationalException, OperationalExceptionType
+from api.schemas.base import (
+    OperationalExceptionBaseOut,
+    ResourceBaseOut,
+    WeeklyShiftTemplateBaseOut,
+)
 
 
 class OperationalExceptionTypeIn(Schema):
@@ -15,16 +19,25 @@ class OperationalExceptionTypeOut(ModelSchema):
         model_fields = ["id", "name"]
 
 
-class OperationalExceptionIn(Schema):
-    external_id: str
-    start_datetime: datetime
-    end_datetime: datetime
-    notes: Optional[str] = None
-    weekly_shift_template_id: int
+class OperationalExceptionIn(ModelSchema):
     operational_exception_type_id: int
+    weekly_shift_template_id: int = None
+    resource_id: int
+
+    class Config:
+        model = OperationalException
+        model_fields = [
+            "external_id",
+            "start_datetime",
+            "end_datetime",
+            "notes",
+        ]
 
 
-class OperationalExceptionOut(ModelSchema):
+class OperationalExceptionOut(OperationalExceptionBaseOut):
+    resource: ResourceBaseOut
+    weekly_shift_template: WeeklyShiftTemplateBaseOut = None
+
     class Config:
         model = OperationalException
         model_fields = "__all__"

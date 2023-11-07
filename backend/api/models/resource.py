@@ -46,6 +46,10 @@ class Resource(models.Model):
     def resource_group_id_list(self):
         return list(self.resource_groups.values_list("id", flat=True))
 
+    @property
+    def operational_exception_id_list(self):
+        return list(self.operational_exceptions.values_list("id", flat=True))
+
     class Meta:
         db_table = "resource"
         indexes = [models.Index(fields=["id", "name"])]
