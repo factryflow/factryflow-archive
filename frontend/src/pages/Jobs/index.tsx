@@ -64,35 +64,29 @@ const Jobs = () => {
     {
       field: "name",
       headerName: "Job Name",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
+      width: 170,
     },
     // {
     //   field: "description",
     //   headerName: "Description",
-    //   flex: 1,
+    //   width: 170,
     //   headerAlign: "center",
     //   align: "center",
     // },
     {
       field: "customer",
       headerName: "Customer",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
+      width: 170,
     },
     {
       field: "due_date",
       headerName: "Due Date",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
+      width: 170,
     },
     // {
     //   field: "planned_start_datetime",
     //   headerName: "Planned Start",
-    //   flex: 1,
+    //   width: 170,
     //   headerAlign: "center",
     //   align: "center",
     //   renderCell: (row) => {
@@ -108,7 +102,7 @@ const Jobs = () => {
     // {
     //   field: "planned_end_datetime",
     //   headerName: "Planned End",
-    //   flex: 1,
+    //   width: 170,
     //   headerAlign: "center",
     //   align: "center",
     //   renderCell: (row) => {
@@ -124,24 +118,19 @@ const Jobs = () => {
     {
       field: "priority",
       headerName: "Priority",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
+      width: 170,
     },
     {
       field: "note",
       headerName: "Note",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
+      width: 170,
     },
 
     {
       field: "status",
       headerName: "Status",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
+      width: 170,
+
       renderCell: (row: any) => {
         const badgeColor: BadgeType = {
           completed: "green",
@@ -183,10 +172,16 @@ const Jobs = () => {
 
         return (
           <Stack direction="row" spacing={2}>
-            <Link to={`/production/jobs/form/${currentRowId}`}>
+            <Link
+              to={`/production/jobs/form/${currentRowId}`}
+              state={{ viewmode: true }}
+            >
               <img src={viewicon} alt="view_Icon" height={17} width={17} />
             </Link>
-            <Link to={`/production/jobs/form/${currentRowId}`}>
+            <Link
+              to={`/production/jobs/form/${currentRowId}`}
+              state={{ viewmode: false }}
+            >
               <img src={editicon} alt="edit_Icon" height={17} width={17} />
             </Link>
 
@@ -276,11 +271,12 @@ const Jobs = () => {
           />
           <Box
             m="10px 0px 0px 0px"
-            height="auto"
+            height="500px"
             width={"auto"}
             sx={{
               "& .MuiDataGrid-root": {
                 border: "unset",
+
                 marginTop: "10px",
               },
 
@@ -401,7 +397,16 @@ const Jobs = () => {
               },
             }}
           >
-            <Card withBorder sx={{ padding: "0px !important", marginTop: 10 }}>
+            <Card
+              withBorder
+              sx={{
+                padding: "0px !important",
+                marginTop: 10,
+                height: "100%",
+                borderRadius: "12px",
+                border: "1px solid rgba(225, 227, 234, 0.50)",
+              }}
+            >
               {/* <StatusTabs
             statusTabs={[
               "all",
@@ -416,7 +421,6 @@ const Jobs = () => {
                 <>
                   <DataGrid
                     className="dataGrid"
-                    autoHeight={true}
                     rows={data ?? []}
                     // rows={filterData ?? []}
                     columns={columns}

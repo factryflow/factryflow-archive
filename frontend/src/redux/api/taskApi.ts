@@ -1,5 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import customFetchBase from "./customeFetchBase";
+import {
+  CreateTask,
+  Task,
+  TaskStatus,
+  TaskType,
+  UpdateTask,
+} from "@/types/api.types";
 
 export const taskApi = createApi({
   reducerPath: "taskApi",
@@ -7,38 +14,35 @@ export const taskApi = createApi({
   tagTypes: ["getAllTasks"],
   endpoints: (builder) => ({
     // getAllTask Api
-    getAllTasks: builder.query<any[], void>({
+    getAllTasks: builder.query<Task[], void>({
       query: () => {
         return `api/tasks/`;
       },
-      transformResponse: (res: { items: any[] }) => {
-        const result = res.items;
-        return result ?? [];
+      transformResponse: (res: { items: Task[] }) => {
+        return res.items ?? [];
       },
       providesTags: ["getAllTasks"],
     }),
 
-    getTaskStatus: builder.query<any[], void>({
+    getTaskStatus: builder.query<TaskStatus[], void>({
       query: () => {
         return `api/task-status/`;
       },
-      transformResponse: (res: { items: any[] }) => {
-        const result = res.items;
-        return result ?? [];
+      transformResponse: (res: { items: TaskStatus[] }) => {
+        return res.items ?? [];
       },
     }),
-    getTaskType: builder.query<any[], void>({
+    getTaskType: builder.query<TaskType[], void>({
       query: () => {
         return `api/task-types/`;
       },
-      transformResponse: (res: { items: any[] }) => {
-        const result = res.items;
-        return result ?? [];
+      transformResponse: (res: { items: TaskType[] }) => {
+        return res.items ?? [];
       },
     }),
 
     // gettaskbyId Api
-    getTaskById: builder.mutation({
+    getTaskById: builder.mutation<null, number>({
       query: (id: number) => {
         return {
           url: `api/tasks/${id}`,
@@ -48,8 +52,8 @@ export const taskApi = createApi({
     }),
 
     // create Task api
-    createTasks: builder.mutation({
-      query: (body: any) => {
+    createTasks: builder.mutation<Task, CreateTask>({
+      query: (body) => {
         return {
           url: "api/tasks/",
           method: "post",
@@ -59,8 +63,8 @@ export const taskApi = createApi({
       invalidatesTags: ["getAllTasks"],
     }),
     // delete Job Api
-    deleteTasks: builder.mutation({
-      query: (id: number) => {
+    deleteTasks: builder.mutation<null, number>({
+      query: (id) => {
         return {
           url: `api/tasks/${id}`,
           method: "delete",
@@ -69,7 +73,7 @@ export const taskApi = createApi({
       invalidatesTags: ["getAllTasks"],
     }),
     //update job Api
-    updateTasks: builder.mutation({
+    updateTasks: builder.mutation<Task, UpdateTask>({
       query: ({ id, data }) => {
         return {
           url: `api/tasks/${id}`,

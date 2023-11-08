@@ -226,6 +226,7 @@ const TaskDetails = ({
   handleDeleteTask,
   jobisenable,
   isEdit,
+  viewmode,
 }: any) => {
   const [taskDetail, setTaskDetails] = useState<any[] | undefined>();
   const jobIddataSelector = useAppSelector((state: any) => state.job.job);
@@ -428,12 +429,16 @@ const TaskDetails = ({
       isEdit && (
         <Flex gap="md">
           <Tooltip label="Edit">
-            <ActionIcon onClick={() => handleEditRow(row)}>
+            <ActionIcon onClick={() => handleEditRow(row)} disabled={viewmode}>
               <IconEdit />
             </ActionIcon>
           </Tooltip>
           <Tooltip label="Delete">
-            <ActionIcon color="red" onClick={() => openDeleteConfirmModal(row)}>
+            <ActionIcon
+              color="red"
+              onClick={() => openDeleteConfirmModal(row)}
+              disabled={viewmode}
+            >
               <IconTrash />
             </ActionIcon>
           </Tooltip>
@@ -448,6 +453,7 @@ const TaskDetails = ({
             setJob("");
             table.setCreatingRow(true); //simplest way to open the create row modal with no default values
           }}
+          disabled={viewmode}
         >
           Create task
         </Button>

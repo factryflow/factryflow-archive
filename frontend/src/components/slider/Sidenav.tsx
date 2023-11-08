@@ -216,10 +216,11 @@ const Sidenav = () => {
                             minHeight: 48,
                             justifyContent: open ? "initial" : "center",
                             px: 2.5,
-                            color:
-                              location.pathname === menuItem.route + child.route
-                                ? "#023E8A"
-                                : "#5E6278",
+                            color: location.pathname.includes(
+                              menuItem.route + child.route
+                            )
+                              ? "#023E8A"
+                              : "#5E6278",
                           }}
                         >
                           <ListItemIcon
@@ -231,16 +232,16 @@ const Sidenav = () => {
                           >
                             <DotIcon
                               sx={{
-                                fontSize:
-                                  location.pathname ===
+                                fontSize: location.pathname.includes(
                                   menuItem.route + child.route
-                                    ? 15
-                                    : 8,
-                                color:
-                                  location.pathname ===
+                                )
+                                  ? 15
+                                  : 8,
+                                color: location.pathname.includes(
                                   menuItem.route + child.route
-                                    ? "#023E8A"
-                                    : "#5E6278",
+                                )
+                                  ? "#023E8A"
+                                  : "#5E6278",
                               }}
                             />
                           </ListItemIcon>

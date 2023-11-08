@@ -215,6 +215,7 @@ const DependencyDetails = ({
   handleEditDependency,
   handleDeleteDependency,
   isEdit,
+  viewmode,
 }: any) => {
   const [dependencystatus, setdependencyStatus] = useState<any>();
   const [dependencyType, setDependencyType] = useState<any>();
@@ -419,12 +420,16 @@ const DependencyDetails = ({
       isEdit && (
         <Flex gap="md">
           <Tooltip label="Edit">
-            <ActionIcon onClick={() => handleEditRow(row)}>
+            <ActionIcon onClick={() => handleEditRow(row)} disabled={viewmode}>
               <IconEdit />
             </ActionIcon>
           </Tooltip>
           <Tooltip label="Delete">
-            <ActionIcon color="red" onClick={() => openDeleteConfirmModal(row)}>
+            <ActionIcon
+              color="red"
+              onClick={() => openDeleteConfirmModal(row)}
+              disabled={viewmode}
+            >
               <IconTrash />
             </ActionIcon>
           </Tooltip>
@@ -440,6 +445,7 @@ const DependencyDetails = ({
             setActualDate("");
             table.setCreatingRow(true);
           }}
+          disabled={viewmode}
         >
           Create Dependency
         </Button>

@@ -44,17 +44,26 @@ const Exception = () => {
     {
       field: "external_id",
       headerName: "External Id",
-      flex: 1,
+      width: 170,
     },
     {
       field: "operational_exception_type",
       headerName: "Exception Type",
-      flex: 1,
+      width: 170,
+      renderCell: (row) => {
+        return (
+          <p>
+            {row.row.operational_exception_type
+              ? row.row.operational_exception_type.name
+              : ""}
+          </p>
+        );
+      },
     },
     {
       field: "start_datetime",
       headerName: "Start Datetime",
-      flex: 1,
+      width: 170,
       renderCell: (row) => {
         return (
           <p>
@@ -66,7 +75,7 @@ const Exception = () => {
     {
       field: "end_datetime",
       headerName: "End Datetime",
-      flex: 1,
+      width: 170,
       renderCell: (row) => {
         return (
           <p>
@@ -78,18 +87,34 @@ const Exception = () => {
     {
       field: "notes",
       headerName: "Notes",
-      flex: 1,
     },
     {
       field: "weekly_shift_template",
       headerName: "Template",
-      flex: 1,
+      width: 170,
+      renderCell: (row) => {
+        return (
+          <p>
+            {row.row.weekly_shift_template
+              ? row.row.weekly_shift_template.name
+              : ""}
+          </p>
+        );
+      },
+    },
+    {
+      field: "resource",
+      headerName: "Resource",
+      width: 170,
+      renderCell: (row) => {
+        return <p>{row.row.resource ? row.row.resource.name : ""}</p>;
+      },
     },
 
     {
       field: "action",
       headerName: "Action",
-      width: 100,
+      width: 170,
       sortable: false,
       // disableClickEventBubbling: true,
       renderCell: (params: any) => {
@@ -178,7 +203,7 @@ const Exception = () => {
 
           <Box
             m="30px 0 0 0"
-            height="75vh"
+            height="500px"
             sx={{
               "& .MuiDataGrid-root": {
                 border: "unset",
@@ -275,10 +300,10 @@ const Exception = () => {
               ".MuiDataGrid-iconSeparator": {
                 display: "none",
               },
-              ".css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root:hover": {
+              ".MuiButtonBase-root-MuiCheckbox-root:hover": {
                 backgroundColor: "transparent",
               },
-              ".css-9vna8i-MuiButtonBase-root-MuiIconButton-root:hover": {
+              ".MuiButtonBase-root-MuiIconButton-root:hover": {
                 backgroundColor: "transparent",
               },
               ".MuiTablePagination-select": {
@@ -302,7 +327,16 @@ const Exception = () => {
               },
             }}
           >
-            <Card withBorder sx={{ padding: "0px !important", marginTop: 10 }}>
+            <Card
+              withBorder
+              sx={{
+                padding: "0px !important",
+                marginTop: 10,
+                borderRadius: "12px",
+                border: "1px solid rgba(225, 227, 234, 0.50)",
+                height: "100%",
+              }}
+            >
               {exceptionIsLoading ? (
                 <Loading />
               ) : (

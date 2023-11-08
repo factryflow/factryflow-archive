@@ -44,22 +44,22 @@ type Nullable<T> = T | null;
 
 //#endregion
 
-interface TaskStatus {
+export type TaskStatus = {
   id: number;
   name: string;
-}
+};
 
-interface TaskType {
+export type TaskType = {
   id: number;
   name: string;
-}
+};
 
 interface WorkCenter {
   id: number;
   name: string;
 }
 
-interface Task {
+export type Task = {
   id: number;
   external_id: string;
   name: string;
@@ -85,20 +85,57 @@ interface Task {
   predecessor_ids: number[];
   successor_ids: number[];
   dependency_ids: number[];
-}
+};
+
+export type CreateTask = {
+  name: string;
+  external_id: string;
+  setup_time: number;
+  run_time_per_unit: number;
+  teardown_time: number;
+  quantity: number;
+  task_status_id: number;
+  task_type_id: number;
+  job_id: number;
+  work_center_id: number;
+  item_id: number;
+  predecessor_ids: number[];
+  successor_ids: number[];
+  dependency_ids: number[];
+};
+
+export type UpdateTask = {
+  id: string | undefined;
+  data: {
+    name: string;
+    external_id: string;
+    setup_time: number;
+    run_time_per_unit: number;
+    teardown_time: number;
+    quantity: number;
+    task_status_id: number;
+    task_type_id: number;
+    job_id: number;
+    work_center_id: number;
+    item_id: number;
+    predecessor_ids: number[];
+    successor_ids: number[];
+    dependency_ids: number[];
+  };
+};
 
 interface DependencyType {
   id: number;
   name: string;
 }
 
-interface DependencyStatus {
+export type DependencyStatus = {
   id: number;
   name: string;
-}
+};
 
-interface Dependency {
-  id: number;
+export type Dependency = {
+  id: string | undefined;
   name: string;
   external_id: string;
   expected_close_datetime: string;
@@ -110,9 +147,36 @@ interface Dependency {
   created_by: number;
   updated_at: string;
   updated_by: number;
-  job_ids: number[];
-  task_ids: number[];
-}
+  job_ids?: number[];
+  task_ids?: number[];
+};
+
+export type CreateDependency = {
+  name: string;
+  external_id: string;
+  expected_close_datetime: string;
+  actual_close_datetime: string;
+  notes: string;
+  dependency_status_id: number;
+  dependency_type_id: number;
+  job_ids: string[];
+  task_ids: string[];
+};
+
+export type UpdateDependency = {
+  id: string;
+  data: {
+    name: string;
+    external_id: string;
+    expected_close_datetime: string;
+    actual_close_datetime: string;
+    notes: string;
+    dependency_status_id: number;
+    dependency_type_id: number;
+    job_ids: string[];
+    task_ids: string[];
+  };
+};
 
 export type Job = {
   id: number;
@@ -154,48 +218,6 @@ export type JobTypeResonse = Partial<JobStatusResponse>;
 //   name: Array<string>;
 // };
 
-// export type JobResponse = {
-//   id: number;
-//   name: string;
-//   description: string;
-//   customer: string;
-//   due_date: string;
-//   priority: number;
-//   planned_start_datetime: string;
-//   planned_end_datetime: string;
-//   external_id: string;
-//   note: string;
-//   job_status: any;
-//   job_type: any;
-//   created_at: string;
-//   created_by: number;
-//   updated_at: string;
-//   updated_by: number;
-//   deleted_at: string;
-//   task_ids: any;
-//   dependencies: any;
-// };
-
-// // id": 0,
-// //       "name": "string",
-// //       "description": "string",
-// //       "customer": "string",
-// //       "due_date": "2023-10-06",
-// //       "priority": 0,
-// //       "planned_start_datetime": "2023-10-06T11:31:13.137Z",
-// //       "planned_end_datetime": "2023-10-06T11:31:13.137Z",
-// //       "external_id": "string",
-// //       "note": "string",
-// //       "job_status": 0,
-// //       "job_type": 0,
-// //       "created_at": "2023-10-06T11:31:13.138Z",
-// //       "created_by": 0,
-// //       "updated_at": "2023-10-06T11:31:13.138Z",
-// //       "updated_by": 0,
-// //       "deleted_at": "2023-10-06T11:31:13.138Z",
-// //       "is_active": true,
-// //       "is_deleted": false
-
 export type CreateJob = {
   name: string;
   customer: string;
@@ -209,7 +231,6 @@ export type CreateJob = {
 };
 
 export type UpdateJob = {
-  // id: Pick<JobResponse, "id">;
   id: string;
   data: {
     name: string;
@@ -223,31 +244,3 @@ export type UpdateJob = {
     priority: number;
   };
 };
-// //#endregion
-
-// export type DependencyResponse = {
-//   id: number;
-//   external_id: Nullable<string>;
-//   name: string;
-//   dependency_type: number;
-//   dependency_status: number;
-//   expected_close_datetime: Nullable<string>;
-//   actual_close_datetime: Nullable<string>;
-//   notes: Nullable<string>;
-//   created_at: Nullable<string>;
-//   created_by: number;
-//   updated_at: Nullable<string>;
-//   updated_by: number;
-//   deleted_at: Nullable<string>;
-//   is_active: boolean;
-//   is_deleted: boolean;
-// };
-
-// export type DependencyStatusResponse = {
-//   id: number;
-//   name: string;
-//   created_at: Nullable<string>;
-//   created_by: any;
-//   updated_at: Nullable<string>;
-//   updated_by: any;
-// };

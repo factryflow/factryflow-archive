@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Layout from "../Layout";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import JobDetails from "@/components/data-tables/jobs/jobsDetails";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -70,6 +70,8 @@ const DependencyForm = () => {
   const [activeTab, setActiveTab] = useState<string | null>("jobs");
   const [jobData, setJobData] = useState<any>();
   const [tasksdata, setTasksData] = useState<any | undefined>();
+  const location = useLocation();
+  const viewmode = location?.state?.viewmode;
 
   const boxStyle = {
     boxShadow: "0.3px 0.3px 1px rgba(0, 0, 0, 0.16)", // Adjust values as needed
@@ -88,7 +90,7 @@ const DependencyForm = () => {
   ] = useCreateDependencyMutation();
 
   const [getDependencyById, { data: getdependencyiddata }] =
-    useGetDependencyByIdMutation();
+    useGetDependencyByIdMutation<any>();
 
   //call api dependency type
   const {
@@ -127,7 +129,7 @@ const DependencyForm = () => {
 
   const onSubmit = (data: any) => {
     if (isEdit) {
-      updateDependency({ id: params.id, data: data });
+      updateDependency({ id: params.id!, data: data });
     } else {
       createDependency(data);
     }
@@ -143,8 +145,7 @@ const DependencyForm = () => {
 
   const handleCreateTask = async (values: any) => {
     if (values) {
-      console.log(values, "values");
-      const requestObj = {
+      const requestObj: any = {
         id: "",
         name: values.name,
         external_id: values.external_id,
@@ -175,7 +176,7 @@ const DependencyForm = () => {
   }: any) => {
     console.log(id);
     if (id && values) {
-      const requestObj = {
+      const requestObj: any = {
         name: values.name,
         external_id: values.external_id,
         setup_time: values.setup_time,
@@ -352,6 +353,7 @@ const DependencyForm = () => {
                     label={"External Id"}
                     placeholder={"Enter dependency Name"}
                     type={"text"}
+                    viewmode={viewmode ? true : false}
                   />
                 </Grid>
 
@@ -362,6 +364,7 @@ const DependencyForm = () => {
                     label={"Name"}
                     placeholder={"Enter  Name"}
                     type={"text"}
+                    viewmode={viewmode ? true : false}
                   />
                 </Grid>
 
@@ -372,6 +375,7 @@ const DependencyForm = () => {
                     label={"Notes"}
                     placeholder={"write notes"}
                     type={"text"}
+                    viewmode={viewmode ? true : false}
                   />
                 </Grid>
 
@@ -382,6 +386,7 @@ const DependencyForm = () => {
                     label={"Expected Date"}
                     placeholder={"expected_close_datetime"}
                     type={"datetime-local"}
+                    viewmode={viewmode ? true : false}
                   />
                 </Grid>
                 <Grid item xs={6}>
@@ -391,6 +396,7 @@ const DependencyForm = () => {
                     label={"Actual Date"}
                     placeholder={""}
                     type={"datetime-local"}
+                    viewmode={viewmode ? true : false}
                   />
                 </Grid>
                 <Grid item xs={6}>
@@ -399,6 +405,7 @@ const DependencyForm = () => {
                     control={control}
                     label={"Status"}
                     options={dependencystatusdata ?? []}
+                    viewmode={viewmode ? true : false}
                   />
                 </Grid>
 
@@ -408,6 +415,7 @@ const DependencyForm = () => {
                     control={control}
                     label={"Type"}
                     options={dependencytypedata ?? []}
+                    viewmode={viewmode ? true : false}
                   />
                 </Grid>
 
@@ -429,6 +437,7 @@ const DependencyForm = () => {
                     <LoadingButton
                       size="large"
                       type="submit"
+                      disabled={viewmode}
                       loading={cdIsLoading || udIsLoading}
                       color="primary"
                       variant="contained"
@@ -465,6 +474,7 @@ const DependencyForm = () => {
                           handleEditJob={handleEditJob}
                           handleDeleteJob={handleDeleteJob}
                           isEdit={isEdit}
+                          viewmode={viewmode ? true : false}
                         />
                       </div>
                     )}
@@ -479,6 +489,7 @@ const DependencyForm = () => {
                           handleEditTask={handleEditTask}
                           handleDeleteTask={handleDeleteTask}
                           isEdit={isEdit}
+                          viewmode={viewmode ? true : false}
                         />
                       </div>
                     )}

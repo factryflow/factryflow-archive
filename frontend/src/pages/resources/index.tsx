@@ -126,7 +126,7 @@ const Resources = () => {
 
         <Box
           m="30px 0 0 0"
-          height="75vh"
+          height="500px"
           sx={{
             "& .MuiDataGrid-root": {
               border: "unset",
@@ -250,7 +250,15 @@ const Resources = () => {
             },
           }}
         >
-          <Card withBorder sx={{ padding: "0px !important", marginTop: 10 }}>
+          <Card
+            withBorder
+            sx={{
+              padding: "0px !important",
+              marginTop: 10,
+              height: "100%",
+              border: "1px solid rgba(225, 227, 234, 0.50)",
+            }}
+          >
             {resourceIsLoading ? (
               <Loading />
             ) : (

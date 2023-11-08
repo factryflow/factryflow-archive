@@ -23,10 +23,6 @@ import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import { Register } from "@/types/api.types";
 
 export default function Register() {
-  if (localStorage.getItem("token")) {
-    return <Navigate to="/jobs" />;
-  }
-
   const [registerUser, { data, isLoading, isSuccess, isError }] =
     useRegisterUserMutation();
   const navigate = useNavigate();

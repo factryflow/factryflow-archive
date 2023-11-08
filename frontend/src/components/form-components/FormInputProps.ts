@@ -6,4 +6,5 @@ export interface FormInputProps {
   placeholder?: string;
   type?: string;
   options?: any;
+  viewmode?: boolean;
 }
