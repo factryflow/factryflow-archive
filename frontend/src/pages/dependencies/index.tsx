@@ -62,18 +62,18 @@ const Dependencys = () => {
     {
       field: "external_id",
       headerName: "external_id",
-      flex: 1,
+      width: 160,
     },
     {
       field: "name",
       headerName: "name",
-      flex: 1,
+      width: 160,
     },
 
     {
       field: "expected_close_datetime",
       headerName: "Expected Close",
-      flex: 1, // Adjust the width as needed
+      width: 160, // Adjust the width as needed
       renderCell: (row) => {
         return (
           <span>
@@ -87,7 +87,7 @@ const Dependencys = () => {
     {
       field: "actual_close_datetime",
       headerName: "Actual Close",
-      flex: 1, // Adjust the width as needed
+      width: 160, // Adjust the width as needed
       renderCell: (row) => {
         return (
           <span>
@@ -101,12 +101,12 @@ const Dependencys = () => {
     {
       field: "notes",
       headerName: "Notes",
-      flex: 1,
+      width: 160,
     },
     {
       field: "status",
       headerName: "Status",
-      flex: 1,
+      width: 160,
       headerAlign: "center",
       align: "center",
       renderCell: (row) => {
@@ -137,32 +137,33 @@ const Dependencys = () => {
     {
       field: "action",
       headerName: "Action",
-      flex: 1,
+      width: 160,
       sortable: false,
       // disableClickEventBubbling: true,
       renderCell: (params: any) => {
+        const currentRowId = params.row.id;
+        const currentRowName = params.row.name;
         const handleDeleteAction = () => {
-          const currentRowId = params.row.id;
-          const currentRowName = params.row.name;
           setDeleteModel(true);
           setDeleteId(currentRowId);
           setDeleteRowName(currentRowName);
         };
-        const handleEditAction = () => {
-          const currentRow = params.row;
-          navigate(`/production/dependency/form/${currentRow?.id}`);
-        };
-
         return (
           <Stack direction="row" spacing={2}>
-            <img src={viewicon} alt="view_Icon" height={17} width={17} />
-            <img
-              src={editicon}
-              alt="edit_Icon"
-              height={17}
-              width={17}
-              onClick={handleEditAction}
-            />
+            <Link
+              to={`/production/dependency/form/${currentRowId}`}
+              state={{ viewmode: true }}
+            >
+              <img src={viewicon} alt="view_Icon" height={17} width={17} />
+            </Link>
+
+            <Link
+              to={`/production/dependency/form/${currentRowId}`}
+              state={{ viewmode: false }}
+            >
+              <img src={editicon} alt="edit_Icon" height={17} width={17} />
+            </Link>
+
             <img
               src={deleteicon}
               alt="delete_Icon"
@@ -225,7 +226,7 @@ const Dependencys = () => {
 
           <Box
             m="30px 0 0 0"
-            height="auto"
+            height="500px"
             sx={{
               "& .MuiDataGrid-root": {
                 border: "unset",
@@ -349,7 +350,16 @@ const Dependencys = () => {
               },
             }}
           >
-            <Card withBorder sx={{ padding: "0px !important", marginTop: 10 }}>
+            <Card
+              withBorder
+              sx={{
+                padding: "0px !important",
+                marginTop: 10,
+                height: "100%",
+                borderRadius: "12px",
+                border: "1px solid rgba(225, 227, 234, 0.50)",
+              }}
+            >
               {/* <StatusTabs
                 statusTabs={[
                   "all",
@@ -368,7 +378,6 @@ const Dependencys = () => {
                   <>
                     <DataGrid
                       className="dataGrid"
-                      autoHeight={true}
                       rows={getDependencyData ?? []}
                       // rows={filterData ?? []}
                       columns={columns}

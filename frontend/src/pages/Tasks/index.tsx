@@ -53,17 +53,17 @@ const Tasks = () => {
     {
       field: "external_id",
       headerName: "External Number",
-      width: 130,
+      width: 160,
     },
     {
       field: "name",
       headerName: "Name",
-      width: 100,
+      width: 160,
     },
     {
       field: "task_status",
       headerName: "Task Status",
-      width: 100,
+      width: 160,
       renderCell: (params: any) => {
         return <p>{params?.row?.task_status?.name}</p>;
       },
@@ -71,7 +71,7 @@ const Tasks = () => {
     {
       field: "task_type",
       headerName: "Task Type",
-      width: 100,
+      width: 160,
       renderCell: (params: any) => {
         return <p>{params?.row?.task_type?.name}</p>;
       },
@@ -80,7 +80,7 @@ const Tasks = () => {
     {
       field: "job",
       headerName: "Job",
-      width: 100,
+      width: 160,
       renderCell: (params: any) => {
         return <p>{params?.row?.job?.name}</p>;
       },
@@ -88,37 +88,28 @@ const Tasks = () => {
     {
       field: "setup_time",
       headerName: "Setup Time",
-      width: 100,
+      width: 160,
     },
     {
       field: "run_time_per_unit",
       headerName: "Run Time Per Unit",
-      width: 130,
+      width: 160,
     },
     {
       field: "teardown_time",
       headerName: "Teardown Time",
-      width: 120,
+      width: 160,
     },
     {
       field: "quantity",
       headerName: "Quantity",
-      width: 100,
+      width: 160,
     },
-    {
-      field: "predecessors",
-      headerName: "Predecessors",
-      width: 120,
-    },
-    {
-      field: "item",
-      headerName: "Item",
-      width: 100,
-    },
+
     {
       field: "action",
       headerName: "Action",
-      width: 100,
+      width: 160,
       sortable: false,
       // disableClickEventBubbling: true,
       renderCell: (params: any) => {
@@ -208,7 +199,7 @@ const Tasks = () => {
           />
           <Box
             m="30px 0 0 0"
-            height="auto"
+            height="500px"
             sx={{
               "& .MuiDataGrid-root": {
                 border: "unset",
@@ -305,10 +296,10 @@ const Tasks = () => {
               ".MuiDataGrid-iconSeparator": {
                 display: "none",
               },
-              ".css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root:hover": {
+              ".MuiButtonBase-root-MuiCheckbox-root:hover": {
                 backgroundColor: "transparent",
               },
-              ".css-9vna8i-MuiButtonBase-root-MuiIconButton-root:hover": {
+              ".MuiButtonBase-root-MuiIconButton-root:hover": {
                 backgroundColor: "transparent",
               },
               ".MuiTablePagination-select": {
@@ -332,7 +323,16 @@ const Tasks = () => {
               },
             }}
           >
-            <Card withBorder sx={{ padding: "0px !important", marginTop: 10 }}>
+            <Card
+              withBorder
+              sx={{
+                padding: "0px !important",
+                marginTop: 10,
+                height: "100%",
+                borderRadius: "12px",
+                border: "1px solid rgba(225, 227, 234, 0.50)",
+              }}
+            >
               {taskIsLoading ? (
                 <Loading />
               ) : (
@@ -340,7 +340,6 @@ const Tasks = () => {
                   <>
                     <DataGrid
                       className="dataGrid"
-                      autoHeight={true}
                       rows={getTaskData ?? []}
                       columns={columns}
                       initialState={{

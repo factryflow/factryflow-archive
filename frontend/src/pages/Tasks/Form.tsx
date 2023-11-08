@@ -48,6 +48,7 @@ import {
   useDeleteDependencyMutation,
   useUpdateDependencyMutation,
 } from "@/redux/api/dependencyApi";
+import { CreateDependency, UpdateDependency } from "@/types/api.types";
 
 const validationSchema = yup.object().shape({
   external_id: yup.string().required("External Id is required"),
@@ -93,7 +94,7 @@ const TaskForm = () => {
     { isLoading: taskisloding, isSuccess: ctaskIsSuccess, error: ctaskError },
   ] = useCreateTasksMutation();
   const [getTaskById, { data: taskgetiddata, isLoading: taskidisloading }] =
-    useGetTaskByIdMutation();
+    useGetTaskByIdMutation<any>();
   const [
     updateTasks,
     {
@@ -151,10 +152,11 @@ const TaskForm = () => {
       job_id: values.job_id,
       item_id: values.item_id,
       predecessor_ids: values.predecessor_ids,
+      work_center_id: 1,
       successor_ids: [],
       dependency_ids: [],
     };
-    console.log(requestData, "requestData");
+
     if (isEdit) {
       updateTasks({ id: params.id, data: requestData });
     } else {
@@ -164,7 +166,7 @@ const TaskForm = () => {
 
   const handleCreateDependency = async (values: any) => {
     if (values) {
-      const requestObj = {
+      const requestObj: CreateDependency = {
         name: values.name,
         external_id: values.external_id,
         expected_close_datetime: values.expected_close_datetime,
@@ -173,9 +175,9 @@ const TaskForm = () => {
         dependency_status_id: values.dependency_status,
         dependency_type_id: values.dependency_type,
         job_ids: [],
-        task_ids: [Number(paramsId)],
+        task_ids: [paramsId!],
       };
-      console.log(requestObj, "requestObject");
+
       const response = await createDependency(requestObj);
       if (response) {
         gettaskid();
@@ -185,7 +187,7 @@ const TaskForm = () => {
 
   const handleEditDependency = async ({ id, values }: any) => {
     if (id && values) {
-      const requestObj = {
+      const requestObj: any = {
         name: values.name,
         external_id: values.external_id,
         expected_close_datetime: values.expected_close_datetime,
@@ -194,7 +196,7 @@ const TaskForm = () => {
         dependency_status_id: values.dependency_status.id,
         dependency_type_id: values.dependency_type.id,
         job_ids: [],
-        task_ids: [Number(paramsId)],
+        task_ids: [paramsId],
       };
       const response = await updateDependency({ id, data: requestObj });
       if (response) {

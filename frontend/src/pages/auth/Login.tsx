@@ -22,9 +22,6 @@ import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import type { Login } from "@/types/api.types";
 
 const LogIn = () => {
-  if (localStorage.getItem("token")) {
-    return <Navigate to="/dashboard" />;
-  }
   const [loginUser, { data, error, isLoading, isSuccess }] =
     useLoginUserMutation();
 

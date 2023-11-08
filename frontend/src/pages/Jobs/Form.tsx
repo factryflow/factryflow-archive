@@ -15,7 +15,7 @@ import {
 } from "@/redux/api/jobApi";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import { useUpdateJobsMutation } from "@/redux/api/jobApi";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import Skeleton from "@mui/material/Skeleton";
@@ -74,10 +74,11 @@ const MyForm = () => {
   const TabsList = Tabs.List;
   const TabsPannel = Tabs.Panel;
   const [activeTab, setActiveTab] = useState<string | null>("tasks");
-
   const [dependencyData, setDependencyData] = useState<any | undefined>();
   const [tasksdata, setTasksData] = useState<any | undefined>();
   const paramsId = params && params.id;
+  const location = useLocation();
+  const viewmode = location?.state?.viewmode;
 
   const Defaultvalues = {
     name: "",
@@ -158,7 +159,7 @@ const MyForm = () => {
 
   const handleCreateTask = async (values: any) => {
     if (values) {
-      const requestObj = {
+      const requestObj: any = {
         id: "",
         name: values.name,
         external_id: values.external_id,
@@ -182,7 +183,7 @@ const MyForm = () => {
 
   const handleEditTask = async ({ id, values, taskstatus, tasktype }: any) => {
     if (id && values) {
-      const requestObj = {
+      const requestObj: any = {
         name: values.name,
         external_id: values.external_id,
         setup_time: values.setup_time,
@@ -214,7 +215,7 @@ const MyForm = () => {
 
   const handleCreateDependency = async (values: any) => {
     if (values) {
-      const requestObj = {
+      const requestObj: any = {
         name: values.name,
         external_id: values.external_id,
         expected_close_datetime: values.expected_close_datetime,
@@ -235,7 +236,7 @@ const MyForm = () => {
 
   const handleEditDependency = async ({ id, values }: any) => {
     if (id && values) {
-      const requestObj = {
+      const requestObj: any = {
         name: values.name,
         external_id: values.external_id,
         expected_close_datetime: values.expected_close_datetime,
@@ -420,6 +421,7 @@ const MyForm = () => {
                       label={"Job Name"}
                       placeholder={"Enter Job Name"}
                       type={"text"}
+                      viewmode={viewmode ? true : false}
                     />
                   )}
                 </Grid>
@@ -447,6 +449,7 @@ const MyForm = () => {
                       label={"Due Date"}
                       placeholder={""}
                       type={"date"}
+                      viewmode={viewmode ? true : false}
                     />
                   )}
                 </Grid>
@@ -465,6 +468,7 @@ const MyForm = () => {
                       label={"priority"}
                       placeholder={""}
                       type={"number"}
+                      viewmode={viewmode ? true : false}
                     />
                   )}
                 </Grid>
@@ -483,6 +487,7 @@ const MyForm = () => {
                       label={"External Id"}
                       placeholder={""}
                       type={"text"}
+                      viewmode={viewmode ? true : false}
                     />
                   )}
                 </Grid>
@@ -530,6 +535,7 @@ const MyForm = () => {
                       control={control}
                       label={"Customer"}
                       type={"text"}
+                      viewmode={viewmode ? true : false}
                     />
                   )}
                 </Grid>
@@ -547,6 +553,7 @@ const MyForm = () => {
                       control={control}
                       label={"Status"}
                       options={jobstatus ? jobstatus : []}
+                      viewmode={viewmode ? true : false}
                     />
                   )}
                 </Grid>
@@ -564,6 +571,7 @@ const MyForm = () => {
                       control={control}
                       label={"Job Type"}
                       options={jobtype ? jobtype : []}
+                      viewmode={viewmode ? true : false}
                     />
                   )}
                 </Grid>
@@ -594,6 +602,7 @@ const MyForm = () => {
                         size="large"
                         type="submit"
                         className="btn-success"
+                        disabled={viewmode}
                         loading={AddJobIsLoading || updateIsLoading}
                         color="primary"
                         variant="contained"
@@ -632,6 +641,7 @@ const MyForm = () => {
                         handleEditTask={handleEditTask}
                         handleDeleteTask={handleDeleteTask}
                         isEdit={isEdit}
+                        viewmode={viewmode ? true : false}
                       />
                     </div>
                   )}
@@ -645,6 +655,7 @@ const MyForm = () => {
                         handleEditDependency={handleEditDependency}
                         handleDeleteDependency={handleDeleteDependency}
                         isEdit={isEdit}
+                        viewmode={viewmode ? true : false}
                       />
                     </div>
                   )}

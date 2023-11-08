@@ -4,9 +4,10 @@ import { userApi } from "@/redux/api";
 
 const requireUser = () => {
   const location = useLocation();
-  const isAuthenticated = !!localStorage.getItem("token");
+  const tokenData = JSON.parse(localStorage.getItem("token") as string);
+  const isAuthenticated = !!tokenData?.access;
   const { isLoading, isFetching } = userApi.endpoints.getMe.useQuery(null, {
-    skip: false,
+    skip: !isAuthenticated,
     refetchOnMountOrArgChange: true,
   });
   const loading = isLoading || isFetching;
@@ -19,9 +20,9 @@ const requireUser = () => {
     return <Loading />;
   }
 
-  return isAuthenticated || user ? (
+  return isAuthenticated && user ? (
     <Outlet />
-  ) : isAuthenticated && user ? (
+  ) : isAuthenticated ? (
     <Navigate to="/unauthorized" state={{ from: location }} replace />
   ) : (
     <Navigate to="/" state={{ from: location }} replace />

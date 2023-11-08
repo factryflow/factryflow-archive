@@ -35,7 +35,7 @@ export const jobApi = createApi({
     }),
     // create job api
     createJobs: builder.mutation<Job, Partial<CreateJob>>({
-      query: (body: any) => {
+      query: (body) => {
         return {
           url: "api/jobs/",
           method: "post",
