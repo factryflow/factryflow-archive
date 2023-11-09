@@ -34,7 +34,14 @@ def register_user(request, user_in: UserIn):
         password=user_in.password,
         role_id=user_in.role_id,
     )
+    if user_in.resource_ids:
+        user.resources.set(user_in.resource_ids)
     return user
+
+
+@user_no_auth_router.get("/check-first-user", response=dict[str, bool])
+def check_first_user(request):
+    return {"is_first_user": User.objects.count() == 0}
 
 
 @user_no_auth_router.post("/forgot-password")
@@ -85,7 +92,7 @@ def change_password(request, change_password: ChangePasswordIn):
         return {"message": "Current password is incorrect"}
 
 
-class UserViewSet(ModelViewSet):
+class UserViewSetAuth(ModelViewSet):
     model_class = User
 
     # AbstractModelView subclasses can be used as-is
@@ -96,4 +103,4 @@ class UserViewSet(ModelViewSet):
 
 
 # The register_routes method must be called to register the routes with the router
-UserViewSet.register_routes(user_auth_router)
+UserViewSetAuth.register_routes(user_auth_router)
