@@ -85,7 +85,7 @@ api.add_router(
 )
 
 api.add_router(
-    "/custom-fields", custom_field_router, auth= JWTAuth(), tags=["custom-fields"]
+    "/custom-fields", custom_field_router, auth=JWTAuth(), tags=["custom-fields"]
 )
 
 
@@ -100,11 +100,18 @@ def handle_object_does_not_exist(request, exc):
 
 @api.exception_handler(PermissionDenied)
 def handle_permission_error(request, exc: PermissionDenied):
+    # Get the specific detail message from the exception if it exists.
+    detail_message = (
+        exc.args[0]
+        if exc.args
+        else "You don't have the permission to access this resource."
+    )
+
     return api.create_response(
         request,
         {
             "message": "PermissionDenied",
-            "detail": "You don't have the permission to access this resource.",
+            "detail": detail_message,
         },
         status=HTTPStatus.FORBIDDEN,
     )
