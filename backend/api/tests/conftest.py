@@ -3,14 +3,14 @@ from django.contrib.auth import get_user_model
 from django.core.management import call_command
 from django.test import Client
 from ninja_jwt.tokens import RefreshToken
-from api.tests.factories import UserFactory
 
 client = Client()
 
 
 # @pytest.fixture(scope="session")
 @pytest.fixture()
-def user():
+def user(load_specific_fixtures):
+    load_specific_fixtures(["roles"])
     return get_user_model().objects.create_user(
         username="testuser", password="testpass", email="test@example.com"
     )
@@ -48,6 +48,7 @@ def test_change_password_data():
         "current_password": "testpass",
         "new_password": "updatedtestpass",
     }
+
 
 @pytest.fixture
 def test_update_password_data():
