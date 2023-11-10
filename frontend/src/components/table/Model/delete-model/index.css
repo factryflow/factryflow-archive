@@ -62,3 +62,7 @@ h3 {
     color: #FFF !important;
     box-shadow: none !important;
 }
+
+.MuiBox-root {
+    z-index: 1;
+}

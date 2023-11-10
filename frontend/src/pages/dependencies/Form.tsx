@@ -71,7 +71,7 @@ const DependencyForm = () => {
   const [jobData, setJobData] = useState<any>();
   const [tasksdata, setTasksData] = useState<any | undefined>();
   const location = useLocation();
-  const viewmode = location?.state?.viewmode;
+  const viewmode = location?.state?.viewmode || false;
 
   const boxStyle = {
     boxShadow: "0.3px 0.3px 1px rgba(0, 0, 0, 0.16)", // Adjust values as needed
@@ -353,7 +353,7 @@ const DependencyForm = () => {
                     label={"External Id"}
                     placeholder={"Enter dependency Name"}
                     type={"text"}
-                    viewmode={viewmode ? true : false}
+                    viewmode={viewmode}
                   />
                 </Grid>
 
@@ -364,7 +364,7 @@ const DependencyForm = () => {
                     label={"Name"}
                     placeholder={"Enter  Name"}
                     type={"text"}
-                    viewmode={viewmode ? true : false}
+                    viewmode={viewmode}
                   />
                 </Grid>
 
@@ -375,7 +375,7 @@ const DependencyForm = () => {
                     label={"Notes"}
                     placeholder={"write notes"}
                     type={"text"}
-                    viewmode={viewmode ? true : false}
+                    viewmode={viewmode}
                   />
                 </Grid>
 
@@ -386,7 +386,7 @@ const DependencyForm = () => {
                     label={"Expected Date"}
                     placeholder={"expected_close_datetime"}
                     type={"datetime-local"}
-                    viewmode={viewmode ? true : false}
+                    viewmode={viewmode}
                   />
                 </Grid>
                 <Grid item xs={6}>
@@ -396,7 +396,7 @@ const DependencyForm = () => {
                     label={"Actual Date"}
                     placeholder={""}
                     type={"datetime-local"}
-                    viewmode={viewmode ? true : false}
+                    viewmode={viewmode}
                   />
                 </Grid>
                 <Grid item xs={6}>
@@ -405,7 +405,7 @@ const DependencyForm = () => {
                     control={control}
                     label={"Status"}
                     options={dependencystatusdata ?? []}
-                    viewmode={viewmode ? true : false}
+                    viewmode={viewmode}
                   />
                 </Grid>
 
@@ -415,7 +415,7 @@ const DependencyForm = () => {
                     control={control}
                     label={"Type"}
                     options={dependencytypedata ?? []}
-                    viewmode={viewmode ? true : false}
+                    viewmode={viewmode}
                   />
                 </Grid>
 
@@ -474,7 +474,7 @@ const DependencyForm = () => {
                           handleEditJob={handleEditJob}
                           handleDeleteJob={handleDeleteJob}
                           isEdit={isEdit}
-                          viewmode={viewmode ? true : false}
+                          viewmode={viewmode}
                         />
                       </div>
                     )}
@@ -489,7 +489,7 @@ const DependencyForm = () => {
                           handleEditTask={handleEditTask}
                           handleDeleteTask={handleDeleteTask}
                           isEdit={isEdit}
-                          viewmode={viewmode ? true : false}
+                          viewmode={viewmode}
                         />
                       </div>
                     )}

@@ -16,7 +16,7 @@ import {
   Autocomplete,
   Box,
 } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { toast } from "react-toastify";
@@ -53,6 +53,8 @@ const ResourceGroupForm = () => {
   const [resourseData, setResourceData] = useState<any>();
   const paramsId = params && params.id;
   const [resourcelist, setresourceList] = useState<any>();
+  const location = useLocation();
+  const viewmode = location?.state?.viewmode || false;
 
   // const { data: resourceData, isLoading: resourceIsLoading } =
   //   useGetAllResourcesQuery();
@@ -215,6 +217,7 @@ const ResourceGroupForm = () => {
                       label={"Name"}
                       placeholder={"Enter Name"}
                       type={"text"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -241,6 +244,7 @@ const ResourceGroupForm = () => {
                         color="primary"
                         variant="contained"
                         loading={crgisLoading || urgisLoading}
+                        disabled={viewmode}
                       >
                         {isEdit ? "Edit" : "Create"}
                       </LoadingButton>
@@ -275,6 +279,7 @@ const ResourceGroupForm = () => {
                           handleEditResource={handleEditResource}
                           handleDeleteResource={handleDeleteResource}
                           isEdit={isEdit}
+                          viewmode={viewmode}
                         />
                       </div>
                     )}
