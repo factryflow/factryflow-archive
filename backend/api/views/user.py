@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from ninja import Router
 from ninja_crud.views import (
     DeleteModelView,
@@ -32,10 +33,12 @@ def register_user(request, user_in: UserIn):
         username=user_in.username,
         email=user_in.email,
         password=user_in.password,
-        role_id=user_in.role_id,
     )
     if user_in.resource_ids:
         user.resources.set(user_in.resource_ids)
+    if user_in.roles:
+        groups = Group.objects.filter(name__in=user_in.roles)
+        user.groups.set(groups)
     return user
 
 
