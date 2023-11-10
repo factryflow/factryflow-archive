@@ -32,7 +32,7 @@ class UserOut(ModelSchema):
 
     class Config:
         model = User
-        model_exclude = ["password", "role", "resources", "groups"]
+        model_exclude = ["password", "resources", "groups"]
 
 
 class UserForgotPassword(Schema):
