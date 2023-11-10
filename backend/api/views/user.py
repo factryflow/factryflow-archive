@@ -18,6 +18,7 @@ from api.schemas.user import (
     UserOut,
     VerifyOtpIn,
 )
+from api.utils.permissions import apply_permission_check_to_views
 from api.utils.send_mail import send_mail
 from api.utils.verify_otp import verify_otp
 
@@ -104,6 +105,8 @@ class UserViewSetAuth(ModelViewSet):
     update = UpdateModelView(input_schema=UserIn, output_schema=UserOut)
     delete = DeleteModelView()
 
+
+apply_permission_check_to_views(UserViewSetAuth)
 
 # The register_routes method must be called to register the routes with the router
 UserViewSetAuth.register_routes(user_auth_router)

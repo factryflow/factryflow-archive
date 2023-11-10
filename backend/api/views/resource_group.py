@@ -11,6 +11,7 @@ from ninja_crud.views import (
 from api.models import ResourceGroup
 from api.schemas import ResourceGroupIn, ResourceGroupOut
 from api.utils.crud_hooks import post_save_hook, pre_save_hook
+from api.utils.permissions import apply_permission_check_to_views
 
 # Assignment Rule Criteria
 resource_group_router = Router()
@@ -35,6 +36,8 @@ class ResourceGroupsViewSet(ModelViewSet):
     )
     delete = DeleteModelView()
 
+
+apply_permission_check_to_views(ResourceGroupsViewSet)
 
 # The register_routes method must be called to register the routes with the router
 ResourceGroupsViewSet.register_routes(resource_group_router)

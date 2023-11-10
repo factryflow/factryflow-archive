@@ -11,6 +11,7 @@ from ninja_crud.views import (
 from api.models import Job, JobStatus, JobType
 from api.schemas import JobIn, JobOut, JobStatusOut, JobTypeOut
 from api.utils.crud_hooks import PostSaveActions, post_save_hook, pre_save_hook
+from api.utils.permissions import apply_permission_check_to_views
 
 job_router = Router()
 job_status_router = Router()
@@ -69,6 +70,10 @@ class JobStatusViewSet(ModelViewSet):
     # AbstractModelView subclasses can be used as-is
     list = ListModelView(output_schema=JobStatusOut)
 
+
+apply_permission_check_to_views(JobViewSet)
+apply_permission_check_to_views(JobTypeViewSet)
+apply_permission_check_to_views(JobStatusViewSet)
 
 # The register_routes method must be called to register the routes with the router
 JobViewSet.register_routes(job_router)
