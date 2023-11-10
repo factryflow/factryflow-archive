@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../Layout";
-import { Box, Button, Stack, useTheme } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 
 import Header from "../../components/table/Header";
 
@@ -14,10 +14,7 @@ import {
   useGetAllDependencyQuery,
 } from "@/redux/api/dependencyApi";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import {
-  setDependencies,
-  setDependenciesStatus,
-} from "@/redux/features/dependencySlice";
+
 import useTabs from "@/hooks/useTabs";
 import DeleteModel from "@/components/table/Model/delete-model";
 // import { DependencyResponse } from "@/types/api.types";

@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Box, Button, Stack } from "@mui/material";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Box, Stack } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
-import { toast } from "react-toastify";
-import AddBoxIcon from "@mui/icons-material/AddBox";
+
 import Loading from "@/components/loading/loading";
 import { setexceptions } from "@/redux/features/exceptionSlice";
 import {
@@ -118,28 +115,29 @@ const Exception = () => {
       sortable: false,
       // disableClickEventBubbling: true,
       renderCell: (params: any) => {
+        const currentRowId = params.row.id;
+        const currentRowName = params.row.name;
         const handleDeleteAction = () => {
-          const currentRowId = params.row.id;
-          const currentRowName = params.row.name;
           setDeleteModel(true);
           setDeleteId(currentRowId);
           setDeleteRowName(currentRowName);
         };
-        const handleEditAction = () => {
-          const currentRow = params.row;
-          navigate(`/resource/exception/form/${currentRow?.id}`);
-        };
 
         return (
           <Stack direction="row" spacing={2}>
-            <img src={viewicon} alt="view_Icon" height={17} width={17} />
-            <img
-              src={editicon}
-              alt="edit_Icon"
-              height={17}
-              width={17}
-              onClick={handleEditAction}
-            />
+            <Link
+              to={`/resource/exception/form/${currentRowId}`}
+              state={{ viewmode: true }}
+            >
+              <img src={viewicon} alt="view_Icon" height={17} width={17} />
+            </Link>
+
+            <Link
+              to={`/resource/exception/form/${currentRowId}`}
+              state={{ viewmode: false }}
+            >
+              <img src={editicon} alt="edit_Icon" height={17} width={17} />
+            </Link>
             <img
               src={deleteicon}
               alt="delete_Icon"

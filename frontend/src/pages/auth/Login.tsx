@@ -89,6 +89,9 @@ const LogIn = () => {
         <Box
           component="div"
           sx={{
+            padding: "20px",
+            // width: "100%",
+            // margin: "0px auto",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -113,7 +116,7 @@ const LogIn = () => {
               sx={{
                 color: "#fff",
                 textAlign: "center",
-                fontSize: "105px",
+                fontSize: "85px",
                 fontWeight: 600,
                 lineHeight: "normal",
               }}
@@ -124,7 +127,7 @@ const LogIn = () => {
 
           <Card
             sx={{
-              width: "800px",
+              width: "730px",
               maxWidth: "100%",
               height: "500px",
               marginTop: 8,
@@ -137,6 +140,7 @@ const LogIn = () => {
               border: "1px solid #E1E3EA",
               px: "67px",
               py: "78px",
+              overflow: "unset",
             }}
             style={boxStyle}
           >

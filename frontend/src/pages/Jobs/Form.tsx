@@ -48,7 +48,7 @@ import {
 } from "@/redux/api/taskApi";
 
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-
+import DataTable from "@/components/table/DataTable";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import HomeIcon from "../../assets/images/home.svg";
 
@@ -78,7 +78,7 @@ const MyForm = () => {
   const [tasksdata, setTasksData] = useState<any | undefined>();
   const paramsId = params && params.id;
   const location = useLocation();
-  const viewmode = location?.state?.viewmode;
+  const viewmode = location?.state?.viewmode || false;
 
   const Defaultvalues = {
     name: "",
@@ -421,7 +421,7 @@ const MyForm = () => {
                       label={"Job Name"}
                       placeholder={"Enter Job Name"}
                       type={"text"}
-                      viewmode={viewmode ? true : false}
+                      viewmode={viewmode}
                     />
                   )}
                 </Grid>
@@ -449,7 +449,7 @@ const MyForm = () => {
                       label={"Due Date"}
                       placeholder={""}
                       type={"date"}
-                      viewmode={viewmode ? true : false}
+                      viewmode={viewmode}
                     />
                   )}
                 </Grid>
@@ -468,7 +468,7 @@ const MyForm = () => {
                       label={"priority"}
                       placeholder={""}
                       type={"number"}
-                      viewmode={viewmode ? true : false}
+                      viewmode={viewmode}
                     />
                   )}
                 </Grid>
@@ -487,7 +487,7 @@ const MyForm = () => {
                       label={"External Id"}
                       placeholder={""}
                       type={"text"}
-                      viewmode={viewmode ? true : false}
+                      viewmode={viewmode}
                     />
                   )}
                 </Grid>
@@ -535,7 +535,7 @@ const MyForm = () => {
                       control={control}
                       label={"Customer"}
                       type={"text"}
-                      viewmode={viewmode ? true : false}
+                      viewmode={viewmode}
                     />
                   )}
                 </Grid>
@@ -553,7 +553,7 @@ const MyForm = () => {
                       control={control}
                       label={"Status"}
                       options={jobstatus ? jobstatus : []}
-                      viewmode={viewmode ? true : false}
+                      viewmode={viewmode}
                     />
                   )}
                 </Grid>
@@ -571,7 +571,7 @@ const MyForm = () => {
                       control={control}
                       label={"Job Type"}
                       options={jobtype ? jobtype : []}
-                      viewmode={viewmode ? true : false}
+                      viewmode={viewmode}
                     />
                   )}
                 </Grid>
@@ -641,7 +641,7 @@ const MyForm = () => {
                         handleEditTask={handleEditTask}
                         handleDeleteTask={handleDeleteTask}
                         isEdit={isEdit}
-                        viewmode={viewmode ? true : false}
+                        viewmode={viewmode}
                       />
                     </div>
                   )}
@@ -655,7 +655,7 @@ const MyForm = () => {
                         handleEditDependency={handleEditDependency}
                         handleDeleteDependency={handleDeleteDependency}
                         isEdit={isEdit}
-                        viewmode={viewmode ? true : false}
+                        viewmode={viewmode}
                       />
                     </div>
                   )}

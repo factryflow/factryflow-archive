@@ -17,7 +17,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Layout from "../Layout";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 
 import {
@@ -55,7 +55,8 @@ const ExceptionForm = () => {
   const dispatch = useAppDispatch();
   const params = useParams();
   const isEdit = !!params.id;
-
+  const location = useLocation();
+  const viewmode = location?.state?.viewmode || false;
   const paramsId = params && params.id;
 
   const [templateData, setTemplateData] = useState<any>();
@@ -231,6 +232,7 @@ const ExceptionForm = () => {
                       label={"External Id"}
                       placeholder={"Enter external Id"}
                       type={"text"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -240,6 +242,7 @@ const ExceptionForm = () => {
                       control={control}
                       label={"Start DateTime"}
                       type={"datetime-local"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -249,6 +252,7 @@ const ExceptionForm = () => {
                       control={control}
                       label={"End DateTime"}
                       type={"datetime-local"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -259,6 +263,7 @@ const ExceptionForm = () => {
                       label={"Notes"}
                       placeholder={"Enter notes "}
                       type={"text"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -274,6 +279,7 @@ const ExceptionForm = () => {
                       }) => (
                         <Autocomplete
                           options={templateData ?? []}
+                          disabled={viewmode}
                           size="small"
                           getOptionLabel={(option: any) => option.label}
                           value={
@@ -316,6 +322,7 @@ const ExceptionForm = () => {
                       }) => (
                         <Autocomplete
                           options={resourceData ?? []}
+                          disabled={viewmode}
                           size="small"
                           getOptionLabel={(option: any) => option.label}
                           value={
@@ -352,6 +359,7 @@ const ExceptionForm = () => {
                       control={control}
                       label={"Type"}
                       options={exceptiontypeData ? exceptiontypeData : []}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -378,6 +386,7 @@ const ExceptionForm = () => {
                         }
                         color="primary"
                         variant="contained"
+                        disabled={viewmode}
                       >
                         {isEdit ? "Edit" : "Create"}
                       </LoadingButton>

@@ -13,7 +13,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Layout from "../Layout";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -73,6 +73,8 @@ const TaskForm = () => {
   const TabsPannel = Tabs.Panel;
   const paramsId = params && params.id;
   const [activeTab] = useState<string | null>("dependency");
+  const location = useLocation();
+  const viewmode = location?.state?.viewmode || false;
 
   const boxStyle = {
     boxShadow: "0.3px 0.3px 1px rgba(0, 0, 0, 0.16)", // Adjust values as needed
@@ -293,6 +295,7 @@ const TaskForm = () => {
                       label={"External Id"}
                       placeholder={"Enter External Id"}
                       type={"text"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -303,6 +306,7 @@ const TaskForm = () => {
                       label={"Name"}
                       placeholder={"Enter task Name"}
                       type={"text"}
+                      viewmode={viewmode}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -311,6 +315,7 @@ const TaskForm = () => {
                       control={control}
                       label={"Status"}
                       options={taskStatus ?? []}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -319,6 +324,7 @@ const TaskForm = () => {
                     <Controller
                       name="job_id"
                       control={control}
+                      disabled={viewmode}
                       render={({
                         field: { onChange, value },
                         fieldState: { error },
@@ -358,6 +364,7 @@ const TaskForm = () => {
                       control={control}
                       label={"Type"}
                       options={tasktype ?? []}
+                      viewmode={viewmode}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -367,6 +374,7 @@ const TaskForm = () => {
                       label={"Setup Time"}
                       placeholder={""}
                       type={"number"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -377,6 +385,7 @@ const TaskForm = () => {
                       label={"Run Time"}
                       placeholder={""}
                       type={"number"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -387,6 +396,7 @@ const TaskForm = () => {
                       label={"Teardown Time"}
                       placeholder={""}
                       type={"number"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -397,6 +407,7 @@ const TaskForm = () => {
                       label={"Quantity"}
                       placeholder={""}
                       type={"number"}
+                      viewmode={viewmode}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -405,6 +416,7 @@ const TaskForm = () => {
                       control={control}
                       label={"Predecessors"}
                       options={[]}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -415,6 +427,7 @@ const TaskForm = () => {
                       label={"Item"}
                       placeholder={""}
                       type={"number"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -439,6 +452,7 @@ const TaskForm = () => {
                         loading={taskisloding || updatetaskisloading}
                         color="primary"
                         variant="contained"
+                        disabled={viewmode}
                       >
                         {isEdit ? "Edit" : "Create"}
                       </LoadingButton>
@@ -473,6 +487,7 @@ const TaskForm = () => {
                         handleEditDependency={handleEditDependency}
                         handleDeleteDependency={handleDeleteDependency}
                         isEdit={isEdit}
+                        viewmode={viewmode}
                       />
                     </div>
                   )}

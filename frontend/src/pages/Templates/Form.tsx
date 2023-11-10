@@ -9,9 +9,15 @@ import {
   Grid,
   TextField,
   Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
 } from "@mui/material";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -42,6 +48,8 @@ const TemplateForm = () => {
   const params = useParams();
   const isEdit = !!params.id;
   const paramsId = params && params.id;
+  const location = useLocation();
+  const viewmode = location?.state?.viewmode || false;
 
   //all template data store reducer
   // const templateSelector = useAppSelector((state) => state.template.templates);
@@ -76,6 +84,7 @@ const TemplateForm = () => {
   // } = useGetAllTemplateDetailsQuery();
 
   const form = useForm({
+    defaultValues: { name: "", details: [] },
     resolver: yupResolver(validationSchema),
   });
 
@@ -100,13 +109,35 @@ const TemplateForm = () => {
     skip: !paramsId,
     refetchOnMountOrArgChange: true,
   });
+  const [editedRowIndex, setEditedRowIndex] = useState(null);
+  const [isAddingDetails, setIsAddingDetails] = useState(false);
 
   const onSubmit = (data: any) => {
     if (isEdit) {
       updateTemplate({ id: params.id, data });
     } else {
       createTemplate(data);
+      // Clear the form and reset the details for a new row after adding details
     }
+  };
+
+  const handleEditClick = (index: any) => {
+    setEditedRowIndex(index);
+  };
+
+  const handleSaveClick = () => {
+    setEditedRowIndex(fields.length as any);
+    setIsAddingDetails(false);
+  };
+
+  const handleAdd = () => {
+    append({
+      day_of_week: "",
+      start_time: "",
+      end_time: "",
+    });
+    setEditedRowIndex(fields.length as any);
+    setIsAddingDetails(true);
   };
 
   useEffect(() => {
@@ -119,8 +150,13 @@ const TemplateForm = () => {
 
   useEffect(() => {
     if (ctIsSuccess || utIsSuccess) {
+      setValue("details", [{ day_of_week: "", start_time: "", end_time: "" }]);
+      setIsAddingDetails(false);
       toast.success(`Template ${isEdit ? "Edit" : "Create"} successfully`) &&
         navigate("/resource/template");
+    }
+    if (utIsSuccess) {
+      setEditedRowIndex(null);
     }
     if (ctError || utError) {
       toast.error(
@@ -153,61 +189,107 @@ const TemplateForm = () => {
                     label={"Name"}
                     placeholder={"Enter Name"}
                     type={"text"}
+                    viewmode={viewmode}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <Typography sx={{ mb: 3 }}>Details</Typography>
-                  {fields.map((item, index) => (
-                    <Box
-                      component={"div"}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        mb: 2,
-                      }}
-                    >
-                      <Grid item xs={3}>
-                        <FormInputText
-                          name={`details[${index}].day_of_week`}
-                          control={control}
-                          label={"Day Of Week"}
-                          placeholder={"Enter Name"}
-                          type={"number"}
-                        />
-                      </Grid>
-                      <Grid item xs={3}>
-                        <FormInputText
-                          name={`details[${index}].start_time`}
-                          control={control}
-                          label={"Start time "}
-                          placeholder={"Start Time"}
-                          type={"time"}
-                        />
-                      </Grid>
-                      <Grid item xs={3}>
-                        <FormInputText
-                          name={`details[${index}].end_time`}
-                          control={control}
-                          label={"End Time"}
-                          placeholder={"end_time "}
-                          type={"time"}
-                        />
-                      </Grid>
-                      <Button type="button" onClick={() => remove(index)}>
-                        Remove
-                      </Button>
-                    </Box>
-                  ))}
-                  <Button
-                    type="button"
-                    onClick={() =>
-                      append({ day_of_week: "", start_time: "", end_time: "" })
-                    }
-                  >
+                  <TableContainer>
+                    <Table size="small">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>Day of Week</TableCell>
+                          <TableCell>Start Time</TableCell>
+                          <TableCell>End Time</TableCell>
+                          <TableCell>Actions</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {fields.map((item, index) => (
+                          <TableRow key={index}>
+                            {/* ... (previous code) */}
+                            <TableCell>
+                              {editedRowIndex === index ||
+                              (!item.day_of_week && isAddingDetails) ? (
+                                <FormInputText
+                                  name={`details[${index}].day_of_week`}
+                                  control={control}
+                                  label={""}
+                                  placeholder={"Enter Date Of week"}
+                                  type={"number"}
+                                  viewmode={viewmode}
+                                />
+                              ) : (
+                                <span>{item.day_of_week}</span>
+                              )}
+                            </TableCell>
+                            {/* ... (previous code) */}
+                            <TableCell>
+                              {editedRowIndex === index ||
+                              (!item.start_time && isAddingDetails) ? (
+                                <FormInputText
+                                  name={`details[${index}].start_time`}
+                                  control={control}
+                                  label={""}
+                                  placeholder={"Start Time"}
+                                  type={"time"}
+                                  viewmode={viewmode}
+                                />
+                              ) : (
+                                <span>{item.start_time}</span>
+                              )}
+                            </TableCell>
+                            {/* ... (previous code) */}
+                            <TableCell>
+                              {editedRowIndex === index ||
+                              (!item.end_time && isAddingDetails) ? (
+                                <FormInputText
+                                  name={`details[${index}].end_time`}
+                                  control={control}
+                                  label={""}
+                                  placeholder={"end_time "}
+                                  type={"time"}
+                                  viewmode={viewmode}
+                                />
+                              ) : (
+                                <span>{item.end_time}</span>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              {editedRowIndex === index ? (
+                                <Button
+                                  variant="contained"
+                                  type="button"
+                                  onClick={() => handleSaveClick()}
+                                >
+                                  Save
+                                </Button>
+                              ) : (
+                                <Button
+                                  variant="contained"
+                                  onClick={() => handleEditClick(index)}
+                                >
+                                  Edit
+                                </Button>
+                              )}{" "}
+                              <Button
+                                variant="contained"
+                                onClick={() => remove(index)}
+                              >
+                                Remove
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Grid>
+                <Grid item xs={12}>
+                  <Button type="button" onClick={() => handleAdd()}>
                     Add Details
                   </Button>
                 </Grid>
-
                 <Grid item xs={12}>
                   <Box
                     sx={{
@@ -229,6 +311,7 @@ const TemplateForm = () => {
                       loading={ctIsLoading || utIsLoading}
                       color="primary"
                       variant="contained"
+                      disabled={viewmode}
                     >
                       {isEdit ? "Edit" : "Create"}
                     </LoadingButton>

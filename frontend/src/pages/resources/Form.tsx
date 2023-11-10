@@ -20,7 +20,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Layout from "../Layout";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import { Tabs } from "@mantine/core";
 import {
@@ -58,8 +58,9 @@ const ResourceForm = () => {
   const [resourseGroupData, setResourceGroupData] = useState<any>();
   const paramsId = params && params.id;
   const resourceSelector = useAppSelector((state) => state.resource.resource);
-
   const [templateData, setTemplateData] = useState<any>();
+  const location = useLocation();
+  const viewmode = location?.state?.viewmode || false;
 
   const defaultValues = {
     name: "",
@@ -223,6 +224,7 @@ const ResourceForm = () => {
                       label={"Name"}
                       placeholder={"Enter task Name"}
                       type={"text"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -238,6 +240,7 @@ const ResourceForm = () => {
                       }) => (
                         <Autocomplete
                           options={templateData ?? []}
+                          disabled={viewmode}
                           size="small"
                           getOptionLabel={(option: any) => option.label}
                           value={
@@ -289,6 +292,7 @@ const ResourceForm = () => {
                         loading={crIsLoading || urIsLoading}
                         color="primary"
                         variant="contained"
+                        disabled={viewmode}
                       >
                         {isEdit ? "Edit" : "Create"}
                       </LoadingButton>
@@ -323,6 +327,7 @@ const ResourceForm = () => {
                           handleEditResourceGroup={handleEditResourceGroup}
                           handleDeleteResourceGroup={handleDeleteResourceGroup}
                           isEdit={isEdit}
+                          viewmode={viewmode}
                         />
                       </div>
                     )}
