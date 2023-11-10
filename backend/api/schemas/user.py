@@ -1,8 +1,8 @@
+from django.contrib.auth.models import Group
 from ninja import ModelSchema, Schema
-from pydantic import EmailStr
+from pydantic import EmailStr, Field
 
 from api.models.resource import Resource
-from api.models.role import Role
 from api.models.user import User
 
 
@@ -10,14 +10,8 @@ class UserIn(Schema):
     username: str
     email: EmailStr
     password: str
-    role_id: int = 3
+    roles: list[str] = ["Admin"]  # Default role is Admin while we develop the system
     resource_ids: list[int] = None
-
-
-class UserRoleOut(ModelSchema):
-    class Config:
-        model = Role
-        model_fields = ["id", "name"]
 
 
 class UserResourceOut(ModelSchema):
@@ -26,13 +20,19 @@ class UserResourceOut(ModelSchema):
         model_fields = ["id", "name"]
 
 
+class UserGroupOut(ModelSchema):
+    class Config:
+        model = Group
+        model_fields = ["id", "name"]
+
+
 class UserOut(ModelSchema):
-    role: UserRoleOut
+    roles: list[UserGroupOut] = Field(None, alias="groups")
     resources: list[UserResourceOut] = None
 
     class Config:
         model = User
-        model_exclude = ["password", "role", "resources"]
+        model_exclude = ["password", "resources", "groups"]
 
 
 class UserForgotPassword(Schema):

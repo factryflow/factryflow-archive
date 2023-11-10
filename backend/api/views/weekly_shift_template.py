@@ -14,6 +14,7 @@ from api.schemas import (
     WeeklyShiftTemplateOut,
 )
 from api.utils.crud_hooks import pre_save_hook
+from api.utils.permissions import apply_permission_check_to_views
 
 weeklyshift_template_router = Router()
 
@@ -36,6 +37,8 @@ class WeeklyShiftTemplateViewSet(ModelViewSet):
     )
     delete = DeleteModelView()
 
+
+apply_permission_check_to_views(WeeklyShiftTemplateViewSet)
 
 # The register_routes method must be called to register the routes with the router
 WeeklyShiftTemplateViewSet.register_routes(weeklyshift_template_router)

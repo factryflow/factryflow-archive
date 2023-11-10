@@ -7,13 +7,19 @@ from ninja_jwt.tokens import RefreshToken
 client = Client()
 
 
+#
+
+
 # @pytest.fixture(scope="session")
 @pytest.fixture()
-def user(load_specific_fixtures):
-    load_specific_fixtures(["roles"])
-    return get_user_model().objects.create_user(
-        username="testuser", password="testpass", email="test@example.com"
+def user(db):
+    user = get_user_model().objects.create_user(
+        username="testuser",
+        password="testpass",
+        email="test@example.com",
+        is_superuser=True,
     )
+    return user
 
 
 # @pytest.fixture(scope="session")

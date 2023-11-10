@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from ninja import Router
 from ninja_crud.views import (
     DeleteModelView,
@@ -17,6 +18,7 @@ from api.schemas.user import (
     UserOut,
     VerifyOtpIn,
 )
+from api.utils.permissions import apply_permission_check_to_views
 from api.utils.send_mail import send_mail
 from api.utils.verify_otp import verify_otp
 
@@ -32,10 +34,12 @@ def register_user(request, user_in: UserIn):
         username=user_in.username,
         email=user_in.email,
         password=user_in.password,
-        role_id=user_in.role_id,
     )
     if user_in.resource_ids:
         user.resources.set(user_in.resource_ids)
+    if user_in.roles:
+        groups = Group.objects.filter(name__in=user_in.roles)
+        user.groups.set(groups)
     return user
 
 
@@ -101,6 +105,8 @@ class UserViewSetAuth(ModelViewSet):
     update = UpdateModelView(input_schema=UserIn, output_schema=UserOut)
     delete = DeleteModelView()
 
+
+apply_permission_check_to_views(UserViewSetAuth)
 
 # The register_routes method must be called to register the routes with the router
 UserViewSetAuth.register_routes(user_auth_router)

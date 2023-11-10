@@ -21,25 +21,33 @@ api.add_router("/users", user_no_auth_router, tags=["users"])
 
 api.add_router("/users", user_auth_router, auth=JWTAuth(), tags=["users"])
 
-api.add_router("/roles", role_router, tags=["roles"])
 
 api.add_router("/jobs", job_router, auth=JWTAuth(), tags=["jobs"])
-api.add_router("/job-types", job_type_router, tags=["jobs"])
-api.add_router("/job-status", job_status_router, tags=["jobs"])
+api.add_router("/job-types", job_type_router, auth=JWTAuth(), tags=["jobs"])
+api.add_router("/job-status", job_status_router, auth=JWTAuth(), tags=["jobs"])
 
 api.add_router("/tasks", task_router, auth=JWTAuth(), tags=["tasks"])
-api.add_router("/task-types", task_type_router, tags=["tasks"])
-api.add_router("/task-status", task_status_router, tags=["tasks"])
+api.add_router("/task-types", task_type_router, auth=JWTAuth(), tags=["tasks"])
+api.add_router("/task-status", task_status_router, auth=JWTAuth(), tags=["tasks"])
 
 api.add_router(
     "/dependencies", dependency_router, auth=JWTAuth(), tags=["dependencies"]
 )
-api.add_router("/dependency-types", dependency_type_router, tags=["dependencies"])
-api.add_router("/dependency-status", dependency_status_router, tags=["dependencies"])
+api.add_router(
+    "/dependency-types", dependency_type_router, auth=JWTAuth(), tags=["dependencies"]
+)
+api.add_router(
+    "/dependency-status",
+    dependency_status_router,
+    auth=JWTAuth(),
+    tags=["dependencies"],
+)
 
 api.add_router("/items", item_router, auth=JWTAuth(), tags=["items"])
 
-api.add_router("/work-centers", work_center_router, tags=["work-centers"])
+api.add_router(
+    "/work-centers", work_center_router, auth=JWTAuth(), tags=["work-centers"]
+)
 
 api.add_router("/resources", resource_router, auth=JWTAuth(), tags=["resources"])
 
@@ -56,6 +64,7 @@ api.add_router(
 api.add_router(
     "operational-exception-types",
     operational_exception_type_router,
+    auth=JWTAuth(),
     tags=["operational-exceptions"],
 )
 
@@ -74,6 +83,7 @@ api.add_router(
 api.add_router(
     "/assignment-rule-criteria",
     assignment_rule_criteria_router,
+    auth=JWTAuth(),
     tags=["assignment-rules"],
 )
 
@@ -81,11 +91,14 @@ api.add_router(
     "/schedule-runs", schedule_run_router, auth=JWTAuth(), tags=["schedule-runs"]
 )
 api.add_router(
-    "/schedule-run-status", schedule_run_status_router, tags=["schedule-runs"]
+    "/schedule-run-status",
+    schedule_run_status_router,
+    auth=JWTAuth(),
+    tags=["schedule-runs"],
 )
 
 api.add_router(
-    "/custom-fields", custom_field_router, auth= JWTAuth(), tags=["custom-fields"]
+    "/custom-fields", custom_field_router, auth=JWTAuth(), tags=["custom-fields"]
 )
 
 
@@ -100,11 +113,18 @@ def handle_object_does_not_exist(request, exc):
 
 @api.exception_handler(PermissionDenied)
 def handle_permission_error(request, exc: PermissionDenied):
+    # Get the specific detail message from the exception if it exists.
+    detail_message = (
+        exc.args[0]
+        if exc.args
+        else "You don't have the permission to access this resource."
+    )
+
     return api.create_response(
         request,
         {
             "message": "PermissionDenied",
-            "detail": "You don't have the permission to access this resource.",
+            "detail": detail_message,
         },
         status=HTTPStatus.FORBIDDEN,
     )

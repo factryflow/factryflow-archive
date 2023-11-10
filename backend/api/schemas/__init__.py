@@ -17,6 +17,7 @@ from .base import (
     TaskStatusOut,
     TaskTypeOut,
 )
+from .custom_field import CustomFieldIn, CustomFieldOut
 from .dependency import (
     DependencyIn,
     DependencyOut,
@@ -34,10 +35,8 @@ from .operational_exception import (
 )
 from .resource import ResourceIn, ResourceOut
 from .resource_group import ResourceGroupIn, ResourceGroupOut
-from .role import RoleIn, RoleOut
 from .schedule_run import ScheduleRunIn, ScheduleRunOut, ScheduleRunStatusOut
 from .task import TaskIn, TaskOut
 from .user import UserIn, UserOut
 from .weekly_shift_template import WeeklyShiftTemplateIn, WeeklyShiftTemplateOut
 from .work_center import WorkCenterIn, WorkCenterOut
-from .custom_field import CustomFieldIn, CustomFieldOut

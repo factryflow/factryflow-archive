@@ -16,6 +16,7 @@ from api.schemas import (
     OperationalExceptionTypeOut,
 )
 from api.utils.crud_hooks import pre_save_hook
+from api.utils.permissions import apply_permission_check_to_views
 
 operational_exception_router = Router()
 operational_exception_type_router = Router()
@@ -58,6 +59,9 @@ class OperationalExceptionTypeViewSet(ModelViewSet):
     )
     delete = DeleteModelView()
 
+
+apply_permission_check_to_views(OperationalExceptionViewSet)
+apply_permission_check_to_views(OperationalExceptionTypeViewSet)
 
 # The register_routes method must be called to register the routes with the router
 OperationalExceptionViewSet.register_routes(operational_exception_router)

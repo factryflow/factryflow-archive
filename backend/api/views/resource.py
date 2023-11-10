@@ -11,6 +11,7 @@ from ninja_crud.views import (
 from api.models import Resource
 from api.schemas import ResourceIn, ResourceOut
 from api.utils.crud_hooks import post_save_hook, pre_save_hook
+from api.utils.permissions import apply_permission_check_to_views
 
 resource_router = Router()
 
@@ -34,6 +35,8 @@ class ResourceViewSet(ModelViewSet):
     )
     delete = DeleteModelView()
 
+
+apply_permission_check_to_views(ResourceViewSet)
 
 # The register_routes method must be called to register the routes with the router
 ResourceViewSet.register_routes(resource_router)

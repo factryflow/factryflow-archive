@@ -11,6 +11,7 @@ from ninja_crud.views import (
 from api.models import Task, TaskStatus, TaskType
 from api.schemas import TaskBaseOut, TaskIn, TaskOut, TaskStatusOut, TaskTypeOut
 from api.utils.crud_hooks import post_save_hook, pre_save_hook
+from api.utils.permissions import apply_permission_check_to_views
 
 task_router = Router()
 task_type_router = Router()
@@ -54,6 +55,10 @@ class TaskStatusViewSet(ModelViewSet):
     # AbstractModelView subclasses can be used as-is
     list = ListModelView(output_schema=TaskStatusOut)
 
+
+apply_permission_check_to_views(TaskViewSet)
+apply_permission_check_to_views(TaskTypeViewSet)
+apply_permission_check_to_views(TaskStatusViewSet)
 
 # The register_routes method must be called to register the routes with the router
 TaskViewSet.register_routes(task_router)

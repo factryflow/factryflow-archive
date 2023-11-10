@@ -11,6 +11,7 @@ from ninja_crud.views import (
 from api.models import ScheduleRun, ScheduleRunStatus
 from api.schemas import ScheduleRunIn, ScheduleRunOut, ScheduleRunStatusOut
 from api.utils.crud_hooks import pre_save_hook
+from api.utils.permissions import apply_permission_check_to_views
 
 schedule_run_router = Router()
 schedule_run_status_router = Router()
@@ -41,6 +42,8 @@ class ScheduleRunStatusViewSet(ModelViewSet):
     # AbstractModelView subclasses can be used as-is
     list = ListModelView(output_schema=ScheduleRunStatusOut)
 
+
+apply_permission_check_to_views(ScheduleRunViewSet)
 
 # The register_routes method must be called to register the routes with the router
 ScheduleRunViewSet.register_routes(schedule_run_router)

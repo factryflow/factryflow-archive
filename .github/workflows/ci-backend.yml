@@ -51,6 +51,11 @@ jobs:
           source venv/bin/activate
           python backend/manage.py migrate
 
+      - name: Setup User Permissions 
+        run: |
+          source venv/bin/activate
+          python backend/manage.py setup_user_roles
+          
       - name: Start the backend (checks if the server starts)
         run: |
           source venv/bin/activate 

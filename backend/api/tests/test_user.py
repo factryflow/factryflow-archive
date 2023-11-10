@@ -6,9 +6,8 @@ from api.tests.factories import UserCreateFactory, UserFactory
 
 
 @pytest.mark.django_db
-def test_create_user(api_client, load_specific_fixtures):
-    load_specific_fixtures(["roles"])
-    data = UserFactory.build(role_id=1, resource_ids=[]).dict()
+def test_create_user(api_client):
+    data = UserFactory.build(resource_ids=[]).dict()
     response = api_client.post(
         "/api/users/", json.dumps(data, default=str), content_type="application/json"
     )
