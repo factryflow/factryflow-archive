@@ -1,0 +1,2283 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../er-diagram/">
+      
+      
+        <link rel="next" href="../database-naming-conventions/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.8">
+    
+    
+      
+        <title>Database Schema - FactryFlow</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.4b4a2bd9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#database-schema" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="FactryFlow" class="md-header__button md-logo" aria-label="FactryFlow" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FactryFlow
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Database Schema
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9v1Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Yacobolo/factryflow" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    factryflow
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="FactryFlow" class="md-nav__button md-logo" aria-label="FactryFlow" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    FactryFlow
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Yacobolo/factryflow" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    factryflow
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Welcome
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Core Concepts
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Core Concepts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/resource-management/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resource Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/production-fundamentals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Production Fundamentals
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/assignment-rules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assignment Rules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Technical Documentation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Technical Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../er-diagram/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ER Diagram
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Database Schema
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Database Schema
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#assignment_rule" class="md-nav__link">
+    assignment_rule
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assignment_rule_criteria" class="md-nav__link">
+    assignment_rule_criteria
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assignment_rule_resource_group" class="md-nav__link">
+    assignment_rule_resource_group
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependency" class="md-nav__link">
+    dependency
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependency_status" class="md-nav__link">
+    dependency_status
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependency_type" class="md-nav__link">
+    dependency_type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job" class="md-nav__link">
+    job
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job_dependency" class="md-nav__link">
+    job_dependency
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job_status" class="md-nav__link">
+    job_status
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job_type" class="md-nav__link">
+    job_type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operational_exception" class="md-nav__link">
+    operational_exception
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operational_exception_type" class="md-nav__link">
+    operational_exception_type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resource" class="md-nav__link">
+    resource
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resource_group" class="md-nav__link">
+    resource_group
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#schedule_run_table" class="md-nav__link">
+    schedule_run_table
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#schedule_run_status" class="md-nav__link">
+    schedule_run_status
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task" class="md-nav__link">
+    task
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task_dependency" class="md-nav__link">
+    task_dependency
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task_relationship" class="md-nav__link">
+    task_relationship
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task_resource_assignment" class="md-nav__link">
+    task_resource_assignment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task_status" class="md-nav__link">
+    task_status
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task_type" class="md-nav__link">
+    task_type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user" class="md-nav__link">
+    user
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user_role" class="md-nav__link">
+    user_role
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#weekly_shift_template" class="md-nav__link">
+    weekly_shift_template
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#weekly_shift_template_detail" class="md-nav__link">
+    weekly_shift_template_detail
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../database-naming-conventions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Database Naming Conventions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-style-guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    API Style Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#assignment_rule" class="md-nav__link">
+    assignment_rule
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assignment_rule_criteria" class="md-nav__link">
+    assignment_rule_criteria
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assignment_rule_resource_group" class="md-nav__link">
+    assignment_rule_resource_group
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependency" class="md-nav__link">
+    dependency
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependency_status" class="md-nav__link">
+    dependency_status
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependency_type" class="md-nav__link">
+    dependency_type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job" class="md-nav__link">
+    job
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job_dependency" class="md-nav__link">
+    job_dependency
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job_status" class="md-nav__link">
+    job_status
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job_type" class="md-nav__link">
+    job_type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operational_exception" class="md-nav__link">
+    operational_exception
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operational_exception_type" class="md-nav__link">
+    operational_exception_type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resource" class="md-nav__link">
+    resource
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resource_group" class="md-nav__link">
+    resource_group
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#schedule_run_table" class="md-nav__link">
+    schedule_run_table
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#schedule_run_status" class="md-nav__link">
+    schedule_run_status
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task" class="md-nav__link">
+    task
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task_dependency" class="md-nav__link">
+    task_dependency
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task_relationship" class="md-nav__link">
+    task_relationship
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task_resource_assignment" class="md-nav__link">
+    task_resource_assignment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task_status" class="md-nav__link">
+    task_status
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task_type" class="md-nav__link">
+    task_type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user" class="md-nav__link">
+    user
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user_role" class="md-nav__link">
+    user_role
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#weekly_shift_template" class="md-nav__link">
+    weekly_shift_template
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#weekly_shift_template_detail" class="md-nav__link">
+    weekly_shift_template_detail
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="database-schema">Database Schema</h1>
+<p>All tables will have the following metadata fields:</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>datetime</td>
+<td>updated_at</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>is_active</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>is_deleted</td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>deleted_at</td>
+</tr>
+</tbody>
+</table>
+<h2 id="assignment_rule"><code>assignment_rule</code></h2>
+<p><strong>Description</strong>: Stores the rules for assignments, including their priority and resource count.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>name</td>
+<td>NOT NULL</td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>description</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>priority</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>resource_count</td>
+<td></td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>bool</td>
+<td>use_all_resources</td>
+<td></td>
+<td>false</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="assignment_rule_criteria"><code>assignment_rule_criteria</code></h2>
+<p><strong>Description</strong>: Defines the criteria for each assignment rule.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>parent_id</td>
+<td></td>
+<td>NULL</td>
+<td></td>
+<td>Parent criteria ID if any</td>
+</tr>
+<tr>
+<td>string</td>
+<td>field</td>
+<td>NOT NULL</td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>enum</td>
+<td>operator</td>
+<td></td>
+<td>'equals'</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>value</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>assignment_rule_id</td>
+<td>FK</td>
+<td></td>
+<td><code>assignment_rule</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="assignment_rule_resource_group"><code>assignment_rule_resource_group</code></h2>
+<p><strong>Description</strong>: Links assignment rules to resource groups.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>assigment_rule_id</td>
+<td>PK, FK</td>
+<td></td>
+<td><code>assignment_rule</code></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>resource_group_id</td>
+<td>PK, FK</td>
+<td></td>
+<td><code>resource_group</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="dependency"><code>dependency</code></h2>
+<p><strong>Description</strong>: Manages external dependencies for tasks and jobs.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>external_id</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td>External Identifier for the dependency</td>
+</tr>
+<tr>
+<td>string</td>
+<td>name</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>dependency_status_id</td>
+<td>FK</td>
+<td></td>
+<td><code>dependency_status</code></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>dependency_type_id</td>
+<td>FK</td>
+<td></td>
+<td><code>dependency_type</code></td>
+<td></td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>expected_close_datetime</td>
+<td></td>
+<td></td>
+<td></td>
+<td>Expected closure date/time for the dependency</td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>actual_close_datetime</td>
+<td></td>
+<td></td>
+<td></td>
+<td>Actual closure date/time for the dependency</td>
+</tr>
+<tr>
+<td>string</td>
+<td>notes</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td>Additional notes or comments about the dependency</td>
+</tr>
+</tbody>
+</table>
+<h2 id="dependency_status"><code>dependency_status</code></h2>
+<p><strong>Description</strong>: Lists possible statuses for dependencies.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>name</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="dependency_type"><code>dependency_type</code></h2>
+<p><strong>Description</strong>: Categorizes dependencies into types.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>name</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="job"><code>job</code></h2>
+<p><strong>Description</strong>: Represents jobs in the production schedule.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>name</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>description</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>customer</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td>Customer associated with the job</td>
+</tr>
+<tr>
+<td>date</td>
+<td>due_date</td>
+<td></td>
+<td></td>
+<td></td>
+<td>Due date for the job completion</td>
+</tr>
+<tr>
+<td>int</td>
+<td>priority</td>
+<td></td>
+<td></td>
+<td></td>
+<td>Priority of the job</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>planned_start_datetime</td>
+<td></td>
+<td></td>
+<td></td>
+<td>Start datetime planned by schedule-run</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>planned_end_datetime</td>
+<td></td>
+<td></td>
+<td></td>
+<td>End datetime planned by schedule-run</td>
+</tr>
+<tr>
+<td>string</td>
+<td>external_id</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>notes</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>job_status_id</td>
+<td>FK</td>
+<td></td>
+<td><code>job_status</code></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>job_type_id</td>
+<td>FK</td>
+<td></td>
+<td><code>job_type</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="job_dependency"><code>job_dependency</code></h2>
+<p><strong>Description</strong>: Links jobs to their dependencies.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>job_id</td>
+<td>PK, FK</td>
+<td></td>
+<td><code>job</code></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>dependency_id</td>
+<td>PK, FK</td>
+<td></td>
+<td><code>dependency</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="job_status"><code>job_status</code></h2>
+<p><strong>Description</strong>: Lists possible statuses for jobs.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>name</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="job_type"><code>job_type</code></h2>
+<p><strong>Description</strong>: Categorizes jobs into different types.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>name</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="operational_exception"><code>operational_exception</code></h2>
+<p><strong>Description</strong>: Manages exceptions in operations.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>external_id</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>start_datetime</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>end_datetime</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>notes</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>weekly_shift_template_id</td>
+<td>FK</td>
+<td></td>
+<td><code>weekly_shift_template</code></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>operational_exception_type_id</td>
+<td>FK</td>
+<td></td>
+<td><code>operational_exception_type</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="operational_exception_type"><code>operational_exception_type</code></h2>
+<p><strong>Description</strong>: Categorizes operational exceptions into types.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>name</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="resource"><code>resource</code></h2>
+<p><strong>Description</strong>: Represents resources available for tasks.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>name</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>weekly_shift_template_id</td>
+<td>FK</td>
+<td></td>
+<td><code>weekly_shift_template</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="resource_group"><code>resource_group</code></h2>
+<p><strong>Description</strong>: Groups resources for better management.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>name</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="schedule_run_table"><code>schedule_run_table</code></h2>
+<p><strong>Description</strong>: Logs when the scheduling algorithm was run.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>triggered_on</td>
+<td></td>
+<td></td>
+<td></td>
+<td>Datetime when the schedule was run</td>
+</tr>
+<tr>
+<td>int</td>
+<td>schedule_status_id</td>
+<td>FK</td>
+<td></td>
+<td><code>schedule_run_status</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="schedule_run_status"><code>schedule_run_status</code></h2>
+<p><strong>Description</strong>: Lists possible statuses for schedule runs.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>name</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="task"><code>task</code></h2>
+<p><strong>Description</strong>: Represents individual tasks in the production schedule.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>name</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>task_status</td>
+<td>FK</td>
+<td></td>
+<td><code>task_status</code></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>quantity</td>
+<td></td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>setup_time</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>run_time_per_unit</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>teardown_time</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>planned_start_datetime</td>
+<td></td>
+<td></td>
+<td></td>
+<td>Start datetime planned by schedule-run</td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>planned_end_datetime</td>
+<td></td>
+<td></td>
+<td></td>
+<td>End datetime planned by schedule-run</td>
+</tr>
+<tr>
+<td>string</td>
+<td>item</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td>The item which is produced</td>
+</tr>
+<tr>
+<td>int</td>
+<td>task_status_id</td>
+<td>FK</td>
+<td></td>
+<td><code>task_status</code></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>task_type_id</td>
+<td>FK</td>
+<td></td>
+<td><code>task_type</code></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>job_id</td>
+<td>FK</td>
+<td></td>
+<td><code>job</code></td>
+<td>The associated job, NULLABLE</td>
+</tr>
+</tbody>
+</table>
+<h2 id="task_dependency"><code>task_dependency</code></h2>
+<p><strong>Description</strong>: Links tasks to their dependencies.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>task_id</td>
+<td>PK, FK</td>
+<td></td>
+<td><code>task</code></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>dependency_id</td>
+<td>PK, FK</td>
+<td></td>
+<td><code>dependency</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="task_relationship"><code>task_relationship</code></h2>
+<p><strong>Description</strong>: Defines relationships between tasks.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>predecessor_id</td>
+<td>PK, FK</td>
+<td></td>
+<td><code>task</code></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>successor_id</td>
+<td>PK, FK</td>
+<td></td>
+<td><code>task</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="task_resource_assignment"><code>task_resource_assignment</code></h2>
+<p><strong>Description</strong>: Assigns resources to tasks.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>task_id</td>
+<td>PK, FK</td>
+<td></td>
+<td><code>task</code></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>resource_id</td>
+<td>PK, FK</td>
+<td></td>
+<td><code>resource</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="task_status"><code>task_status</code></h2>
+<p><strong>Description</strong>: Lists possible statuses for tasks.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>name</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="task_type"><code>task_type</code></h2>
+<p><strong>Description</strong>: Categorizes tasks into different types.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>name</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="user"><code>user</code></h2>
+<p><strong>Description</strong>: Represents users of the production scheduling software.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>first_name</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>last_name</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>email</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>password</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td>Encrypted</td>
+</tr>
+<tr>
+<td>int</td>
+<td>user_role_id</td>
+<td>FK</td>
+<td></td>
+<td><code>user_role</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="user_role"><code>user_role</code></h2>
+<p><strong>Description</strong>: Defines roles for users.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>name</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="weekly_shift_template"><code>weekly_shift_template</code></h2>
+<p><strong>Description</strong>: Templates for weekly shifts.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>name</td>
+<td></td>
+<td>'N/A'</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="weekly_shift_template_detail"><code>weekly_shift_template_detail</code></h2>
+<p><strong>Description</strong>: Detailed breakdown of weekly shift templates.</p>
+<table>
+<thead>
+<tr>
+<th>data_type</th>
+<th>field_name</th>
+<th>constraints</th>
+<th>default</th>
+<th>relationships</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>id</td>
+<td>PK</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>day_of_week</td>
+<td></td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>time</td>
+<td>start_time</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>time</td>
+<td>end_time</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>int</td>
+<td>weekly_shift_template_id</td>
+<td>FK</td>
+<td></td>
+<td><code>weekly_shift_template</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "content.tabs.link", "navigation.indexes", "content.tooltips", "navigation.path", "content.code.annotate", "content.code.copy", "content.code.select"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.81fa17fe.min.js"></script>
+      
+    
+  </body>
+</html>
