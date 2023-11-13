@@ -13,6 +13,7 @@ class JobFactory(ModelFactory[JobIn]):
     priority = 1
     dependency_ids = []
     task_ids = []
+    custom_fields = {}
 
 
 class UserFactory(ModelFactory[UserIn]):

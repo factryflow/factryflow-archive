@@ -1,9 +1,10 @@
 # schemas.py
 
-from typing import List
+from typing import List, Optional
 
 from ninja import ModelSchema
 from pydantic.fields import Field
+from api.utils.generate_custom_schema import generate_custom_field_schema
 
 from api.models import (
     CustomField,
@@ -75,6 +76,7 @@ class JobBaseOut(ModelSchema):
     job_type: JobTypeOut
     task_ids: List[int] = Field([], alias="task_id_list")
     dependency_ids: List[int] = Field([], alias="dependency_id_list")
+    custom_fields: Optional[generate_custom_field_schema(model_name= 'Job', class_suffix= 'Job')]
 
     class Config:
         model = Job
@@ -118,6 +120,7 @@ class TaskBaseOut(ModelSchema):
     predecessor_ids: List[int] = Field([], alias="predecessor_id_list")
     successor_ids: List[int] = Field([], alias="successor_id_list")
     dependency_ids: List[int] = Field([], alias="dependency_id_list")
+    custom_fields: Optional[generate_custom_field_schema(model_name= 'Task', class_suffix= 'Task')]
 
     class Config:
         model = Task

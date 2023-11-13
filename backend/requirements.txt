@@ -9,10 +9,12 @@ djangorestframework==3.14.0
 drf-yasg==1.21.7
 python-decouple==3.8
 six==1.16.0
-pytest==7.4.2
-pytest-django==4.5.2
+pytest==7.4.3
+pytest-django==4.5.3
 polyfactory==2.9.0
 django-ordered-model==3.7.4
 psycopg2==2.9.9
 factory-boy==3.3.0
+pytest-env==1.1.1
+python-dotenv==1.0.0
 email-validator==2.0.0.post2

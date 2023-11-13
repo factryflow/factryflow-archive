@@ -2,6 +2,7 @@ import json
 
 import pytest
 
+
 from api.tests.factories import UserCreateFactory, UserFactory
 
 
@@ -81,5 +82,4 @@ def test_update_user_password(api_client, test_update_password_data):
 @pytest.mark.django_db
 def test_get_current_user(api_client):
     response = api_client.get("/api/users/me/")
-
     assert response.status_code == 200

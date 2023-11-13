@@ -10,11 +10,11 @@ class FieldType(str, Enum):
     NUMBER = "number"
     DATE = "date"
     BOOLEAN = "boolean"
+    DATETIME = "datetime"
+    TIME = "time"
 
 class CustomFieldIn(ModelSchema):
     field_type : FieldType
-    label : Optional[str]
-
     class Config:
         model = CustomField
         model_fields = [
