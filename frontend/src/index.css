@@ -17,6 +17,10 @@ body,
 
 } */
 
+body {
+  /* background-color: #023E8A !important; */
+}
+
 .btn-cancel {
   padding: 10px 24px 10px 24px !important;
   background-color: #F1F1F2 !important;
@@ -32,26 +36,31 @@ body,
   box-shadow: none !important;
 }
 
-.btn-success{
+.btn-success {
   padding: 10px 24px 10px 24px !important;
   border-radius: 6px !important;
   text-transform: capitalize !important;
+  background-color: #023E8A !important;
 }
 
 
 .main-header {
-  position: sticky !important;
+  position: fixed !important;
   top: 0px !important;
   width: 100% !important;
+  right: unset !important;
 }
 
-.main-content{
+.main-content {
   padding: 20px;
   border-radius: 12px !important;
   background: #FAFAFB !important;
-  height: 100%;
-  overflow: auto;
+  /* height: 100%;
+  overflow: auto; */
+  position: relative;
+  top: 70px;
 }
+
 .main {
   flex-grow: 1;
   margin-top: 0px !important;
@@ -68,16 +77,17 @@ body,
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #1976d2; 
+  background: #1976d2;
   border-radius: 50px;
 }
-.css-12i7wg6-MuiPaper-root-MuiDrawer-paper{
-  border-right: 0px!important;
+
+.css-12i7wg6-MuiPaper-root-MuiDrawer-paper {
+  border-right: 0px !important;
 }
 
 .MuiBox-root {
@@ -93,12 +103,35 @@ body,
   padding-left: 12px !important;
 }
 
-.mantine-1lwx4nh {
-  border-radius: 12px;
-  border: 1px solid rgba(225, 227, 234, 0.50) !important;
-}
-
 .MuiDataGrid-columnHeaders {
   border-top-right-radius: unset !important;
   border-top-left-radius: unset !important;
+}
+
+.MuiInputBase-input.Mui-disabled {
+  -webkit-text-fill-color: #000 !important;
+}
+
+.mantine-g7194 {
+  background-color: #023E8A !important;
+}
+
+.mantine-g7194[data-disabled] {
+  background-color: #023E8A !important;
+  color: #FFF !important;
+}
+
+.MuiButtonBase-root.Mui-disabled {
+  background-color: #023E8A !important;
+  color: #FFF !important;
+}
+
+.mantine-1pt46x6[data-disabled] {
+  background-color: transparent;
+  color: #868e96;
+}
+
+.mantine-1flu9xd[data-disabled] {
+  background-color: transparent;
+  color: #fa5252;
 }

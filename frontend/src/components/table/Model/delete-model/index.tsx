@@ -1,15 +1,17 @@
 import React from "react";
 import "./index.css";
-import { useDisclosure } from "@mantine/hooks";
+
 import { Modal, Button } from "@mantine/core";
 import { Box, IconButton, Typography } from "@mui/material";
-import Deleteicon from "@/assets/images/delete.svg";
+import Deleteicon from "@/assets/images/delete.png";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 const DeleteModel = ({
   deleteModel,
   setDeleteModel,
   handleCancle,
   handleDelete,
+  deleterowName,
+  deleteTitle,
 }: any) => {
   return (
     <>
@@ -30,27 +32,30 @@ const DeleteModel = ({
               onClick={() => {}}
               className="delete-icon"
             >
-              <img src={Deleteicon} alt="Deleteicon" height={30} width={30} />
+              <img src={Deleteicon} alt="Deleteicon" height={100} width={100} />
             </IconButton>
             <Typography variant="h3" className="h3">
               Are you sure you want to delete?
             </Typography>
             <Typography variant="h6" className="h6">
-              By deleting <b>“Loreum Ipsum”</b> Job, all task inside that column
-              will also be deleted.
+              By deleting{" "}
+              <b style={{ color: "#5E6278" }}>
+                {deleterowName ? deleterowName : ""}
+              </b>{" "}
+              {deleteTitle}, all task inside that column will also be deleted.
             </Typography>
           </div>
           <Box component={"div"} className="btn-model-row">
             <Button
               variant="contained"
-              size="large"
+              // size="large"
               className="btn-cancel-model"
               onClick={() => handleCancle()}
             >
               Cancel
             </Button>
             <LoadingButton
-              size="large"
+              // size="large"
               type="submit"
               loading={false}
               variant="contained"

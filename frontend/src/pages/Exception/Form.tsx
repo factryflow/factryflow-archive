@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
-import { format } from "date-fns";
+
 import {
   TextField,
   Typography,
@@ -8,10 +8,7 @@ import {
   Grid,
   CardContent,
   Button,
-  FormHelperText,
-  Select,
   MenuItem,
-  FormControl,
   InputLabel,
   Box,
   Autocomplete,
@@ -20,9 +17,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Layout from "../Layout";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
-import { Tabs } from "@mantine/core";
 
 import {
   FormInputDropdown,
@@ -36,6 +32,7 @@ import {
   useGetExceptionByIdQuery,
   useUpdateExceptionMutation,
 } from "@/redux/api/exceptionApi";
+import { useGetAllResourcesQuery } from "@/redux/api/resourceApi";
 
 const validationSchema = yup.object().shape({
   external_id: yup.string().required("external id is required").nullable(),
@@ -50,6 +47,7 @@ const validationSchema = yup.object().shape({
     .string()
     .required("Operational Exception Type  is required")
     .nullable(),
+  resource_id: yup.string().required("Resource  is required").nullable(),
 });
 
 const ExceptionForm = () => {
@@ -57,14 +55,12 @@ const ExceptionForm = () => {
   const dispatch = useAppDispatch();
   const params = useParams();
   const isEdit = !!params.id;
-  const TabsList = Tabs.List;
-  const TabsPannel = Tabs.Panel;
-  const [activeTab] = useState<string | null>("resourcegroup");
-  const [resourseGroupData, setResourceGroupData] = useState<any>();
+  const location = useLocation();
+  const viewmode = location?.state?.viewmode || false;
   const paramsId = params && params.id;
 
   const [templateData, setTemplateData] = useState<any>();
-
+  const [resourceData, setResourceData] = useState<any>();
   const { data: getExceptionIdData } = useGetExceptionByIdQuery(
     Number(paramsId),
     {
@@ -96,6 +92,9 @@ const ExceptionForm = () => {
   const { data: getTemplateData, isLoading: templateIsLoading } =
     useGetAllTemplateQuery();
 
+  const { data: getResourceData, isLoading: resourceIsLoading } =
+    useGetAllResourcesQuery();
+
   const form = useForm({
     defaultValues: {
       external_id: "",
@@ -104,6 +103,7 @@ const ExceptionForm = () => {
       notes: "",
       weekly_shift_template_id: "",
       operational_exception_type_id: "",
+      resource_id: "",
     },
     resolver: yupResolver(validationSchema),
   });
@@ -113,7 +113,6 @@ const ExceptionForm = () => {
     control,
     handleSubmit,
     setValue,
-    watch,
     reset,
     formState: { errors },
   } = form;
@@ -136,7 +135,7 @@ const ExceptionForm = () => {
   useEffect(() => {
     if (createExceptionIsSuccess || updateExceptionIsSuccess) {
       toast.success(`Exception ${isEdit ? "Edit" : "Create"} successfully`) &&
-        navigate("/exception");
+        navigate("/resource/exception");
     }
     if (createExceptionError || updateExceptionError) {
       toast.error(
@@ -159,32 +158,44 @@ const ExceptionForm = () => {
       }));
       setTemplateData(transformedJob);
     }
-  }, [templateIsLoading, getTemplateData]);
+    if (!resourceIsLoading && getResourceData) {
+      const transformedResource = getResourceData.map((resource: any) => ({
+        label: resource.name,
+        value: resource.id,
+      }));
+      setResourceData(transformedResource);
+    }
+  }, [templateIsLoading, getTemplateData, resourceIsLoading, getResourceData]);
 
   useEffect(() => {
     const operational_exception_type = ["operational_exception_type"];
     const weekly_shift_template = ["weekly_shift_template"];
+    const resource = ["resource"];
     const start_datetime = ["start_datetime"];
     const end_datetime = ["end_datetime"];
     if (isEdit && getExceptionIdData) {
       Object.entries(getExceptionIdData ?? []).forEach(([name, value]: any) => {
         if (operational_exception_type.includes(name)) {
-          form.setValue("operational_exception_type_id", value);
+          setValue("operational_exception_type_id", value.id);
           return;
         }
         if (weekly_shift_template.includes(name)) {
-          form.setValue("weekly_shift_template_id", value);
+          setValue("weekly_shift_template_id", value.id);
+          return;
+        }
+        if (resource.includes(name)) {
+          setValue("resource_id", value.id);
           return;
         }
         if (start_datetime.includes(name)) {
-          form.setValue("start_datetime", value?.slice(0, 16));
+          setValue("start_datetime", value?.slice(0, 16));
           return;
         }
         if (end_datetime.includes(name)) {
-          form.setValue("end_datetime", value?.slice(0, 16));
+          setValue("end_datetime", value?.slice(0, 16));
           return;
         }
-        form.setValue(name, value);
+        setValue(name, value);
       });
     }
   }, [getExceptionIdData]);
@@ -221,6 +232,7 @@ const ExceptionForm = () => {
                       label={"External Id"}
                       placeholder={"Enter external Id"}
                       type={"text"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -230,6 +242,7 @@ const ExceptionForm = () => {
                       control={control}
                       label={"Start DateTime"}
                       type={"datetime-local"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -239,6 +252,7 @@ const ExceptionForm = () => {
                       control={control}
                       label={"End DateTime"}
                       type={"datetime-local"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -249,6 +263,7 @@ const ExceptionForm = () => {
                       label={"Notes"}
                       placeholder={"Enter notes "}
                       type={"text"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -264,10 +279,54 @@ const ExceptionForm = () => {
                       }) => (
                         <Autocomplete
                           options={templateData ?? []}
+                          disabled={viewmode}
                           size="small"
                           getOptionLabel={(option: any) => option.label}
                           value={
                             templateData?.find(
+                              (option: any) => option.value === Number(value)
+                            ) || null
+                          }
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              // error={!!errors.category}
+                              // helperText={errors.category?.message}
+                            />
+                          )}
+                          renderOption={(props, option: any) => (
+                            <MenuItem
+                              {...props}
+                              key={Number(option.value)}
+                              value={Number(option.value)}
+                            >
+                              {option.label}
+                            </MenuItem>
+                          )}
+                          fullWidth
+                          onChange={onChange}
+                        />
+                      )}
+                    />
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <InputLabel sx={{ color: "#181C32" }}>Resource</InputLabel>
+                    <Controller
+                      name="resource_id"
+                      control={control}
+                      render={({
+                        field: { onChange, value },
+                        fieldState: { error },
+                        formState,
+                      }) => (
+                        <Autocomplete
+                          options={resourceData ?? []}
+                          disabled={viewmode}
+                          size="small"
+                          getOptionLabel={(option: any) => option.label}
+                          value={
+                            resourceData?.find(
                               (option: any) => option.value === Number(value)
                             ) || null
                           }
@@ -300,6 +359,7 @@ const ExceptionForm = () => {
                       control={control}
                       label={"Type"}
                       options={exceptiontypeData ? exceptiontypeData : []}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -314,7 +374,7 @@ const ExceptionForm = () => {
                         variant="contained"
                         size="large"
                         className="btn-cancel"
-                        onClick={() => navigate("/exception")}
+                        onClick={() => navigate("/resource/exception")}
                       >
                         {isEdit ? "Back" : "Cancel"}
                       </Button>
@@ -326,6 +386,7 @@ const ExceptionForm = () => {
                         }
                         color="primary"
                         variant="contained"
+                        disabled={viewmode}
                       >
                         {isEdit ? "Edit" : "Create"}
                       </LoadingButton>

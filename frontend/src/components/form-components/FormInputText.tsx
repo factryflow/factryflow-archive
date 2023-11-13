@@ -20,6 +20,7 @@ export const FormInputText = ({
   label,
   placeholder,
   type,
+  viewmode,
 }: FormInputProps) => {
   return (
     <>
@@ -40,6 +41,7 @@ export const FormInputText = ({
             error={!!error}
             onChange={onChange}
             value={value}
+            disabled={viewmode}
             placeholder={placeholder}
             fullWidth
             variant="outlined"
@@ -73,6 +75,7 @@ export const FormInputDropdown: React.FC<FormInputProps> = ({
   control,
   label,
   options,
+  viewmode,
 }) => {
   const generateSingleOptions = () => {
     return (
@@ -100,6 +103,7 @@ export const FormInputDropdown: React.FC<FormInputProps> = ({
               value={value}
               onChange={onChange}
               error={!!error}
+              disabled={viewmode}
               sx={{
                 background: "#F9F9F9 !important",
               }}

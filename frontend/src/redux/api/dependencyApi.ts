@@ -1,9 +1,11 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import customFetchBase from "./customeFetchBase";
 import {
-  DependencyResponse,
-  DependencyStatusResponse,
+  CreateDependency,
+  Dependency,
+  DependencyStatus,
   GenericResponse,
+  UpdateDependency,
 } from "@/types/api.types";
 export const dependencyApi = createApi({
   reducerPath: "dependencyApi",
@@ -11,18 +13,17 @@ export const dependencyApi = createApi({
   tagTypes: ["getAllDependencys"],
   endpoints: (builder) => ({
     // getAllDependency Api
-    getAllDependency: builder.query<DependencyResponse[], void>({
+    getAllDependency: builder.query<Dependency[], void>({
       query: () => {
         return `api/dependencies/`;
       },
-      transformResponse: (res: GenericResponse<DependencyResponse[]>) => {
-        const result = res.items;
-        return result ?? [];
+      transformResponse: (res: { items: Dependency[] }) => {
+        return res.items ?? [];
       },
       providesTags: ["getAllDependencys"],
     }),
 
-    getDependencyById: builder.mutation<any | undefined, number>({
+    getDependencyById: builder.mutation<Dependency | undefined, number>({
       query: (id: number) => {
         return {
           url: `api/dependencies/${id}`,
@@ -31,7 +32,7 @@ export const dependencyApi = createApi({
     }),
 
     // create Dependency Api
-    createDependency: builder.mutation({
+    createDependency: builder.mutation<Dependency, Partial<CreateDependency>>({
       query: (body: any) => {
         return {
           url: "api/dependencies/",
@@ -42,7 +43,7 @@ export const dependencyApi = createApi({
       invalidatesTags: ["getAllDependencys"],
     }),
     // delete Dependency Api
-    deleteDependency: builder.mutation({
+    deleteDependency: builder.mutation<null, number>({
       query: (id: number) => {
         return {
           url: `api/dependencies/${id}`,
@@ -52,7 +53,7 @@ export const dependencyApi = createApi({
       invalidatesTags: ["getAllDependencys"],
     }),
     //update Dependency Api
-    updateDependency: builder.mutation({
+    updateDependency: builder.mutation<Dependency, UpdateDependency>({
       query: ({ id, data }) => {
         return {
           url: `api/dependencies/${id}`,
@@ -64,13 +65,12 @@ export const dependencyApi = createApi({
     }),
 
     //getAll dependency Status
-    getAllDependecyStatus: builder.query({
+    getAllDependecyStatus: builder.query<DependencyStatus[], void>({
       query: () => {
         return `api/dependency-status/`;
       },
-      transformResponse: (res: GenericResponse<DependencyStatusResponse[]>) => {
-        const result = res.items;
-        return result ?? [];
+      transformResponse: (res: { items: DependencyStatus[] }) => {
+        return res.items ?? [];
       },
     }),
   }),

@@ -12,7 +12,7 @@ import { setJobies, setJobStatus } from "@/redux/features/jobSlice";
 import Loading from "@/components/loading/loading";
 import useTabs from "@/hooks/useTabs";
 import { getString } from "@/helpers";
-import { JobResponse } from "@/types/api.types";
+import { Job } from "@/types/api.types";
 import deleteicon from "@/assets/images/delete.svg";
 import editicon from "@/assets/images/border_color.svg";
 import viewicon from "@/assets/images/visibility.svg";
@@ -27,27 +27,13 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import HomeIcon from "../../assets/images/home.svg";
-
-type BadgeType = {
-  [key in string]: string;
-};
-
-type excluded_fields =
-  | "planned_start"
-  | "planned_end"
-  | "is_active"
-  | "is_deleted";
-
-interface WithJobResponse extends JobResponse {
-  customer: string;
-  status?: string;
-}
+import DataTable from "@/components/table/DataTable";
 
 const Jobs = () => {
   const dispatch = useAppDispatch();
   const jobsSelector = useAppSelector((state: any) => state.job.jobies);
   const jobstatusSelector = useAppSelector((state: any) => state.job.jobstatus);
-  const [data, setData] = useState<Array<WithJobResponse> | []>();
+  const [data, setData] = useState<Array<Job> | undefined>();
 
   //call api joblist
   const { data: getjobData, isLoading: jobLoading } = useGetAllJobsQuery();
@@ -62,41 +48,36 @@ const Jobs = () => {
   const [deleteJobs] = useDeleteJobsMutation();
   const [deleteModel, setDeleteModel] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<any>("");
+  const [deleteRowName, setDeleteRowName] = useState<any>("");
 
-  const columns: GridColDef<WithJobResponse>[] = [
+  const columns: GridColDef<Job>[] = [
     { field: "id", headerName: "ID" },
     {
       field: "name",
       headerName: "Job Name",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
+      width: 170,
     },
     // {
     //   field: "description",
     //   headerName: "Description",
-    //   flex: 1,
+    //   width: 170,
     //   headerAlign: "center",
     //   align: "center",
     // },
     {
       field: "customer",
       headerName: "Customer",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
+      width: 170,
     },
     {
       field: "due_date",
       headerName: "Due Date",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
+      width: 170,
     },
     // {
     //   field: "planned_start_datetime",
     //   headerName: "Planned Start",
-    //   flex: 1,
+    //   width: 170,
     //   headerAlign: "center",
     //   align: "center",
     //   renderCell: (row) => {
@@ -112,7 +93,7 @@ const Jobs = () => {
     // {
     //   field: "planned_end_datetime",
     //   headerName: "Planned End",
-    //   flex: 1,
+    //   width: 170,
     //   headerAlign: "center",
     //   align: "center",
     //   renderCell: (row) => {
@@ -128,32 +109,20 @@ const Jobs = () => {
     {
       field: "priority",
       headerName: "Priority",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
+      width: 170,
     },
     {
       field: "note",
       headerName: "Note",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
+      width: 170,
     },
 
     {
       field: "status",
       headerName: "Status",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
-      renderCell: (row) => {
-        const badgeColor: BadgeType = {
-          completed: "green",
-          "not-planned": "red",
-          planned: "violet",
-          progress: "yellow",
-        };
+      width: 170,
 
+      renderCell: (row: any) => {
         return (
           <Badge
             variant="light"
@@ -178,15 +147,25 @@ const Jobs = () => {
       sortable: false,
       renderCell: (params: any) => {
         const currentRowId = params.row.id;
+        const currentRowName = params.row.name;
         const handleDeleteAction = (e: React.SyntheticEvent<any>) => {
           setDeleteModel(true);
           setDeleteId(currentRowId);
+          setDeleteRowName(currentRowName);
         };
 
         return (
           <Stack direction="row" spacing={2}>
-            <img src={viewicon} alt="view_Icon" height={17} width={17} />
-            <Link to={`/jobs/form/${currentRowId}`}>
+            <Link
+              to={`/production/jobs/form/${currentRowId}`}
+              state={{ viewmode: true }}
+            >
+              <img src={viewicon} alt="view_Icon" height={17} width={17} />
+            </Link>
+            <Link
+              to={`/production/jobs/form/${currentRowId}`}
+              state={{ viewmode: false }}
+            >
               <img src={editicon} alt="edit_Icon" height={17} width={17} />
             </Link>
 
@@ -204,7 +183,7 @@ const Jobs = () => {
   ];
 
   const handleClick = () => {
-    navigate("/jobs/form");
+    navigate("/production/jobs/form");
   };
 
   //handle cancle function  in custom delete modal
@@ -212,6 +191,7 @@ const Jobs = () => {
     setDeleteModel(false);
     if (deleteId) {
       setDeleteId("");
+      setDeleteRowName("");
     }
     return;
   };
@@ -273,189 +253,17 @@ const Jobs = () => {
             buttonname="Create New job"
             onClick={handleClick}
           />
-          <Box
-            m="10px 0px 0px 0px"
-            height="auto"
-            width={"auto"}
-            sx={{
-              "& .MuiDataGrid-root": {
-                border: "unset",
-                marginTop: "10px",
-              },
-
-              "& .name-column--cell": {
-                color: "bold !important",
-              },
-              "& .MuiDataGrid-row": {
-                cursor: "pointer",
-              },
-              "& .MuiDataGrid-columnHeaders": {
-                backgroundColor: "#FAFAFA",
-                color: "	#000000",
-                fontSize: "14px",
-                fontWeight: "bold !important",
-                borderTop: "1px solid #F0F0F0",
-              },
-              "& .MuiDataGrid-virtualScroller": {
-                backgroundColor: "#fff",
-              },
-              "& .MuiDataGrid-footerContainer": {
-                backgroundColor: "#FFFFFF",
-                width: "100%",
-              },
-              "& .MuiTablePagination-root": {
-                background: "#FAFAFB",
-                width: "100%",
-              },
-              "& .MuiTablePagination-spacer": {
-                display: "none",
-              },
-              "& .MuiTablePagination-selectLabel": {
-                flex: "0 0 6%",
-              },
-              "& .MuiTablePagination-displayedRows": {
-                flex: "0 0 78%",
-                textAlign: "right",
-              },
-              "& .css-1hgjne-MuiButtonBase-root-MuiIconButton-root": {
-                background: "#FFFFFF !important",
-                border: "1px solid #E1E3EA80",
-              },
-              "& .MuiCheckbox-root svg": {
-                width: "30px",
-                height: "30px",
-                backgroundColor: "#F1F1F2",
-                borderRadius: "7px",
-                padding: "6px 7px",
-              },
-              "& .MuiCheckbox-root svg path": {
-                display: "none",
-              },
-              "& .MuiCheckbox-root.Mui-checked:not(.MuiCheckbox-indeterminate) svg":
-                {
-                  backgroundColor: "#1890ff",
-                  borderColor: "#1890ff",
-                },
-              ".MuiDataGrid-cell:focus": {
-                outline: "none !important",
-              },
-              ".MuiDataGrid-columnHeader:focus-within": {
-                outline: "none !important",
-              },
-              ".MuiDataGrid-cell:focus-within": {
-                outline: "none !important",
-              },
-              ".MuiDataGrid-toolbarContainer": {
-                padding: "15px",
-                flexDirection: "row-reverse",
-                marginBottom: "10px",
-              },
-              ".MuiFormControl-root": {
-                border: "1px solid #E1E3EA",
-                borderRadius: "6px",
-                width: "450px",
-                paddingBottom: "0",
-                padding: "0 10px",
-                ".MuiInput-underline": {
-                  "&:before": {
-                    borderBottom: "none",
-                  },
-                  "&:hover:not(.Mui-disabled):before": {
-                    borderBottom: "none",
-                  },
-                },
-              },
-              ".MuiSvgIcon-root": {
-                width: "24px",
-                height: "24px",
-                color: "#A1A5B7",
-              },
-              ".MuiDataGrid-iconSeparator": {
-                display: "none",
-              },
-              ".css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root:hover": {
-                backgroundColor: "transparent",
-              },
-              ".css-9vna8i-MuiButtonBase-root-MuiIconButton-root:hover": {
-                backgroundColor: "transparent",
-              },
-              ".MuiTablePagination-select": {
-                paddingRight: "34px",
-                paddingTop: "10px",
-              },
-              ".MuiDataGrid-columnHeaderTitle": {
-                fontSize: "14px",
-                color: "#181C32",
-                fontWeight: 600,
-              },
-              ".MuiDataGrid-sortIcon": {
-                color: "#7E8299",
-                opacity: "inherit !important",
-              },
-              ".MuiDataGrid-iconButtonContainer": {
-                visibility: "visible",
-              },
-              ".MuiDataGrid-cellContent": {
-                fontSize: "14px",
-              },
-            }}
-          >
-            <Card withBorder sx={{ padding: "0px !important", marginTop: 10 }}>
-              {/* <StatusTabs
-            statusTabs={[
-              "all",
-              ...jobstatusSelector?.map((status: any) => status?.name),
-            ]}
-            data={data ?? []}
-            jobstatus={jobstatusSelector}
-            setFilterData={setData}
-          /> */}
-              {jobLoading ? (
-                <>
-                  <Loading />
-                </>
-              ) : (
-                getjobData && (
-                  <>
-                    <DataGrid
-                      className="dataGrid"
-                      autoHeight={true}
-                      rows={data ?? []}
-                      // rows={filterData ?? []}
-                      columns={columns}
-                      initialState={{
-                        pagination: {
-                          paginationModel: {
-                            pageSize: 10,
-                          },
-                        },
-                      }}
-                      slots={{ toolbar: GridToolbar }}
-                      slotProps={{
-                        toolbar: {
-                          showQuickFilter: true,
-                          quickFilterProps: { debounceMs: 500 },
-                        },
-                      }}
-                      pageSizeOptions={[5, 10, 25]}
-                      checkboxSelection
-                      disableRowSelectionOnClick
-                      disableColumnFilter
-                      disableColumnMenu
-                      disableDensitySelector
-                      disableColumnSelector
-                    />
-                  </>
-                )
-              )}
-            </Card>
-          </Box>
+          {getjobData && (
+            <DataTable rows={data ?? []} columns={columns ?? []} />
+          )}
         </Box>
         <DeleteModel
           deleteModel={deleteModel}
           setDeleteModel={setDeleteModel}
           handleCancle={handleCancle}
           handleDelete={handleDelete}
+          deleterowName={deleteRowName}
+          deleteTitle={"Job"}
         />
       </Layout>
     </>

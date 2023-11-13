@@ -20,6 +20,7 @@ const JobDetails = ({
   handleEditJob,
   handleDeleteJob,
   isEdit,
+  viewmode,
 }: any) => {
   // call api jobstatus
   const { data: jobstatusdata } = useGetJobStatusQuery(undefined, {});
@@ -181,12 +182,16 @@ const JobDetails = ({
       isEdit && (
         <Flex gap="md">
           <Tooltip label="Edit">
-            <ActionIcon onClick={() => handleEditRow(row)}>
+            <ActionIcon onClick={() => handleEditRow(row)} disabled={viewmode}>
               <IconEdit />
             </ActionIcon>
           </Tooltip>
           <Tooltip label="Delete">
-            <ActionIcon color="red" onClick={() => openDeleteConfirmModal(row)}>
+            <ActionIcon
+              color="red"
+              onClick={() => openDeleteConfirmModal(row)}
+              disabled={viewmode}
+            >
               <IconTrash />
             </ActionIcon>
           </Tooltip>
@@ -200,6 +205,7 @@ const JobDetails = ({
             setJobType("");
             table.setCreatingRow(true); //simplest way to open the create row modal with no default values
           }}
+          disabled={viewmode}
         >
           Create Job
         </Button>

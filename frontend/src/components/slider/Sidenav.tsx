@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -9,27 +8,20 @@ import {
   ListItemButton,
   ListItem,
   List,
-  IconButton,
-  Divider,
-  SvgIcon,
+  Typography,
 } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-// import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
 import FactoryFlowIcon from "@/assets/images/FactryFlow.svg";
 import FFLogo from "@/assets/images/FFlogo.svg";
-import {
-  setActiveMenuItem,
-  setMenuItems,
-  toggleChildrenOpen,
-} from "@/redux/features/menuSlice";
+import { toggleChildrenOpen } from "@/redux/features/menuSlice";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import { FiberManualRecord as DotIcon } from "@mui/icons-material";
+import { useState } from "react";
 
 const drawerWidth = 240;
 
@@ -40,6 +32,8 @@ const openedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: "hidden",
+  paddingLeft: "10px",
+  paddingRight: "10px",
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
@@ -48,6 +42,8 @@ const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: "hidden",
+  paddingLeft: "10px",
+  paddingRight: "10px",
   width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
@@ -59,7 +55,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
@@ -83,95 +78,29 @@ const Drawer = styled(MuiDrawer, {
 const Sidenav = () => {
   const dispatch = useAppDispatch();
   const location = useLocation();
+  const pathParts = location.pathname.split("/");
+  const pathresult = `/${pathParts[1]}`;
   const menuItems = useAppSelector((state) => state.menu.menuItems);
-  const activeitem = useAppSelector((state) => state.menu.activeMenuItem);
-  console.log(activeitem, "activeitem");
 
-  // const newMenuItems = [
-  //   {
-  //     label: "Dashboard",
-  //     icon: DashboardIcon,
-  //     route: "/dashboard",
-  //   },
-  //   {
-  //     label: "Production",
-  //     icon: ProductionIcon,
-  //     childrenOpen: false,
-  //     route: "/production",
-  //     children: [
-  //       {
-  //         label: "Jobs",
-  //         icon: Dote,
-  //         route: "/jobs",
-  //       },
-  //       {
-  //         label: "Tasks",
-  //         icon: Dote,
-  //         route: "/tasks",
-  //       },
-  //       {
-  //         label: "Dependency",
-  //         icon: Dote,
-  //         route: "/dependency",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     label: "Resource",
-  //     icon: ResourceIcon,
-  //     childrenOpen: false,
-  //     route: "/resource",
-  //     children: [
-  //       {
-  //         label: "Template",
-  //         icon: Dote,
-  //         route: "/template",
-  //       },
-  //       {
-  //         label: "Resources",
-  //         icon: Dote,
-  //         route: "/resources",
-  //       },
-  //       {
-  //         label: "Exception",
-  //         icon: Dote,
-  //         route: "/exception",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     label: "Settings",
-  //     icon: SettingIcon,
-  //     route: "/settings",
-  //   },
-  //   {
-  //     label: "Help & Support",
-  //     icon: SupportIcon,
-  //     route: "/help",
-  //   },
-  // ];
-
-  const handleMenuItemClick = (menuItem: any) => {
-    console.log(menuItem, "menuItems");
+  const handleMenuItemClick = (menuItem: any, parentRoute = "") => {
+    const fullRoute = `${parentRoute}${menuItem.route}`;
     if (menuItem.children) {
       dispatch(toggleChildrenOpen(menuItems.indexOf(menuItem)));
     } else {
-      navigate(menuItem.route);
-      dispatch(setActiveMenuItem(menuItem));
+      navigate(fullRoute);
     }
   };
   const theme = useTheme();
-  // const [open, setOpen] = React.useState(true);
+
   const navigate = useNavigate();
   const open = useAppSelector((state) => state.menu.menu);
-  // const open = useAppStore((state) => state.dopen);
 
   return (
     <Box sx={{ display: "flex", borderRight: "1px solid #F1F1F2 " }}>
       <CssBaseline />
 
       <Drawer variant="permanent" open={open}>
-        <DrawerHeader sx={{ marginRight: "14px !important" }}>
+        <DrawerHeader sx={{ marginLeft: "14px !important" }}>
           {open && open ? (
             <img
               src={FactoryFlowIcon}
@@ -180,7 +109,7 @@ const Sidenav = () => {
               width={200}
             />
           ) : (
-            <img src={FFLogo} alt="FFlogo" height={30} width={30} />
+            <img src={FFLogo} alt="FFlogo" height={35} width={35} />
           )}
         </DrawerHeader>
 
@@ -191,6 +120,19 @@ const Sidenav = () => {
                 disablePadding
                 sx={{
                   display: "block",
+                  color: menuItem.route.includes(pathresult)
+                    ? "#023E8A"
+                    : "#5E6278",
+                  background: menuItem.route.includes(pathresult)
+                    ? "#023E8A0D"
+                    : "#FFF",
+                  borderLeft: menuItem.route.includes(pathresult)
+                    ? "3px solid #023E8A"
+                    : "",
+                  borderRadius: menuItem.route.includes(pathresult)
+                    ? "8px"
+                    : "",
+                  margin: "10px 5px",
                 }}
                 onClick={() => handleMenuItemClick(menuItem)}
               >
@@ -213,18 +155,38 @@ const Sidenav = () => {
                       alt={menuItem.label}
                       height={30}
                       width={24}
+                      style={{
+                        filter: menuItem.route.includes(pathresult)
+                          ? "invert(14%) sepia(69%) saturate(3330%) hue-rotate(205deg) brightness(92%) contrast(98%)"
+                          : "none",
+                      }}
                     />
                   </ListItemIcon>
                   <ListItemText
-                    primary={menuItem.label}
-                    sx={{ opacity: open ? 1 : 0 }}
+                    primary={
+                      <Typography
+                        variant="h1"
+                        sx={{
+                          fontWeight: 600,
+                          fontSize: 14,
+                        }}
+                      >
+                        {menuItem.label}
+                      </Typography>
+                    }
+                    sx={{
+                      opacity: open ? 1 : 0,
+                    }}
                   />
-                  {menuItem.children &&
-                    (menuItem.childrenOpen ? (
-                      <ExpandMoreIcon />
-                    ) : (
-                      <KeyboardArrowRight />
-                    ))}
+                  {
+                    menuItem.children && open ? (
+                      menuItem.childrenOpen ? (
+                        <ExpandMoreIcon />
+                      ) : open ? (
+                        <KeyboardArrowRight />
+                      ) : null // Hide the submenu arrow icon when the submenu is open
+                    ) : null /* Hide the submenu icons when the menu is closed */
+                  }
                 </ListItemButton>
               </ListItem>
               {menuItem.children && (
@@ -232,20 +194,33 @@ const Sidenav = () => {
                   in={menuItem.childrenOpen}
                   timeout="auto"
                   unmountOnExit
+                  sx={{ "& .MuiList-root": { padding: "0px !important" } }}
                 >
                   <List>
                     {menuItem.children.map((child: any, childIndex: any) => (
                       <ListItem
                         key={childIndex}
                         disablePadding
-                        sx={{ display: "block", pl: 4 }}
-                        onClick={() => handleMenuItemClick(child)}
+                        sx={{
+                          display: "block",
+                          pl: 4,
+                          padding: 0,
+                          margin: 0,
+                        }}
+                        onClick={() =>
+                          handleMenuItemClick(child, menuItem.route)
+                        }
                       >
                         <ListItemButton
                           sx={{
                             minHeight: 48,
                             justifyContent: open ? "initial" : "center",
                             px: 2.5,
+                            color: location.pathname.includes(
+                              menuItem.route + child.route
+                            )
+                              ? "#023E8A"
+                              : "#5E6278",
                           }}
                         >
                           <ListItemIcon
@@ -255,16 +230,38 @@ const Sidenav = () => {
                               justifyContent: "center",
                             }}
                           >
-                            <img
-                              src={child.icon}
-                              alt={child.label}
-                              height={30}
-                              width={24}
+                            <DotIcon
+                              sx={{
+                                fontSize: location.pathname.includes(
+                                  menuItem.route + child.route
+                                )
+                                  ? 15
+                                  : 8,
+                                color: location.pathname.includes(
+                                  menuItem.route + child.route
+                                )
+                                  ? "#023E8A"
+                                  : "#5E6278",
+                              }}
                             />
                           </ListItemIcon>
+
                           <ListItemText
-                            primary={child.label}
-                            sx={{ opacity: open ? 1 : 0 }}
+                            disableTypography
+                            primary={
+                              <Typography
+                                variant="h1"
+                                sx={{
+                                  fontWeight: 600,
+                                  fontSize: 14,
+                                }}
+                              >
+                                {child.label}
+                              </Typography>
+                            }
+                            sx={{
+                              opacity: open ? 1 : 0,
+                            }}
                           />
                         </ListItemButton>
                       </ListItem>

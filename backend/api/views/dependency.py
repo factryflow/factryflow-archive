@@ -17,6 +17,7 @@ from api.schemas import (
     DependencyTypeOut,
 )
 from api.utils.crud_hooks import post_save_hook, pre_save_hook
+from api.utils.permissions import apply_permission_check_to_views
 
 dependency_router = Router()
 dependency_type_router = Router()
@@ -70,6 +71,10 @@ class DependencyStatusViewSet(ModelViewSet):
 
     list = ListModelView(output_schema=DependencyStatusOut)
 
+
+apply_permission_check_to_views(DependencyViewSet)
+apply_permission_check_to_views(DependencyTypeViewSet)
+apply_permission_check_to_views(DependencyStatusViewSet)
 
 # The register_routes method must be called to register the routes with the router
 DependencyViewSet.register_routes(dependency_router)

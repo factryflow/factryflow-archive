@@ -4,7 +4,7 @@ BACKEND_DIR = backend
 
 ## Install frontend dependencies
 setup-db:
-	cd $(BACKEND_DIR) && python manage.py migrate
+	cd $(BACKEND_DIR) && python manage.py migrate && python manage.py setup_user_roles
 	$(MAKE) load-data
 
 load-data:
@@ -20,7 +20,7 @@ start-frontend:
 
 ## Start the backend server
 start-backend:
-	cd $(BACKEND_DIR) && python manage.py migrate && python manage.py runserver
+	cd $(BACKEND_DIR) && python manage.py runserver
 
 ## Other utility targets (like testing, linting, etc.) can be added as needed
 

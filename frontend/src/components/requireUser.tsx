@@ -2,34 +2,31 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import Loading from "./loading/loading";
 import { userApi } from "@/redux/api";
 
-const RequireUser = () => {
+const requireUser = () => {
   const location = useLocation();
+  const tokenData = JSON.parse(localStorage.getItem("token") as string);
+  const isAuthenticated = !!tokenData?.access;
+  const { isLoading, isFetching } = userApi.endpoints.getMe.useQuery(null, {
+    skip: !isAuthenticated,
+    refetchOnMountOrArgChange: true,
+  });
+  const loading = isLoading || isFetching;
 
-  const tokenInLocalStorage = () => {
-    const token = localStorage.getItem("token");
-    return token && JSON.parse(token).access;
-  };
+  const user = userApi.endpoints.getMe.useQueryState(null, {
+    selectFromResult: ({ data }) => data!,
+  });
 
-  const {
-    data: user,
-    isLoading,
-    isFetching,
-  } = tokenInLocalStorage()
-    ? userApi.endpoints.getMe.useQuery(null)
-    : { data: null, isLoading: false, isFetching: false };
-
-  // Show loading indicator while fetching data
-  if (isLoading || isFetching) {
+  if (loading) {
     return <Loading />;
   }
 
-  // Check if user data exists from API call
-  if (user) {
-    return <Outlet />;
-  }
-
-  // Redirect if user is not authenticated
-  return <Navigate to="/" state={{ from: location }} replace />;
+  return isAuthenticated && user ? (
+    <Outlet />
+  ) : isAuthenticated ? (
+    <Navigate to="/unauthorized" state={{ from: location }} replace />
+  ) : (
+    <Navigate to="/" state={{ from: location }} replace />
+  );
 };
 
-export default RequireUser;
+export default requireUser;

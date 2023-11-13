@@ -11,6 +11,7 @@ from ninja_crud.views import (
 from api.models import WorkCenter
 from api.schemas import WorkCenterIn, WorkCenterOut
 from api.utils.crud_hooks import pre_save_hook
+from api.utils.permissions import apply_permission_check_to_views
 
 work_center_router = Router()
 
@@ -33,6 +34,8 @@ class WorkCenterViewSet(ModelViewSet):
     )
     delete = DeleteModelView()
 
+
+apply_permission_check_to_views(WorkCenterViewSet)
 
 # The register_routes method must be called to register the routes with the router
 WorkCenterViewSet.register_routes(work_center_router)

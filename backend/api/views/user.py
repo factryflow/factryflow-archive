@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from ninja import Router
 from ninja_crud.views import (
     DeleteModelView,
@@ -17,6 +18,7 @@ from api.schemas.user import (
     UserOut,
     VerifyOtpIn,
 )
+from api.utils.permissions import apply_permission_check_to_views
 from api.utils.send_mail import send_mail
 from api.utils.verify_otp import verify_otp
 
@@ -32,9 +34,18 @@ def register_user(request, user_in: UserIn):
         username=user_in.username,
         email=user_in.email,
         password=user_in.password,
-        role_id=user_in.role_id,
     )
+    if user_in.resource_ids:
+        user.resources.set(user_in.resource_ids)
+    if user_in.roles:
+        groups = Group.objects.filter(name__in=user_in.roles)
+        user.groups.set(groups)
     return user
+
+
+@user_no_auth_router.get("/check-first-user", response=dict[str, bool])
+def check_first_user(request):
+    return {"is_first_user": User.objects.count() == 0}
 
 
 @user_no_auth_router.post("/forgot-password")
@@ -85,7 +96,7 @@ def change_password(request, change_password: ChangePasswordIn):
         return {"message": "Current password is incorrect"}
 
 
-class UserViewSet(ModelViewSet):
+class UserViewSetAuth(ModelViewSet):
     model_class = User
 
     # AbstractModelView subclasses can be used as-is
@@ -95,5 +106,7 @@ class UserViewSet(ModelViewSet):
     delete = DeleteModelView()
 
 
+apply_permission_check_to_views(UserViewSetAuth)
+
 # The register_routes method must be called to register the routes with the router
-UserViewSet.register_routes(user_auth_router)
+UserViewSetAuth.register_routes(user_auth_router)

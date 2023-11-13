@@ -13,7 +13,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Layout from "../Layout";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -48,6 +48,7 @@ import {
   useDeleteDependencyMutation,
   useUpdateDependencyMutation,
 } from "@/redux/api/dependencyApi";
+import { CreateDependency, UpdateDependency } from "@/types/api.types";
 
 const validationSchema = yup.object().shape({
   external_id: yup.string().required("External Id is required"),
@@ -72,6 +73,8 @@ const TaskForm = () => {
   const TabsPannel = Tabs.Panel;
   const paramsId = params && params.id;
   const [activeTab] = useState<string | null>("dependency");
+  const location = useLocation();
+  const viewmode = location?.state?.viewmode || false;
 
   const boxStyle = {
     boxShadow: "0.3px 0.3px 1px rgba(0, 0, 0, 0.16)", // Adjust values as needed
@@ -88,16 +91,19 @@ const TaskForm = () => {
 
   //task-type
   const { data: tasktype } = useGetTaskTypeQuery<any>();
-  const [createTasks, { isLoading: taskisloding, isSuccess: taskissuccess }] =
-    useCreateTasksMutation();
+  const [
+    createTasks,
+    { isLoading: taskisloding, isSuccess: ctaskIsSuccess, error: ctaskError },
+  ] = useCreateTasksMutation();
   const [getTaskById, { data: taskgetiddata, isLoading: taskidisloading }] =
-    useGetTaskByIdMutation();
+    useGetTaskByIdMutation<any>();
   const [
     updateTasks,
     {
       data: updatetask,
       isLoading: updatetaskisloading,
-      isSuccess: updatetaskissuccess,
+      isSuccess: utaskIsSuccess,
+      error: utaskError,
     },
   ] = useUpdateTasksMutation();
   const [jobdataa, setJobData] = useState<any>([]);
@@ -148,10 +154,11 @@ const TaskForm = () => {
       job_id: values.job_id,
       item_id: values.item_id,
       predecessor_ids: values.predecessor_ids,
+      work_center_id: 1,
       successor_ids: [],
       dependency_ids: [],
     };
-    console.log(requestData, "requestData");
+
     if (isEdit) {
       updateTasks({ id: params.id, data: requestData });
     } else {
@@ -161,7 +168,7 @@ const TaskForm = () => {
 
   const handleCreateDependency = async (values: any) => {
     if (values) {
-      const requestObj = {
+      const requestObj: CreateDependency = {
         name: values.name,
         external_id: values.external_id,
         expected_close_datetime: values.expected_close_datetime,
@@ -170,9 +177,9 @@ const TaskForm = () => {
         dependency_status_id: values.dependency_status,
         dependency_type_id: values.dependency_type,
         job_ids: [],
-        task_ids: [Number(paramsId)],
+        task_ids: [paramsId!],
       };
-      console.log(requestObj, "requestObject");
+
       const response = await createDependency(requestObj);
       if (response) {
         gettaskid();
@@ -182,7 +189,7 @@ const TaskForm = () => {
 
   const handleEditDependency = async ({ id, values }: any) => {
     if (id && values) {
-      const requestObj = {
+      const requestObj: any = {
         name: values.name,
         external_id: values.external_id,
         expected_close_datetime: values.expected_close_datetime,
@@ -191,7 +198,7 @@ const TaskForm = () => {
         dependency_status_id: values.dependency_status.id,
         dependency_type_id: values.dependency_type.id,
         job_ids: [],
-        task_ids: [Number(paramsId)],
+        task_ids: [paramsId],
       };
       const response = await updateDependency({ id, data: requestObj });
       if (response) {
@@ -251,13 +258,16 @@ const TaskForm = () => {
   }, [jobisLoading, getjobData]);
 
   useEffect(() => {
-    if (!taskisloding && taskissuccess) {
-      toast.success("Task Create Successfully") && navigate("/tasks");
+    if (ctaskIsSuccess || utaskIsSuccess) {
+      toast.success(`Task ${isEdit ? "Edit" : "Create"} successfully`) &&
+        navigate("/production/tasks");
     }
-    if (!updatetaskisloading && updatetaskissuccess) {
-      toast.success("Task Update Successfully") && navigate("/tasks");
+    if (ctaskError || utaskError) {
+      toast.error(
+        (ctaskError || (utaskError as unknown as any))?.data.message as string
+      );
     }
-  }, [taskisloding, taskissuccess, updatetaskisloading, updatetaskissuccess]);
+  }, [ctaskIsSuccess, ctaskError, utaskIsSuccess, utaskError]);
 
   return (
     <>
@@ -285,6 +295,7 @@ const TaskForm = () => {
                       label={"External Id"}
                       placeholder={"Enter External Id"}
                       type={"text"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -295,6 +306,7 @@ const TaskForm = () => {
                       label={"Name"}
                       placeholder={"Enter task Name"}
                       type={"text"}
+                      viewmode={viewmode}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -303,6 +315,7 @@ const TaskForm = () => {
                       control={control}
                       label={"Status"}
                       options={taskStatus ?? []}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -311,6 +324,7 @@ const TaskForm = () => {
                     <Controller
                       name="job_id"
                       control={control}
+                      disabled={viewmode}
                       render={({
                         field: { onChange, value },
                         fieldState: { error },
@@ -350,6 +364,7 @@ const TaskForm = () => {
                       control={control}
                       label={"Type"}
                       options={tasktype ?? []}
+                      viewmode={viewmode}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -359,6 +374,7 @@ const TaskForm = () => {
                       label={"Setup Time"}
                       placeholder={""}
                       type={"number"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -369,6 +385,7 @@ const TaskForm = () => {
                       label={"Run Time"}
                       placeholder={""}
                       type={"number"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -379,6 +396,7 @@ const TaskForm = () => {
                       label={"Teardown Time"}
                       placeholder={""}
                       type={"number"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -389,6 +407,7 @@ const TaskForm = () => {
                       label={"Quantity"}
                       placeholder={""}
                       type={"number"}
+                      viewmode={viewmode}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -397,6 +416,7 @@ const TaskForm = () => {
                       control={control}
                       label={"Predecessors"}
                       options={[]}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -407,6 +427,7 @@ const TaskForm = () => {
                       label={"Item"}
                       placeholder={""}
                       type={"number"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -421,7 +442,7 @@ const TaskForm = () => {
                         variant="contained"
                         size="large"
                         className="btn-cancel"
-                        onClick={() => navigate("/tasks")}
+                        onClick={() => navigate("/production/tasks")}
                       >
                         {isEdit ? "Back" : "Cancel"}
                       </Button>
@@ -431,6 +452,7 @@ const TaskForm = () => {
                         loading={taskisloding || updatetaskisloading}
                         color="primary"
                         variant="contained"
+                        disabled={viewmode}
                       >
                         {isEdit ? "Edit" : "Create"}
                       </LoadingButton>
@@ -465,6 +487,7 @@ const TaskForm = () => {
                         handleEditDependency={handleEditDependency}
                         handleDeleteDependency={handleDeleteDependency}
                         isEdit={isEdit}
+                        viewmode={viewmode}
                       />
                     </div>
                   )}

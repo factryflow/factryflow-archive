@@ -21,6 +21,7 @@ const ResourceDetails = ({
   handleEditResource,
   handleDeleteResource,
   isEdit,
+  viewmode,
 }: any) => {
   const { data: getTemplateData, isLoading: templateIsLoading } =
     useGetAllTemplateQuery();
@@ -143,12 +144,16 @@ const ResourceDetails = ({
       isEdit && (
         <Flex gap="md">
           <Tooltip label="Edit">
-            <ActionIcon onClick={() => handleEditRow(row)}>
+            <ActionIcon onClick={() => handleEditRow(row)} disabled={viewmode}>
               <IconEdit />
             </ActionIcon>
           </Tooltip>
           <Tooltip label="Delete">
-            <ActionIcon color="red" onClick={() => openDeleteConfirmModal(row)}>
+            <ActionIcon
+              color="red"
+              onClick={() => openDeleteConfirmModal(row)}
+              disabled={viewmode}
+            >
               <IconTrash />
             </ActionIcon>
           </Tooltip>
@@ -161,6 +166,7 @@ const ResourceDetails = ({
             setTemplateList("");
             table.setCreatingRow(true);
           }}
+          disabled={viewmode}
         >
           Create Resource
         </Button>

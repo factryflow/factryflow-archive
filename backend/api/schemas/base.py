@@ -14,6 +14,8 @@ from api.models import (
     Job,
     JobStatus,
     JobType,
+    OperationalException,
+    OperationalExceptionType,
     Resource,
     ResourceGroup,
     Task,
@@ -137,8 +139,9 @@ class ResourceWeeklyShiftTemplateOut(ModelSchema):
 
 
 class ResourceBaseOut(ModelSchema):
-    resource_group_ids: List[int] = Field([], alias="resource_group_id_list")
     weekly_shift_template: ResourceWeeklyShiftTemplateOut = None
+    resource_group_ids: List[int] = Field([], alias="resource_group_id_list")
+    operational_exceptions: List[int] = Field([], alias="operational_exception_id_list")
 
     class Config:
         model = Resource
@@ -179,4 +182,23 @@ class WeeklyShiftTemplateBaseOut(ModelSchema):
 class CustomFieldBaseOut(ModelSchema):
     class Config:
         model = CustomField
+        model_fields = "__all__"
+
+
+# ====================================
+# =============== Operational Exception ===============
+# ====================================
+
+
+class OperationalExceptionTypeOut(ModelSchema):
+    class Config:
+        model = OperationalExceptionType
+        model_fields = ["id", "name"]
+
+
+class OperationalExceptionBaseOut(ModelSchema):
+    operational_exception_type: OperationalExceptionTypeOut
+
+    class Config:
+        model = OperationalException
         model_fields = "__all__"

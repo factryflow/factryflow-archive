@@ -16,7 +16,7 @@ import {
   Autocomplete,
   Box,
 } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { toast } from "react-toastify";
@@ -53,6 +53,8 @@ const ResourceGroupForm = () => {
   const [resourseData, setResourceData] = useState<any>();
   const paramsId = params && params.id;
   const [resourcelist, setresourceList] = useState<any>();
+  const location = useLocation();
+  const viewmode = location?.state?.viewmode || false;
 
   // const { data: resourceData, isLoading: resourceIsLoading } =
   //   useGetAllResourcesQuery();
@@ -71,11 +73,15 @@ const ResourceGroupForm = () => {
     skip: !paramsId,
   });
 
-  const [updateResourcesGroup, { data: urgData, isLoading: urgisLoading }] =
-    useUpdateResourcesGroupMutation();
+  const [
+    updateResourcesGroup,
+    { isLoading: urgisLoading, error: urgError, isSuccess: urgIsSuccess },
+  ] = useUpdateResourcesGroupMutation();
 
-  const [createresourcesGroup, { data: crgData, isLoading: crgisLoading }] =
-    useCreateresourcesGroupMutation();
+  const [
+    createresourcesGroup,
+    { isLoading: crgisLoading, error: crgError, isSuccess: crgIsSuccess },
+  ] = useCreateresourcesGroupMutation();
 
   const resourceGroupSelector = useAppSelector(
     (state) => state.resourceGroup.resourceGroups
@@ -163,15 +169,17 @@ const ResourceGroupForm = () => {
   }, [isEdit, rgdata]);
 
   useEffect(() => {
-    if (!crgisLoading && crgData) {
-      toast.success("Resource Group Create successfully") &&
-        navigate("/resources/resourcegroup");
+    if (crgIsSuccess || urgIsSuccess) {
+      toast.success(
+        `Resource Group ${isEdit ? "Edit" : "Create"} successfully`
+      ) && navigate("/resource/resources/resourcegroup");
     }
-    if (!urgisLoading && urgData) {
-      toast.success("Resource Group Update successfully") &&
-        navigate("/resources/resourcegroup");
+    if (crgError || urgError) {
+      toast.error(
+        (crgError || (urgError as unknown as any))?.data.message as string
+      );
     }
-  }, [crgisLoading, crgData, urgisLoading, urgData]);
+  }, [crgIsSuccess, crgError, urgIsSuccess, urgError]);
 
   // useEffect(() => {
   //   if (!resourceIsLoading && resourceData) {
@@ -209,6 +217,7 @@ const ResourceGroupForm = () => {
                       label={"Name"}
                       placeholder={"Enter Name"}
                       type={"text"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -223,7 +232,9 @@ const ResourceGroupForm = () => {
                         variant="contained"
                         size="large"
                         className="btn-cancel"
-                        onClick={() => navigate("/resources/resourcegroup")}
+                        onClick={() =>
+                          navigate("/resource/resources/resourcegroup")
+                        }
                       >
                         {isEdit ? "Back" : "Cancel"}
                       </Button>
@@ -232,6 +243,8 @@ const ResourceGroupForm = () => {
                         type="submit"
                         color="primary"
                         variant="contained"
+                        loading={crgisLoading || urgisLoading}
+                        disabled={viewmode}
                       >
                         {isEdit ? "Edit" : "Create"}
                       </LoadingButton>
@@ -266,6 +279,7 @@ const ResourceGroupForm = () => {
                           handleEditResource={handleEditResource}
                           handleDeleteResource={handleDeleteResource}
                           isEdit={isEdit}
+                          viewmode={viewmode}
                         />
                       </div>
                     )}

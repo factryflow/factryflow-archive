@@ -20,7 +20,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Layout from "../Layout";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import { Tabs } from "@mantine/core";
 import {
@@ -58,8 +58,9 @@ const ResourceForm = () => {
   const [resourseGroupData, setResourceGroupData] = useState<any>();
   const paramsId = params && params.id;
   const resourceSelector = useAppSelector((state) => state.resource.resource);
-
   const [templateData, setTemplateData] = useState<any>();
+  const location = useLocation();
+  const viewmode = location?.state?.viewmode || false;
 
   const defaultValues = {
     name: "",
@@ -80,20 +81,12 @@ const ResourceForm = () => {
 
   const [
     updateResources,
-    {
-      data: updateResource,
-      isLoading: updateResourceIsLoading,
-      error: updateResourceError,
-    },
+    { isLoading: urIsLoading, error: urError, isSuccess: urIsSuccess },
   ] = useUpdateResourcesMutation();
 
   const [
     createresources,
-    {
-      data: createResourceData,
-      isLoading: resourceIsLoading,
-      error: resourceError,
-    },
+    { isLoading: crIsLoading, error: crError, isSuccess: crIsSuccess },
   ] = useCreateresourcesMutation();
 
   const { data: getTemplateData, isLoading: templateIsLoading } =
@@ -162,20 +155,16 @@ const ResourceForm = () => {
   };
 
   useEffect(() => {
-    if (!resourceIsLoading && createResourceData) {
-      toast.success(`Resource Add Sucessfully`) && navigate("/resources");
+    if (crIsSuccess || urIsSuccess) {
+      toast.success(`Resource  ${isEdit ? "Edit" : "Create"} successfully`) &&
+        navigate("/resource/resources");
     }
-    if (!updateResourceIsLoading && updateResource) {
-      toast.success(`Resource Update  Sucessfully`) && navigate("/resources");
+    if (crError || urError) {
+      toast.error(
+        (crError || (urError as unknown as any))?.data.message as string
+      );
     }
-  }, [
-    resourceIsLoading,
-    resourceError,
-    createResourceData,
-    updateResourceIsLoading,
-    updateResourceError,
-    updateResource,
-  ]);
+  }, [crIsSuccess, crError, urIsSuccess, urError]);
 
   useEffect(() => {
     if (!templateIsLoading && getTemplateData) {
@@ -235,6 +224,7 @@ const ResourceForm = () => {
                       label={"Name"}
                       placeholder={"Enter task Name"}
                       type={"text"}
+                      viewmode={viewmode}
                     />
                   </Grid>
 
@@ -250,6 +240,7 @@ const ResourceForm = () => {
                       }) => (
                         <Autocomplete
                           options={templateData ?? []}
+                          disabled={viewmode}
                           size="small"
                           getOptionLabel={(option: any) => option.label}
                           value={
@@ -291,16 +282,17 @@ const ResourceForm = () => {
                         variant="contained"
                         size="large"
                         className="btn-cancel"
-                        onClick={() => navigate("/resources")}
+                        onClick={() => navigate("/resource/resources")}
                       >
                         {isEdit ? "Back" : "Cancel"}
                       </Button>
                       <LoadingButton
                         size="large"
                         type="submit"
-                        loading={resourceIsLoading || updateResourceIsLoading}
+                        loading={crIsLoading || urIsLoading}
                         color="primary"
                         variant="contained"
+                        disabled={viewmode}
                       >
                         {isEdit ? "Edit" : "Create"}
                       </LoadingButton>
@@ -335,6 +327,7 @@ const ResourceForm = () => {
                           handleEditResourceGroup={handleEditResourceGroup}
                           handleDeleteResourceGroup={handleDeleteResourceGroup}
                           isEdit={isEdit}
+                          viewmode={viewmode}
                         />
                       </div>
                     )}

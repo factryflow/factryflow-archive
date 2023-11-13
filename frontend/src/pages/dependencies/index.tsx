@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../Layout";
-import { Box, Button, Stack, useTheme } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 
 import Header from "../../components/table/Header";
 
@@ -14,13 +14,10 @@ import {
   useGetAllDependencyQuery,
 } from "@/redux/api/dependencyApi";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import {
-  setDependencies,
-  setDependenciesStatus,
-} from "@/redux/features/dependencySlice";
+
 import useTabs from "@/hooks/useTabs";
 import DeleteModel from "@/components/table/Model/delete-model";
-import { DependencyResponse } from "@/types/api.types";
+// import { DependencyResponse } from "@/types/api.types";
 import deleteicon from "@/assets/images/delete.svg";
 import editicon from "@/assets/images/border_color.svg";
 import viewicon from "@/assets/images/visibility.svg";
@@ -35,6 +32,7 @@ const Dependencys = () => {
   const [deleteDependency] = useDeleteDependencyMutation();
   const [deleteModel, setDeleteModel] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<any>("");
+  const [deleteRowName, setDeleteRowName] = useState<any>("");
 
   const dependenciesSelector = useAppSelector(
     (state) => state.dependency.dependencies
@@ -54,25 +52,25 @@ const Dependencys = () => {
   // const { data: dependencystatus, isLoading: dsIsLoading } =
   //   useGetAllDependecyStatusQuery(undefined, {});
 
-  const [data, setData] = useState<Array<DependencyResponse> | []>();
+  const [data, setData] = useState<Array<any> | []>();
 
   const columns: GridColDef<any>[] = [
     { field: "id", headerName: "ID" }, // Adjust the width as needed
     {
       field: "external_id",
       headerName: "external_id",
-      flex: 1,
+      width: 160,
     },
     {
       field: "name",
       headerName: "name",
-      flex: 1,
+      width: 160,
     },
 
     {
       field: "expected_close_datetime",
       headerName: "Expected Close",
-      flex: 1, // Adjust the width as needed
+      width: 160, // Adjust the width as needed
       renderCell: (row) => {
         return (
           <span>
@@ -86,7 +84,7 @@ const Dependencys = () => {
     {
       field: "actual_close_datetime",
       headerName: "Actual Close",
-      flex: 1, // Adjust the width as needed
+      width: 160, // Adjust the width as needed
       renderCell: (row) => {
         return (
           <span>
@@ -100,12 +98,12 @@ const Dependencys = () => {
     {
       field: "notes",
       headerName: "Notes",
-      flex: 1,
+      width: 160,
     },
     {
       field: "status",
       headerName: "Status",
-      flex: 1,
+      width: 160,
       headerAlign: "center",
       align: "center",
       renderCell: (row) => {
@@ -136,30 +134,33 @@ const Dependencys = () => {
     {
       field: "action",
       headerName: "Action",
-      flex: 1,
+      width: 160,
       sortable: false,
       // disableClickEventBubbling: true,
       renderCell: (params: any) => {
+        const currentRowId = params.row.id;
+        const currentRowName = params.row.name;
         const handleDeleteAction = () => {
-          const currentRowId = params.row.id;
           setDeleteModel(true);
           setDeleteId(currentRowId);
+          setDeleteRowName(currentRowName);
         };
-        const handleEditAction = () => {
-          const currentRow = params.row;
-          navigate(`/dependency/form/${currentRow?.id}`);
-        };
-
         return (
           <Stack direction="row" spacing={2}>
-            <img src={viewicon} alt="view_Icon" height={17} width={17} />
-            <img
-              src={editicon}
-              alt="edit_Icon"
-              height={17}
-              width={17}
-              onClick={handleEditAction}
-            />
+            <Link
+              to={`/production/dependency/form/${currentRowId}`}
+              state={{ viewmode: true }}
+            >
+              <img src={viewicon} alt="view_Icon" height={17} width={17} />
+            </Link>
+
+            <Link
+              to={`/production/dependency/form/${currentRowId}`}
+              state={{ viewmode: false }}
+            >
+              <img src={editicon} alt="edit_Icon" height={17} width={17} />
+            </Link>
+
             <img
               src={deleteicon}
               alt="delete_Icon"
@@ -174,7 +175,7 @@ const Dependencys = () => {
   ];
 
   const handleClick = () => {
-    navigate(`/dependency/form`);
+    navigate(`/production/dependency/form`);
   };
 
   //handle cancle function  in custom delete modal
@@ -182,6 +183,7 @@ const Dependencys = () => {
     setDeleteModel(false);
     if (deleteId) {
       setDeleteId("");
+      setDeleteRowName("");
     }
     return;
   };
@@ -221,7 +223,7 @@ const Dependencys = () => {
 
           <Box
             m="30px 0 0 0"
-            height="auto"
+            height="500px"
             sx={{
               "& .MuiDataGrid-root": {
                 border: "unset",
@@ -345,7 +347,16 @@ const Dependencys = () => {
               },
             }}
           >
-            <Card withBorder sx={{ padding: "0px !important", marginTop: 10 }}>
+            <Card
+              withBorder
+              sx={{
+                padding: "0px !important",
+                marginTop: 10,
+                height: "100%",
+                borderRadius: "12px",
+                border: "1px solid rgba(225, 227, 234, 0.50)",
+              }}
+            >
               {/* <StatusTabs
                 statusTabs={[
                   "all",
@@ -364,7 +375,6 @@ const Dependencys = () => {
                   <>
                     <DataGrid
                       className="dataGrid"
-                      autoHeight={true}
                       rows={getDependencyData ?? []}
                       // rows={filterData ?? []}
                       columns={columns}
@@ -398,6 +408,8 @@ const Dependencys = () => {
                 setDeleteModel={setDeleteModel}
                 handleCancle={handleCancle}
                 handleDelete={handleDelete}
+                deleterowName={deleteRowName}
+                deleteTitle={"Dependency"}
               />
             </Card>
           </Box>

@@ -1,49 +1,54 @@
-from ninja import Schema
-from pydantic import BaseModel
+from django.contrib.auth.models import Group
+from ninja import ModelSchema, Schema
+from pydantic import EmailStr, Field
+
+from api.models.resource import Resource
+from api.models.user import User
 
 
 class UserIn(Schema):
-    """
-    This schema is using for getting the input data for the User model.
-    """
     username: str
-    email: str
+    email: EmailStr
     password: str
-    role_id:int
+    roles: list[str] = ["Admin"]  # Default role is Admin while we develop the system
+    resource_ids: list[int] = None
 
 
-class UserTestIn(Schema):
-    """
-    This schema is using for getting the input data for the User model.
-    """
-    id : int
-    username: str
-    email: str
-    password: str
-    
+class UserResourceOut(ModelSchema):
+    class Config:
+        model = Resource
+        model_fields = ["id", "name"]
 
 
-class UserOut(Schema):
-    """
-    This schema is using for returning the output of the User
-    """
-    id: int
-    username: str
-    email: str
+class UserGroupOut(ModelSchema):
+    class Config:
+        model = Group
+        model_fields = ["id", "name"]
+
+
+class UserOut(ModelSchema):
+    roles: list[UserGroupOut] = Field(None, alias="groups")
+    resources: list[UserResourceOut] = None
+
+    class Config:
+        model = User
+        model_exclude = ["password", "resources", "groups"]
 
 
 class UserForgotPassword(Schema):
     """
     This schema is using for getting the input data for Forgot Password
     """
-    email: str
+
+    email: EmailStr
 
 
 class VerifyOtpIn(Schema):
     """
     This schema is using for getting the input data for Verify Otp
     """
-    email:str
+
+    email: EmailStr
     otp: int
 
 
@@ -51,6 +56,7 @@ class UpdatePasswordIn(Schema):
     """
     This schema is using for getting the input data for Update password, This is using when user forgot password.
     """
+
     id: int
     password: str
 
@@ -59,5 +65,6 @@ class ChangePasswordIn(Schema):
     """
     This schema is using for getting the input data for change password, This is using when user is login and want to change password
     """
+
     current_password: str
     new_password: str
